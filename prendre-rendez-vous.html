@@ -9,13 +9,41 @@
 </head>
 <body>
 <nav id="mainNav"></nav>
+<section class="page-hero page-hero--full">
+  <div class="page-hero__bg" style="background-image:url('https://www.nosmontres.com/uploads/nosmontres2-fMm4.jpg')"></div>
+  <div class="page-hero__inner">
+    <span class="page-hero__eyebrow fr">46 rue de Miromesnil, Paris 8ème</span>
+    <span class="page-hero__eyebrow en">46 rue de Miromesnil, Paris 8th</span>
+    <h1 class="page-hero__title fr">Prendre <em>Rendez-vous</em></h1>
+    <h1 class="page-hero__title en">Book an <em>Appointment</em></h1>
+    <div class="page-hero__line"></div>
+  </div>
+</section>
 
-<section class="page-hero">
-  <span class="page-hero__eyebrow fr">46 rue de Miromesnil, Paris 8ème</span>
-  <span class="page-hero__eyebrow en">46 rue de Miromesnil, Paris 8th</span>
-  <h1 class="page-hero__title fr">Prendre <em>Rendez-vous</em></h1>
-  <h1 class="page-hero__title en">Book an <em>Appointment</em></h1>
-  <div class="page-hero__line"></div>
+<!-- HOW IT WORKS -->
+<section class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number" style="font-size:2rem">①</span>
+      <span class="stat-label fr">Vous nous contactez</span>
+      <span class="stat-label en">You contact us</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" style="font-size:2rem">②</span>
+      <span class="stat-label fr">Nous préparons votre sélection</span>
+      <span class="stat-label en">We prepare your selection</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" style="font-size:2rem">③</span>
+      <span class="stat-label fr">Rencontre en boutique</span>
+      <span class="stat-label en">Meeting in boutique</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" style="font-size:2rem">④</span>
+      <span class="stat-label fr">Votre montre, livrée</span>
+      <span class="stat-label en">Your watch, delivered</span>
+    </div>
+  </div>
 </section>
 
 <section class="section">
@@ -27,7 +55,6 @@
         <h2 class="rdv-info__title en">A meeting<br>for <em>your project</em></h2>
         <p class="rdv-info__body fr">Nous sommes disponibles sur rendez-vous pour vous accompagner dans votre projet d'acquisition ou de vente de montre de luxe. Chaque rendez-vous est un moment privilégié, dédié entièrement à vos attentes.</p>
         <p class="rdv-info__body en">We are available by appointment to guide you in your luxury watch acquisition or sale project. Each appointment is a privileged moment, dedicated entirely to your expectations.</p>
-
         <div class="rdv-contact-item">
           <span class="rdv-contact-label fr">Téléphone</span>
           <span class="rdv-contact-label en">Phone</span>
@@ -55,7 +82,6 @@
           <span class="en">By appointment, 7 days a week</span>
         </div>
       </div>
-
       <!-- Form -->
       <div>
         <form onsubmit="return false">
@@ -75,8 +101,8 @@
             <input class="form-input" type="email" id="email" name="email" required>
           </div>
           <div class="form-group">
-            <label class="form-label fr" for="marque">Marque(s) choisie(s) *</label>
-            <label class="form-label en" for="marque">Chosen Brand(s) *</label>
+            <label class="form-label fr" for="marque">Marque(s) *</label>
+            <label class="form-label en" for="marque">Brand(s) *</label>
             <select class="form-select" id="marque" name="marque" required>
               <option value="">—</option>
               <option>Rolex</option>
@@ -87,8 +113,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label fr" for="modele">Modèle de montre *</label>
-            <label class="form-label en" for="modele">Watch model *</label>
+            <label class="form-label fr" for="modele">Modèle souhaité *</label>
+            <label class="form-label en" for="modele">Desired model *</label>
             <input class="form-input" type="text" id="modele" name="modele" required>
           </div>
           <div class="form-group">
