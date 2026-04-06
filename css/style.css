@@ -7,7 +7,7 @@
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; scroll-behavior: smooth; }
+html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: 'Jost', sans-serif;
   font-weight: 300;
@@ -15,6 +15,7 @@ body {
   color: #1A1A1A;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -613,44 +614,175 @@ h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr { display: block; }
 /* ──────────────────────────────────────────────────
    RESPONSIVE
 ────────────────────────────────────────────────── */
+
+/* — 1100px: tablet landscape ————————————————— */
 @media (max-width: 1100px) {
   .watch-grid { grid-template-columns: repeat(3, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
   .watch-detail { grid-template-columns: 1fr; }
-  .watch-detail__gallery { position: relative; height: 60vw; }
+  .watch-detail__gallery { position: relative; height: 70vw; max-height: 540px; }
+  .watch-detail__info { padding: 56px 48px 64px; }
+  .rdv-grid { gap: 48px; }
 }
+
+/* — 960px: tablet / mobile nav ——————————————— */
 @media (max-width: 960px) {
+  /* Nav */
   .burger { display: flex; }
+  .nav-inner { gap: 0; justify-content: space-between; }
   #navLinks {
-    position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; z-index: 999;
     background: var(--white); flex-direction: column; justify-content: flex-start;
-    padding: 32px 24px; gap: 4px;
+    padding: 24px 20px 40px; gap: 0;
     transform: translateX(100%); opacity: 0; pointer-events: none;
     transition: transform var(--transition), opacity var(--transition);
-    overflow-y: auto;
+    overflow-y: auto; overflow-x: hidden;
   }
   #navLinks.open { transform: translateX(0); opacity: 1; pointer-events: auto; }
-  .nav-link { font-size: 0.88rem; padding: 14px 4px; border-bottom: 1px solid var(--border); width: 100%; }
+  .nav-link {
+    font-size: 0.85rem; letter-spacing: 0.1em;
+    padding: 16px 8px; border-bottom: 1px solid var(--border);
+    width: 100%; display: block;
+    min-height: 52px; display: flex; align-items: center;
+  }
   .nav-link::after { display: none; }
-  .drop-menu { position: static; border: none; box-shadow: none; padding: 8px 0 8px 16px; opacity: 1; pointer-events: auto; transform: none; display: none; }
+  .drop-menu {
+    position: static; border: none; box-shadow: none;
+    padding: 4px 0 8px 20px; opacity: 1; pointer-events: auto;
+    transform: none; display: none; min-width: 0;
+    border-left: 2px solid var(--gold);
+    margin-left: 8px; margin-bottom: 4px;
+  }
+  .drop-menu a {
+    padding: 10px 12px; font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.08em; min-height: 44px; display: flex; align-items: center;
+  }
+  .drop-menu a:hover { padding-left: 18px; }
+  .has-drop { cursor: pointer; }
   .has-drop.open .drop-menu { display: block; }
   .nav-cta { display: none; }
-  .rdv-grid { grid-template-columns: 1fr; }
+  /* RDV form */
+  .rdv-grid { grid-template-columns: 1fr; gap: 40px; }
+  /* Watch detail */
+  .watch-detail__info { padding: 40px 32px 56px; }
 }
+
+/* — 768px: mobile ——————————————————————————— */
 @media (max-width: 768px) {
+  /* Layout grids */
   .watch-grid { grid-template-columns: repeat(2, 1fr); }
   .collections-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .about-strip { grid-template-columns: 1fr; }
+
+  /* About strip */
   .about-strip__img { aspect-ratio: 3/2; }
-  .about-strip__text { padding: 48px 32px; }
-  .hero__content { padding: 0 24px 48px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-  .container { padding: 0 20px; }
+  .about-strip__text { padding: 48px 28px; }
+  .about-strip__quote { font-size: 1.4rem; }
+
+  /* Hero */
+  .hero__content { padding: 0 24px 52px; }
+  .hero__sub { font-size: 0.88rem; margin-bottom: 36px; }
+
+  /* Sections */
   .section { padding: 64px 0; }
+  .section-header { margin-bottom: 44px; }
+  .container { padding: 0 20px; }
+  .container--narrow { padding: 0 20px; }
+
+  /* Collection tiles */
+  .collection-tile__label { left: 24px; right: 24px; bottom: 24px; }
+  .collection-tile__title { font-size: 1.7rem; }
+
+  /* Page hero */
+  .page-hero { padding-top: calc(var(--nav-h) + 44px); padding-bottom: 44px; }
+
+  /* Watch detail */
+  .watch-detail__gallery { height: 80vw; max-height: 400px; }
+  .watch-detail__info { padding: 32px 20px 48px; }
+  .watch-detail__title { font-size: 1.8rem; }
+  .watch-detail__price { font-size: 1.7rem; margin-bottom: 28px; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-newsletter { max-width: 100%; }
+
+  /* Prose */
+  .prose-section { padding: 56px 0; }
+  .prose h2 { font-size: 1.5rem; margin: 40px 0 14px; }
+
+  /* Service cards */
+  .service-card { padding: 36px 28px; }
+
+  /* RDV info */
+  .rdv-info__title { font-size: 1.8rem; }
+  .rdv-grid { gap: 32px; }
 }
+
+/* — 480px: small mobile ———————————————————— */
 @media (max-width: 480px) {
+  /* Watch grid: single column */
   .watch-grid { grid-template-columns: 1fr; }
-  .hero__title { font-size: 2.4rem; }
+
+  /* Hero */
+  .hero__title { font-size: clamp(2.2rem, 9vw, 3rem); }
+  .hero__eyebrow { font-size: 0.65rem; letter-spacing: 0.2em; }
+  .hero__content { padding: 0 20px 44px; }
+  .hero__actions { flex-direction: column; gap: 12px; }
+  .hero__actions .btn-primary,
+  .hero__actions .btn-ghost { text-align: center; padding: 16px 24px; }
+
+  /* Sections */
+  .section { padding: 48px 0; }
+  .section-header { margin-bottom: 36px; }
+  .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+  .container { padding: 0 16px; }
+  .container--narrow { padding: 0 16px; }
+
+  /* Brand pills */
+  .brand-filters { gap: 8px; }
+  .brand-pill { padding: 8px 14px; font-size: 0.68rem; }
+
+  /* Watch cards */
+  .watch-card__body { padding: 16px 18px 20px; }
+  .watch-card__name { font-size: 1rem; }
+  .watch-card__price { font-size: 1.1rem; }
+
+  /* Collections */
+  .collection-tile__title { font-size: 1.5rem; }
+  .collection-tile__label { left: 20px; right: 20px; bottom: 20px; }
+
+  /* About strip */
+  .about-strip__text { padding: 36px 20px; }
+  .about-strip__quote { font-size: 1.25rem; }
+
+  /* Services */
+  .service-card { padding: 28px 20px; }
+  .service-card__icon { font-size: 2.4rem; }
+
+  /* Page hero */
+  .page-hero { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 36px; }
+  .page-hero__title { font-size: clamp(2rem, 8vw, 2.8rem); }
+
+  /* Watch detail */
+  .watch-detail__gallery { height: 90vw; max-height: 380px; }
+  .watch-detail__info { padding: 28px 16px 40px; }
+  .watch-detail__title { font-size: 1.6rem; }
+  .watch-detail__price { font-size: 1.5rem; }
+
+  /* Footer */
+  #siteFooter { padding: 52px 0 28px; }
+
+  /* RDV form */
+  .rdv-info__title { font-size: 1.6rem; }
+  .form-input, .form-select, .form-textarea { font-size: 1rem; } /* prevents iOS zoom */
+  .btn-primary, .btn-ghost { padding: 14px 24px; font-size: 0.72rem; }
+
+  /* Prose */
+  .prose-section { padding: 40px 0; }
+  .prose h2 { font-size: 1.35rem; }
+
+  /* Marquee */
+  .marquee-track span { font-size: 0.88rem; padding: 0 32px; }
 }
