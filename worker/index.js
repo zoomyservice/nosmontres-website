@@ -99,8 +99,17 @@ function staticLookup(query) {
   return null;
 }
 
+// European country codes — exactly as Chrono24 uses them in their "Europe" filter
+const EUROPE_COUNTRIES = [
+  'DE','FR','CH','IT','ES','AT','NL','BE','PT','GR',
+  'PL','CZ','RO','HU','SE','DK','FI','NO','IE','LU',
+  'HR','SI','SK','LT','LV','EE','CY','MT','MC','LI',
+  'IS','AL','RS','BA','ME','MK','MD','UA','BY','SM',
+  'AD','GI','UK','BG',
+].map(c => `countryIds=${c}`).join('&');
+
 async function tryLivePrices(query) {
-  const url = `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(query)}&dosearch=true&sortorder=1`;
+  const url = `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(query)}&dosearch=true&sortorder=1&currencyId=EUR&${EUROPE_COUNTRIES}`;
   try {
     const resp = await fetch(url, {
       headers: {
