@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Montre Rolex Occasion | Nos Montres Paris</title>
+  <meta name="description" content="Achat vente montre Rolex occasion à Paris. Rolex certifiées authentifiées. Nos Montres 46 rue de Miromesnil 75008 Paris.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">Achat · Vente · Expertise</span>
+  <span class="page-hero__eyebrow en">Achat · Vente · Expertise</span>
+  <h1 class="page-hero__title fr"><em>Montre Rolex Occasion</em></h1>
+  <h1 class="page-hero__title en"><em>Pre-Owned Rolex Watch</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+<section class="prose-section">
+  <div class="prose">
+    <h2 class="fr">Acheter une Rolex d'occasion</h2>
+    <h2 class="en">Buying a pre-owned Rolex</h2>
+    <p class="fr">Acheter une montre Rolex d'occasion certifiée représente le meilleur rapport qualité-prix du marché de l'horlogerie de luxe. Chez Nos Montres, chaque pièce d'occasion est rigoureusement authentifiée et présentée dans son état exact.</p>
+    <p class="en">Buying a certified pre-owned Rolex watch represents the best value for money in the luxury watch market. At Nos Montres, every pre-owned piece is rigorously authenticated and presented in its exact condition.</p>
+    <h2 class="fr">Notre processus d'authentification</h2>
+    <h2 class="en">Our authentication process</h2>
+    <p class="fr">Chaque Rolex d'occasion que nous proposons a été soumise à un examen minutieux par nos experts horlogers. Vérification du numéro de série, test de l'étanchéité, contrôle du mouvement, examen de l'état esthétique — rien n'est laissé au hasard.</p>
+    <p class="en">Every pre-owned Rolex we offer has been subjected to meticulous examination by our expert watchmakers. Serial number verification, water resistance testing, movement inspection, aesthetic condition check — nothing is left to chance.</p>
+    <h2 class="fr">Pourquoi choisir une Rolex occasion certifiée ?</h2>
+    <h2 class="en">Why choose a certified pre-owned Rolex?</h2>
+    <p class="fr">Une Rolex d'occasion certifiée vous offre : l'authenticité garantie, un prix inférieur au neuf de 10 à 40%, une pièce déjà amortie et souvent avec une patine caractère. De plus, la valeur des Rolex d'occasion tend à s'apprécier dans le temps.</p>
+    <p class="en">A certified pre-owned Rolex offers you: guaranteed authenticity, a price 10-40% below new, a piece already worn in and often with a characterful patina. Moreover, the value of pre-owned Rolex watches tends to appreciate over time.</p>
+    <h2 class="fr">Nous rachétons aussi vos Rolex</h2>
+    <h2 class="en">We also buy your Rolex</h2>
+    <p class="fr">Vous souhaitez vendre votre Rolex ? Nous proposons des estimations gratuites et des rachats au juste prix. Contactez-nous pour une évaluation confidentielle.</p>
+    <p class="en">Looking to sell your Rolex? We offer free valuations and fair-price buybacks. Contact us for a confidential assessment.</p>
+  </div>
+</section>
+<section class='section section--cream'><div class='container'><div class='section-header'><span class='section-eyebrow fr'>Disponibles à la vente</span><span class='section-eyebrow en'>Available now</span><h2 class='section-title fr'>Notre Sélection</h2><h2 class='section-title en'>Our Selection</h2><div class='section-line'></div></div><div class='watch-grid' id='watchGrid'></div></div></section>
+<section class="section section--dark">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title fr">Découvrez notre <em>boutique</em></h2>
+    <h2 class="section-title en">Discover our <em>boutique</em></h2>
+    <div class="section-line"></div>
+    <div style="margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a class="btn-primary" href="index.html#boutique">
+        <span class="fr">Toutes nos montres</span><span class="en">All our watches</span>
+      </a>
+      <a class="btn-ghost" href="prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous</span><span class="en">Book appointment</span>
+      </a>
+    </div>
+  </div>
+</section>
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav();
+  NM.renderFooter();
+  document.addEventListener('DOMContentLoaded', () => {
+    const brands = ['Rolex'];
+    const g = document.getElementById('watchGrid');
+    if(g) g.innerHTML = WATCHES.filter(w => brands.includes(w.brand)).map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+</script>
+</body>
+</html>

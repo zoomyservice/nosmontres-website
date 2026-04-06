@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prendre Rendez-vous — Nos Montres Paris</title>
+  <meta name="description" content="Prenez rendez-vous avec nos experts en montres de luxe. 46 rue de Miromesnil, 75008 Paris. 01 81 80 08 47.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">46 rue de Miromesnil, Paris 8ème</span>
+  <span class="page-hero__eyebrow en">46 rue de Miromesnil, Paris 8th</span>
+  <h1 class="page-hero__title fr">Prendre <em>Rendez-vous</em></h1>
+  <h1 class="page-hero__title en">Book an <em>Appointment</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="rdv-grid">
+      <!-- Contact info -->
+      <div>
+        <h2 class="rdv-info__title fr">Une rencontre<br>pour <em>votre projet</em></h2>
+        <h2 class="rdv-info__title en">A meeting<br>for <em>your project</em></h2>
+        <p class="rdv-info__body fr">Nous sommes disponibles sur rendez-vous pour vous accompagner dans votre projet d'acquisition ou de vente de montre de luxe. Chaque rendez-vous est un moment privilégié, dédié entièrement à vos attentes.</p>
+        <p class="rdv-info__body en">We are available by appointment to guide you in your luxury watch acquisition or sale project. Each appointment is a privileged moment, dedicated entirely to your expectations.</p>
+
+        <div class="rdv-contact-item">
+          <span class="rdv-contact-label fr">Téléphone</span>
+          <span class="rdv-contact-label en">Phone</span>
+          <a href="tel:0181800847">01 81 80 08 47</a>
+        </div>
+        <div class="rdv-contact-item">
+          <span class="rdv-contact-label fr">Mobile</span>
+          <span class="rdv-contact-label en">Mobile</span>
+          <a href="tel:0622807014">06 22 80 70 14</a>
+        </div>
+        <div class="rdv-contact-item">
+          <span class="rdv-contact-label fr">Email</span>
+          <span class="rdv-contact-label en">Email</span>
+          <a href="mailto:contact.nosmontres@gmail.com">contact.nosmontres@gmail.com</a>
+        </div>
+        <div class="rdv-contact-item">
+          <span class="rdv-contact-label fr">Adresse</span>
+          <span class="rdv-contact-label en">Address</span>
+          <span>46 rue de Miromesnil<br>75008 Paris</span>
+        </div>
+        <div class="rdv-contact-item" style="margin-top:28px">
+          <span class="rdv-contact-label fr">Disponibilité</span>
+          <span class="rdv-contact-label en">Availability</span>
+          <span class="fr">Sur rendez-vous, 7 jours sur 7</span>
+          <span class="en">By appointment, 7 days a week</span>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div>
+        <form onsubmit="return false">
+          <div class="form-group">
+            <label class="form-label fr" for="nom">Nom *</label>
+            <label class="form-label en" for="nom">Name *</label>
+            <input class="form-input" type="text" id="nom" name="nom" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label fr" for="tel">Téléphone *</label>
+            <label class="form-label en" for="tel">Phone *</label>
+            <input class="form-input" type="tel" id="tel" name="tel" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label fr" for="email">Email *</label>
+            <label class="form-label en" for="email">Email *</label>
+            <input class="form-input" type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label fr" for="marque">Marque(s) choisie(s) *</label>
+            <label class="form-label en" for="marque">Chosen Brand(s) *</label>
+            <select class="form-select" id="marque" name="marque" required>
+              <option value="">—</option>
+              <option>Rolex</option>
+              <option>Audemars Piguet</option>
+              <option>Patek Philippe</option>
+              <option>Richard Mille</option>
+              <option>Cartier</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label fr" for="modele">Modèle de montre *</label>
+            <label class="form-label en" for="modele">Watch model *</label>
+            <input class="form-input" type="text" id="modele" name="modele" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label fr" for="message">Message</label>
+            <label class="form-label en" for="message">Message</label>
+            <textarea class="form-textarea" id="message" name="message"></textarea>
+          </div>
+          <button class="form-submit" type="submit">
+            <span class="fr">Me recontacter pour fixer un rendez-vous</span>
+            <span class="en">Contact me to schedule an appointment</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav('rdv');
+  NM.renderFooter();
+</script>
+</body>
+</html>

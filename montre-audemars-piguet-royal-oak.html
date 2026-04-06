@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Montre Audemars Piguet Royal Oak | Nos Montres Paris</title>
+  <meta name="description" content="Montre Audemars Piguet Royal Oak Paris. Achat vente AP Royal Oak. Expert AP, Nos Montres 75008.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">L'Icône du Luxe Sportif</span>
+  <span class="page-hero__eyebrow en">L'Icône du Luxe Sportif</span>
+  <h1 class="page-hero__title fr"><em>Montre Audemars Piguet Royal Oak</em></h1>
+  <h1 class="page-hero__title en"><em>Audemars Piguet Royal Oak Watch</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+<section class="prose-section">
+  <div class="prose">
+    <h2 class="fr">La Royal Oak, révolution horlogère</h2>
+    <h2 class="en">The Royal Oak, a horological revolution</h2>
+    <p class="fr">Créée en 1972 par le légendaire Gérald Genta, la Royal Oak fut la première montre de luxe en acier avec un prix comparable à l'or. Son boîtier octogonal avec vis apparentes, son bracelet intégré et son cadran «Grande Tapisserie» en font l'une des montres les plus iconiques jamais créées.</p>
+    <p class="en">Created in 1972 by the legendary Gérald Genta, the Royal Oak was the first luxury steel sports watch with a price comparable to gold. Its octagonal bezel with visible screws, integrated bracelet and 'Grande Tapisserie' dial make it one of the most iconic watches ever created.</p>
+    <h2 class="fr">Royal Oak 41 Anniversaire</h2>
+    <h2 class="en">Royal Oak 41 Anniversary</h2>
+    <p class="fr">La référence 26240 lancée pour le 50ème anniversaire de la Royal Oak représente l'apogée du modèle original. Avec son cadran bleu, ses finitions satin-brossé et son mouvement manufacture 4302, elle incarne la perfection horlogère selon AP.</p>
+    <p class="en">The reference 26240 launched for the Royal Oak's 50th anniversary represents the pinnacle of the original model. With its blue dial, satin-brushed finishes and in-house calibre 4302, it embodies watchmaking perfection according to AP.</p>
+    <h2 class="fr">Royal Oak Offshore</h2>
+    <h2 class="en">Royal Oak Offshore</h2>
+    <p class="fr">Plus imposante, plus sportive, la Royal Oak Offshore a été lancée en 1993. Sa taille généreuse, son remontoir en caoutchouc et ses finitions audacieuses en font un objet de désir pour ceux qui aiment l'horlogerie comme accessoire de style fort.</p>
+    <p class="en">Larger, more sporting, the Royal Oak Offshore was launched in 1993. Its generous size, rubber crown protector and bold finishes make it a coveted object for those who love watchmaking as a strong style accessory.</p>
+    <h2 class="fr">Investir dans une Royal Oak</h2>
+    <h2 class="en">Investing in a Royal Oak</h2>
+    <p class="fr">Les prix des Royal Oak ont considérablement augmenté ces dernières années. La référence 15500ST se négocie bien au-dessus du tarif boutique. La rareté de certains cadrans et l'anniversaire du modèle ont créé un marché secondaire très actif.</p>
+    <p class="en">Royal Oak prices have increased considerably in recent years. The reference 15500ST trades well above retail price. The scarcity of certain dials and the model's anniversary have created a very active secondary market.</p>
+  </div>
+</section>
+<section class='section section--cream'><div class='container'><div class='section-header'><span class='section-eyebrow fr'>Disponibles à la vente</span><span class='section-eyebrow en'>Available now</span><h2 class='section-title fr'>Notre Sélection</h2><h2 class='section-title en'>Our Selection</h2><div class='section-line'></div></div><div class='watch-grid' id='watchGrid'></div></div></section>
+<section class="section section--dark">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title fr">Découvrez notre <em>boutique</em></h2>
+    <h2 class="section-title en">Discover our <em>boutique</em></h2>
+    <div class="section-line"></div>
+    <div style="margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a class="btn-primary" href="index.html#boutique">
+        <span class="fr">Toutes nos montres</span><span class="en">All our watches</span>
+      </a>
+      <a class="btn-ghost" href="prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous</span><span class="en">Book appointment</span>
+      </a>
+    </div>
+  </div>
+</section>
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav();
+  NM.renderFooter();
+  document.addEventListener('DOMContentLoaded', () => {
+    const brands = ['Audemars Piguet'];
+    const g = document.getElementById('watchGrid');
+    if(g) g.innerHTML = WATCHES.filter(w => brands.includes(w.brand)).map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+</script>
+</body>
+</html>

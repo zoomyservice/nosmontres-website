@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rolex Date Just 41 — Nos Montres Paris</title>
+  <meta name="description" content="Rolex Date Just 41 Réf. 126334 — 12 900 €. Boutique Nos Montres, 46 rue de Miromesnil 75008 Paris.">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<div style="padding-top:var(--nav-h)">
+  <div class="watch-detail">
+    <!-- Gallery -->
+    <div class="watch-detail__gallery">
+      <img src="https://www.nosmontres.com/uploads/IMG-1334-V3NN.jpeg" alt="Rolex Date Just 41">
+    </div>
+
+    <!-- Info -->
+    <div class="watch-detail__info">
+      <span class="watch-detail__brand">Rolex</span>
+      <h1 class="watch-detail__title fr">Rolex Date Just 41</h1>
+      <h1 class="watch-detail__title en">Rolex Date Just 41</h1>
+      <span class="watch-detail__ref">Réf. 126334</span>
+      <div class="watch-detail__price">12 900 €</div>
+
+      <div class="watch-specs">
+        <div class="watch-spec">
+          <span class="watch-spec__label fr">Marque</span>
+          <span class="watch-spec__label en">Brand</span>
+          <span class="watch-spec__value">Rolex</span>
+        </div>
+        <div class="watch-spec">
+          <span class="watch-spec__label fr">Référence</span>
+          <span class="watch-spec__label en">Reference</span>
+          <span class="watch-spec__value">126334</span>
+        </div>
+        <div class="watch-spec"><span class="watch-spec__label fr">Année</span><span class="watch-spec__label en">Year</span><span class="watch-spec__value">2024</span></div>
+        <div class="watch-spec">
+          <span class="watch-spec__label fr">Papiers d'origine</span>
+          <span class="watch-spec__label en">Original papers</span>
+          <span class="watch-spec__value fr">Oui</span>
+          <span class="watch-spec__value en">Yes</span>
+        </div>
+        <div class="watch-spec">
+          <span class="watch-spec__label fr">Boite d'origine</span>
+          <span class="watch-spec__label en">Original box</span>
+          <span class="watch-spec__value fr">Oui</span>
+          <span class="watch-spec__value en">Yes</span>
+        </div>
+      </div>
+
+      
+
+      <a class="watch-detail__cta" href="../prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous pour cette montre</span>
+        <span class="en">Book an appointment for this watch</span>
+      </a>
+
+      <p style="margin-top:24px;font-size:0.78rem;color:var(--mid);line-height:1.7" class="fr">
+        Toutes nos montres sont rigoureusement authentifiées. Pour toute information&nbsp;: 
+        <a href="tel:0181800847" style="color:var(--gold)">01 81 80 08 47</a>
+      </p>
+      <p style="margin-top:24px;font-size:0.78rem;color:var(--mid);line-height:1.7" class="en">
+        All our watches are rigorously authenticated. For any information: 
+        <a href="tel:0181800847" style="color:var(--gold)">01 81 80 08 47</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- More watches -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow fr">Continuez à explorer</span>
+      <span class="section-eyebrow en">Continue exploring</span>
+      <h2 class="section-title fr">Autres <em>Pièces Disponibles</em></h2>
+      <h2 class="section-title en">Other <em>Available Pieces</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="watch-grid" id="moreWatches"></div>
+  </div>
+</section>
+
+<footer id="siteFooter"></footer>
+<script src="../js/watches.js"></script>
+<script src="../js/components.js"></script>
+<script>
+  NM.rootPath = '../';
+  NM.renderNav();
+  NM.renderFooter();
+  document.addEventListener('DOMContentLoaded', () => {
+    const others = WATCHES.filter(w => w.id !== '1737934' && w.brand === 'Rolex').slice(0, 4);
+    const fallback = WATCHES.filter(w => w.id !== '1737934').slice(0, 4);
+    const show = others.length >= 2 ? others : fallback;
+    document.getElementById('moreWatches').innerHTML = show.map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+  const orig = NM.setLang.bind(NM);
+  NM.setLang = function(lang, save) {
+    orig(lang, save);
+    const others = WATCHES.filter(w => w.id !== '1737934' && w.brand === 'Rolex').slice(0, 4);
+    const fallback = WATCHES.filter(w => w.id !== '1737934').slice(0, 4);
+    const show = others.length >= 2 ? others : fallback;
+    document.getElementById('moreWatches').innerHTML = show.map(ww => NM.watchCard(ww, lang)).join('');
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Montre Rolex Daytona | Nos Montres Paris</title>
+  <meta name="description" content="Montre Rolex Daytona — guide d'achat, prix, histoire. Achat vente Daytona Paris. Nos Montres 75008.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">L'Icône des Chronographes</span>
+  <span class="page-hero__eyebrow en">L'Icône des Chronographes</span>
+  <h1 class="page-hero__title fr"><em>Montre Rolex Daytona</em></h1>
+  <h1 class="page-hero__title en"><em>Rolex Daytona Watch</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+<section class="prose-section">
+  <div class="prose">
+    <h2 class="fr">L'histoire du Rolex Daytona</h2>
+    <h2 class="en">The history of the Rolex Daytona</h2>
+    <p class="fr">La Rolex Daytona est née dans les années 1960, rendue célèbre par l'acteur et pilote Paul Newman. Vendue à 1 000 dollars à une certaine époque, depuis janvier 2022 le fabricant suisse propose ce modèle à partir de 13 700€ au tarif public — et bien plus sur le marché secondaire.</p>
+    <p class="en">The Rolex Daytona was born in the 1960s, made famous by actor and racing driver Paul Newman. Once sold for $1,000, since January 2022 the Swiss manufacturer offers this model from €13,700 at public pricing — and considerably more on the secondary market.</p>
+    <h2 class="fr">Le Daytona comme investissement</h2>
+    <h2 class="en">The Daytona as an investment</h2>
+    <p class="fr">La Daytona reste très recherchée et de plus en plus rare. La référence 16520 offre des prix accessibles avec un fort potentiel d'appréciation. Un cadran blanc 116520 acheté 7 536€ en 2010 se négocie aujourd'hui entre 17 000 et 20 000€.</p>
+    <p class="en">The Daytona remains highly sought-after and increasingly rare. The reference 16520 offers accessible pricing with strong appreciation potential. A white dial 116520 purchased for €7,536 in 2010 now trades between €17,000 and €20,000.</p>
+    <h2 class="fr">Combien coûte un Rolex Daytona ?</h2>
+    <h2 class="en">How much does a Rolex Daytona cost?</h2>
+    <p class="fr">Les prix varient selon la référence, l'état et le marché. Comptez 27 000€ pour un nouveau modèle céramique, et jusqu'à 50 000€ et plus pour les versions en or rose ou or jaune. Les éditions Paul Newman vintage peuvent atteindre plusieurs centaines de milliers d'euros.</p>
+    <p class="en">Prices vary by reference, condition and market. Expect €27,000 for a new ceramic model, and up to €50,000 and above for rose gold or yellow gold versions. Vintage Paul Newman editions can reach several hundred thousand euros.</p>
+    <h2 class="fr">Achetez ou vendez votre Daytona</h2>
+    <h2 class="en">Buy or sell your Daytona</h2>
+    <p class="fr">Nos Montres dispose régulièrement de Daytona en stock — neuves et d'occasion. Contactez-nous pour connaître les disponibilités actuelles ou pour vendre la vôtre au meilleur prix.</p>
+    <p class="en">Nos Montres regularly has Daytonas in stock — new and pre-owned. Contact us for current availability or to sell yours at the best price.</p>
+  </div>
+</section>
+<section class='section section--cream'><div class='container'><div class='section-header'><span class='section-eyebrow fr'>Disponibles à la vente</span><span class='section-eyebrow en'>Available now</span><h2 class='section-title fr'>Notre Sélection</h2><h2 class='section-title en'>Our Selection</h2><div class='section-line'></div></div><div class='watch-grid' id='watchGrid'></div></div></section>
+<section class="section section--dark">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title fr">Découvrez notre <em>boutique</em></h2>
+    <h2 class="section-title en">Discover our <em>boutique</em></h2>
+    <div class="section-line"></div>
+    <div style="margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a class="btn-primary" href="index.html#boutique">
+        <span class="fr">Toutes nos montres</span><span class="en">All our watches</span>
+      </a>
+      <a class="btn-ghost" href="prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous</span><span class="en">Book appointment</span>
+      </a>
+    </div>
+  </div>
+</section>
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav();
+  NM.renderFooter();
+  document.addEventListener('DOMContentLoaded', () => {
+    const brands = ['Rolex'];
+    const g = document.getElementById('watchGrid');
+    if(g) g.innerHTML = WATCHES.filter(w => brands.includes(w.brand)).map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+</script>
+</body>
+</html>

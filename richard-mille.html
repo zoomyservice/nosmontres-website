@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection Richard Mille — Achat vente montre RM Paris | Nos Montres</title>
+  <meta name="description" content="Achat et vente de montres Richard Mille à Paris. Expert Richard Mille, Nos Montres 75008 Paris.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">Horlogerie de Demain</span>
+  <span class="page-hero__eyebrow en">Tomorrow's Watchmaking</span>
+  <h1 class="page-hero__title fr"><em>Richard Mille</em></h1>
+  <h1 class="page-hero__title en"><em>Richard Mille</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+
+<section class="section section--cream">
+  <div class="container--narrow">
+    <div class="section-header">
+      <h2 class="section-title fr">L'Avant-garde <em>Richard Mille</em></h2>
+      <h2 class="section-title en"><em>Richard Mille</em> — The Avant-garde</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="prose" style="padding:0">
+      <p class="fr">Richard Mille a lancé sa première série de 17 montres en 2001, alliant ergonomie et esthétique dans des créations radicalement nouvelles. Visionnaire incontournable de l'horlogerie, la maison n'utilise que des matériaux de haute qualité et des technologies de pointe pour chaque garde-temps, garantissant des produits répondant aux critères de qualité les plus stricts.</p>
+      <p class="en">Richard Mille launched its first series of 17 watches in 2001, combining ergonomics and aesthetics in radically new creations. An essential visionary in watchmaking, the house uses only high-quality materials and cutting-edge technology for each timepiece, guaranteeing products meeting the strictest quality criteria.</p>
+      <p class="fr">Chaque montre Richard Mille est une prouesse technique&nbsp;: matériaux aérospatiaux, mouvements ultra-plats, résistances exceptionnelles. Porter une RM, c'est porter une formule 1 au poignet.</p>
+      <p class="en">Every Richard Mille watch is a technical achievement: aerospace materials, ultra-thin movements, exceptional resistance. Wearing an RM is wearing a Formula 1 on your wrist.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow fr">Disponibles à la vente</span>
+      <span class="section-eyebrow en">Available now</span>
+      <h2 class="section-title fr">Notre Sélection <em>Richard Mille</em></h2>
+      <h2 class="section-title en">Our <em>Richard Mille</em> Selection</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="watch-grid" id="watchGrid"></div>
+  </div>
+</section>
+
+<section class="section section--dark">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title fr">Votre <em>Richard Mille</em></h2>
+    <h2 class="section-title en">Your <em>Richard Mille</em></h2>
+    <div class="section-line"></div>
+    <p class="section-subtitle fr">Nous vous accompagnons dans l'acquisition d'une pièce Richard Mille, neuve ou d'occasion.</p>
+    <p class="section-subtitle en">We guide you through the acquisition of a Richard Mille piece, new or pre-owned.</p>
+    <div style="margin-top:40px">
+      <a class="btn-primary" href="prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous</span>
+        <span class="en">Book an appointment</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav();
+  NM.renderFooter();
+  const orig = NM.setLang.bind(NM);
+  NM.setLang = function(lang, save) {
+    orig(lang, save);
+    const g = document.getElementById('watchGrid');
+    if (g) g.innerHTML = WATCHES.filter(w => w.brand === 'Richard Mille').map(w => NM.watchCard(w, lang)).join('');
+  };
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('watchGrid').innerHTML = WATCHES.filter(w => w.brand === 'Richard Mille').map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+</script>
+</body>
+</html>

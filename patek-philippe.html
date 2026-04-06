@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection Patek Philippe — Achat vente montre Patek Paris | Nos Montres</title>
+  <meta name="description" content="Achat et vente de montres Patek Philippe à Paris. Nautilus, Aquanaut, Calatrava. Expert Patek Philippe, Nos Montres 75008 Paris.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">Genève · depuis 1839</span>
+  <span class="page-hero__eyebrow en">Geneva · since 1839</span>
+  <h1 class="page-hero__title fr"><em>Patek Philippe</em></h1>
+  <h1 class="page-hero__title en"><em>Patek Philippe</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+
+<section class="section section--cream">
+  <div class="container--narrow">
+    <div class="section-header">
+      <h2 class="section-title fr">L'Art de <em>Patek Philippe</em></h2>
+      <h2 class="section-title en">The Art of <em>Patek Philippe</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="prose" style="padding:0">
+      <p class="fr">Fondée en 1839 à Genève, Patek Philippe est la plus ancienne manufacture horlogère familiale indépendante au monde. Synonyme de fiabilité et de luxe, la maison a créé la première montre-bracelet suisse en 1868 et développé en 2009 son propre poinçon, allant au-delà du Poinçon de Genève pour répondre à de nouvelles exigences.</p>
+      <p class="en">Founded in 1839 in Geneva, Patek Philippe is the world's oldest independent family-owned watch manufacturer. Synonymous with reliability and luxury, the house created the first Swiss wristwatch in 1868 and in 2009 developed its own hallmark, going beyond the Geneva Seal to meet new standards.</p>
+      <p class="fr">Posséder une Patek Philippe, c'est rejoindre une tradition de connaisseurs. La célèbre signature dit tout&nbsp;: «&nbsp;On ne possède jamais une Patek Philippe. On en est simplement le gardien, pour les générations futures.&nbsp;»</p>
+      <p class="en">Owning a Patek Philippe is to join a tradition of connoisseurs. The famous signature says it all: "You never actually own a Patek Philippe. You merely look after it for the next generation."</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow fr">Disponibles à la vente</span>
+      <span class="section-eyebrow en">Available now</span>
+      <h2 class="section-title fr">Notre Sélection <em>Patek Philippe</em></h2>
+      <h2 class="section-title en">Our <em>Patek Philippe</em> Selection</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="watch-grid" id="watchGrid"></div>
+  </div>
+</section>
+
+<section class="section section--dark">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title fr">Votre <em>Nautilus</em> vous attend</h2>
+    <h2 class="section-title en">Your <em>Nautilus</em> awaits</h2>
+    <div class="section-line"></div>
+    <p class="section-subtitle fr">Parlez-nous de votre projet. Nous vous guidons vers la pièce qui vous correspond.</p>
+    <p class="section-subtitle en">Tell us about your project. We guide you to the piece that suits you.</p>
+    <div style="margin-top:40px">
+      <a class="btn-primary" href="prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous</span>
+        <span class="en">Book an appointment</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav();
+  NM.renderFooter();
+  const orig = NM.setLang.bind(NM);
+  NM.setLang = function(lang, save) {
+    orig(lang, save);
+    const g = document.getElementById('watchGrid');
+    if (g) g.innerHTML = WATCHES.filter(w => w.brand === 'Patek Philippe').map(w => NM.watchCard(w, lang)).join('');
+  };
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('watchGrid').innerHTML = WATCHES.filter(w => w.brand === 'Patek Philippe').map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+</script>
+</body>
+</html>

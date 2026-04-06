@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection Audemars Piguet — Achat montre AP Paris | Nos Montres</title>
+  <meta name="description" content="Achat et vente de montres Audemars Piguet à Paris. Royal Oak, Royal Oak Offshore. Expert AP, Nos Montres 75008 Paris.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">Le Brassus · depuis 1875</span>
+  <span class="page-hero__eyebrow en">Le Brassus · since 1875</span>
+  <h1 class="page-hero__title fr"><em>Audemars Piguet</em></h1>
+  <h1 class="page-hero__title en"><em>Audemars Piguet</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+
+<section class="section section--cream">
+  <div class="container--narrow">
+    <div class="section-header">
+      <h2 class="section-title fr"><em>Audemars Piguet</em> — L'Excellence Suisse</h2>
+      <h2 class="section-title en"><em>Audemars Piguet</em> — Swiss Excellence</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="prose" style="padding:0">
+      <p class="fr">L'expertise de l'horlogerie suisse, combinée au luxe et aux courbes de l'élégance. Depuis plus de 140 ans, Audemars Piguet poursuit la même inventivité pour créer des chefs-d'œuvre horlogers alliant avant-garde technologique et créations modernes et audacieuses.</p>
+      <p class="en">The expertise of Swiss watchmaking, combined with luxury and the curves of elegance. For over 140 years, Audemars Piguet has pursued the same inventiveness to create horological masterpieces combining technological avant-garde with modern, bold creations.</p>
+      <p class="fr">Les montres Audemars Piguet se distinguent par leurs finitions de cadran soigneusement maîtrisées, leurs mouvements de dernière génération et leur soin apporté aux moindres détails. Des pièces de collection autant que de fonctionnelles.</p>
+      <p class="en">Audemars Piguet watches are distinguished by their carefully mastered dial finishes, latest-generation movements and meticulous attention to the finest details. Collector's pieces as much as functional timepieces.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow fr">Disponibles à la vente</span>
+      <span class="section-eyebrow en">Available now</span>
+      <h2 class="section-title fr">Notre Sélection <em>Audemars Piguet</em></h2>
+      <h2 class="section-title en">Our <em>Audemars Piguet</em> Selection</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="watch-grid" id="watchGrid"></div>
+  </div>
+</section>
+
+<section class="section section--dark">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title fr">Trouvons votre <em>Royal Oak</em></h2>
+    <h2 class="section-title en">Let's find your <em>Royal Oak</em></h2>
+    <div class="section-line"></div>
+    <p class="section-subtitle fr">Contactez-nous pour une expertise personnalisée sur votre projet Audemars Piguet.</p>
+    <p class="section-subtitle en">Contact us for a personalised consultation on your Audemars Piguet project.</p>
+    <div style="margin-top:40px">
+      <a class="btn-primary" href="prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous</span>
+        <span class="en">Book an appointment</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav();
+  NM.renderFooter();
+  const orig = NM.setLang.bind(NM);
+  NM.setLang = function(lang, save) {
+    orig(lang, save);
+    const g = document.getElementById('watchGrid');
+    if (g) g.innerHTML = WATCHES.filter(w => w.brand === 'Audemars Piguet').map(w => NM.watchCard(w, lang)).join('');
+  };
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('watchGrid').innerHTML = WATCHES.filter(w => w.brand === 'Audemars Piguet').map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+</script>
+</body>
+</html>

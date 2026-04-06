@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Montre Rolex Submariner | Nos Montres Paris</title>
+  <meta name="description" content="Montre Rolex Submariner — Guide d'achat, prix, histoire. Achat vente Submariner à Paris. Nos Montres 75008.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+<section class="page-hero">
+  <span class="page-hero__eyebrow fr">Guide & Collection</span>
+  <span class="page-hero__eyebrow en">Guide & Collection</span>
+  <h1 class="page-hero__title fr"><em>Montre Rolex Submariner</em></h1>
+  <h1 class="page-hero__title en"><em>Rolex Submariner Watch</em></h1>
+  <div class="page-hero__line"></div>
+</section>
+<section class="prose-section">
+  <div class="prose">
+    <h2 class="fr">La Rolex Submariner</h2>
+    <h2 class="en">The Rolex Submariner</h2>
+    <p class="fr">La Rolex Submariner est la montre de luxe nécessaire pour tous les hommes d'action. Pour une expérience sous-marine ou en soirée, cet accessoire sera votre allié. La Submariner a acquis sa renommée dans les années 1950 et a notamment été portée dans les films James Bond, en faisant un symbole de prestige et d'élégance.</p>
+    <p class="en">The Rolex Submariner is the essential luxury watch for men of action. Whether diving or at an evening function, this accessory will be your trusted companion. The Submariner gained fame in the 1950s and was notably worn in James Bond films, making it a symbol of prestige and elegance.</p>
+    <h2 class="fr">L'histoire de la Rolex Submariner</h2>
+    <h2 class="en">The history of the Rolex Submariner</h2>
+    <p class="fr">Introduite en 1953 au Salon de l'Horlogerie de Bâle, la Submariner fut la première montre certifiée étanche jusqu'à 100 mètres. Depuis, elle n'a cessé d'évoluer tout en conservant son ADN : lunette tournante, cadran sombre, bracelet Oyster.</p>
+    <p class="en">Introduced in 1953 at the Basel Watch Fair, the Submariner was the first watch certified waterproof to 100 metres. Since then it has continuously evolved while retaining its DNA: rotating bezel, dark dial, Oyster bracelet.</p>
+    <h2 class="fr">Combien coûte la Rolex Submariner ?</h2>
+    <h2 class="en">How much does a Rolex Submariner cost?</h2>
+    <p class="fr">Les prix varient considérablement selon le modèle et l'état. Un modèle de base démarre aux alentours de 9 000€, la variante Kermit avec lunette verte se négocie autour de 18 000€, tandis que les versions vintage Comex peuvent atteindre 45 000€ et plus.</p>
+    <p class="en">Prices vary considerably depending on the model and condition. A basic model starts at around €9,000, the Kermit variant with green bezel trades at around €18,000, while vintage Comex versions can reach €45,000 and above.</p>
+    <h2 class="fr">Un excellent investissement</h2>
+    <h2 class="en">An excellent investment</h2>
+    <p class="fr">Un modèle Submariner 116610 LN neuf vaut actuellement plus de 10 000 euros avec une augmentation annuelle régulière. La Submariner reste l'une des meilleures montres en termes de valeur patrimoniale.</p>
+    <p class="en">A new Submariner 116610 LN is currently worth over €10,000 with a regular annual increase. The Submariner remains one of the best watches in terms of heritage value.</p>
+    <h2 class="fr">Spécifications techniques</h2>
+    <h2 class="en">Technical specifications</h2>
+    <p class="fr">Étanchéité jusqu'à 300 mètres, lunette céramique Cerachrom résistante aux rayures, mouvement manufacture Calibre 3235 avec réserve de marche de 70 heures. Un outil de haute précision dans un écrin d'élégance intemporelle.</p>
+    <p class="en">Water resistance to 300 metres, scratch-resistant Cerachrom ceramic bezel, in-house Calibre 3235 movement with 70-hour power reserve. A high-precision tool in a case of timeless elegance.</p>
+  </div>
+</section>
+<section class='section section--cream'><div class='container'><div class='section-header'><span class='section-eyebrow fr'>Disponibles à la vente</span><span class='section-eyebrow en'>Available now</span><h2 class='section-title fr'>Notre Sélection</h2><h2 class='section-title en'>Our Selection</h2><div class='section-line'></div></div><div class='watch-grid' id='watchGrid'></div></div></section>
+<section class="section section--dark">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title fr">Découvrez notre <em>boutique</em></h2>
+    <h2 class="section-title en">Discover our <em>boutique</em></h2>
+    <div class="section-line"></div>
+    <div style="margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a class="btn-primary" href="index.html#boutique">
+        <span class="fr">Toutes nos montres</span><span class="en">All our watches</span>
+      </a>
+      <a class="btn-ghost" href="prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous</span><span class="en">Book appointment</span>
+      </a>
+    </div>
+  </div>
+</section>
+<footer id="siteFooter"></footer>
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.rootPath = '';
+  NM.renderNav();
+  NM.renderFooter();
+  document.addEventListener('DOMContentLoaded', () => {
+    const brands = ['Rolex'];
+    const g = document.getElementById('watchGrid');
+    if(g) g.innerHTML = WATCHES.filter(w => brands.includes(w.brand)).map(w => NM.watchCard(w, NM.lang)).join('');
+  });
+</script>
+</body>
+</html>
