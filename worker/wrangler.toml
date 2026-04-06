@@ -1,0 +1,7 @@
+name = "nosmontres-prices"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Deploy with: npx wrangler deploy
+# After deploy your URL will be: https://nosmontres-prices.YOUR_SUBDOMAIN.workers.dev
+# Paste that URL into vendre.html as WORKER_URL

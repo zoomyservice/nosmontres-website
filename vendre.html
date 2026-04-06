@@ -551,179 +551,21 @@
     });
   }
 
-  /* ── Price database ── */
-  // Ranges represent current secondary market (low = fair buy / high = retail ask)
-  // Organised as: PRICES[brand][ref_or_model] = [min, max]
-  const PRICES = {
-    'Rolex': {
-      // Submariner
-      '124060': [9000, 13500], 'submariner no date': [9000, 13500], 'nodate': [9000, 13500],
-      '126610ln': [11000, 15500], '126610': [11000, 16000],
-      '126610lv': [15000, 22000], 'starbucks': [15000, 22000], 'kermit': [12000, 19000],
-      '116610lv': [12000, 19000], 'hulk': [18000, 28000], '116610gv': [18000, 28000],
-      '116610ln': [10000, 14500],
-      'submariner': [9000, 22000],
-      // GMT
-      '126710blnr': [14000, 22000], 'batman': [14000, 22000],
-      '126710grnr': [22000, 35000], 'sprite': [22000, 35000],
-      '126711chnr': [18000, 30000], 'rootbeer': [18000, 30000], 'bicolore gmt': [18000, 30000],
-      '126710': [13000, 22000],
-      '116710blnr': [12000, 18000], '116710ln': [10000, 15000],
-      'gmt master ii': [12000, 35000], 'gmt': [12000, 35000],
-      // Daytona
-      '126500ln': [25000, 40000], '126520': [26000, 42000],
-      '116500ln': [28000, 50000], '116520': [22000, 38000],
-      '116503': [20000, 35000], '116508': [35000, 65000],
-      'daytona': [22000, 200000],
-      // DateJust
-      '126334': [8500, 14000], '126300': [8000, 13000], '126301': [8000, 13000],
-      '126333': [9000, 14500],
-      '126200': [7000, 11000], '126233': [8000, 12500],
-      '16234': [4500, 7500], '16233': [4500, 7500],
-      'datejust 41': [8000, 14000], 'datejust 36': [7000, 12500], 'datejust': [7000, 14000],
-      // Day-Date
-      '228238': [28000, 55000], '228239': [28000, 55000], '228206': [30000, 60000],
-      '18238': [18000, 35000], '18039': [18000, 35000],
-      'day-date': [18000, 80000], 'day date': [18000, 80000], 'president': [18000, 80000],
-      // Explorer
-      '124270': [7500, 11500], '214270': [6500, 10000], '14270': [3500, 6000],
-      '226570': [9000, 13500], '16570': [4500, 8000],
-      'explorer ii': [9000, 13500], 'explorer': [7500, 11500],
-      // Oyster Perpetual
-      '124300': [8000, 12000], '124300 red': [8500, 13000], '124300 coral': [9000, 14000],
-      '124300 turquoise': [10000, 16000], '124300 yellow': [9000, 14000],
-      '124300 blue': [8000, 12000], '114300': [5000, 9000],
-      'oyster perpetual 41': [8000, 14000], 'oyster perpetual': [7000, 14000],
-      // Sea-Dweller
-      '126600': [12000, 18000], '116600': [10000, 16000],
-      '126660': [28000, 45000], 'deepsea': [28000, 45000],
-      'sea-dweller': [12000, 18000], 'sea dweller': [12000, 18000],
-      // Yacht-Master
-      '126622': [14000, 20000], '126655': [18000, 28000],
-      '116622': [12000, 18000], '116655': [16000, 26000],
-      '116681': [16000, 25000], '116688': [18000, 28000],
-      'yacht-master': [12000, 28000], 'yacht master': [12000, 28000],
-      // Other
-      '116400gv': [12000, 18000], 'milgauss': [12000, 18000],
-      '126900': [7000, 10500], 'air-king': [7000, 10500], 'air king': [7000, 10500],
-      '126710': [13000, 22000],
-      '_default': [7000, 45000]
-    },
-    'Audemars Piguet': {
-      // Royal Oak
-      '15500st': [35000, 60000], '15500': [35000, 60000],
-      '15202st': [75000, 130000], '15202': [75000, 130000], 'jumbo': [75000, 130000], 'extra-thin': [75000, 130000],
-      '15400st': [28000, 48000], '15400': [28000, 48000],
-      '26331st': [35000, 60000], '26315st': [35000, 60000],
-      '15710st': [22000, 40000], '15703st': [22000, 40000],
-      'royal oak chronograph': [35000, 65000],
-      'royal oak': [28000, 130000],
-      // Royal Oak Offshore
-      '26405ce': [50000, 85000], '26470st': [28000, 45000],
-      '26480ti': [35000, 60000], '26378st': [28000, 48000],
-      '26237st': [25000, 42000],
-      'royal oak offshore chronograph': [35000, 85000],
-      'royal oak offshore': [25000, 85000],
-      // Other
-      'code 11.59': [22000, 50000], 'code 11': [22000, 50000],
-      'millenary': [18000, 45000], 'jules audemars': [25000, 80000],
-      '_default': [22000, 130000]
-    },
-    'Patek Philippe': {
-      // Nautilus
-      '5711a': [80000, 150000], '5711/1a': [80000, 150000], '5711': [65000, 150000],
-      '5726a': [55000, 95000], '5726/1a': [55000, 95000],
-      '5980r': [80000, 140000], '5990r': [90000, 160000],
-      '5712r': [65000, 110000], '5712g': [75000, 130000],
-      '5719g': [120000, 200000],
-      'nautilus': [55000, 200000],
-      // Aquanaut
-      '5167a': [35000, 65000], '5167/1a': [35000, 65000],
-      '5168g': [65000, 110000], '5164a': [45000, 75000],
-      '5065a': [20000, 40000],
-      'aquanaut': [30000, 110000],
-      // Calatrava
-      '5296r': [22000, 40000], '5227g': [28000, 50000],
-      '5196g': [25000, 45000], '6119r': [28000, 50000],
-      '5153g': [35000, 65000],
-      'calatrava': [20000, 65000],
-      // Complications
-      '5905p': [55000, 95000], '5726a': [55000, 95000],
-      '5531r': [300000, 600000],
-      'grand complications': [200000, 1000000],
-      'complications': [40000, 200000],
-      // Chronograph
-      '5170j': [65000, 120000], '5172g': [55000, 100000],
-      'chronograph': [55000, 150000],
-      '_default': [20000, 200000]
-    },
-    'Richard Mille': {
-      'rm 011': [180000, 350000], 'rm011': [180000, 350000], 'rm-011': [180000, 350000],
-      'rm 027': [500000, 1200000], 'rm027': [500000, 1200000],
-      'rm 035': [150000, 280000], 'rm035': [150000, 280000],
-      'rm 055': [120000, 200000], 'rm055': [120000, 200000],
-      'rm 067': [100000, 180000], 'rm067': [100000, 180000],
-      'rm 072': [200000, 400000], 'rm072': [200000, 400000],
-      'rm 010': [80000, 150000],  'rm010': [80000, 150000],
-      'rm 030': [90000, 160000],  'rm030': [90000, 160000],
-      '_default': [80000, 400000]
-    }
-  };
+  /* ── Live price fetch via Cloudflare Worker ── */
+  // UPDATE this URL after deploying worker/index.js to Cloudflare Workers
+  const WORKER_URL = 'https://nosmontres-prices.YOUR_SUBDOMAIN.workers.dev';
 
-  /* ── Price lookup with fuzzy matching ── */
-  function lookupPrice(brand, model, ref) {
-    const db = PRICES[brand];
-    if (!db) return null;
-
-    const normalize = s => s.toLowerCase().replace(/[\s\-_\/\.]/g, '');
-    const refN  = normalize(ref || '');
-    const modelN = normalize(model || '');
-
-    // 1. Exact reference match
-    if (refN) {
-      if (db[ref.toLowerCase()]) return db[ref.toLowerCase()];
-      // Try normalised ref
-      for (const key of Object.keys(db)) {
-        if (normalize(key) === refN) return db[key];
-      }
-      // Try ref as substring of a key or vice versa
-      for (const key of Object.keys(db)) {
-        const keyN = normalize(key);
-        if (keyN !== '_default' && (refN.includes(keyN) || keyN.includes(refN))) return db[key];
-      }
-    }
-
-    // 2. Model keyword match
-    if (modelN) {
-      for (const key of Object.keys(db)) {
-        const keyN = normalize(key);
-        if (keyN !== '_default' && (modelN.includes(keyN) || keyN.includes(modelN))) return db[key];
-      }
-    }
-
-    // 3. Brand default
-    return db['_default'] || null;
-  }
-
-  /* ── Helpers ── */
-  function fmtEur(num) {
+  function fmtCurrency(num, currency) {
     return new Intl.NumberFormat('fr-FR', {
-      style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0
+      style: 'currency', currency: currency || 'EUR',
+      minimumFractionDigits: 0, maximumFractionDigits: 0
     }).format(num);
   }
 
-  /* ── Condition & papers adjustment ── */
-  function adjustForCondition(range, condition, papers) {
-    let [lo, hi] = range;
-    // Used condition: subtract 10-20% from low end
-    if (condition === 'used') { lo = Math.round(lo * 0.82); hi = Math.round(hi * 0.93); }
-    // No papers: subtract ~10% from both
-    if (papers === 'no') { lo = Math.round(lo * 0.88); hi = Math.round(hi * 0.90); }
-    return [lo, hi];
-  }
+  function fmtEur(num) { return fmtCurrency(num, 'EUR'); }
 
-  /* ── Main estimate ── */
-  function runEstimate() {
+  /* ── Main estimate (async — fetches live market data) ── */
+  async function runEstimate() {
     const brand     = document.getElementById('selBrand').value;
     const model     = document.getElementById('selModel').value;
     const condition = document.getElementById('selCondition').value;
@@ -736,50 +578,67 @@
 
     const results = document.getElementById('estimateResults');
     results.className = '';
-    results.innerHTML = '';
-
-    const range = lookupPrice(brand, model, ref);
-    const label = [brand, model, ref].filter(Boolean).join(' · ');
-
-    if (!range) {
-      results.innerHTML = buildNoResults(label);
-    } else {
-      const [lo, hi] = adjustForCondition(range, condition, papers);
-      results.innerHTML = buildResults(label, lo, hi, papers, condition);
-    }
-
+    results.innerHTML = buildLoading(lang);
     results.classList.add('visible');
     results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    const parts = [brand, model, ref].filter(Boolean);
+    const query = parts.join(' ');
+    const label = parts.join(' · ');
+
+    try {
+      const resp = await fetch(WORKER_URL + '?q=' + encodeURIComponent(query));
+      const data = await resp.json();
+      if (!resp.ok || data.error) {
+        results.innerHTML = buildError(label, lang);
+      } else {
+        results.innerHTML = buildResults(label, data.lowPrice, data.highPrice, data.currency, data.offerCount, papers, condition);
+      }
+    } catch (err) {
+      results.innerHTML = buildError(label, lang);
+    }
   }
 
-  function buildResults(label, minP, maxP, papers, condition) {
-    const lang = NM.lang || 'fr';
+  function buildLoading(lang) {
+    const msg = lang === 'fr' ? 'Recherche des prix en cours&hellip;' : 'Fetching live prices&hellip;';
+    return `
+      <div class="results-header">
+        <span class="results-header__label">${msg}</span>
+      </div>
+      <div style="text-align:center;padding:2rem">
+        <span class="price-loader"></span>
+      </div>`;
+  }
+
+  function buildResults(label, minP, maxP, currency, count, papers, condition) {
     const papNote = papers === 'yes'
       ? '<span class="fr"> · avec papiers</span><span class="en"> · with papers</span>'
       : '<span class="fr"> · sans papiers</span><span class="en"> · without papers</span>';
     const condNote = condition === 'new'
       ? '<span class="fr"> · neuve</span><span class="en"> · new</span>'
       : '<span class="fr"> · occasion</span><span class="en"> · used</span>';
+    const cntFr = count > 0 ? `(${count} annonces)` : '';
+    const cntEn = count > 0 ? `(${count} listings)` : '';
     return `
       <div class="results-header">
-        <span class="results-header__label fr">Estimation du marché</span>
-        <span class="results-header__label en">Market estimate</span>
+        <span class="results-header__label fr">Prix du marché en temps réel</span>
+        <span class="results-header__label en">Live market prices</span>
         <span class="results-header__watch">${label}${condNote}${papNote}</span>
       </div>
       <div class="price-range">
         <div class="price-box price-box--low">
-          <span class="price-box__label fr">Prix le plus bas</span>
-          <span class="price-box__label en">Lowest price</span>
-          <span class="price-box__value">${fmtEur(minP)}</span>
+          <span class="price-box__label fr">Annonce la moins chère</span>
+          <span class="price-box__label en">Cheapest listing</span>
+          <span class="price-box__value">${fmtCurrency(minP, currency)}</span>
         </div>
         <div class="price-box price-box--high">
-          <span class="price-box__label fr">Prix le plus élevé</span>
-          <span class="price-box__label en">Highest price</span>
-          <span class="price-box__value">${fmtEur(maxP)}</span>
+          <span class="price-box__label fr">Annonce la plus chère</span>
+          <span class="price-box__label en">Most expensive listing</span>
+          <span class="price-box__value">${fmtCurrency(maxP, currency)}</span>
         </div>
       </div>
-      <p class="results-note fr">Fourchette basée sur les prix du marché secondaire actuel. Le prix de rachat réel dépend de l'état exact et de l'historique de la pièce.</p>
-      <p class="results-note en">Range based on current secondary market prices. Actual buyback price depends on the exact condition and history of the piece.</p>
+      <p class="results-note fr">Prix relevés en temps réel sur le marché secondaire. ${cntFr}</p>
+      <p class="results-note en">Prices fetched live from the secondary market. ${cntEn}</p>
       <div class="results-cta-row">
         <a href="prendre-rendez-vous.html" class="btn-primary-sm">
           <span class="fr">Obtenir une offre de rachat</span>
@@ -788,12 +647,26 @@
       </div>`;
   }
 
-  function buildNoResults(label) {
+  function buildError(label, lang) {
     return `
       <div class="results-header">
-        <span class="results-header__label fr">Référence inconnue</span>
-        <span class="results-header__label en">Unknown reference</span>
+        <span class="results-header__label fr">Estimation non disponible</span>
+        <span class="results-header__label en">Estimate unavailable</span>
         <span class="results-header__watch">${label}</span>
+      </div>
+      <p class="results-note fr">Les prix en temps réel sont temporairement indisponibles. Contactez-nous pour une estimation personnalisée.</p>
+      <p class="results-note en">Live prices are temporarily unavailable. Contact us for a personalised estimate.</p>
+      <div class="results-cta-row">
+        <a href="prendre-rendez-vous.html" class="btn-primary-sm">
+          <span class="fr">Estimation personnalisée</span>
+          <span class="en">Personal estimate</span>
+        </a>
+      </div>`;
+  }
+
+  function buildNoResults(label) {
+    return buildError(label, NM.lang || 'fr');
+  }</span>
       </div>
       <p class="results-note fr">Cette référence n'est pas dans notre base. Contactez-nous pour une estimation personnalisée.</p>
       <p class="results-note en">This reference is not in our database. Contact us for a personalised estimate.</p>
