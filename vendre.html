@@ -393,7 +393,7 @@
         <label class="fr">Modèle</label>
         <label class="en">Model</label>
         <select id="selModel">
-          <option value="" disabled selected>— Choisir la marque d'abord —</option>
+          <option value="" disabled selected class="fr-opt" data-fr="— Choisir la marque d'abord —" data-en="— Choose brand first —">— Choose brand first —</option>
         </select>
       </div>
 
@@ -403,8 +403,8 @@
         <label class="en">Watch condition</label>
         <select id="selCondition">
           <option value="" disabled selected>— Sélectionner —</option>
-          <option value="new" data-fr="Neuve" data-en="New">Neuve / New</option>
-          <option value="used" data-fr="Occasion" data-en="Used">Occasion / Used</option>
+          <option value="new" data-fr="Neuve" data-en="New">New</option>
+          <option value="used" data-fr="Occasion" data-en="Used">Used</option>
         </select>
       </div>
 
@@ -414,8 +414,8 @@
         <label class="en">Original papers</label>
         <select id="selPapers">
           <option value="" disabled selected>— Sélectionner —</option>
-          <option value="yes">Oui / Yes</option>
-          <option value="no">Non / No</option>
+          <option value="yes" data-fr="Oui" data-en="Yes">Yes</option>
+          <option value="no" data-fr="Non" data-en="No">No</option>
         </select>
       </div>
 
@@ -444,8 +444,8 @@
 <section class="sell-why">
   <div class="container">
     <div style="text-align:center">
-      <span class="section-eyebrow" style="color:var(--gold-lt) fr">Pourquoi nous choisir</span>
-      <span class="section-eyebrow" style="color:var(--gold-lt) en">Why choose us</span>
+      <span class="section-eyebrow fr" style="color:var(--gold-lt)">Pourquoi nous choisir</span>
+      <span class="section-eyebrow en" style="color:var(--gold-lt)">Why choose us</span>
       <h2 class="section-title" style="color:var(--white)">
         <span class="fr">Le meilleur prix pour votre montre</span>
         <span class="en">The best price for your watch</span>
@@ -498,7 +498,42 @@
 <script>
   NM.renderNav('sell');
   NM.renderFooter();
+
+  // Swap <option> text labels when language changes
+  function syncSelectLang(lang) {
+    document.querySelectorAll('select option[data-fr]').forEach(opt => {
+      opt.textContent = lang === 'fr' ? opt.dataset.fr : opt.dataset.en;
+    });
+    // Also fix the — placeholder text for selBrand
+    const brandPlaceholder = document.querySelector('#selBrand option[disabled]');
+    if (brandPlaceholder) {
+      brandPlaceholder.textContent = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+    }
+    const condPlaceholder = document.querySelector('#selCondition option[disabled]');
+    if (condPlaceholder) {
+      condPlaceholder.textContent = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+    }
+    const papPlaceholder = document.querySelector('#selPapers option[disabled]');
+    if (papPlaceholder) {
+      papPlaceholder.textContent = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+    }
+    // Model dropdown — re-populate with translated placeholder
+    const modelPlaceholder = document.querySelector('#selModel option[disabled]');
+    if (modelPlaceholder) {
+      modelPlaceholder.textContent = lang === 'fr' ? '— Choisir la marque d\'abord —' : '— Choose brand first —';
+    }
+  }
+
+  // Patch NM.setLang to also sync selects
+  const _origSetLang = NM.setLang.bind(NM);
+  NM.setLang = function(lang, save) {
+    _origSetLang(lang, save);
+    syncSelectLang(lang);
+  };
+
   NM.init();
+  // Apply correct language to selects on load
+  syncSelectLang(localStorage.getItem('nm_lang') || 'fr');
 
   /* ── Model options per brand ── */
   const MODELS = {
@@ -510,8 +545,10 @@
 
   function updateModelOptions() {
     const brand = document.getElementById('selBrand').value;
+    const lang = NM.lang || localStorage.getItem('nm_lang') || 'fr';
     const sel = document.getElementById('selModel');
-    sel.innerHTML = '<option value="" disabled selected>— Sélectionner —</option>';
+    const placeholder = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+    sel.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
     (MODELS[brand] || []).forEach(m => {
       const opt = document.createElement('option');
       opt.value = m;
