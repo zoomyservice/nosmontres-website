@@ -139,7 +139,7 @@ h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr { display: block; }
 .nav-cta:hover { background: var(--charcoal); color: var(--white); }
 
 /* Burger */
-.burger { display: none; flex-direction: column; gap: 5px; padding: 8px; flex-shrink: 0; position: relative; z-index: 1001; }
+.burger { display: none; flex-direction: column; gap: 5px; padding: 8px; flex-shrink: 0; position: relative; z-index: 1001; background: transparent; }
 .burger span {
   display: block; width: 22px; height: 1.5px; background: var(--charcoal);
   transition: transform var(--transition), opacity var(--transition);
@@ -633,14 +633,21 @@ h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr { display: block; }
   .nav-logo img { max-width: 130px; height: auto; max-height: 36px; }
   .nav-right { gap: 12px; }
   #navLinks {
-    position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; z-index: 999;
-    background: var(--white); flex-direction: column; justify-content: flex-start;
+    /* position: absolute keeps it inside mainNav's stacking context but
+       avoids the Safari/iOS bug where backdrop-filter traps position:fixed
+       children inside the parent's 72px height box */
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    max-height: calc(100vh - var(--nav-h));
+    z-index: 2000;
+    background: var(--white);
+    flex-direction: column; justify-content: flex-start;
     padding: 24px 20px 40px; gap: 0;
-    transform: translateX(100%); opacity: 0; pointer-events: none;
-    transition: transform var(--transition), opacity var(--transition);
     overflow-y: auto; overflow-x: hidden;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
   }
-  #navLinks.open { transform: translateX(0); opacity: 1; pointer-events: auto; }
+  #navLinks.open { display: flex; }
   .nav-link {
     font-size: 0.85rem; letter-spacing: 0.1em;
     padding: 16px 8px; border-bottom: 1px solid var(--border);
