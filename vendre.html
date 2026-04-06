@@ -1,490 +1,971 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vendre ma montre — Estimation gratuite Rolex, AP, Patek | Nos Montres</title>
-  <meta name="description" content="Estimez et vendez votre montre de luxe à Paris. Estimation gratuite en ligne pour Rolex, Audemars Piguet, Patek Philippe, Richard Mille. Boutique Nos Montres 75008.">
+  <meta name="description" content="Vendez votre montre de luxe à Paris. Estimation gratuite en ligne pour Rolex, Audemars Piguet, Patek Philippe, Richard Mille, Cartier. Paiement immédiat. Boutique Paris 8ème.">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* ── Sell page specific styles ── */
-    .sell-hero {
-      position: relative;
-      background: var(--charcoal);
-      min-height: 48vh;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-    }
-    .sell-hero__bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://www.nosmontres.com/uploads/IMG-8144-PeMi.jpeg');
-      background-size: cover;
-      background-position: center 30%;
-      opacity: 0.35;
-    }
-    .sell-hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.25) 100%);
-    }
-    .sell-hero__inner {
-      position: relative;
-      z-index: 1;
-      padding: 0 64px 56px;
-      width: 100%;
-    }
+/* ─── Wizard progress bar ─────────────────────────────────────────────────── */
+.wiz-progress {
+  background: var(--charcoal);
+  padding: 0;
+  border-bottom: 1px solid rgba(201,169,110,0.18);
+}
+.wiz-steps {
+  display: flex;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.wiz-step {
+  flex: 1;
+  padding: 18px 8px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+  position: relative;
+}
+.wiz-step.active {
+  color: var(--gold, #c9a96e);
+  border-bottom-color: var(--gold, #c9a96e);
+}
+.wiz-step.done {
+  color: rgba(201,169,110,0.55);
+}
+.wiz-step__num {
+  display: block;
+  font-size: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  margin-bottom: 2px;
+  letter-spacing: 0;
+}
 
-    /* ── Estimate Form ── */
-    .sell-section {
-      background: var(--white);
-      padding: 80px 0;
-    }
-    .sell-card {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    .sell-card__intro {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .sell-card__intro .section-eyebrow {
-      display: block;
-      margin-bottom: 12px;
-    }
-    .sell-card__intro h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem;
-      font-weight: 300;
-      color: var(--charcoal);
-      margin: 0 0 16px;
-    }
-    .sell-card__intro p {
-      color: var(--mid);
-      font-size: 0.95rem;
-      line-height: 1.7;
-      max-width: 520px;
-      margin: 0 auto;
-    }
+/* ─── Sell hero ────────────────────────────────────────────────────────────── */
+.sell-hero {
+  position: relative;
+  min-height: 52vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--charcoal, #080808);
+}
+.sell-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://www.nosmontres.com/uploads/IMG-8144-PeMi.jpeg');
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0.3;
+}
+.sell-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.5) 60%, rgba(8,8,8,0.2) 100%);
+}
+.sell-hero__inner {
+  position: relative;
+  z-index: 1;
+  padding: 0 64px 60px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.sell-hero__eyebrow {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold, #c9a96e);
+  margin-bottom: 16px;
+}
+.sell-hero__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.05;
+  margin: 0;
+}
+.sell-hero__title em { font-style: italic; color: var(--gold, #c9a96e); }
+.sell-hero__sub {
+  margin: 18px 0 0;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.55);
+  max-width: 480px;
+  line-height: 1.7;
+}
 
-    .estimate-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .form-group--full {
-      grid-column: 1 / -1;
-    }
-    .form-group label {
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--mid);
-      font-family: 'Montserrat', sans-serif;
-    }
-    .form-group select,
-    .form-group input[type="text"] {
-      appearance: none;
-      -webkit-appearance: none;
-      border: 1px solid var(--border);
-      border-radius: 0;
-      padding: 14px 20px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      color: var(--charcoal);
-      background: var(--cream);
-      outline: none;
-      transition: border-color 0.2s;
-      width: 100%;
-    }
-    .form-group select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 44px;
-      cursor: pointer;
-    }
-    .form-group select:focus,
-    .form-group input[type="text"]:focus {
-      border-color: var(--gold);
-    }
-    .form-group input[type="text"]::placeholder {
-      color: #aaa;
-      font-style: italic;
-    }
+/* ─── Wizard container ─────────────────────────────────────────────────────── */
+.wiz-body {
+  background: #f7f5f0;
+  padding: 0 0 80px;
+}
+.wiz-panel {
+  display: none;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 24px 0;
+}
+.wiz-panel.active { display: block; }
+.wiz-heading {
+  text-align: center;
+  margin-bottom: 44px;
+}
+.wiz-heading .eyebrow {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold, #c9a96e);
+  margin-bottom: 10px;
+}
+.wiz-heading h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 300;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+}
+.wiz-heading p {
+  font-size: 0.88rem;
+  color: #888;
+  line-height: 1.65;
+  max-width: 500px;
+  margin: 0 auto;
+}
 
-    .btn-estimate {
-      grid-column: 1 / -1;
-      background: var(--gold);
-      color: var(--white);
-      border: none;
-      padding: 18px 40px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .btn-estimate:hover {
-      background: var(--gold-dk, #b8963e);
-    }
-    .btn-estimate:active {
-      transform: scale(0.98);
-    }
-    .btn-estimate:disabled {
-      opacity: 0.6;
-      cursor: wait;
-    }
-    .btn-estimate .spinner {
-      display: none;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-    .btn-estimate.loading .spinner { display: block; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+/* ─── Brand tiles ──────────────────────────────────────────────────────────── */
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.brand-tile {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.25s, transform 0.22s, box-shadow 0.25s;
+  background: #1a1a1a;
+}
+.brand-tile:hover {
+  border-color: var(--gold, #c9a96e);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+}
+.brand-tile.selected {
+  border-color: var(--gold, #c9a96e);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.25), 0 12px 40px rgba(0,0,0,0.22);
+}
+.brand-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  transition: opacity 0.25s, transform 0.4s;
+  display: block;
+}
+.brand-tile:hover img, .brand-tile.selected img { opacity: 0.7; transform: scale(1.04); }
+.brand-tile__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.brand-tile__name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+  text-align: center;
+}
+.brand-tile__check {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 22px; height: 22px;
+  background: var(--gold, #c9a96e);
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.brand-tile__check svg { width: 12px; height: 12px; }
+.brand-tile.selected .brand-tile__check { display: flex; }
 
-    /* ── Results ── */
-    #estimateResults {
-      grid-column: 1 / -1;
-      display: none;
-      margin-top: 8px;
-    }
-    #estimateResults.visible { display: block; }
+/* ─── Model pills ──────────────────────────────────────────────────────────── */
+.model-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.model-pill {
+  padding: 11px 22px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.model-pill:hover {
+  border-color: var(--gold, #c9a96e);
+  background: #fdf9f3;
+  color: var(--gold, #c9a96e);
+}
+.model-pill.selected {
+  background: var(--gold, #c9a96e);
+  border-color: var(--gold, #c9a96e);
+  color: #fff;
+}
+.wiz-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 32px;
+  transition: color 0.2s;
+}
+.wiz-back:hover { color: #1a1a1a; }
 
-    .results-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 16px;
-      margin-bottom: 24px;
-    }
-    .results-header__label {
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--mid);
-    }
-    .results-header__watch {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      color: var(--charcoal);
-    }
+/* ─── Details + Contact form ──────────────────────────────────────────────── */
+.wiz-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.wiz-form .f-full { grid-column: 1 / -1; }
+.f-group { display: flex; flex-direction: column; gap: 6px; }
+.f-group label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #999;
+}
+.f-group select,
+.f-group input[type="text"],
+.f-group input[type="tel"],
+.f-group input[type="email"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid #d8d3cb;
+  padding: 13px 18px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: #1a1a1a;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+  border-radius: 0;
+  width: 100%;
+  font-size: 16px; /* prevent iOS zoom */
+}
+.f-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 5 5-5z' fill='%23999'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+.f-group select:focus,
+.f-group input:focus { border-color: var(--gold, #c9a96e); }
+.f-group input::placeholder { color: #bbb; }
+.f-divider {
+  grid-column: 1 / -1;
+  border: none;
+  border-top: 1px solid #e0dbd3;
+  margin: 4px 0;
+}
+.f-section-label {
+  grid-column: 1 / -1;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold, #c9a96e);
+  padding-top: 4px;
+}
 
-    .price-range {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      margin-bottom: 20px;
-    }
-    .price-box {
-      background: var(--cream);
-      padding: 28px 24px;
-      text-align: center;
-    }
-    .price-box__label {
-      display: block;
-      font-size: 0.67rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 10px;
-    }
-    .price-box__value {
-      display: block;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 300;
-      color: var(--charcoal);
-      line-height: 1;
-    }
-    .price-box--low .price-box__value { color: var(--charcoal); }
-    .price-box--high .price-box__value { color: var(--gold); }
+/* ─── Submit button ────────────────────────────────────────────────────────── */
+.btn-wiz-submit {
+  grid-column: 1 / -1;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 17px 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 6px;
+}
+.btn-wiz-submit:hover { background: var(--gold, #c9a96e); }
+.btn-wiz-next {
+  display: block;
+  width: fit-content;
+  margin: 32px auto 0;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 15px 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-wiz-next:hover { background: var(--gold, #c9a96e); }
+.btn-wiz-next:disabled { opacity: 0.4; cursor: default; }
 
-    .results-note {
-      font-size: 0.8rem;
-      color: var(--mid);
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-    .results-cta-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .results-cta-row a {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 12px 24px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .results-cta-row .btn-primary-sm {
-      background: var(--charcoal);
-      color: var(--white);
-    }
-    .results-cta-row .btn-ghost-sm {
-      border: 1px solid var(--border);
-      color: var(--charcoal);
-    }
-    .results-cta-row .btn-primary-sm:hover { background: var(--gold); }
-    .results-cta-row .btn-ghost-sm:hover { border-color: var(--gold); color: var(--gold); }
+/* ─── Confirmation panel ──────────────────────────────────────────────────── */
+.confirm-box {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+.confirm-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--gold, #c9a96e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+}
+.confirm-icon svg { width: 28px; height: 28px; }
+.confirm-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: #1a1a1a;
+  margin: 0 0 12px;
+}
+.confirm-box p {
+  font-size: 0.9rem;
+  color: #888;
+  line-height: 1.7;
+  margin: 0 0 28px;
+}
+.price-range-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: #d8d3cb;
+  margin: 28px 0;
+}
+.price-cell {
+  background: #fff;
+  padding: 24px;
+  text-align: center;
+}
+.price-cell__label {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+.price-cell__val {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+.price-cell--hi .price-cell__val { color: var(--gold, #c9a96e); }
+.confirm-note {
+  font-size: 0.78rem;
+  color: #bbb;
+  line-height: 1.6;
+}
+.confirm-cta {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-confirm-primary {
+  display: inline-block;
+  background: var(--gold, #c9a96e);
+  color: #fff;
+  padding: 13px 32px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-confirm-primary:hover { background: #b8963e; }
 
-    .error-box {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      padding: 16px 20px;
-      font-size: 0.88rem;
-      color: #b91c1c;
-      line-height: 1.6;
-    }
+/* ─── How it works ─────────────────────────────────────────────────────────── */
+.how-section {
+  background: #fff;
+  padding: 90px 0;
+}
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #e8e3db;
+  margin-top: 56px;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.how-step {
+  background: #fff;
+  padding: 40px 28px 36px;
+}
+.how-step__num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--gold, #c9a96e);
+  line-height: 1;
+  display: block;
+  margin-bottom: 16px;
+}
+.how-step__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: #1a1a1a;
+  margin: 0 0 10px;
+}
+.how-step__desc {
+  font-size: 0.84rem;
+  color: #888;
+  line-height: 1.65;
+  margin: 0;
+}
 
-    /* ── Why sell with us ── */
-    .sell-why {
-      background: var(--charcoal);
-      padding: 80px 0;
-      color: var(--white);
-    }
-    .sell-why__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,0.08);
-      margin-top: 48px;
-    }
-    .sell-why__item {
-      background: var(--charcoal);
-      padding: 40px 32px;
-    }
-    .sell-why__number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3.5rem;
-      font-weight: 300;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 12px;
-    }
-    .sell-why__title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-    .sell-why__body {
-      font-size: 0.87rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.7;
-    }
+/* ─── Why sell ─────────────────────────────────────────────────────────────── */
+.why-section {
+  background: #1a1a1a;
+  padding: 90px 0;
+  color: #fff;
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.07);
+  margin-top: 56px;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.why-item {
+  background: #1a1a1a;
+  padding: 44px 36px;
+}
+.why-item__icon {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 18px;
+  color: var(--gold, #c9a96e);
+}
+.why-item__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #fff;
+  margin: 0 0 12px;
+}
+.why-item__body {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+}
 
-    /* ── Dark CTA ── */
-    .sell-cta {
-      background: var(--gold);
-      padding: 64px 0;
-      text-align: center;
-    }
-    .sell-cta h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem;
-      font-weight: 300;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-    .sell-cta p {
-      color: rgba(255,255,255,0.8);
-      font-size: 0.92rem;
-      margin-bottom: 28px;
-    }
-    .sell-cta .btn-white {
-      display: inline-block;
-      background: var(--white);
-      color: var(--gold);
-      padding: 14px 36px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .sell-cta .btn-white:hover { background: var(--cream); }
+/* ─── Testimonials ─────────────────────────────────────────────────────────── */
+.testi-section {
+  background: #f7f5f0;
+  padding: 90px 0;
+}
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1080px;
+  margin: 56px auto 0;
+}
+.testi-card {
+  background: #fff;
+  padding: 36px 32px;
+  border-top: 3px solid var(--gold, #c9a96e);
+}
+.testi-stars {
+  color: var(--gold, #c9a96e);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  display: block;
+}
+.testi-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: #333;
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+.testi-author {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #aaa;
+}
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .sell-hero__inner { padding: 0 24px 40px; }
-      .estimate-form { grid-template-columns: 1fr; }
-      .btn-estimate { grid-column: 1; }
-      #estimateResults { grid-column: 1; }
-      .price-range { grid-template-columns: 1fr; }
-      .sell-why__grid { grid-template-columns: 1fr; }
-      .results-cta-row { flex-direction: column; }
-    }
-    @media (max-width: 480px) {
-      .sell-card__intro h2 { font-size: 1.8rem; }
-      .price-box__value { font-size: 1.8rem; }
-    }
+/* ─── Bottom CTA ───────────────────────────────────────────────────────────── */
+.sell-cta-bar {
+  background: var(--gold, #c9a96e);
+  padding: 64px 0;
+  text-align: center;
+}
+.sell-cta-bar h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 300;
+  color: #fff;
+  margin: 0 0 10px;
+}
+.sell-cta-bar p { font-size: 0.9rem; color: rgba(255,255,255,0.75); margin: 0 0 28px; }
+.btn-cta-white {
+  display: inline-block;
+  background: #fff;
+  color: var(--gold, #c9a96e);
+  padding: 14px 38px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-cta-white:hover { background: #f5f0e8; }
+
+/* ─── Mobile responsive ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sell-hero__inner { padding: 0 24px 44px; }
+  .brand-grid { grid-template-columns: 1fr 1fr; }
+  .how-steps { grid-template-columns: 1fr 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .wiz-form { grid-template-columns: 1fr; }
+  .wiz-form .f-full, .f-divider, .f-section-label { grid-column: 1; }
+  .btn-wiz-submit { grid-column: 1; }
+  .price-range-box { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .brand-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .brand-tile { aspect-ratio: 3/2; }
+  .how-steps { grid-template-columns: 1fr; }
+  .wiz-steps .wiz-step__label { display: none; }
+  .sell-hero { min-height: 44vh; }
+  .model-grid { gap: 7px; }
+  .model-pill { padding: 9px 16px; font-size: 0.92rem; }
+}
   </style>
 </head>
 <body>
-
 <nav id="mainNav"></nav>
 
 <!-- HERO -->
 <section class="sell-hero">
   <div class="sell-hero__bg"></div>
   <div class="sell-hero__inner">
-    <span class="page-hero__eyebrow fr">Expertise &amp; Rachat · Paris 8ème</span>
-    <span class="page-hero__eyebrow en">Expert Valuation &amp; Buyback · Paris 8th</span>
-    <h1 class="page-hero__title fr">Vendez votre<br><em>montre de luxe</em></h1>
-    <h1 class="page-hero__title en">Sell your<br><em>luxury watch</em></h1>
-    <div class="page-hero__line"></div>
+    <span class="sell-hero__eyebrow fr">Expertise &amp; Rachat · Paris 8ème</span>
+    <span class="sell-hero__eyebrow en">Expert Buyback · Paris 8th</span>
+    <h1 class="sell-hero__title fr">Vendez votre<br><em>montre de luxe</em></h1>
+    <h1 class="sell-hero__title en">Sell your<br><em>luxury watch</em></h1>
+    <p class="sell-hero__sub fr">Estimation gratuite en ligne. Paiement immédiat par virement sécurisé. Nos experts vous contactent sous 24h.</p>
+    <p class="sell-hero__sub en">Free online estimate. Immediate payment by secure transfer. Our experts contact you within 24h.</p>
   </div>
 </section>
 
-<!-- ESTIMATE FORM -->
-<section class="sell-section">
-  <div class="sell-card">
-    <div class="sell-card__intro">
-      <span class="section-eyebrow fr">Estimation gratuite en ligne</span>
-      <span class="section-eyebrow en">Free online estimate</span>
-      <h2 class="fr">Estimez votre montre</h2>
-      <h2 class="en">Estimate your watch</h2>
-      <p class="fr">Renseignez les caractéristiques de votre garde-temps. Nous analysons les annonces du marché en temps réel pour vous donner une fourchette de prix actuelle.</p>
-      <p class="en">Enter your timepiece's details. We analyse live market listings in real time to give you a current price range.</p>
+<!-- STEP PROGRESS BAR -->
+<div class="wiz-progress">
+  <div class="wiz-steps">
+    <div class="wiz-step active" id="wstep1">
+      <span class="wiz-step__num">1</span>
+      <span class="wiz-step__label fr">Marque</span>
+      <span class="wiz-step__label en">Brand</span>
     </div>
+    <div class="wiz-step" id="wstep2">
+      <span class="wiz-step__num">2</span>
+      <span class="wiz-step__label fr">Modèle</span>
+      <span class="wiz-step__label en">Model</span>
+    </div>
+    <div class="wiz-step" id="wstep3">
+      <span class="wiz-step__num">3</span>
+      <span class="wiz-step__label fr">Détails</span>
+      <span class="wiz-step__label en">Details</span>
+    </div>
+    <div class="wiz-step" id="wstep4">
+      <span class="wiz-step__num">4</span>
+      <span class="wiz-step__label fr">Confirmation</span>
+      <span class="wiz-step__label en">Confirmed</span>
+    </div>
+  </div>
+</div>
 
-    <div class="estimate-form" id="estimateForm">
+<!-- ═══════════════════ WIZARD BODY ═══════════════════════════════════════ -->
+<div class="wiz-body">
 
-      <!-- Brand -->
-      <div class="form-group">
-        <label class="fr">Marque</label>
-        <label class="en">Brand</label>
-        <select id="selBrand" onchange="updateModelOptions()">
-          <option value="" disabled selected>— Select a brand —</option>
-          <option value="Rolex">Rolex</option>
-          <option value="Audemars Piguet">Audemars Piguet</option>
-          <option value="Patek Philippe">Patek Philippe</option>
-          <option value="Richard Mille">Richard Mille</option>
+  <!-- STEP 1 — Select Brand -->
+  <div class="wiz-panel active" id="panel1">
+    <div class="wiz-heading">
+      <span class="eyebrow fr">Étape 1</span>
+      <span class="eyebrow en">Step 1</span>
+      <h2 class="fr">Sélectionnez votre marque</h2>
+      <h2 class="en">Select your brand</h2>
+      <p class="fr">Choisissez le fabricant de votre montre parmi nos marques partenaires.</p>
+      <p class="en">Choose your watch manufacturer from our partner brands.</p>
+    </div>
+    <div class="brand-grid">
+      <div class="brand-tile" onclick="selectBrand('Rolex')">
+        <img src="https://www.nosmontres.com/uploads/IMG-7772-Y5vh.jpeg" alt="Rolex" loading="lazy">
+        <div class="brand-tile__label">
+          <span class="brand-tile__name">Rolex</span>
+        </div>
+        <div class="brand-tile__check">
+          <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="brand-tile" onclick="selectBrand('Audemars Piguet')">
+        <img src="https://www.nosmontres.com/uploads/IMG-1358-iYgo.jpeg" alt="Audemars Piguet" loading="lazy">
+        <div class="brand-tile__label">
+          <span class="brand-tile__name">Audemars Piguet</span>
+        </div>
+        <div class="brand-tile__check">
+          <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="brand-tile" onclick="selectBrand('Patek Philippe')">
+        <img src="https://www.nosmontres.com/uploads/IMG-5178-VIZv.jpeg" alt="Patek Philippe" loading="lazy">
+        <div class="brand-tile__label">
+          <span class="brand-tile__name">Patek Philippe</span>
+        </div>
+        <div class="brand-tile__check">
+          <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="brand-tile" onclick="selectBrand('Richard Mille')">
+        <img src="https://www.nosmontres.com/uploads/c552deb8-4084-4deb-93e7-15a7ce0b2aaf-8BG2.jpeg" alt="Richard Mille" loading="lazy">
+        <div class="brand-tile__label">
+          <span class="brand-tile__name">Richard Mille</span>
+        </div>
+        <div class="brand-tile__check">
+          <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="brand-tile" onclick="selectBrand('Cartier')">
+        <img src="https://www.nosmontres.com/uploads/IMG-8144-PeMi.jpeg" alt="Cartier" loading="lazy">
+        <div class="brand-tile__label">
+          <span class="brand-tile__name">Cartier</span>
+        </div>
+        <div class="brand-tile__check">
+          <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+    <button class="btn-wiz-next" id="btnNext1" disabled onclick="goStep(2)">
+      <span class="fr">Continuer</span><span class="en">Continue</span> →
+    </button>
+  </div>
+
+  <!-- STEP 2 — Select Model -->
+  <div class="wiz-panel" id="panel2">
+    <div class="wiz-heading">
+      <span class="eyebrow fr">Étape 2</span>
+      <span class="eyebrow en">Step 2</span>
+      <h2 class="fr" id="step2Title">Sélectionnez votre modèle</h2>
+      <h2 class="en" id="step2TitleEn">Select your model</h2>
+    </div>
+    <button class="wiz-back" onclick="goStep(1)">
+      ← <span class="fr">Changer de marque</span><span class="en">Change brand</span>
+    </button>
+    <div class="model-grid" id="modelGrid"></div>
+    <button class="btn-wiz-next" id="btnNext2" disabled onclick="goStep(3)">
+      <span class="fr">Continuer</span><span class="en">Continue</span> →
+    </button>
+  </div>
+
+  <!-- STEP 3 — Watch Details + Contact -->
+  <div class="wiz-panel" id="panel3">
+    <div class="wiz-heading">
+      <span class="eyebrow fr">Étape 3</span>
+      <span class="eyebrow en">Step 3</span>
+      <h2 class="fr">Décrivez votre montre</h2>
+      <h2 class="en">Describe your watch</h2>
+      <p class="fr">Renseignez les détails de votre pièce et vos coordonnées. Nous vous rappelons sous 24h.</p>
+      <p class="en">Fill in your watch details and contact information. We'll call you within 24h.</p>
+    </div>
+    <button class="wiz-back" onclick="goStep(2)">
+      ← <span class="fr">Changer de modèle</span><span class="en">Change model</span>
+    </button>
+    <div class="wiz-form" id="detailsForm">
+      <!-- Watch details -->
+      <span class="f-section-label fr">Détails de la montre</span>
+      <span class="f-section-label en">Watch details</span>
+
+      <div class="f-group">
+        <label class="fr">État</label>
+        <label class="en">Condition</label>
+        <select id="fCondition">
+          <option value="" disabled selected>—</option>
+          <option value="new">Neuve / New</option>
+          <option value="used">Occasion / Used</option>
         </select>
       </div>
-
-      <!-- Model -->
-      <div class="form-group">
-        <label class="fr">Modèle</label>
-        <label class="en">Model</label>
-        <select id="selModel">
-          <option value="" disabled selected>— Select a brand first —</option>
-        </select>
-      </div>
-
-      <!-- Condition -->
-      <div class="form-group">
-        <label class="fr">État de la montre</label>
-        <label class="en">Watch condition</label>
-        <select id="selCondition">
-          <option value="" disabled selected>— Select condition —</option>
-          <option value="new" data-fr="Neuve" data-en="New">New</option>
-          <option value="used" data-fr="Occasion" data-en="Used">Used</option>
-        </select>
-      </div>
-
-      <!-- Papers -->
-      <div class="form-group">
+      <div class="f-group">
         <label class="fr">Papiers d'origine</label>
         <label class="en">Original papers</label>
-        <select id="selPapers">
-          <option value="" disabled selected>— Select papers —</option>
-          <option value="yes" data-fr="Oui" data-en="Yes">Yes</option>
-          <option value="no" data-fr="Non" data-en="No">No</option>
+        <select id="fPapers">
+          <option value="" disabled selected>—</option>
+          <option value="yes">Oui / Yes</option>
+          <option value="no">Non / No</option>
         </select>
       </div>
-
-      <!-- Reference (full width) -->
-      <div class="form-group form-group--full">
-        <label class="fr">Référence de la montre <span style="font-style:italic;text-transform:none;letter-spacing:0">(ex&nbsp;: 116610LN, 15500ST, 5711A)</span></label>
-        <label class="en">Watch reference <span style="font-style:italic;text-transform:none;letter-spacing:0">(e.g. 116610LN, 15500ST, 5711A)</span></label>
-        <input type="text" id="inputRef" placeholder="Enter reference number…" data-fr-placeholder="Entrez le numéro de référence…" data-en-placeholder="Enter reference number…">
+      <div class="f-group f-full">
+        <label class="fr">Référence (facultatif)</label>
+        <label class="en">Reference (optional)</label>
+        <input type="text" id="fRef" placeholder="ex: 126610LN, 15500ST, 5711/1A…">
       </div>
 
-      <!-- Button -->
-      <button class="btn-estimate" id="btnEstimate" onclick="runEstimate()">
-        <span class="spinner"></span>
-        <span class="fr">Estimer ma montre</span>
-        <span class="en">Estimate my watch</span>
+      <hr class="f-divider">
+
+      <!-- Contact details -->
+      <span class="f-section-label fr">Vos coordonnées</span>
+      <span class="f-section-label en">Your contact details</span>
+
+      <div class="f-group f-full">
+        <label class="fr">Nom complet *</label>
+        <label class="en">Full name *</label>
+        <input type="text" id="fName" placeholder="Jean Dupont" required>
+      </div>
+      <div class="f-group">
+        <label class="fr">Téléphone *</label>
+        <label class="en">Phone *</label>
+        <input type="tel" id="fPhone" placeholder="+33 6 00 00 00 00" required>
+      </div>
+      <div class="f-group">
+        <label class="fr">Email *</label>
+        <label class="en">Email *</label>
+        <input type="email" id="fEmail" placeholder="vous@exemple.com" required>
+      </div>
+
+      <button class="btn-wiz-submit" id="btnSubmit" onclick="submitForm()">
+        <span class="fr">Obtenir mon estimation →</span>
+        <span class="en">Get my estimate →</span>
       </button>
+    </div>
+  </div>
 
-      <!-- Results -->
-      <div id="estimateResults"></div>
+  <!-- STEP 4 — Confirmation + Price Estimate -->
+  <div class="wiz-panel" id="panel4">
+    <div class="confirm-box">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 28 28" fill="none">
+          <polyline points="4,14 11,21 24,7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="fr">Demande enregistrée</h2>
+      <h2 class="en">Request received</h2>
+      <p class="fr">Merci <strong id="confirmName"></strong>. Nos experts vous contacteront sous 24h au <strong id="confirmPhone"></strong> pour finaliser votre estimation.</p>
+      <p class="en">Thank you <strong id="confirmNameEn"></strong>. Our experts will contact you within 24h at <strong id="confirmPhoneEn"></strong> to finalise your estimate.</p>
 
-    </div><!-- /estimate-form -->
-  </div><!-- /sell-card -->
+      <!-- Live price range (fetched after submission) -->
+      <div id="priceRangeWrap" style="display:none">
+        <div class="price-range-box">
+          <div class="price-cell price-cell--lo">
+            <span class="price-cell__label fr">Prix minimum estimé</span>
+            <span class="price-cell__label en">Estimated minimum</span>
+            <span class="price-cell__val" id="priceMin">—</span>
+          </div>
+          <div class="price-cell price-cell--hi">
+            <span class="price-cell__label fr">Prix maximum estimé</span>
+            <span class="price-cell__label en">Estimated maximum</span>
+            <span class="price-cell__val" id="priceMax">—</span>
+          </div>
+        </div>
+        <p class="confirm-note fr">Fourchette basée sur le marché secondaire en temps réel. Votre prix de rachat définitif est établi après inspection physique.</p>
+        <p class="confirm-note en">Range based on live secondary market. Your final buyback price is set after physical inspection.</p>
+      </div>
+
+      <div class="confirm-cta">
+        <a href="prendre-rendez-vous.html" class="btn-confirm-primary">
+          <span class="fr">Prendre rendez-vous</span>
+          <span class="en">Book an appointment</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wiz-body -->
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-eyebrow fr">Comment ça marche</span>
+      <span class="section-eyebrow en">How it works</span>
+      <h2 class="section-title fr">Un processus <em>simple et rapide</em></h2>
+      <h2 class="section-title en">A <em>simple and fast</em> process</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <span class="how-step__num">01</span>
+        <h3 class="how-step__title fr">Décrivez votre montre</h3>
+        <h3 class="how-step__title en">Describe your watch</h3>
+        <p class="how-step__desc fr">Sélectionnez la marque, le modèle, l'état et les accessoires. Renseignez vos coordonnées — le tout en moins de 2 minutes.</p>
+        <p class="how-step__desc en">Select the brand, model, condition and accessories. Enter your contact details — all in under 2 minutes.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-step__num">02</span>
+        <h3 class="how-step__title fr">Recevez une estimation</h3>
+        <h3 class="how-step__title en">Receive an estimate</h3>
+        <p class="how-step__desc fr">Une fourchette de prix basée sur les cotes du marché secondaire vous est communiquée instantanément.</p>
+        <p class="how-step__desc en">A price range based on secondary market rates is communicated to you instantly.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-step__num">03</span>
+        <h3 class="how-step__title fr">Nous vous contactons</h3>
+        <h3 class="how-step__title en">We contact you</h3>
+        <p class="how-step__desc fr">Un de nos experts vous rappelle sous 24h pour affiner l'estimation et organiser un rendez-vous en boutique ou une inspection.</p>
+        <p class="how-step__desc en">One of our experts calls you back within 24h to refine the estimate and arrange a boutique appointment or inspection.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-step__num">04</span>
+        <h3 class="how-step__title fr">Paiement immédiat</h3>
+        <h3 class="how-step__title en">Immediate payment</h3>
+        <p class="how-step__desc fr">Après inspection, si vous acceptez notre offre, nous procédons au virement bancaire sécurisé le jour même.</p>
+        <p class="how-step__desc en">After inspection, if you accept our offer, we process a secure bank transfer the same day.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- WHY SELL WITH US -->
-<section class="sell-why">
+<section class="why-section">
   <div class="container">
     <div style="text-align:center">
-      <span class="section-eyebrow fr" style="color:var(--gold-lt)">Pourquoi nous choisir</span>
-      <span class="section-eyebrow en" style="color:var(--gold-lt)">Why choose us</span>
-      <h2 class="section-title" style="color:var(--white)">
-        <span class="fr">Le meilleur prix pour votre montre</span>
-        <span class="en">The best price for your watch</span>
+      <span class="section-eyebrow" style="color:rgba(201,169,110,0.7)">Nos Atouts</span>
+      <h2 class="section-title" style="color:#fff">
+        <span class="fr">Pourquoi nous <em>choisir</em></span>
+        <span class="en">Why <em>choose us</em></span>
       </h2>
+      <div class="section-line" style="background:rgba(201,169,110,0.35)"></div>
     </div>
-    <div class="sell-why__grid">
-      <div class="sell-why__item">
-        <span class="sell-why__number">01</span>
-        <div class="sell-why__title fr">Expertise certifiée</div>
-        <div class="sell-why__title en">Certified expertise</div>
-        <p class="sell-why__body fr">Nos experts horlogers évaluent chaque pièce avec précision. Boîtier, mouvement, papiers, provenance — chaque détail compte dans la valorisation finale.</p>
-        <p class="sell-why__body en">Our watchmaking experts evaluate each piece with precision. Case, movement, papers, provenance — every detail counts in the final valuation.</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-item__icon">◎</span>
+        <div class="why-item__title fr">Expertise certifiée</div>
+        <div class="why-item__title en">Certified expertise</div>
+        <p class="why-item__body fr">Nos horlogers évaluent chaque pièce avec précision — boîtier, mouvement, papiers, provenance. Chaque détail compte dans la valorisation finale.</p>
+        <p class="why-item__body en">Our watchmakers evaluate every piece with precision — case, movement, papers, provenance. Every detail counts in the final valuation.</p>
       </div>
-      <div class="sell-why__item">
-        <span class="sell-why__number">02</span>
-        <div class="sell-why__title fr">Paiement immédiat</div>
-        <div class="sell-why__title en">Immediate payment</div>
-        <p class="sell-why__body fr">Pas d'attente, pas de commission. Nous achetons directement votre montre et vous réglons immédiatement par virement bancaire sécurisé.</p>
-        <p class="sell-why__body en">No waiting, no commission. We buy your watch directly and pay you immediately by secure bank transfer.</p>
+      <div class="why-item">
+        <span class="why-item__icon">◈</span>
+        <div class="why-item__title fr">Paiement le jour même</div>
+        <div class="why-item__title en">Same-day payment</div>
+        <p class="why-item__body fr">Pas de commission, pas d'attente. Nous achetons directement et virons les fonds le jour de l'accord, par virement bancaire sécurisé.</p>
+        <p class="why-item__body en">No commission, no waiting. We buy directly and transfer funds on the day of agreement, by secure bank transfer.</p>
       </div>
-      <div class="sell-why__item">
-        <span class="sell-why__number">03</span>
-        <div class="sell-why__title fr">Prix du marché</div>
-        <div class="sell-why__title en">Market price</div>
-        <p class="sell-why__body fr">Nous suivons en permanence les cotes du marché secondaire mondial. Vous bénéficiez toujours du meilleur tarif.</p>
-        <p class="sell-why__body en">We continuously monitor the global secondary market. You always get the best rate.</p>
+      <div class="why-item">
+        <span class="why-item__icon">◇</span>
+        <div class="why-item__title fr">Prix du marché garanti</div>
+        <div class="why-item__title en">Market price guaranteed</div>
+        <p class="why-item__body fr">Nous suivons en permanence les cotes du marché secondaire mondial — Chrono24, Watchfinder, WatchCharts — pour vous offrir toujours le meilleur tarif.</p>
+        <p class="why-item__body en">We continuously monitor global secondary market rates — Chrono24, Watchfinder, WatchCharts — to always offer you the best price.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="sell-cta">
+<!-- TESTIMONIALS -->
+<section class="testi-section">
   <div class="container">
-    <h2 class="fr">Prêt à vendre ?</h2>
-    <h2 class="en">Ready to sell?</h2>
+    <div style="text-align:center">
+      <span class="section-eyebrow fr">Témoignages</span>
+      <span class="section-eyebrow en">Testimonials</span>
+      <h2 class="section-title fr">Ce que disent <em>nos clients</em></h2>
+      <h2 class="section-title en">What our <em>clients say</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <span class="testi-stars">★★★★★</span>
+        <p class="testi-body fr">"J'ai vendu ma Rolex Daytona en moins de 48h. Estimation précise, contact immédiat, virement reçu le lendemain. Service irréprochable."</p>
+        <p class="testi-body en">"I sold my Rolex Daytona in less than 48h. Precise estimate, immediate contact, transfer received the next day. Impeccable service."</p>
+        <span class="testi-author">Alexandre M. — Rolex Daytona 126500LN</span>
+      </div>
+      <div class="testi-card">
+        <span class="testi-stars">★★★★★</span>
+        <p class="testi-body fr">"Meilleure offre que partout ailleurs pour ma Royal Oak. L'équipe connaît parfaitement le marché. Je recommande sans hésitation."</p>
+        <p class="testi-body en">"Best offer anywhere for my Royal Oak. The team knows the market perfectly. I recommend without hesitation."</p>
+        <span class="testi-author">Stéphane R. — Audemars Piguet Royal Oak 15500ST</span>
+      </div>
+      <div class="testi-card">
+        <span class="testi-stars">★★★★★</span>
+        <p class="testi-body fr">"Processus transparent et rapide. J'ai eu une estimation en ligne, un rappel le lendemain matin, et le virement deux jours après. Parfait."</p>
+        <p class="testi-body en">"Transparent and fast process. I had an online estimate, a callback the next morning, and the transfer two days later. Perfect."</p>
+        <span class="testi-author">Claire D. — Patek Philippe Nautilus 5711/1A</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAR -->
+<section class="sell-cta-bar">
+  <div class="container">
+    <h2 class="fr">Prêt à vendre votre montre ?</h2>
+    <h2 class="en">Ready to sell your watch?</h2>
     <p class="fr">Prenez rendez-vous dans notre boutique au 46 rue de Miromesnil, Paris 8ème.</p>
     <p class="en">Book an appointment at our boutique, 46 rue de Miromesnil, Paris 8th.</p>
-    <a href="prendre-rendez-vous.html" class="btn-white">
+    <a href="prendre-rendez-vous.html" class="btn-cta-white">
       <span class="fr">Prendre rendez-vous</span>
       <span class="en">Book appointment</span>
     </a>
@@ -492,200 +973,166 @@
 </section>
 
 <footer id="siteFooter"></footer>
-
 <script src="js/watches.js"></script>
 <script src="js/components.js"></script>
 <script src="js/chatbot.js"></script>
+
 <script>
-  NM.renderNav('sell');
-  NM.renderFooter();
+/* ═══════════════════════════════════════════════════════════════
+   Nos Montres — Sell page wizard
+   Steps: 1=brand  2=model  3=details+contact  4=confirmation
+   ═══════════════════════════════════════════════════════════════ */
+const WORKER_URL = 'https://nosmontres-prices.zoozoomfast.workers.dev';
 
-  /* ── Language sync for <select> options ── */
-  function syncSelectLang(lang) {
-    document.querySelectorAll('select option[data-fr]').forEach(opt => {
-      opt.textContent = lang === 'fr' ? opt.dataset.fr : opt.dataset.en;
-    });
-    const refInput = document.getElementById('inputRef');
-    if (refInput) {
-      refInput.placeholder = lang === 'fr'
-        ? (refInput.dataset.frPlaceholder || 'Entrez le numéro de référence…')
-        : (refInput.dataset.enPlaceholder || 'Enter reference number…');
-    }
-    const labels = {
-      selBrand:     ["— Sélectionner une marque —", "— Select a brand —"],
-      selCondition: ["— État de la montre —",        "— Select condition —"],
-      selPapers:    ["— Papiers d'origine —",        "— Select papers —"],
-      selModel:     ["— Sélectionner le modèle —",   "— Select a model —"],
-    };
-    Object.keys(labels).forEach(id => {
-      const el = document.querySelector('#' + id + ' option[disabled]');
-      if (el) el.textContent = lang === 'fr' ? labels[id][0] : labels[id][1];
-    });
-  }
+const MODELS = {
+  'Rolex': [
+    'Submariner','GMT-Master II','Daytona','DateJust 36','DateJust 41',
+    'Day-Date','Explorer','Explorer II','Sea-Dweller','Yacht-Master',
+    'Milgauss','Air-King','Oyster Perpetual','Autre / Other'
+  ],
+  'Audemars Piguet': [
+    'Royal Oak 37mm','Royal Oak 39mm','Royal Oak 41mm',
+    'Royal Oak Offshore','Royal Oak Chronograph',
+    'Code 11.59','Millenary','Jules Audemars','Autre / Other'
+  ],
+  'Patek Philippe': [
+    'Nautilus','Aquanaut','Calatrava','Complications',
+    'Grand Complications','Gondolo','Twenty~4','Chronograph','Autre / Other'
+  ],
+  'Richard Mille': [
+    'RM 011','RM 027','RM 035','RM 055',
+    'RM 052','RM 067','RM 072','RM 069','Autre / Other'
+  ],
+  'Cartier': [
+    'Santos','Tank','Ballon Bleu','Panthère',
+    'Drive','Clé','Ronde Solo','Calibre','Autre / Other'
+  ],
+};
 
-  const _origSetLang = NM.setLang.bind(NM);
-  NM.setLang = function(lang, save) {
-    _origSetLang(lang, save);
-    syncSelectLang(lang);
+let state = { brand: null, model: null, step: 1 };
+
+/* ── Step management ── */
+function goStep(n) {
+  document.querySelectorAll('.wiz-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel' + n).classList.add('active');
+  document.querySelectorAll('.wiz-step').forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i + 1 < n) s.classList.add('done');
+    if (i + 1 === n) s.classList.add('active');
+  });
+  state.step = n;
+  window.scrollTo({ top: document.querySelector('.wiz-progress').offsetTop - 60, behavior: 'smooth' });
+}
+
+/* ── Brand selection ── */
+function selectBrand(brand) {
+  state.brand = brand;
+  document.querySelectorAll('.brand-tile').forEach(t => t.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  document.getElementById('btnNext1').disabled = false;
+  buildModelGrid(brand);
+}
+
+/* ── Model grid ── */
+function buildModelGrid(brand) {
+  const lang = (typeof NM !== 'undefined' && NM.lang) || localStorage.getItem('nm_lang') || 'fr';
+  const grid = document.getElementById('modelGrid');
+  grid.innerHTML = '';
+  (MODELS[brand] || []).forEach(m => {
+    const btn = document.createElement('button');
+    btn.className = 'model-pill';
+    btn.textContent = m;
+    btn.onclick = () => selectModel(m, btn);
+    grid.appendChild(btn);
+  });
+  const h2fr = document.getElementById('step2Title');
+  const h2en = document.getElementById('step2TitleEn');
+  if (h2fr) h2fr.textContent = 'Sélectionnez votre modèle — ' + brand;
+  if (h2en) h2en.textContent = 'Select your model — ' + brand;
+}
+
+/* ── Model selection ── */
+function selectModel(model, btn) {
+  state.model = model;
+  document.querySelectorAll('.model-pill').forEach(p => p.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('btnNext2').disabled = false;
+}
+
+/* ── Form submission ── */
+async function submitForm() {
+  const name  = document.getElementById('fName').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+
+  if (!name)  { highlight('fName');  return; }
+  if (!phone) { highlight('fPhone'); return; }
+  if (!email || !email.includes('@')) { highlight('fEmail'); return; }
+
+  const condition = document.getElementById('fCondition').value;
+  const papers    = document.getElementById('fPapers').value;
+  const ref       = document.getElementById('fRef').value.trim();
+
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="fr">Envoi en cours…</span><span class="en">Sending…</span>';
+
+  const payload = {
+    brand: state.brand, model: state.model,
+    condition, papers, ref,
+    name, phone, email,
+    timestamp: new Date().toISOString(),
+    lang: (typeof NM !== 'undefined' && NM.lang) || 'fr',
   };
 
-  NM.init();
-  syncSelectLang(localStorage.getItem('nm_lang') || 'fr');
-
-  /* ── Model dropdown ── */
-  const MODELS = {
-    'Rolex': ['Submariner','GMT Master II','Daytona','DateJust 36','DateJust 41','Day-Date','Explorer','Explorer II','Yacht-Master','Sea-Dweller','Milgauss','Air-King','Oyster Perpetual','Cellini'],
-    'Audemars Piguet': ['Royal Oak','Royal Oak Offshore','Royal Oak Concept','Code 11.59','Millenary','Jules Audemars'],
-    'Patek Philippe': ['Nautilus','Aquanaut','Calatrava','Complications','Grand Complications','Gondolo','Twenty~4','Chronograph'],
-    'Richard Mille': ['RM 011','RM 027','RM 035','RM 055','RM 067','RM 072','RM 010','RM 030']
-  };
-
-  function updateModelOptions() {
-    const brand = document.getElementById('selBrand').value;
-    const lang  = NM.lang || localStorage.getItem('nm_lang') || 'fr';
-    const sel   = document.getElementById('selModel');
-    sel.innerHTML = '<option value="" disabled selected>' + (lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —') + '</option>';
-    (MODELS[brand] || []).forEach(function(m) {
-      const opt = document.createElement('option');
-      opt.value = opt.textContent = m;
-      sel.appendChild(opt);
+  /* 1. Submit lead to Worker */
+  try {
+    await fetch(WORKER_URL + '/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
     });
-  }
+  } catch (_) { /* proceed even if worker unreachable */ }
 
-  /* ── Live price fetch via Cloudflare Worker ── */
-  // UPDATE this URL after deploying worker/index.js to Cloudflare Workers
-  const WORKER_URL = 'https://nosmontres-prices.zoozoomfast.workers.dev';
+  /* 2. Populate confirmation */
+  document.getElementById('confirmName').textContent   = name;
+  document.getElementById('confirmNameEn').textContent  = name;
+  document.getElementById('confirmPhone').textContent  = phone;
+  document.getElementById('confirmPhoneEn').textContent = phone;
 
-  function fmtCurrency(num, currency) {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency', currency: currency || 'EUR',
-      minimumFractionDigits: 0, maximumFractionDigits: 0
-    }).format(num);
-  }
+  goStep(4);
 
-  function fmtEur(num) { return fmtCurrency(num, 'EUR'); }
-
-  /* ── Main estimate (async — fetches live market data) ── */
-  async function runEstimate() {
-    const brand     = document.getElementById('selBrand').value;
-    const model     = document.getElementById('selModel').value;
-    const condition = document.getElementById('selCondition').value;
-    const papers    = document.getElementById('selPapers').value;
-    const ref       = document.getElementById('inputRef').value.trim();
-    const lang      = NM.lang || 'fr';
-
-    if (!brand)     { alert(lang === 'fr' ? 'Veuillez sélectionner une marque' : 'Please select a brand'); return; }
-    if (!condition) { alert(lang === 'fr' ? "Veuillez sélectionner l'état" : 'Please select a condition'); return; }
-
-    const results = document.getElementById('estimateResults');
-    results.className = '';
-    results.innerHTML = buildLoading(lang);
-    results.classList.add('visible');
-    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    const parts = [brand, model, ref].filter(Boolean);
-    const query = parts.join(' ');
-    const label = parts.join(' · ');
-
-    try {
-      const resp = await fetch(WORKER_URL + '?q=' + encodeURIComponent(query));
-      const data = await resp.json();
-      if (!resp.ok || data.error) {
-        results.innerHTML = buildError(label, lang);
-      } else {
-        results.innerHTML = buildResults(label, data.lowPrice, data.highPrice, data.currency, data.offerCount, papers, condition);
-      }
-    } catch (err) {
-      results.innerHTML = buildError(label, lang);
+  /* 3. Fetch live price estimate */
+  const q = [state.brand, state.model, ref].filter(Boolean).join(' ');
+  try {
+    const r = await fetch(WORKER_URL + '?q=' + encodeURIComponent(q));
+    const d = await r.json();
+    if (d.lowPrice) {
+      let lo = d.lowPrice, hi = d.highPrice;
+      const rnd = n => Math.round(n / 100) * 100;
+      if (condition === 'new') { lo = rnd(lo * 1.12); hi = rnd(hi * 1.15); }
+      if (papers === 'no')    { lo = rnd(lo * 0.93); hi = rnd(hi * 0.92); }
+      const fmt = n => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: d.currency || 'EUR', maximumFractionDigits: 0 }).format(n);
+      document.getElementById('priceMin').textContent = fmt(lo);
+      document.getElementById('priceMax').textContent = fmt(hi);
+      document.getElementById('priceRangeWrap').style.display = 'block';
+      if (typeof NM !== 'undefined') NM.setLang(NM.lang, false);
     }
-    // Re-apply language visibility to newly injected HTML spans
-    NM.setLang(NM.lang, false);
-  }
+  } catch (_) { /* price estimate is a bonus, not required */ }
+}
 
-  function buildLoading(lang) {
-    const msg = lang === 'fr' ? 'Recherche des prix en cours&hellip;' : 'Fetching live prices&hellip;';
-    return `
-      <div class="results-header">
-        <span class="results-header__label">${msg}</span>
-      </div>
-      <div style="text-align:center;padding:2rem">
-        <span class="price-loader"></span>
-      </div>`;
-  }
+function highlight(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.borderColor = '#c0392b';
+  el.focus();
+  setTimeout(() => { el.style.borderColor = ''; }, 2500);
+}
 
-  function buildResults(label, minP, maxP, currency, count, papers, condition) {
-    // ── Condition + papers price adjustment ──────────────────────────────────
-    // Base prices from Worker represent the general used+papers secondary market.
-    // Adjust up for unworn / down for no-papers accordingly.
-    const round100 = n => Math.round(n / 100) * 100;
-    if (condition === 'new') {
-      // Unworn/new: commands a clear premium on secondary market
-      minP = round100(minP * 1.12);
-      maxP = round100(maxP * 1.15);
-    }
-    if (papers === 'no') {
-      // No papers: reduces value, especially on the high end
-      minP = round100(minP * 0.93);
-      maxP = round100(maxP * 0.92);
-    }
-    // ─────────────────────────────────────────────────────────────────────────
-    const papNote = papers === 'yes'
-      ? '<span class="fr"> · avec papiers</span><span class="en"> · with papers</span>'
-      : '<span class="fr"> · sans papiers</span><span class="en"> · without papers</span>';
-    const condNote = condition === 'new'
-      ? '<span class="fr"> · neuve</span><span class="en"> · new</span>'
-      : '<span class="fr"> · occasion</span><span class="en"> · used</span>';
-    const cntFr = count > 0 ? `(${count} annonces)` : '';
-    const cntEn = count > 0 ? `(${count} listings)` : '';
-    return `
-      <div class="results-header">
-        <span class="results-header__label fr">Prix du marché en temps réel</span>
-        <span class="results-header__label en">Live market prices</span>
-        <span class="results-header__watch">${label}${condNote}${papNote}</span>
-      </div>
-      <div class="price-range">
-        <div class="price-box price-box--low">
-          <span class="price-box__label fr">Annonce la moins chère</span>
-          <span class="price-box__label en">Cheapest listing</span>
-          <span class="price-box__value">${fmtCurrency(minP, currency)}</span>
-        </div>
-        <div class="price-box price-box--high">
-          <span class="price-box__label fr">Annonce la plus chère</span>
-          <span class="price-box__label en">Most expensive listing</span>
-          <span class="price-box__value">${fmtCurrency(maxP, currency)}</span>
-        </div>
-      </div>
-      <p class="results-note fr">Prix relevés en temps réel sur le marché secondaire. ${cntFr}</p>
-      <p class="results-note en">Prices fetched live from the secondary market. ${cntEn}</p>
-      <div class="results-cta-row">
-        <a href="prendre-rendez-vous.html" class="btn-primary-sm">
-          <span class="fr">Obtenir une offre de rachat</span>
-          <span class="en">Get a buyback offer</span>
-        </a>
-      </div>`;
-  }
-
-  function buildError(label, lang) {
-    return `
-      <div class="results-header">
-        <span class="results-header__label fr">Estimation non disponible</span>
-        <span class="results-header__label en">Estimate unavailable</span>
-        <span class="results-header__watch">${label}</span>
-      </div>
-      <p class="results-note fr">Les prix en temps réel sont temporairement indisponibles. Contactez-nous pour une estimation personnalisée.</p>
-      <p class="results-note en">Live prices are temporarily unavailable. Contact us for a personalised estimate.</p>
-      <div class="results-cta-row">
-        <a href="prendre-rendez-vous.html" class="btn-primary-sm">
-          <span class="fr">Estimation personnalisée</span>
-          <span class="en">Personal estimate</span>
-        </a>
-      </div>`;
-  }
-
-  function buildNoResults(label) {
-    return buildError(label, NM.lang || 'fr');
-  }
+/* ── Boot ── */
+NM.renderNav('sell');
+NM.renderFooter();
+NM.init();
 </script>
-
 </body>
 </html>

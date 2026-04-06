@@ -2,6 +2,19 @@ name = "nosmontres-prices"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
-# Deploy with: npx wrangler deploy
-# After deploy your URL will be: https://nosmontres-prices.YOUR_SUBDOMAIN.workers.dev
-# Paste that URL into vendre.html as WORKER_URL
+# ── KV Namespace for lead storage ──────────────────────────────────────────
+# One-time setup (run once from /worker/ folder):
+#   npx wrangler kv:namespace create LEADS
+# Copy the "id" from the output and paste it below, then deploy:
+#   npx wrangler deploy
+
+[[kv_namespaces]]
+binding = "LEADS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# ── Admin secret for /leads.csv and /leads.json ──────────────────────────
+# Set this secret via CLI (never commit real values):
+#   npx wrangler secret put ADMIN_KEY
+# Then download leads at:
+#   https://nosmontres-prices.zoozoomfast.workers.dev/leads.csv?key=YOUR_SECRET
+#   https://nosmontres-prices.zoozoomfast.workers.dev/leads.json?key=YOUR_SECRET
