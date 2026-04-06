@@ -279,8 +279,18 @@ const NM = {
     const navLinks = document.getElementById('navLinks');
     if (burger && navLinks) {
       burger.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
+        const isOpen = navLinks.classList.toggle('open');
         burger.classList.toggle('active');
+        // Lock body scroll while menu is open
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      // Close menu + restore scroll when any nav link is tapped
+      navLinks.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          burger.classList.remove('active');
+          document.body.style.overflow = '';
+        });
       });
     }
     // Dropdowns

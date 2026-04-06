@@ -627,49 +627,75 @@ h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr { display: block; }
 
 /* — 960px: tablet / mobile nav ——————————————— */
 @media (max-width: 960px) {
-  /* Nav */
+  /* Remove backdrop-filter so position:fixed children are correctly
+     anchored to the viewport (Safari/iOS bug: backdrop-filter creates
+     a containing block that traps fixed descendants inside 72px) */
+  #mainNav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--white);
+  }
+
+  /* Nav bar layout */
   .burger { display: flex; }
-  .nav-inner { gap: 0; justify-content: space-between; padding: 0 16px; }
-  .nav-logo img { max-width: 130px; height: auto; max-height: 36px; }
-  .nav-right { gap: 12px; }
+  .nav-inner { gap: 0; justify-content: space-between; padding: 0 20px; }
+  .nav-logo img { max-width: 120px; height: auto; max-height: 34px; }
+  .nav-right { gap: 16px; }
+
+  /* Full-screen luxury overlay — always display:flex, hidden via opacity/visibility
+     so CSS transitions work smoothly */
   #navLinks {
-    /* position: absolute keeps it inside mainNav's stacking context but
-       avoids the Safari/iOS bug where backdrop-filter traps position:fixed
-       children inside the parent's 72px height box */
-    display: none;
-    position: absolute; top: 100%; left: 0; right: 0;
-    max-height: calc(100vh - var(--nav-h));
+    display: flex;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
     z-index: 2000;
     background: var(--white);
     flex-direction: column; justify-content: flex-start;
-    padding: 24px 20px 40px; gap: 0;
+    padding: 44px 36px 64px; gap: 0;
     overflow-y: auto; overflow-x: hidden;
-    border-top: 1px solid var(--border);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    /* Hidden state */
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
   }
-  #navLinks.open { display: flex; }
+  #navLinks.open {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  /* Luxury menu items — Cormorant Garamond, generous sizing */
+  #navLinks > li { border-bottom: 1px solid var(--border); }
   .nav-link {
-    font-size: 0.85rem; letter-spacing: 0.1em;
-    padding: 16px 8px; border-bottom: 1px solid var(--border);
-    width: 100%; display: block;
-    min-height: 52px; display: flex; align-items: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem; font-weight: 300; letter-spacing: 0.04em;
+    text-transform: none; color: var(--charcoal);
+    padding: 18px 0; width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 64px;
+    transition: color var(--transition);
   }
+  .nav-link:hover { color: var(--gold); }
   .nav-link::after { display: none; }
+
+  /* Dropdown sub-items */
   .drop-menu {
     position: static; border: none; box-shadow: none;
-    padding: 4px 0 8px 20px; opacity: 1; pointer-events: auto;
+    padding: 4px 0 20px 20px; opacity: 1; pointer-events: auto;
     transform: none; display: none; min-width: 0;
     border-left: 2px solid var(--gold);
-    margin-left: 8px; margin-bottom: 4px;
   }
   .drop-menu a {
-    padding: 10px 12px; font-size: 0.78rem; text-transform: uppercase;
-    letter-spacing: 0.08em; min-height: 44px; display: flex; align-items: center;
+    display: flex; align-items: center;
+    padding: 10px 16px; min-height: 44px;
+    font-family: 'Jost', sans-serif; font-size: 0.75rem;
+    font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--mid);
+    transition: color var(--transition), padding-left var(--transition);
   }
-  .drop-menu a:hover { padding-left: 18px; }
+  .drop-menu a:hover { color: var(--gold); padding-left: 22px; }
   .has-drop { cursor: pointer; }
   .has-drop.open .drop-menu { display: block; }
   .nav-cta { display: none; }
+
   /* RDV form */
   .rdv-grid { grid-template-columns: 1fr; gap: 40px; }
   /* Watch detail */
