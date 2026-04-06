@@ -423,7 +423,7 @@
       <div class="form-group form-group--full">
         <label class="fr">Référence de la montre <span style="font-style:italic;text-transform:none;letter-spacing:0">(ex&nbsp;: 116610LN, 15500ST, 5711A)</span></label>
         <label class="en">Watch reference <span style="font-style:italic;text-transform:none;letter-spacing:0">(e.g. 116610LN, 15500ST, 5711A)</span></label>
-        <input type="text" id="inputRef" placeholder="Entrez la référence / Enter reference…">
+        <input type="text" id="inputRef" placeholder="Enter reference number…" data-fr-placeholder="Entrez le numéro de référence…" data-en-placeholder="Enter reference number…">
       </div>
 
       <!-- Button -->
@@ -504,6 +504,11 @@
     document.querySelectorAll('select option[data-fr]').forEach(opt => {
       opt.textContent = lang === 'fr' ? opt.dataset.fr : opt.dataset.en;
     });
+    // Swap input placeholder
+    const refInput = document.getElementById('inputRef');
+    if (refInput) {
+      refInput.placeholder = lang === 'fr' ? refInput.dataset.frPlaceholder : refInput.dataset.enPlaceholder;
+    }
     // Also fix the — placeholder text for selBrand
     const brandPlaceholder = document.querySelector('#selBrand option[disabled]');
     if (brandPlaceholder) {
