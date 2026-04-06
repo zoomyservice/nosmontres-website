@@ -380,7 +380,7 @@
         <label class="fr">Marque</label>
         <label class="en">Brand</label>
         <select id="selBrand" onchange="updateModelOptions()">
-          <option value="" disabled selected>— Sélectionner —</option>
+          <option value="" disabled selected>— Select a brand —</option>
           <option value="Rolex">Rolex</option>
           <option value="Audemars Piguet">Audemars Piguet</option>
           <option value="Patek Philippe">Patek Philippe</option>
@@ -393,7 +393,7 @@
         <label class="fr">Modèle</label>
         <label class="en">Model</label>
         <select id="selModel">
-          <option value="" disabled selected class="fr-opt" data-fr="— Choisir la marque d'abord —" data-en="— Choose brand first —">— Choose brand first —</option>
+          <option value="" disabled selected>— Select a brand first —</option>
         </select>
       </div>
 
@@ -402,7 +402,7 @@
         <label class="fr">État de la montre</label>
         <label class="en">Watch condition</label>
         <select id="selCondition">
-          <option value="" disabled selected>— Sélectionner —</option>
+          <option value="" disabled selected>— Select condition —</option>
           <option value="new" data-fr="Neuve" data-en="New">New</option>
           <option value="used" data-fr="Occasion" data-en="Used">Used</option>
         </select>
@@ -413,7 +413,7 @@
         <label class="fr">Papiers d'origine</label>
         <label class="en">Original papers</label>
         <select id="selPapers">
-          <option value="" disabled selected>— Sélectionner —</option>
+          <option value="" disabled selected>— Select papers —</option>
           <option value="yes" data-fr="Oui" data-en="Yes">Yes</option>
           <option value="no" data-fr="Non" data-en="No">No</option>
         </select>
@@ -507,20 +507,20 @@
     // Also fix the — placeholder text for selBrand
     const brandPlaceholder = document.querySelector('#selBrand option[disabled]');
     if (brandPlaceholder) {
-      brandPlaceholder.textContent = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+      brandPlaceholder.textContent = lang === 'fr' ? '— Sélectionner une marque —' : '— Select a brand —';
     }
     const condPlaceholder = document.querySelector('#selCondition option[disabled]');
     if (condPlaceholder) {
-      condPlaceholder.textContent = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+      condPlaceholder.textContent = lang === 'fr' ? '— État de la montre —' : '— Select condition —';
     }
     const papPlaceholder = document.querySelector('#selPapers option[disabled]');
     if (papPlaceholder) {
-      papPlaceholder.textContent = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+      papPlaceholder.textContent = lang === 'fr' ? '— Papiers d\'origine —' : '— Select papers —';
     }
     // Model dropdown — re-populate with translated placeholder
     const modelPlaceholder = document.querySelector('#selModel option[disabled]');
     if (modelPlaceholder) {
-      modelPlaceholder.textContent = lang === 'fr' ? '— Choisir la marque d\'abord —' : '— Choose brand first —';
+      modelPlaceholder.textContent = lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —';
     }
   }
 
@@ -547,7 +547,7 @@
     const brand = document.getElementById('selBrand').value;
     const lang = NM.lang || localStorage.getItem('nm_lang') || 'fr';
     const sel = document.getElementById('selModel');
-    const placeholder = lang === 'fr' ? '— Sélectionner —' : '— Select —';
+    const placeholder = lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —';
     sel.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
     (MODELS[brand] || []).forEach(m => {
       const opt = document.createElement('option');
