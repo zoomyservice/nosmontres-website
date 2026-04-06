@@ -510,15 +510,14 @@
         ? (refInput.dataset.frPlaceholder || 'Entrez le numéro de référence…')
         : (refInput.dataset.enPlaceholder || 'Enter reference number…');
     }
-    const ids = ['selBrand','selCondition','selPapers','selModel'];
     const labels = {
-      selBrand:     ['— Sélectionner une marque —', '— Select a brand —'],
-      selCondition: ['— État de la montre —',        '— Select condition —'],
-      selPapers:    ["— Papiers d'origine —",       '— Select papers —'],
-      selModel:     ['— Sélectionner le modèle —',   '— Select a model —'],
+      selBrand:     ["— Sélectionner une marque —", "— Select a brand —"],
+      selCondition: ["— État de la montre —",        "— Select condition —"],
+      selPapers:    ["— Papiers d'origine —",        "— Select papers —"],
+      selModel:     ["— Sélectionner le modèle —",   "— Select a model —"],
     };
-    ids.forEach(id => {
-      const el = document.querySelector(`#${id} option[disabled]`);
+    Object.keys(labels).forEach(id => {
+      const el = document.querySelector('#' + id + ' option[disabled]');
       if (el) el.textContent = lang === 'fr' ? labels[id][0] : labels[id][1];
     });
   }
@@ -544,12 +543,166 @@
     const brand = document.getElementById('selBrand').value;
     const lang  = NM.lang || localStorage.getItem('nm_lang') || 'fr';
     const sel   = document.getElementById('selModel');
-    sel.innerHTML = `<option value="" disabled selected>${lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —'}</option>`;
-    (MODELS[brand] || []).forEach(m => {
+    sel.innerHTML = '<option value="" disabled selected>' + (lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —') + '</option>';
+    (MODELS[brand] || []).forEach(function(m) {
       const opt = document.createElement('option');
       opt.value = opt.textContent = m;
       sel.appendChild(opt);
     });
+  }
+
+  /* ── Price database ── */
+  // Ranges represent current secondary market (low = fair buy / high = retail ask)
+  // Organised as: PRICES[brand][ref_or_model] = [min, max]
+  const PRICES = {
+    'Rolex': {
+      // Submariner
+      '124060': [9000, 13500], 'submariner no date': [9000, 13500], 'nodate': [9000, 13500],
+      '126610ln': [11000, 15500], '126610': [11000, 16000],
+      '126610lv': [15000, 22000], 'starbucks': [15000, 22000], 'kermit': [12000, 19000],
+      '116610lv': [12000, 19000], 'hulk': [18000, 28000], '116610gv': [18000, 28000],
+      '116610ln': [10000, 14500],
+      'submariner': [9000, 22000],
+      // GMT
+      '126710blnr': [14000, 22000], 'batman': [14000, 22000],
+      '126710grnr': [22000, 35000], 'sprite': [22000, 35000],
+      '126711chnr': [18000, 30000], 'rootbeer': [18000, 30000], 'bicolore gmt': [18000, 30000],
+      '126710': [13000, 22000],
+      '116710blnr': [12000, 18000], '116710ln': [10000, 15000],
+      'gmt master ii': [12000, 35000], 'gmt': [12000, 35000],
+      // Daytona
+      '126500ln': [25000, 40000], '126520': [26000, 42000],
+      '116500ln': [28000, 50000], '116520': [22000, 38000],
+      '116503': [20000, 35000], '116508': [35000, 65000],
+      'daytona': [22000, 200000],
+      // DateJust
+      '126334': [8500, 14000], '126300': [8000, 13000], '126301': [8000, 13000],
+      '126333': [9000, 14500],
+      '126200': [7000, 11000], '126233': [8000, 12500],
+      '16234': [4500, 7500], '16233': [4500, 7500],
+      'datejust 41': [8000, 14000], 'datejust 36': [7000, 12500], 'datejust': [7000, 14000],
+      // Day-Date
+      '228238': [28000, 55000], '228239': [28000, 55000], '228206': [30000, 60000],
+      '18238': [18000, 35000], '18039': [18000, 35000],
+      'day-date': [18000, 80000], 'day date': [18000, 80000], 'president': [18000, 80000],
+      // Explorer
+      '124270': [7500, 11500], '214270': [6500, 10000], '14270': [3500, 6000],
+      '226570': [9000, 13500], '16570': [4500, 8000],
+      'explorer ii': [9000, 13500], 'explorer': [7500, 11500],
+      // Oyster Perpetual
+      '124300': [8000, 12000], '124300 red': [8500, 13000], '124300 coral': [9000, 14000],
+      '124300 turquoise': [10000, 16000], '124300 yellow': [9000, 14000],
+      '124300 blue': [8000, 12000], '114300': [5000, 9000],
+      'oyster perpetual 41': [8000, 14000], 'oyster perpetual': [7000, 14000],
+      // Sea-Dweller
+      '126600': [12000, 18000], '116600': [10000, 16000],
+      '126660': [28000, 45000], 'deepsea': [28000, 45000],
+      'sea-dweller': [12000, 18000], 'sea dweller': [12000, 18000],
+      // Yacht-Master
+      '126622': [14000, 20000], '126655': [18000, 28000],
+      '116622': [12000, 18000], '116655': [16000, 26000],
+      '116681': [16000, 25000], '116688': [18000, 28000],
+      'yacht-master': [12000, 28000], 'yacht master': [12000, 28000],
+      // Other
+      '116400gv': [12000, 18000], 'milgauss': [12000, 18000],
+      '126900': [7000, 10500], 'air-king': [7000, 10500], 'air king': [7000, 10500],
+      '126710': [13000, 22000],
+      '_default': [7000, 45000]
+    },
+    'Audemars Piguet': {
+      // Royal Oak
+      '15500st': [35000, 60000], '15500': [35000, 60000],
+      '15202st': [75000, 130000], '15202': [75000, 130000], 'jumbo': [75000, 130000], 'extra-thin': [75000, 130000],
+      '15400st': [28000, 48000], '15400': [28000, 48000],
+      '26331st': [35000, 60000], '26315st': [35000, 60000],
+      '15710st': [22000, 40000], '15703st': [22000, 40000],
+      'royal oak chronograph': [35000, 65000],
+      'royal oak': [28000, 130000],
+      // Royal Oak Offshore
+      '26405ce': [50000, 85000], '26470st': [28000, 45000],
+      '26480ti': [35000, 60000], '26378st': [28000, 48000],
+      '26237st': [25000, 42000],
+      'royal oak offshore chronograph': [35000, 85000],
+      'royal oak offshore': [25000, 85000],
+      // Other
+      'code 11.59': [22000, 50000], 'code 11': [22000, 50000],
+      'millenary': [18000, 45000], 'jules audemars': [25000, 80000],
+      '_default': [22000, 130000]
+    },
+    'Patek Philippe': {
+      // Nautilus
+      '5711a': [80000, 150000], '5711/1a': [80000, 150000], '5711': [65000, 150000],
+      '5726a': [55000, 95000], '5726/1a': [55000, 95000],
+      '5980r': [80000, 140000], '5990r': [90000, 160000],
+      '5712r': [65000, 110000], '5712g': [75000, 130000],
+      '5719g': [120000, 200000],
+      'nautilus': [55000, 200000],
+      // Aquanaut
+      '5167a': [35000, 65000], '5167/1a': [35000, 65000],
+      '5168g': [65000, 110000], '5164a': [45000, 75000],
+      '5065a': [20000, 40000],
+      'aquanaut': [30000, 110000],
+      // Calatrava
+      '5296r': [22000, 40000], '5227g': [28000, 50000],
+      '5196g': [25000, 45000], '6119r': [28000, 50000],
+      '5153g': [35000, 65000],
+      'calatrava': [20000, 65000],
+      // Complications
+      '5905p': [55000, 95000], '5726a': [55000, 95000],
+      '5531r': [300000, 600000],
+      'grand complications': [200000, 1000000],
+      'complications': [40000, 200000],
+      // Chronograph
+      '5170j': [65000, 120000], '5172g': [55000, 100000],
+      'chronograph': [55000, 150000],
+      '_default': [20000, 200000]
+    },
+    'Richard Mille': {
+      'rm 011': [180000, 350000], 'rm011': [180000, 350000], 'rm-011': [180000, 350000],
+      'rm 027': [500000, 1200000], 'rm027': [500000, 1200000],
+      'rm 035': [150000, 280000], 'rm035': [150000, 280000],
+      'rm 055': [120000, 200000], 'rm055': [120000, 200000],
+      'rm 067': [100000, 180000], 'rm067': [100000, 180000],
+      'rm 072': [200000, 400000], 'rm072': [200000, 400000],
+      'rm 010': [80000, 150000],  'rm010': [80000, 150000],
+      'rm 030': [90000, 160000],  'rm030': [90000, 160000],
+      '_default': [80000, 400000]
+    }
+  };
+
+  /* ── Price lookup with fuzzy matching ── */
+  function lookupPrice(brand, model, ref) {
+    const db = PRICES[brand];
+    if (!db) return null;
+
+    const normalize = s => s.toLowerCase().replace(/[\s\-_\/\.]/g, '');
+    const refN  = normalize(ref || '');
+    const modelN = normalize(model || '');
+
+    // 1. Exact reference match
+    if (refN) {
+      if (db[ref.toLowerCase()]) return db[ref.toLowerCase()];
+      // Try normalised ref
+      for (const key of Object.keys(db)) {
+        if (normalize(key) === refN) return db[key];
+      }
+      // Try ref as substring of a key or vice versa
+      for (const key of Object.keys(db)) {
+        const keyN = normalize(key);
+        if (keyN !== '_default' && (refN.includes(keyN) || keyN.includes(refN))) return db[key];
+      }
+    }
+
+    // 2. Model keyword match
+    if (modelN) {
+      for (const key of Object.keys(db)) {
+        const keyN = normalize(key);
+        if (keyN !== '_default' && (modelN.includes(keyN) || keyN.includes(modelN))) return db[key];
+      }
+    }
+
+    // 3. Brand default
+    return db['_default'] || null;
   }
 
   /* ── Helpers ── */
@@ -559,122 +712,59 @@
     }).format(num);
   }
 
-  /* ── Multi-proxy fetch ── */
-  async function fetchHtml(url) {
-    const proxies = [
-      async u => { const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(u)}`, {signal:AbortSignal.timeout(10000)}); if(!r.ok) throw 0; return r.text(); },
-      async u => { const r = await fetch(`https://api.allorigins.me/get?url=${encodeURIComponent(u)}`, {signal:AbortSignal.timeout(10000)}); if(!r.ok) throw 0; const d=await r.json(); return d.contents||''; },
-      async u => { const r = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, {signal:AbortSignal.timeout(10000)}); if(!r.ok) throw 0; return r.text(); },
-    ];
-    for (const proxy of proxies) {
-      try {
-        const html = await proxy(url);
-        if (html && html.length > 8000 && !html.includes('cf-browser-verification') && !html.includes('Just a moment'))
-          return html;
-      } catch(e) {}
-    }
-    return null;
+  /* ── Condition & papers adjustment ── */
+  function adjustForCondition(range, condition, papers) {
+    let [lo, hi] = range;
+    // Used condition: subtract 10-20% from low end
+    if (condition === 'used') { lo = Math.round(lo * 0.82); hi = Math.round(hi * 0.93); }
+    // No papers: subtract ~10% from both
+    if (papers === 'no') { lo = Math.round(lo * 0.88); hi = Math.round(hi * 0.90); }
+    return [lo, hi];
   }
 
-  /* ── Price parser ── */
-  function parsePrices(html) {
-    const found = [];
-    let m;
-
-    // data-price attributes
-    const dpRe = /data-price["\s]*[:=]["\s]*(\d+)/g;
-    while ((m = dpRe.exec(html)) !== null) {
-      const n = parseInt(m[1]);
-      if (n >= 500 && n <= 15000000) found.push(n);
-    }
-
-    // JSON-LD
-    const ldRe = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-    while ((m = ldRe.exec(html)) !== null) {
-      try {
-        const checkObj = (obj) => {
-          if (!obj || typeof obj !== 'object') return;
-          ['price','lowPrice','highPrice'].forEach(k => {
-            if (obj[k]) { const n = parseFloat(String(obj[k]).replace(/[^\d.]/g,'')); if (n>=500) found.push(Math.round(n)); }
-          });
-          if (Array.isArray(obj)) obj.forEach(checkObj);
-          if (obj.itemListElement) obj.itemListElement.forEach(i => checkObj(i.item||i));
-          if (obj.offers) checkObj(obj.offers);
-        };
-        checkObj(JSON.parse(m[1]));
-      } catch(e) {}
-    }
-
-    // European price strings: 14.500 € / 14 500 € / € 14.500
-    const euroRe = /(?:€\s*)(\d{1,3}(?:[.\s']\d{3})+)|(?:^|[\s>,(])(\d{1,3}(?:[.\s']\d{3})+)\s*€/gm;
-    while ((m = euroRe.exec(html)) !== null) {
-      const raw = (m[1]||m[2]||'').replace(/[.\s']/g,'');
-      const n = parseInt(raw);
-      if (n >= 500 && n <= 15000000) found.push(n);
-    }
-
-    // Plain 5-7 digit numbers near €
-    const plainRe = /(\d{4,7})\s*€|€\s*(\d{4,7})/g;
-    while ((m = plainRe.exec(html)) !== null) {
-      const n = parseInt(m[1]||m[2]);
-      if (n >= 500 && n <= 15000000) found.push(n);
-    }
-
-    return [...new Set(found)].filter(p => p>=500 && p<=15000000).sort((a,b)=>a-b);
-  }
-
-  /* ── Estimate ── */
-  async function runEstimate() {
+  /* ── Main estimate ── */
+  function runEstimate() {
     const brand     = document.getElementById('selBrand').value;
     const model     = document.getElementById('selModel').value;
     const condition = document.getElementById('selCondition').value;
     const papers    = document.getElementById('selPapers').value;
     const ref       = document.getElementById('inputRef').value.trim();
+    const lang      = NM.lang || 'fr';
 
-    if (!brand)     { alert('Please select a brand'); return; }
-    if (!condition) { alert('Please select a condition'); return; }
+    if (!brand)     { alert(lang === 'fr' ? 'Veuillez sélectionner une marque' : 'Please select a brand'); return; }
+    if (!condition) { alert(lang === 'fr' ? "Veuillez sélectionner l'état" : 'Please select a condition'); return; }
 
-    const btn     = document.getElementById('btnEstimate');
     const results = document.getElementById('estimateResults');
-    btn.disabled  = true;
-    btn.classList.add('loading');
     results.className = '';
     results.innerHTML = '';
 
-    const parts = [brand, model, ref].filter(Boolean);
-    const condParam = condition === 'new' ? '&usedOrNew=new' : '&usedOrNew=used';
-    const makeUrl = q => `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(q)}&dosearch=true&sortorder=1${condParam}`;
+    const range = lookupPrice(brand, model, ref);
+    const label = [brand, model, ref].filter(Boolean).join(' · ');
 
-    let prices = [];
-    const html1 = await fetchHtml(makeUrl(parts.join(' ')));
-    if (html1) prices = parsePrices(html1);
-
-    // Broaden search if too specific
-    if (prices.length < 2 && parts.length > 2) {
-      const html2 = await fetchHtml(makeUrl(parts.slice(0,2).join(' ')));
-      if (html2) { const p2 = parsePrices(html2); if (p2.length > prices.length) prices = p2; }
+    if (!range) {
+      results.innerHTML = buildNoResults(label);
+    } else {
+      const [lo, hi] = adjustForCondition(range, condition, papers);
+      results.innerHTML = buildResults(label, lo, hi, papers, condition);
     }
 
-    const label = [brand, model, ref].filter(Boolean).join(' · ');
-    results.innerHTML = prices.length >= 1
-      ? buildResults(label, prices[0], prices[prices.length-1], prices.length, papers)
-      : buildNoResults(label);
-
     results.classList.add('visible');
-    btn.disabled = false;
-    btn.classList.remove('loading');
-    results.scrollIntoView({behavior:'smooth', block:'nearest'});
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function buildResults(label, minP, maxP, count, papers) {
+  function buildResults(label, minP, maxP, papers, condition) {
+    const lang = NM.lang || 'fr';
     const papNote = papers === 'yes'
       ? '<span class="fr"> · avec papiers</span><span class="en"> · with papers</span>'
       : '<span class="fr"> · sans papiers</span><span class="en"> · without papers</span>';
+    const condNote = condition === 'new'
+      ? '<span class="fr"> · neuve</span><span class="en"> · new</span>'
+      : '<span class="fr"> · occasion</span><span class="en"> · used</span>';
     return `
       <div class="results-header">
         <span class="results-header__label fr">Estimation du marché</span>
         <span class="results-header__label en">Market estimate</span>
-        <span class="results-header__watch">${label}${papNote}</span>
+        <span class="results-header__watch">${label}${condNote}${papNote}</span>
       </div>
       <div class="price-range">
         <div class="price-box price-box--low">
@@ -688,8 +778,8 @@
           <span class="price-box__value">${fmtEur(maxP)}</span>
         </div>
       </div>
-      <p class="results-note fr">Fourchette basée sur ${count} annonce${count>1?'s':''} au moment de la recherche. Le prix de rachat dépend de l'état et de l'historique de la pièce.</p>
-      <p class="results-note en">Range based on ${count} listing${count>1?'s':''} at time of search. Actual buyback price depends on condition and history.</p>
+      <p class="results-note fr">Fourchette basée sur les prix du marché secondaire actuel. Le prix de rachat réel dépend de l'état exact et de l'historique de la pièce.</p>
+      <p class="results-note en">Range based on current secondary market prices. Actual buyback price depends on the exact condition and history of the piece.</p>
       <div class="results-cta-row">
         <a href="prendre-rendez-vous.html" class="btn-primary-sm">
           <span class="fr">Obtenir une offre de rachat</span>
@@ -701,12 +791,18 @@
   function buildNoResults(label) {
     return `
       <div class="results-header">
-        <span class="results-header__label fr">Aucune annonce trouvée</span>
-        <span class="results-header__label en">No listings found</span>
+        <span class="results-header__label fr">Référence inconnue</span>
+        <span class="results-header__label en">Unknown reference</span>
         <span class="results-header__watch">${label}</span>
       </div>
-      <p class="results-note fr">Aucun résultat pour cette référence. Essayez sans le suffixe couleur ou vérifiez l'orthographe.</p>
-      <p class="results-note en">No results for this reference. Try without the colour suffix or double-check the spelling.</p>`;
+      <p class="results-note fr">Cette référence n'est pas dans notre base. Contactez-nous pour une estimation personnalisée.</p>
+      <p class="results-note en">This reference is not in our database. Contact us for a personalised estimate.</p>
+      <div class="results-cta-row">
+        <a href="prendre-rendez-vous.html" class="btn-primary-sm">
+          <span class="fr">Estimation personnalisée</span>
+          <span class="en">Personal estimate</span>
+        </a>
+      </div>`;
   }
 </script>
 
