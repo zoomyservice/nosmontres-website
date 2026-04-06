@@ -139,7 +139,7 @@ h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr { display: block; }
 .nav-cta:hover { background: var(--charcoal); color: var(--white); }
 
 /* Burger */
-.burger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+.burger { display: none; flex-direction: column; gap: 5px; padding: 8px; flex-shrink: 0; position: relative; z-index: 1001; }
 .burger span {
   display: block; width: 22px; height: 1.5px; background: var(--charcoal);
   transition: transform var(--transition), opacity var(--transition);
@@ -629,7 +629,9 @@ h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr { display: block; }
 @media (max-width: 960px) {
   /* Nav */
   .burger { display: flex; }
-  .nav-inner { gap: 0; justify-content: space-between; }
+  .nav-inner { gap: 0; justify-content: space-between; padding: 0 16px; }
+  .nav-logo img { max-width: 130px; height: auto; max-height: 36px; }
+  .nav-right { gap: 12px; }
   #navLinks {
     position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; z-index: 999;
     background: var(--white); flex-direction: column; justify-content: flex-start;
