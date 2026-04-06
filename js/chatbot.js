@@ -21,8 +21,8 @@
     years:   '15+',
   };
 
-  // ─── Conversation context (remember brand/model across turns) ─────────────────
-  const ctx = { brand: null, model: null };
+  // ─── Conversation context (persists across turns) ────────────────────────────
+  const ctx = { brand: null, model: null, lastEntry: null, lastText: null };
 
   // ─── Keyword helpers ──────────────────────────────────────────────────────────
   function norm(s) {
@@ -828,6 +828,146 @@
     ]);
   }
 
+  // ─── Follow-up detection ──────────────────────────────────────────────────────
+  function isFollowUp(n) {
+    return anyKw(n, [
+      'which one','the best one','specifically','number one','top pick','the one',
+      'that one','this one','the watch','that watch','pick one','choose one',
+      'reference number','ref number','the ref','what ref','which ref','reference for it',
+      'ref for it','what is the reference','reference of it','its reference',
+      'how much is it','what does it cost','the price','its price','how much for it',
+      'can you elaborate','more details','more about it','tell me more','go on',
+      'explain more','what else','and what','what about it','compared to',
+      'best option','your recommendation','recommend','which is better',
+      'vs','versus','or the','between','difference between',
+      'what year','when was it made','who made it','who designed',
+      'is it worth','should i buy it','good deal','worth the money',
+      'can i wear it','how to wear','dress or sport','size','how big',
+      'movement inside','what movement','caliber','what caliber','the movement',
+      'available','in stock','can i get one','where to buy','how to buy it'
+    ]);
+  }
+
+  // ─── Context-aware follow-up responses ───────────────────────────────────────
+  const FOLLOW_UP = {
+
+    investment: n => {
+      if (anyKw(n, ['which one','specifically','number one','top pick','best one',
+                    'recommend','the one','pick one','choose','single best'])) {
+        return t(
+          `Si je devais choisir **une seule montre** comme placement absolu, ce serait la **Patek Philippe Nautilus 5711/1A-010** :\n\n💙 Cadran bleu rayé, 40mm acier, bracelet intégré\n📌 Référence : **5711/1A-010**\n💰 Retail à la discontinuation : €28 900\n📈 Marché actuel : **€70 000–€145 000**\n🚫 **Discontinuée en janvier 2021** — Patek ne la reproduira jamais sous ce nom\n\nLa combinaison "discontinuation officielle + icône culturelle + faible production" en fait le cas le plus solide.\n\nVous souhaitez une estimation pour une 5711 que vous possédez ?\n📞 **${BIZ.phone1}**`,
+          `If I had to choose **one single watch** as the absolute best investment, it would be the **Patek Philippe Nautilus 5711/1A-010**:\n\n💙 Blue striped dial, 40mm steel, integrated bracelet\n📌 Reference: **5711/1A-010**\n💰 Retail at discontinuation: €28,900\n📈 Current market: **€70,000–€145,000**\n🚫 **Discontinued January 2021** — Patek will never reproduce it under this name\n\nThe combination of "official discontinuation + cultural icon + low production" makes it the strongest case.\n\nDo you own a 5711 and want an estimate?\n📞 **${BIZ.phone1}**`
+        );
+      }
+      if (anyKw(n, ['reference','ref ','the ref','what ref'])) {
+        return t(
+          `Les références clés des montres d'investissement :\n\n• **Patek Nautilus** → 5711/1A-010 (acier/bleu) · 5711/1A-011 (acier/vert)\n• **Rolex Daytona** → 116500LN (noir) · 116500LN "Panda" (blanc)\n• **AP Royal Oak Jumbo** → 15202ST.OO.1240ST.01\n• **AP Royal Oak 41mm** → 15500ST.OO.1220ST\n\nQuelle marque vous intéresse en priorité ?`,
+          `Key references for investment watches:\n\n• **Patek Nautilus** → 5711/1A-010 (steel/blue) · 5711/1A-011 (steel/green)\n• **Rolex Daytona** → 116500LN (black) · 116500LN "Panda" (white)\n• **AP Royal Oak Jumbo** → 15202ST.OO.1240ST.01\n• **AP Royal Oak 41mm** → 15500ST.OO.1220ST\n\nWhich brand interests you most?`
+        );
+      }
+      return null;
+    },
+
+    submariner: n => {
+      if (anyKw(n, ['which one','best one','recommend','pick one','specifically'])) {
+        return t(
+          `Parmi les Submariner, je recommande selon votre objectif :\n\n🏆 **Investissement** → **126610LV "Kermit"** (lunette verte) — la plus recherchée du lineup actuel\n⌚ **Usage quotidien** → **124060 No-Date** — plus épurée, moins encombrante, cote solide\n💰 **Budget** → **116610LN** (ancienne génération 40mm) — moins chère à l'entrée\n\nQuelle est votre priorité — porter au quotidien ou placer ?`,
+          `Among Submariners, my recommendation depends on your goal:\n\n🏆 **Investment** → **126610LV "Kermit"** (green bezel) — the most sought-after in the current lineup\n⌚ **Daily wear** → **124060 No-Date** — cleaner, less obtrusive, solid value\n💰 **Budget entry** → **116610LN** (old 40mm generation) — lower entry price\n\nWhat's your priority — daily wear or investment?`
+        );
+      }
+      if (anyKw(n, ['reference','ref ','the ref','what ref','reference number'])) {
+        return t(
+          `Références Submariner actuelles :\n\n• **124060** — No-Date, lunette/cadran noirs, 41mm (2020–)\n• **126610LN** — Date, lunette/cadran noirs, 41mm (2020–)\n• **126610LV** — Date, lunette verte "Kermit", cadran noir, 41mm (2020–)\n\nAnciennes très recherchées :\n• **116610LV "Hulk"** — cadran ET lunette verts (2010–2020)\n• **116610LN** — 40mm, lunette/cadran noirs (2010–2020)`,
+          `Current Submariner references:\n\n• **124060** — No-Date, black bezel/dial, 41mm (2020–)\n• **126610LN** — Date, black bezel/dial, 41mm (2020–)\n• **126610LV** — Date, green "Kermit" bezel, black dial, 41mm (2020–)\n\nHighly sought-after older refs:\n• **116610LV "Hulk"** — green dial AND bezel (2010–2020)\n• **116610LN** — 40mm, black bezel/dial (2010–2020)`
+        );
+      }
+      if (anyKw(n, ['how much','price','worth','cost','valeur'])) {
+        return t(
+          `Prix actuels Submariner (marché secondaire) :\n\n• 124060 No-Date → **€9 000–€12 000**\n• 126610LN → **€10 500–€14 000**\n• 126610LV "Kermit" → **€12 000–€17 000**\n• 116610LV "Hulk" → **€14 000–€19 000**\n\nPour votre montre spécifique : 📞 ${BIZ.phone1}`,
+          `Current Submariner prices (secondary market):\n\n• 124060 No-Date → **€9,000–€12,000**\n• 126610LN → **€10,500–€14,000**\n• 126610LV "Kermit" → **€12,000–€17,000**\n• 116610LV "Hulk" → **€14,000–€19,000**\n\nFor your specific watch: 📞 ${BIZ.phone1}`
+        );
+      }
+      return null;
+    },
+
+    daytona: n => {
+      if (anyKw(n, ['which one','best one','recommend','pick one','specifically'])) {
+        return t(
+          `La Daytona la plus recherchée du marché actuel est la **126500LN "Panda"** (cadran blanc, index noirs) :\n\n📌 Ref : **126500LN** (cadran blanc) ou **126500LN** (cadran noir)\n💰 Marché "Panda" : **€16 000–€24 000**\n\nPour l'investissement pur, la **116500LN** (2016–2023, première céramique) reste très liquide à **€14 000–€21 000**.\n\nAvez-vous une Daytona à estimer ? 📞 ${BIZ.phone1}`,
+          `The most sought-after Daytona on the current market is the **126500LN "Panda"** (white dial, black indices):\n\n📌 Ref: **126500LN** (white dial) or **126500LN** (black dial)\n💰 "Panda" market: **€16,000–€24,000**\n\nFor pure investment, the **116500LN** (2016–2023, first ceramic) remains very liquid at **€14,000–€21,000**.\n\nDo you have a Daytona to estimate? 📞 ${BIZ.phone1}`
+        );
+      }
+      if (anyKw(n, ['reference','ref ','the ref','what ref','reference number'])) {
+        return t(
+          `Références Daytona :\n\n**Actuelles (2023–)**\n• **126500LN** — lunette céramique noire, cadran noir ou "Panda" (blanc)\n\n**Récentes (2016–2023)**\n• **116500LN** — première Daytona céramique, très recherchée\n\n**Or blanc**\n• **126509** — or blanc, lunette céramique ou diamants\n• **116509** — version précédente\n\n**Vintages mythiques**\n• **6239 / 6241 / 6263 / 6265** — "Paul Newman" era`,
+          `Daytona references:\n\n**Current (2023–)**\n• **126500LN** — ceramic black bezel, black or "Panda" (white) dial\n\n**Recent (2016–2023)**\n• **116500LN** — first ceramic Daytona, highly sought-after\n\n**White gold**\n• **126509** — white gold, ceramic or diamond bezel\n• **116509** — previous version\n\n**Mythic vintages**\n• **6239 / 6241 / 6263 / 6265** — "Paul Newman" era`
+        );
+      }
+      return null;
+    },
+
+    nautilus: n => {
+      if (anyKw(n, ['which one','best one','recommend','pick one','specifically',
+                    'most sought','most wanted','the one to buy'])) {
+        return t(
+          `La **Nautilus 5711/1A-010** (cadran bleu) est unanimement considérée comme la montre d'investissement ultime de l'ère moderne :\n\n📌 **Référence : 5711/1A-010**\n💙 Cadran bleu rayé horizontal, 40mm, acier 316L\n📅 **Discontinuée : janvier 2021** — jamais plus reproduite sous ce nom\n💰 Retail : €28 900 → Marché : **€70 000–€145 000**\n\n📌 La version cadran blanc **5711/1A-011** est également très demandée (sortie juste avant la discontinuation, tirage très limité).\n\nVous en avez une ? 📞 ${BIZ.phone1}`,
+          `The **Nautilus 5711/1A-010** (blue dial) is universally considered the ultimate investment watch of the modern era:\n\n📌 **Reference: 5711/1A-010**\n💙 Horizontal striped blue dial, 40mm, 316L steel\n📅 **Discontinued: January 2021** — never to be reproduced under this name\n💰 Retail: €28,900 → Market: **€70,000–€145,000**\n\n📌 The white dial **5711/1A-011** is also highly sought-after (released just before discontinuation, very limited run).\n\nDo you own one? 📞 ${BIZ.phone1}`
+        );
+      }
+      if (anyKw(n, ['reference','ref ','the ref','what ref','reference number'])) {
+        return t(
+          `Références Nautilus :\n\n• **5711/1A-010** — acier, cadran bleu *(la plus recherchée)*\n• **5711/1A-011** — acier, cadran blanc (tirage limité avant disco.)\n• **5712/1A-001** — acier, moonphase + date\n• **5726/1A-014** — acier, annual calendar\n• **5980/1AR-001** — Everose/acier, chronographe flyback\n• **5726A-014** — acier, annual calendar\n\nToutes discontinuées ou en très forte demande.`,
+          `Nautilus references:\n\n• **5711/1A-010** — steel, blue dial *(the most sought-after)*\n• **5711/1A-011** — steel, white dial (limited run before disco.)\n• **5712/1A-001** — steel, moonphase + date\n• **5726/1A-014** — steel, annual calendar\n• **5980/1AR-001** — Everose/steel, flyback chronograph\n• **5726A-014** — steel, annual calendar\n\nAll discontinued or in very high demand.`
+        );
+      }
+      return null;
+    },
+
+    royal_oak: n => {
+      if (anyKw(n, ['which one','best one','recommend','pick one','specifically',
+                    'most sought','most valuable','the one to buy'])) {
+        return t(
+          `Il y a deux réponses selon votre budget :\n\n👑 **Ultime (budget illimité)** : **Royal Oak 15202ST "Jumbo"**\n📌 Ref : 15202ST.OO.1240ST.01\n💰 Marché : **€85 000–€150 000**\nDiscontinué 2022 · Cal. 2121 partagé avec la Patek 5711 · 8.1mm d'épaisseur\n\n⭐ **Meilleur rapport valeur/accessibilité** : **Royal Oak 15500ST**\n📌 Ref : 15500ST.OO.1220ST.01\n💰 Marché : **€38 000–€55 000**\nActuel · Cal. 4302 · 41mm · Icône moderne\n\nVous souhaitez en vendre une ? 📞 ${BIZ.phone1}`,
+          `Two answers depending on your budget:\n\n👑 **Ultimate (unlimited budget)**: **Royal Oak 15202ST "Jumbo"**\n📌 Ref: 15202ST.OO.1240ST.01\n💰 Market: **€85,000–€150,000**\nDiscontinued 2022 · Cal. 2121 shared with Patek 5711 · 8.1mm thick\n\n⭐ **Best value/accessibility**: **Royal Oak 15500ST**\n📌 Ref: 15500ST.OO.1220ST.01\n💰 Market: **€38,000–€55,000**\nCurrent · Cal. 4302 · 41mm · Modern icon\n\nLooking to sell one? 📞 ${BIZ.phone1}`
+        );
+      }
+      if (anyKw(n, ['reference','ref ','the ref','what ref','reference number'])) {
+        return t(
+          `Références Royal Oak clés :\n\n• **15202ST** "Jumbo/Extra-Thin" — 39mm, Cal. 2121 *(discontinué 2022)*\n• **15500ST** — 41mm, Cal. 4302 *(actuel)*\n• **15400ST** — 41mm, Cal. 3120 *(2012–2021)*\n• **15300ST** — 39mm, Cal. 3120 *(2005–2012)*\n• **26240ST** — Chronographe 41mm\n• **26470ST** — Offshore Chronographe 42mm\n• **15703ST** — Offshore Diver 42mm`,
+          `Key Royal Oak references:\n\n• **15202ST** "Jumbo/Extra-Thin" — 39mm, Cal. 2121 *(discontinued 2022)*\n• **15500ST** — 41mm, Cal. 4302 *(current)*\n• **15400ST** — 41mm, Cal. 3120 *(2012–2021)*\n• **15300ST** — 39mm, Cal. 3120 *(2005–2012)*\n• **26240ST** — Chronograph 41mm\n• **26470ST** — Offshore Chronograph 42mm\n• **15703ST** — Offshore Diver 42mm`
+        );
+      }
+      return null;
+    },
+
+    gmt: n => {
+      if (anyKw(n, ['which one','best one','recommend','pick one','specifically'])) {
+        return t(
+          `La GMT la plus iconique et recherchée est le **126710BLRO "Pepsi"** (lunette rouge/bleue) :\n\n📌 Ref : **126710BLRO**\n🔴🔵 Lunette céramique bicolore rouge/bleue\n⌚ 40mm, bracelet Jubilee 5 maillons\n💰 Marché : **€12 000–€18 000**\n\nLe "Batman" (**126710BLNR**, bleu/noir) est légèrement moins cher mais tout aussi populaire.\n\nPour une estimation de votre GMT : 📞 ${BIZ.phone1}`,
+          `The most iconic and sought-after GMT is the **126710BLRO "Pepsi"** (red/blue bezel):\n\n📌 Ref: **126710BLRO**\n🔴🔵 Red/blue ceramic bicolour bezel\n⌚ 40mm, 5-link Jubilee bracelet\n💰 Market: **€12,000–€18,000**\n\nThe "Batman" (**126710BLNR**, blue/black) is slightly less expensive but equally popular.\n\nFor an estimate on your GMT: 📞 ${BIZ.phone1}`
+        );
+      }
+      if (anyKw(n, ['reference','ref ','the ref','what ref','reference number'])) {
+        return t(
+          `Références GMT-Master II :\n\n• **126710BLRO** — "Pepsi" rouge/bleu, Jubilee *(actuel)*\n• **126710BLNR** — "Batman" bleu/noir, Jubilee *(actuel)*\n• **126715CHNR** — "Root Beer" Everose, brun/noir *(actuel)*\n• **116710BLNR** — "Batman" (2013–2019)\n• **116710BLRO** — "Pepsi" acier (2007–2019)\n• **116718LN** — "Sprite" or jaune, lunette noire\n• **16710** — Génération précédente (aluminium)`,
+          `GMT-Master II references:\n\n• **126710BLRO** — "Pepsi" red/blue, Jubilee *(current)*\n• **126710BLNR** — "Batman" blue/black, Jubilee *(current)*\n• **126715CHNR** — "Root Beer" Everose, brown/black *(current)*\n• **116710BLNR** — "Batman" (2013–2019)\n• **116710BLRO** — "Pepsi" steel (2007–2019)\n• **116718LN** — "Sprite" yellow gold, black bezel\n• **16710** — Previous generation (aluminium)`
+        );
+      }
+      return null;
+    },
+
+    rm027: n => {
+      if (anyKw(n, ['reference','ref ','the ref','what ref','reference number'])) {
+        return t(
+          `Références RM 027 :\n\n• **RM 027.01** (2010) — Première édition Nadal\n• **RM 027.02** (2012) — Évolution technique\n• **RM 027.03 "Americas"** (2013) — Édition marché Amériques\n\nChaque édition est numérotée — les premiers numéros valent plus.`,
+          `RM 027 references:\n\n• **RM 027.01** (2010) — First Nadal edition\n• **RM 027.02** (2012) — Technical evolution\n• **RM 027.03 "Americas"** (2013) — Americas market edition\n\nEach edition is numbered — lower serial numbers command a premium.`
+        );
+      }
+      return null;
+    },
+
+  };
+
   // ─── Main router ─────────────────────────────────────────────────────────────
   function getResponse(userInput) {
     const n = norm(userInput);
@@ -837,14 +977,63 @@
       return '__WORKER__';
     }
 
-    // KB scan — first match wins (array order = priority)
+    // KB scan — first match wins, track context
     for (const entry of KB) {
       if (anyKw(n, entry.kw)) {
+        ctx.lastEntry = entry.id;
         return entry.r();
       }
     }
 
-    // Context-aware follow-up: if we know the brand/model, give targeted fallback
+    // ── Follow-up / contextual intelligence ──────────────────────────────────
+    // Try topic-specific follow-up handler first
+    if (ctx.lastEntry && FOLLOW_UP[ctx.lastEntry]) {
+      const fu = FOLLOW_UP[ctx.lastEntry](n);
+      if (fu) return fu;
+    }
+
+    // Generic follow-up when we have brand/model context
+    if (isFollowUp(n) && ctx.lastEntry) {
+      // Reference question — handle generically across any model
+      if (anyKw(n, ['reference','ref ','the ref','what ref','reference number',
+                    'reference of it','ref for it','its reference'])) {
+        const refs = {
+          submariner: '124060 (no-date) · 126610LN (date, black) · 126610LV (date, Kermit green)',
+          daytona:    '126500LN (ceramic, current) · 116500LN (2016–2023)',
+          gmt:        '126710BLRO "Pepsi" · 126710BLNR "Batman" · 126715CHNR "Root Beer"',
+          nautilus:   '5711/1A-010 (blue) · 5711/1A-011 (white) — both discontinued 2021',
+          royal_oak:  '15202ST "Jumbo" (discontinued) · 15500ST (current, 41mm)',
+          aquanaut:   '5167A-001 (steel, black) · 5168G-010 (white gold, blue)',
+          offshore:   '26470ST (chronograph) · 26471SR (ceramic/steel) · 26480TI (titanium)',
+          speedmaster:'311.30.42.30.01.005 (manual, Moonwatch) · 310.30.42.50.01.001 (Cal.321)',
+          seamaster:  '210.30.42.20.01.001 (Diver 300M) · 215.30.44.21.01.001 (Planet Ocean)',
+          santos:     'WSSA0018 (medium steel) · WSSA0029 (medium steel/gold) · WSSA0009 (XL)',
+          tank:       'WSTA0041 (Tank Must) · W5200028 (Tank Louis Cartier gold)',
+        };
+        const modelRef = refs[ctx.model] || refs[ctx.lastEntry];
+        if (modelRef) {
+          return t(
+            `Références pour ${ctx.model || ctx.lastEntry} :\n\n📌 ${modelRef}\n\nVous avez une pièce spécifique à estimer ? 📞 ${BIZ.phone1}`,
+            `References for ${ctx.model || ctx.lastEntry}:\n\n📌 ${modelRef}\n\nDo you have a specific piece to estimate? 📞 ${BIZ.phone1}`
+          );
+        }
+      }
+
+      // "Which one is best" generically
+      if (anyKw(n, ['which one','best one','specifically','top pick','recommend',
+                    'most sought','number one','pick one'])) {
+        const brandName = { rolex:'Rolex', ap:'Audemars Piguet', patek:'Patek Philippe',
+                            rm:'Richard Mille', cartier:'Cartier', omega:'Omega' }[ctx.brand];
+        if (brandName) {
+          return t(
+            `Pouvez-vous préciser — parmi les ${brandName}, quel est votre priorité : **investissement**, **usage quotidien**, ou **prestige** ? Je pourrai vous donner une recommandation précise.\n\n📞 Ou discutez directement avec Gary : ${BIZ.phone1}`,
+            `Could you specify — among ${brandName} watches, what is your priority: **investment**, **daily use**, or **prestige**? I'll give you a precise recommendation.\n\n📞 Or speak directly with Gary: ${BIZ.phone1}`
+          );
+        }
+      }
+    }
+
+    // Brand/model context — give a targeted prompt
     if (ctx.brand) {
       const brandName = { rolex:'Rolex', ap:'Audemars Piguet', patek:'Patek Philippe',
                           rm:'Richard Mille', cartier:'Cartier', omega:'Omega',
@@ -852,15 +1041,15 @@
                           lange:'A. Lange & Söhne', tudor:'Tudor' }[ctx.brand] || ctx.brand;
       const modelStr = ctx.model ? ` ${ctx.model}` : '';
       return t(
-        `Je peux vous en dire plus sur la ${brandName}${modelStr}. Précisez votre question : référence, prix, histoire, révision, comparaison avec un autre modèle ?\n\n📞 Pour une expertise personnalisée : **${BIZ.phone1}**`,
-        `I can tell you more about the ${brandName}${modelStr}. Please specify: reference, price, history, service, comparison with another model?\n\n📞 For personalised expertise: **${BIZ.phone1}**`
+        `Sur la **${brandName}${modelStr}**, je peux vous renseigner sur :\n• La référence exacte\n• Le prix du marché secondaire\n• L'histoire et les spécifications\n• La révision / l'entretien\n• La comparaison avec un autre modèle\n\nQuelle information cherchez-vous ?\n📞 ${BIZ.phone1}`,
+        `About the **${brandName}${modelStr}**, I can tell you about:\n• The exact reference\n• Secondary market price\n• History and specifications\n• Service / maintenance\n• Comparison with another model\n\nWhat information are you looking for?\n📞 ${BIZ.phone1}`
       );
     }
 
-    // Generic intelligent fallback
+    // Smart generic fallback
     return t(
-      `Je n'ai pas tout compris, mais je suis expert en montres de luxe — Rolex, AP, Patek, Richard Mille, Cartier, Omega, IWC, Jaeger-LeCoultre, Vacheron, Lange, Breguet, Hublot, Panerai, Tudor…\n\nEssayez :\n• Nom d'un modèle ou d'une marque\n• "Estimer ma [marque] [modèle]"\n• "Je veux vendre ma montre"\n• "Comment authentifier une montre"\n• "Quelle montre acheter pour 15 000€"\n\n📞 Ou appelez Gary directement : **${BIZ.phone1}**`,
-      `I didn't quite catch that, but I'm a luxury watch expert — Rolex, AP, Patek, Richard Mille, Cartier, Omega, IWC, Jaeger-LeCoultre, Vacheron, Lange, Breguet, Hublot, Panerai, Tudor…\n\nTry:\n• A model or brand name\n• "Estimate my [brand] [model]"\n• "I want to sell my watch"\n• "How to authenticate a watch"\n• "Which watch to buy for €15,000"\n\n📞 Or call Gary directly: **${BIZ.phone1}**`
+      `Je ne suis pas sûr de comprendre — mais posez-moi n'importe quelle question sur les montres de luxe !\n\n💡 **Essayez par exemple :**\n• _"Quelle est la meilleure Rolex ?"_\n• _"Référence de la Submariner ?"_\n• _"Combien vaut ma Nautilus 5711 ?"_\n• _"Quelle montre acheter pour 20 000€ ?"_\n• _"Je veux vendre ma Daytona"_\n\n📞 **${BIZ.phone1}** — Gary répond directement`,
+      `I'm not quite sure I understand — but ask me anything about luxury watches!\n\n💡 **Try for example:**\n• _"What is the best Rolex?"_\n• _"Submariner reference number?"_\n• _"How much is my Nautilus 5711 worth?"_\n• _"Which watch to buy for €20,000?"_\n• _"I want to sell my Daytona"_\n\n📞 **${BIZ.phone1}** — Gary answers directly`
     );
   }
 
