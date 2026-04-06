@@ -597,6 +597,8 @@
     } catch (err) {
       results.innerHTML = buildError(label, lang);
     }
+    // Re-apply language visibility to newly injected HTML spans
+    NM.setLang(NM.lang, false);
   }
 
   function buildLoading(lang) {
@@ -611,6 +613,21 @@
   }
 
   function buildResults(label, minP, maxP, currency, count, papers, condition) {
+    // ── Condition + papers price adjustment ──────────────────────────────────
+    // Base prices from Worker represent the general used+papers secondary market.
+    // Adjust up for unworn / down for no-papers accordingly.
+    const round100 = n => Math.round(n / 100) * 100;
+    if (condition === 'new') {
+      // Unworn/new: commands a clear premium on secondary market
+      minP = round100(minP * 1.12);
+      maxP = round100(maxP * 1.15);
+    }
+    if (papers === 'no') {
+      // No papers: reduces value, especially on the high end
+      minP = round100(minP * 0.93);
+      maxP = round100(maxP * 0.92);
+    }
+    // ─────────────────────────────────────────────────────────────────────────
     const papNote = papers === 'yes'
       ? '<span class="fr"> · avec papiers</span><span class="en"> · with papers</span>'
       : '<span class="fr"> · sans papiers</span><span class="en"> · without papers</span>';
