@@ -499,37 +499,30 @@
   NM.renderNav('sell');
   NM.renderFooter();
 
-  // Swap <option> text labels when language changes
+  /* ── Language sync for <select> options ── */
   function syncSelectLang(lang) {
     document.querySelectorAll('select option[data-fr]').forEach(opt => {
       opt.textContent = lang === 'fr' ? opt.dataset.fr : opt.dataset.en;
     });
-    // Swap input placeholder
     const refInput = document.getElementById('inputRef');
     if (refInput) {
-      refInput.placeholder = lang === 'fr' ? refInput.dataset.frPlaceholder : refInput.dataset.enPlaceholder;
+      refInput.placeholder = lang === 'fr'
+        ? (refInput.dataset.frPlaceholder || 'Entrez le numéro de référence…')
+        : (refInput.dataset.enPlaceholder || 'Enter reference number…');
     }
-    // Also fix the — placeholder text for selBrand
-    const brandPlaceholder = document.querySelector('#selBrand option[disabled]');
-    if (brandPlaceholder) {
-      brandPlaceholder.textContent = lang === 'fr' ? '— Sélectionner une marque —' : '— Select a brand —';
-    }
-    const condPlaceholder = document.querySelector('#selCondition option[disabled]');
-    if (condPlaceholder) {
-      condPlaceholder.textContent = lang === 'fr' ? '— État de la montre —' : '— Select condition —';
-    }
-    const papPlaceholder = document.querySelector('#selPapers option[disabled]');
-    if (papPlaceholder) {
-      papPlaceholder.textContent = lang === 'fr' ? '— Papiers d\'origine —' : '— Select papers —';
-    }
-    // Model dropdown — re-populate with translated placeholder
-    const modelPlaceholder = document.querySelector('#selModel option[disabled]');
-    if (modelPlaceholder) {
-      modelPlaceholder.textContent = lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —';
-    }
+    const ids = ['selBrand','selCondition','selPapers','selModel'];
+    const labels = {
+      selBrand:     ['— Sélectionner une marque —', '— Select a brand —'],
+      selCondition: ['— État de la montre —',        '— Select condition —'],
+      selPapers:    ['— Papiers d'origine —',        '— Select papers —'],
+      selModel:     ['— Sélectionner le modèle —',   '— Select a model —'],
+    };
+    ids.forEach(id => {
+      const el = document.querySelector(`#${id} option[disabled]`);
+      if (el) el.textContent = lang === 'fr' ? labels[id][0] : labels[id][1];
+    });
   }
 
-  // Patch NM.setLang to also sync selects
   const _origSetLang = NM.setLang.bind(NM);
   NM.setLang = function(lang, save) {
     _origSetLang(lang, save);
@@ -537,10 +530,9 @@
   };
 
   NM.init();
-  // Apply correct language to selects on load
   syncSelectLang(localStorage.getItem('nm_lang') || 'fr');
 
-  /* ── Model options per brand ── */
+  /* ── Model dropdown ── */
   const MODELS = {
     'Rolex': ['Submariner','GMT Master II','Daytona','DateJust 36','DateJust 41','Day-Date','Explorer','Explorer II','Yacht-Master','Sea-Dweller','Milgauss','Air-King','Oyster Perpetual','Cellini'],
     'Audemars Piguet': ['Royal Oak','Royal Oak Offshore','Royal Oak Concept','Code 11.59','Millenary','Jules Audemars'],
@@ -550,131 +542,88 @@
 
   function updateModelOptions() {
     const brand = document.getElementById('selBrand').value;
-    const lang = NM.lang || localStorage.getItem('nm_lang') || 'fr';
-    const sel = document.getElementById('selModel');
-    const placeholder = lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —';
-    sel.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
+    const lang  = NM.lang || localStorage.getItem('nm_lang') || 'fr';
+    const sel   = document.getElementById('selModel');
+    sel.innerHTML = `<option value="" disabled selected>${lang === 'fr' ? '— Sélectionner le modèle —' : '— Select a model —'}</option>`;
     (MODELS[brand] || []).forEach(m => {
       const opt = document.createElement('option');
-      opt.value = m;
-      opt.textContent = m;
+      opt.value = opt.textContent = m;
       sel.appendChild(opt);
     });
   }
 
-  /* ── Format price in EUR ── */
+  /* ── Helpers ── */
   function fmtEur(num) {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0
     }).format(num);
   }
 
-  /* ── Parse prices from raw HTML ── */
-  function parsePrices(html) {
-    const found = [];
-
-    // 1. Try JSON-LD structured data first (most reliable)
-    const ldRe = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-    let m;
-    while ((m = ldRe.exec(html)) !== null) {
-      try {
-        const data = JSON.parse(m[1]);
-        const checkObj = (obj) => {
-          if (!obj) return;
-          if (obj.price) { const n = parseFloat(String(obj.price).replace(/[^\d.]/g,'')); if (n>500) found.push(n); }
-          if (obj.lowPrice) { const n = parseFloat(String(obj.lowPrice).replace(/[^\d.]/g,'')); if (n>500) found.push(n); }
-          if (obj.highPrice) { const n = parseFloat(String(obj.highPrice).replace(/[^\d.]/g,'')); if (n>500) found.push(n); }
-          if (Array.isArray(obj)) obj.forEach(checkObj);
-          if (obj.itemListElement) obj.itemListElement.forEach(i => checkObj(i.item || i));
-          if (obj.offers) checkObj(obj.offers);
-        };
-        checkObj(data);
-      } catch(e) {}
-    }
-
   /* ── Multi-proxy fetch ── */
   async function fetchHtml(url) {
     const proxies = [
-      async (u) => {
-        const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(u)}`, { signal: AbortSignal.timeout(10000) });
-        if (!r.ok) throw new Error(r.status);
-        return await r.text();
-      },
-      async (u) => {
-        const r = await fetch(`https://api.allorigins.me/get?url=${encodeURIComponent(u)}`, { signal: AbortSignal.timeout(10000) });
-        if (!r.ok) throw new Error(r.status);
-        const d = await r.json();
-        return d.contents || '';
-      },
-      async (u) => {
-        const r = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, { signal: AbortSignal.timeout(10000) });
-        if (!r.ok) throw new Error(r.status);
-        return await r.text();
-      },
+      async u => { const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(u)}`, {signal:AbortSignal.timeout(10000)}); if(!r.ok) throw 0; return r.text(); },
+      async u => { const r = await fetch(`https://api.allorigins.me/get?url=${encodeURIComponent(u)}`, {signal:AbortSignal.timeout(10000)}); if(!r.ok) throw 0; const d=await r.json(); return d.contents||''; },
+      async u => { const r = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`, {signal:AbortSignal.timeout(10000)}); if(!r.ok) throw 0; return r.text(); },
     ];
-
     for (const proxy of proxies) {
       try {
         const html = await proxy(url);
-        // Reject Cloudflare challenge pages & empty responses
-        if (html && html.length > 8000 && !html.includes('cf-browser-verification') && !html.includes('Just a moment')) {
+        if (html && html.length > 8000 && !html.includes('cf-browser-verification') && !html.includes('Just a moment'))
           return html;
-        }
-      } catch(e) { /* try next */ }
+      } catch(e) {}
     }
     return null;
   }
 
-  /* ── Price parser — handles European dot/space/apostrophe thousands separators ── */
+  /* ── Price parser ── */
   function parsePrices(html) {
     const found = [];
-
-    // 1. data-price attributes (most reliable on listing pages)
-    const dpRe = /data-price["\s]*[:=]["\s]*([\d]+)/g;
     let m;
+
+    // data-price attributes
+    const dpRe = /data-price["\s]*[:=]["\s]*(\d+)/g;
     while ((m = dpRe.exec(html)) !== null) {
       const n = parseInt(m[1]);
       if (n >= 500 && n <= 15000000) found.push(n);
     }
 
-    // 2. JSON-LD structured data
+    // JSON-LD
     const ldRe = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
     while ((m = ldRe.exec(html)) !== null) {
       try {
-        const d = JSON.parse(m[1]);
         const checkObj = (obj) => {
           if (!obj || typeof obj !== 'object') return;
           ['price','lowPrice','highPrice'].forEach(k => {
             if (obj[k]) { const n = parseFloat(String(obj[k]).replace(/[^\d.]/g,'')); if (n>=500) found.push(Math.round(n)); }
           });
           if (Array.isArray(obj)) obj.forEach(checkObj);
-          if (obj.itemListElement) obj.itemListElement.forEach(i => checkObj(i.item || i));
+          if (obj.itemListElement) obj.itemListElement.forEach(i => checkObj(i.item||i));
           if (obj.offers) checkObj(obj.offers);
         };
-        checkObj(d);
+        checkObj(JSON.parse(m[1]));
       } catch(e) {}
     }
 
-    // 3. Visible price strings — European format: 14.500 € / 14 500 € / 14'500 € / € 14.500
-    // Also US format: $14,500 / 14,500 €
-    const euroRe = /(?:€\s*|EUR\s*)(\d{1,3}(?:[.\s']\d{3})+)(?:\s*€)?|(?:^|[\s>,(])((\d{1,3})(?:[.\s']\d{3})+)\s*€/gm;
+    // European price strings: 14.500 € / 14 500 € / € 14.500
+    const euroRe = /(?:€\s*)(\d{1,3}(?:[.\s']\d{3})+)|(?:^|[\s>,(])(\d{1,3}(?:[.\s']\d{3})+)\s*€/gm;
     while ((m = euroRe.exec(html)) !== null) {
-      const raw = (m[1] || m[2] || '').replace(/[.\s']/g, '');
+      const raw = (m[1]||m[2]||'').replace(/[.\s']/g,'');
       const n = parseInt(raw);
       if (n >= 500 && n <= 15000000) found.push(n);
     }
 
-    // 4. Fallback: plain 5-7 digit numbers near € sign
+    // Plain 5-7 digit numbers near €
     const plainRe = /(\d{4,7})\s*€|€\s*(\d{4,7})/g;
     while ((m = plainRe.exec(html)) !== null) {
-      const n = parseInt(m[1] || m[2]);
+      const n = parseInt(m[1]||m[2]);
       if (n >= 500 && n <= 15000000) found.push(n);
     }
 
-    return [...new Set(found)].filter(p => p >= 500 && p <= 15000000).sort((a,b) => a-b);
+    return [...new Set(found)].filter(p => p>=500 && p<=15000000).sort((a,b)=>a-b);
   }
 
-  /* ── Main estimate function ── */
+  /* ── Estimate ── */
   async function runEstimate() {
     const brand     = document.getElementById('selBrand').value;
     const model     = document.getElementById('selModel').value;
@@ -692,56 +641,40 @@
     results.className = '';
     results.innerHTML = '';
 
-    const queryParts = [brand];
-    if (model) queryParts.push(model);
-    if (ref)   queryParts.push(ref);
-    const query = queryParts.join(' ');
+    const parts = [brand, model, ref].filter(Boolean);
     const condParam = condition === 'new' ? '&usedOrNew=new' : '&usedOrNew=used';
-    const searchUrl = `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(query)}&dosearch=true&sortorder=1${condParam}`;
+    const makeUrl = q => `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(q)}&dosearch=true&sortorder=1${condParam}`;
 
-    const watchLabel = [brand, model, ref].filter(Boolean).join(' · ');
     let prices = [];
-
-    // First attempt: full query (brand + model + ref)
-    const html1 = await fetchHtml(searchUrl);
+    const html1 = await fetchHtml(makeUrl(parts.join(' ')));
     if (html1) prices = parsePrices(html1);
 
-    // Second attempt: broaden to brand + model only (if ref was too specific)
-    if (prices.length < 2 && ref && model) {
-      const url2 = `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(brand+' '+model)}&dosearch=true&sortorder=1${condParam}`;
-      const html2 = await fetchHtml(url2);
-      if (html2) {
-        const p2 = parsePrices(html2);
-        if (p2.length > prices.length) prices = p2;
-      }
+    // Broaden search if too specific
+    if (prices.length < 2 && parts.length > 2) {
+      const html2 = await fetchHtml(makeUrl(parts.slice(0,2).join(' ')));
+      if (html2) { const p2 = parsePrices(html2); if (p2.length > prices.length) prices = p2; }
     }
 
-    if (prices.length >= 2) {
-      results.innerHTML = buildResults(watchLabel, prices[0], prices[prices.length - 1], prices.length, papers);
-    } else if (prices.length === 1) {
-      results.innerHTML = buildResults(watchLabel, prices[0], prices[0], 1, papers);
-    } else {
-      results.innerHTML = buildNoResults(watchLabel);
-    }
+    const label = [brand, model, ref].filter(Boolean).join(' · ');
+    results.innerHTML = prices.length >= 1
+      ? buildResults(label, prices[0], prices[prices.length-1], prices.length, papers)
+      : buildNoResults(label);
 
     results.classList.add('visible');
     btn.disabled = false;
     btn.classList.remove('loading');
-    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    results.scrollIntoView({behavior:'smooth', block:'nearest'});
   }
 
   function buildResults(label, minP, maxP, count, papers) {
-    const papersNote = papers === 'yes'
+    const papNote = papers === 'yes'
       ? '<span class="fr"> · avec papiers</span><span class="en"> · with papers</span>'
       : '<span class="fr"> · sans papiers</span><span class="en"> · without papers</span>';
-    const countFr = `${count} annonce${count>1?'s':''} analysée${count>1?'s':''}`;
-    const countEn = `${count} listing${count>1?'s':''} analysed`;
-
     return `
       <div class="results-header">
         <span class="results-header__label fr">Estimation du marché</span>
         <span class="results-header__label en">Market estimate</span>
-        <span class="results-header__watch">${label}${papersNote}</span>
+        <span class="results-header__watch">${label}${papNote}</span>
       </div>
       <div class="price-range">
         <div class="price-box price-box--low">
@@ -755,15 +688,14 @@
           <span class="price-box__value">${fmtEur(maxP)}</span>
         </div>
       </div>
-      <p class="results-note fr">Fourchette basée sur ${countFr} au moment de la recherche. Le prix de rachat réel dépend de l'état et de l'historique de la pièce.</p>
-      <p class="results-note en">Range based on ${countEn} at the time of search. Actual buyback price depends on the condition and history of the piece.</p>
+      <p class="results-note fr">Fourchette basée sur ${count} annonce${count>1?'s':''} au moment de la recherche. Le prix de rachat dépend de l'état et de l'historique de la pièce.</p>
+      <p class="results-note en">Range based on ${count} listing${count>1?'s':''} at time of search. Actual buyback price depends on condition and history.</p>
       <div class="results-cta-row">
         <a href="prendre-rendez-vous.html" class="btn-primary-sm">
           <span class="fr">Obtenir une offre de rachat</span>
           <span class="en">Get a buyback offer</span>
         </a>
-      </div>
-    `;
+      </div>`;
   }
 
   function buildNoResults(label) {
@@ -773,9 +705,8 @@
         <span class="results-header__label en">No listings found</span>
         <span class="results-header__watch">${label}</span>
       </div>
-      <p class="results-note fr">Aucun résultat pour cette référence. Essayez sans le suffixe couleur, ou vérifiez l'orthographe de la référence.</p>
-      <p class="results-note en">No results for this reference. Try without the colour suffix, or double-check the reference spelling.</p>
-    `;
+      <p class="results-note fr">Aucun résultat pour cette référence. Essayez sans le suffixe couleur ou vérifiez l'orthographe.</p>
+      <p class="results-note en">No results for this reference. Try without the colour suffix or double-check the spelling.</p>`;
   }
 </script>
 
