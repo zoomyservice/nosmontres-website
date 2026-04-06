@@ -10,7 +10,7 @@ compatibility_date = "2024-01-01"
 
 [[kv_namespaces]]
 binding = "LEADS"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "37560864eed04f288995ddec3d7c0765"
 
 # ── Admin secret for /leads.csv and /leads.json ──────────────────────────
 # Set this secret via CLI (never commit real values):
