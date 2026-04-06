@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendre ma montre — Estimation gratuite Rolex, AP, Patek | Nos Montres</title>
+  <meta name="description" content="Estimez et vendez votre montre de luxe à Paris. Estimation gratuite en ligne pour Rolex, Audemars Piguet, Patek Philippe, Richard Mille. Boutique Nos Montres 75008.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Sell page specific styles ── */
+    .sell-hero {
+      position: relative;
+      background: var(--charcoal);
+      min-height: 48vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .sell-hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://www.nosmontres.com/uploads/IMG-8144-PeMi.jpeg');
+      background-size: cover;
+      background-position: center 30%;
+      opacity: 0.35;
+    }
+    .sell-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.25) 100%);
+    }
+    .sell-hero__inner {
+      position: relative;
+      z-index: 1;
+      padding: 0 64px 56px;
+      width: 100%;
+    }
+
+    /* ── Estimate Form ── */
+    .sell-section {
+      background: var(--white);
+      padding: 80px 0;
+    }
+    .sell-card {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .sell-card__intro {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .sell-card__intro .section-eyebrow {
+      display: block;
+      margin-bottom: 12px;
+    }
+    .sell-card__intro h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--charcoal);
+      margin: 0 0 16px;
+    }
+    .sell-card__intro p {
+      color: var(--mid);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .estimate-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group--full {
+      grid-column: 1 / -1;
+    }
+    .form-group label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-family: 'Montserrat', sans-serif;
+    }
+    .form-group select,
+    .form-group input[type="text"] {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 14px 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--charcoal);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 44px;
+      cursor: pointer;
+    }
+    .form-group select:focus,
+    .form-group input[type="text"]:focus {
+      border-color: var(--gold);
+    }
+    .form-group input[type="text"]::placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .btn-estimate {
+      grid-column: 1 / -1;
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      padding: 18px 40px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-estimate:hover {
+      background: var(--gold-dk, #b8963e);
+    }
+    .btn-estimate:active {
+      transform: scale(0.98);
+    }
+    .btn-estimate:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+    .btn-estimate .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    .btn-estimate.loading .spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Results ── */
+    #estimateResults {
+      grid-column: 1 / -1;
+      display: none;
+      margin-top: 8px;
+    }
+    #estimateResults.visible { display: block; }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .results-header__label {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+    .results-header__watch {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--charcoal);
+    }
+
+    .price-range {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin-bottom: 20px;
+    }
+    .price-box {
+      background: var(--cream);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .price-box__label {
+      display: block;
+      font-size: 0.67rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 10px;
+    }
+    .price-box__value {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--charcoal);
+      line-height: 1;
+    }
+    .price-box--low .price-box__value { color: var(--charcoal); }
+    .price-box--high .price-box__value { color: var(--gold); }
+
+    .results-note {
+      font-size: 0.8rem;
+      color: var(--mid);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .results-cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .results-cta-row a {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .results-cta-row .btn-primary-sm {
+      background: var(--charcoal);
+      color: var(--white);
+    }
+    .results-cta-row .btn-ghost-sm {
+      border: 1px solid var(--border);
+      color: var(--charcoal);
+    }
+    .results-cta-row .btn-primary-sm:hover { background: var(--gold); }
+    .results-cta-row .btn-ghost-sm:hover { border-color: var(--gold); color: var(--gold); }
+
+    .error-box {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 16px 20px;
+      font-size: 0.88rem;
+      color: #b91c1c;
+      line-height: 1.6;
+    }
+
+    /* ── Why sell with us ── */
+    .sell-why {
+      background: var(--charcoal);
+      padding: 80px 0;
+      color: var(--white);
+    }
+    .sell-why__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-top: 48px;
+    }
+    .sell-why__item {
+      background: var(--charcoal);
+      padding: 40px 32px;
+    }
+    .sell-why__number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .sell-why__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .sell-why__body {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+    }
+
+    /* ── Dark CTA ── */
+    .sell-cta {
+      background: var(--gold);
+      padding: 64px 0;
+      text-align: center;
+    }
+    .sell-cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .sell-cta p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.92rem;
+      margin-bottom: 28px;
+    }
+    .sell-cta .btn-white {
+      display: inline-block;
+      background: var(--white);
+      color: var(--gold);
+      padding: 14px 36px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .sell-cta .btn-white:hover { background: var(--cream); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sell-hero__inner { padding: 0 24px 40px; }
+      .estimate-form { grid-template-columns: 1fr; }
+      .btn-estimate { grid-column: 1; }
+      #estimateResults { grid-column: 1; }
+      .price-range { grid-template-columns: 1fr; }
+      .sell-why__grid { grid-template-columns: 1fr; }
+      .results-cta-row { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .sell-card__intro h2 { font-size: 1.8rem; }
+      .price-box__value { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="mainNav"></nav>
+
+<!-- HERO -->
+<section class="sell-hero">
+  <div class="sell-hero__bg"></div>
+  <div class="sell-hero__inner">
+    <span class="page-hero__eyebrow fr">Expertise &amp; Rachat · Paris 8ème</span>
+    <span class="page-hero__eyebrow en">Expert Valuation &amp; Buyback · Paris 8th</span>
+    <h1 class="page-hero__title fr">Vendez votre<br><em>montre de luxe</em></h1>
+    <h1 class="page-hero__title en">Sell your<br><em>luxury watch</em></h1>
+    <div class="page-hero__line"></div>
+  </div>
+</section>
+
+<!-- ESTIMATE FORM -->
+<section class="sell-section">
+  <div class="sell-card">
+    <div class="sell-card__intro">
+      <span class="section-eyebrow fr">Estimation gratuite en ligne</span>
+      <span class="section-eyebrow en">Free online estimate</span>
+      <h2 class="fr">Estimez votre montre</h2>
+      <h2 class="en">Estimate your watch</h2>
+      <p class="fr">Renseignez les caractéristiques de votre garde-temps. Nous consultons Chrono24 en temps réel pour vous donner une fourchette de prix de marché actuelle.</p>
+      <p class="en">Enter your timepiece's details. We consult Chrono24 in real time to give you a current market price range.</p>
+    </div>
+
+    <div class="estimate-form" id="estimateForm">
+
+      <!-- Brand -->
+      <div class="form-group">
+        <label class="fr">Marque</label>
+        <label class="en">Brand</label>
+        <select id="selBrand" onchange="updateModelOptions()">
+          <option value="" disabled selected>— Sélectionner —</option>
+          <option value="Rolex">Rolex</option>
+          <option value="Audemars Piguet">Audemars Piguet</option>
+          <option value="Patek Philippe">Patek Philippe</option>
+          <option value="Richard Mille">Richard Mille</option>
+        </select>
+      </div>
+
+      <!-- Model -->
+      <div class="form-group">
+        <label class="fr">Modèle</label>
+        <label class="en">Model</label>
+        <select id="selModel">
+          <option value="" disabled selected>— Choisir la marque d'abord —</option>
+        </select>
+      </div>
+
+      <!-- Condition -->
+      <div class="form-group">
+        <label class="fr">État de la montre</label>
+        <label class="en">Watch condition</label>
+        <select id="selCondition">
+          <option value="" disabled selected>— Sélectionner —</option>
+          <option value="new" data-fr="Neuve" data-en="New">Neuve / New</option>
+          <option value="used" data-fr="Occasion" data-en="Used">Occasion / Used</option>
+        </select>
+      </div>
+
+      <!-- Papers -->
+      <div class="form-group">
+        <label class="fr">Papiers d'origine</label>
+        <label class="en">Original papers</label>
+        <select id="selPapers">
+          <option value="" disabled selected>— Sélectionner —</option>
+          <option value="yes">Oui / Yes</option>
+          <option value="no">Non / No</option>
+        </select>
+      </div>
+
+      <!-- Reference (full width) -->
+      <div class="form-group form-group--full">
+        <label class="fr">Référence de la montre <span style="font-style:italic;text-transform:none;letter-spacing:0">(ex&nbsp;: 116610LN, 15500ST, 5711A)</span></label>
+        <label class="en">Watch reference <span style="font-style:italic;text-transform:none;letter-spacing:0">(e.g. 116610LN, 15500ST, 5711A)</span></label>
+        <input type="text" id="inputRef" placeholder="Entrez la référence / Enter reference…">
+      </div>
+
+      <!-- Button -->
+      <button class="btn-estimate" id="btnEstimate" onclick="runEstimate()">
+        <span class="spinner"></span>
+        <span class="fr">Estimer ma montre</span>
+        <span class="en">Estimate my watch</span>
+      </button>
+
+      <!-- Results -->
+      <div id="estimateResults"></div>
+
+    </div><!-- /estimate-form -->
+  </div><!-- /sell-card -->
+</section>
+
+<!-- WHY SELL WITH US -->
+<section class="sell-why">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-eyebrow" style="color:var(--gold-lt) fr">Pourquoi nous choisir</span>
+      <span class="section-eyebrow" style="color:var(--gold-lt) en">Why choose us</span>
+      <h2 class="section-title" style="color:var(--white)">
+        <span class="fr">Le meilleur prix pour votre montre</span>
+        <span class="en">The best price for your watch</span>
+      </h2>
+    </div>
+    <div class="sell-why__grid">
+      <div class="sell-why__item">
+        <span class="sell-why__number">01</span>
+        <div class="sell-why__title fr">Expertise certifiée</div>
+        <div class="sell-why__title en">Certified expertise</div>
+        <p class="sell-why__body fr">Nos experts horlogers évaluent chaque pièce avec précision. Boîtier, mouvement, papiers, provenance — chaque détail compte dans la valorisation finale.</p>
+        <p class="sell-why__body en">Our watchmaking experts evaluate each piece with precision. Case, movement, papers, provenance — every detail counts in the final valuation.</p>
+      </div>
+      <div class="sell-why__item">
+        <span class="sell-why__number">02</span>
+        <div class="sell-why__title fr">Paiement immédiat</div>
+        <div class="sell-why__title en">Immediate payment</div>
+        <p class="sell-why__body fr">Pas d'attente, pas de commission. Nous achetons directement votre montre et vous réglons immédiatement par virement bancaire sécurisé.</p>
+        <p class="sell-why__body en">No waiting, no commission. We buy your watch directly and pay you immediately by secure bank transfer.</p>
+      </div>
+      <div class="sell-why__item">
+        <span class="sell-why__number">03</span>
+        <div class="sell-why__title fr">Prix du marché</div>
+        <div class="sell-why__title en">Market price</div>
+        <p class="sell-why__body fr">Nous suivons en permanence les cotes de marché sur Chrono24, Watchfinder et les grandes maisons de vente. Vous bénéficiez toujours du meilleur tarif.</p>
+        <p class="sell-why__body en">We continuously monitor market prices on Chrono24, Watchfinder and major auction houses. You always get the best rate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sell-cta">
+  <div class="container">
+    <h2 class="fr">Prêt à vendre ?</h2>
+    <h2 class="en">Ready to sell?</h2>
+    <p class="fr">Prenez rendez-vous dans notre boutique au 46 rue de Miromesnil, Paris 8ème.</p>
+    <p class="en">Book an appointment at our boutique, 46 rue de Miromesnil, Paris 8th.</p>
+    <a href="prendre-rendez-vous.html" class="btn-white">
+      <span class="fr">Prendre rendez-vous</span>
+      <span class="en">Book appointment</span>
+    </a>
+  </div>
+</section>
+
+<footer id="siteFooter"></footer>
+
+<script src="js/watches.js"></script>
+<script src="js/components.js"></script>
+<script>
+  NM.renderNav('sell');
+  NM.renderFooter();
+  NM.init();
+
+  /* ── Model options per brand ── */
+  const MODELS = {
+    'Rolex': ['Submariner','GMT Master II','Daytona','DateJust 36','DateJust 41','Day-Date','Explorer','Explorer II','Yacht-Master','Sea-Dweller','Milgauss','Air-King','Oyster Perpetual','Cellini'],
+    'Audemars Piguet': ['Royal Oak','Royal Oak Offshore','Royal Oak Concept','Code 11.59','Millenary','Jules Audemars'],
+    'Patek Philippe': ['Nautilus','Aquanaut','Calatrava','Complications','Grand Complications','Gondolo','Twenty~4','Chronograph'],
+    'Richard Mille': ['RM 011','RM 027','RM 035','RM 055','RM 067','RM 072','RM 010','RM 030']
+  };
+
+  function updateModelOptions() {
+    const brand = document.getElementById('selBrand').value;
+    const sel = document.getElementById('selModel');
+    sel.innerHTML = '<option value="" disabled selected>— Sélectionner —</option>';
+    (MODELS[brand] || []).forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = m;
+      sel.appendChild(opt);
+    });
+  }
+
+  /* ── Format price in EUR ── */
+  function fmtEur(num) {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0
+    }).format(num);
+  }
+
+  /* ── Parse prices from raw HTML ── */
+  function parsePrices(html) {
+    const found = [];
+
+    // 1. Try JSON-LD structured data first (most reliable)
+    const ldRe = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+    let m;
+    while ((m = ldRe.exec(html)) !== null) {
+      try {
+        const data = JSON.parse(m[1]);
+        const checkObj = (obj) => {
+          if (!obj) return;
+          if (obj.price) { const n = parseFloat(String(obj.price).replace(/[^\d.]/g,'')); if (n>500) found.push(n); }
+          if (obj.lowPrice) { const n = parseFloat(String(obj.lowPrice).replace(/[^\d.]/g,'')); if (n>500) found.push(n); }
+          if (obj.highPrice) { const n = parseFloat(String(obj.highPrice).replace(/[^\d.]/g,'')); if (n>500) found.push(n); }
+          if (Array.isArray(obj)) obj.forEach(checkObj);
+          if (obj.itemListElement) obj.itemListElement.forEach(i => checkObj(i.item || i));
+          if (obj.offers) checkObj(obj.offers);
+        };
+        checkObj(data);
+      } catch(e) {}
+    }
+
+    // 2. data-price attributes
+    const dpRe = /data-price="([\d.]+)"/g;
+    while ((m = dpRe.exec(html)) !== null) {
+      const n = parseFloat(m[1]);
+      if (n > 500) found.push(n);
+    }
+
+    // 3. Regex for visible price strings (European formats)
+    // Match patterns like: 18.500 €  /  18,500 €  /  € 18,500  /  CHF 22'000
+    const priceRe = /(?:(?:€|EUR)\s*)([\d]{1,3}(?:[.\s'][\d]{3})+)(?:\s*(?:€|EUR))?|(?:^|[\s,>])([\d]{1,3}(?:[.\s'][\d]{3})+)\s*(?:€|EUR)/gm;
+    while ((m = priceRe.exec(html)) !== null) {
+      const raw = (m[1] || m[2] || '').replace(/[\s'.]/g, '');
+      const n = parseInt(raw);
+      if (n >= 1000 && n <= 15000000) found.push(n);
+    }
+
+    // Deduplicate and filter reasonable watch prices
+    return [...new Set(found)].filter(p => p >= 500 && p <= 15000000).sort((a,b) => a-b);
+  }
+
+  /* ── Main estimate function ── */
+  async function runEstimate() {
+    const brand     = document.getElementById('selBrand').value;
+    const model     = document.getElementById('selModel').value;
+    const condition = document.getElementById('selCondition').value;
+    const papers    = document.getElementById('selPapers').value;
+    const ref       = document.getElementById('inputRef').value.trim();
+
+    // Validation
+    if (!brand) { alert('Veuillez sélectionner une marque / Please select a brand'); return; }
+    if (!condition) { alert('Veuillez sélectionner l\'état / Please select condition'); return; }
+
+    const btn = document.getElementById('btnEstimate');
+    const results = document.getElementById('estimateResults');
+    btn.disabled = true;
+    btn.classList.add('loading');
+    results.className = '';
+    results.innerHTML = '';
+
+    // Build Chrono24 search URL
+    const brandSlug = {
+      'Rolex': 'rolex',
+      'Audemars Piguet': 'audemars-piguet',
+      'Patek Philippe': 'patek-philippe',
+      'Richard Mille': 'richard-mille'
+    }[brand] || brand.toLowerCase().replace(/\s+/g,'-');
+
+    const queryParts = [brand];
+    if (model) queryParts.push(model);
+    if (ref) queryParts.push(ref);
+    const query = queryParts.join(' ');
+
+    // Condition param for Chrono24
+    // Chrono24 uses: usedOrNew=new or usedOrNew=used in some contexts
+    const condParam = condition === 'new' ? '&usedOrNew=new' : '&usedOrNew=used';
+    const c24SearchUrl = `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(query)}&dosearch=true&sortorder=1${condParam}`;
+    const c24DirectUrl = `https://www.chrono24.com/${brandSlug}/index.htm?query=${encodeURIComponent((model||'')+' '+(ref||'')).trim()}&dosearch=true&sortorder=1`;
+
+    const watchLabel = [brand, model, ref].filter(Boolean).join(' · ');
+
+    try {
+      // Use allorigins CORS proxy
+      const proxyUrl = `https://api.allorigins.me/get?url=${encodeURIComponent(c24SearchUrl)}`;
+      const resp = await fetch(proxyUrl, { signal: AbortSignal.timeout(12000) });
+
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      if (!data.contents) throw new Error('Empty response');
+
+      const prices = parsePrices(data.contents);
+
+      if (prices.length === 0) {
+        // No prices found - show fallback with direct link
+        results.innerHTML = buildFallback(watchLabel, c24SearchUrl);
+      } else {
+        const minP = prices[0];
+        const maxP = prices[prices.length - 1];
+        results.innerHTML = buildResults(watchLabel, minP, maxP, prices.length, c24SearchUrl, papers, condition);
+      }
+
+    } catch(err) {
+      results.innerHTML = buildFallback(watchLabel, c24SearchUrl);
+    }
+
+    results.classList.add('visible');
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function buildResults(label, minP, maxP, count, url, papers, condition) {
+    const papersNote = papers === 'yes'
+      ? '<span class="fr"> (avec papiers)</span><span class="en"> (with papers)</span>'
+      : '<span class="fr"> (sans papiers)</span><span class="en"> (without papers)</span>';
+    const countNote = count > 1 ? `${count} annonces analysées` : '1 annonce analysée';
+
+    return `
+      <div class="results-header">
+        <span class="results-header__label fr">Résultats marché Chrono24</span>
+        <span class="results-header__label en">Chrono24 market results</span>
+        <span class="results-header__watch">${label}${papersNote}</span>
+      </div>
+      <div class="price-range">
+        <div class="price-box price-box--low">
+          <span class="price-box__label fr">Prix le plus bas</span>
+          <span class="price-box__label en">Lowest price</span>
+          <span class="price-box__value">${fmtEur(minP)}</span>
+        </div>
+        <div class="price-box price-box--high">
+          <span class="price-box__label fr">Prix le plus élevé</span>
+          <span class="price-box__label en">Highest price</span>
+          <span class="price-box__value">${fmtEur(maxP)}</span>
+        </div>
+      </div>
+      <p class="results-note fr">Fourchette basée sur ${countNote} sur Chrono24 au moment de la recherche. Votre prix de rachat réel dépendra de l'état exact de la montre et de son historique.</p>
+      <p class="results-note en">Range based on ${countNote} on Chrono24 at the time of search. Your actual buyback price will depend on the exact condition and history of the watch.</p>
+      <div class="results-cta-row">
+        <a href="prendre-rendez-vous.html" class="btn-primary-sm">
+          <span class="fr">Obtenir une offre de rachat</span>
+          <span class="en">Get a buyback offer</span>
+        </a>
+        <a href="${url}" target="_blank" rel="noopener" class="btn-ghost-sm">
+          <span class="fr">Voir sur Chrono24</span>
+          <span class="en">View on Chrono24</span>
+        </a>
+      </div>
+    `;
+  }
+
+  function buildFallback(label, url) {
+    return `
+      <div class="results-header">
+        <span class="results-header__label fr">Recherche Chrono24</span>
+        <span class="results-header__label en">Chrono24 search</span>
+        <span class="results-header__watch">${label}</span>
+      </div>
+      <p class="results-note fr">Nous n'avons pas pu récupérer les prix en temps réel. Consultez directement Chrono24 pour voir les annonces actuelles, ou contactez-nous pour une estimation personnalisée.</p>
+      <p class="results-note en">We couldn't retrieve live prices right now. View listings directly on Chrono24, or contact us for a personalised estimate.</p>
+      <div class="results-cta-row">
+        <a href="prendre-rendez-vous.html" class="btn-primary-sm">
+          <span class="fr">Estimation personnalisée</span>
+          <span class="en">Personal estimate</span>
+        </a>
+        <a href="${url}" target="_blank" rel="noopener" class="btn-ghost-sm">
+          <span class="fr">Voir sur Chrono24</span>
+          <span class="en">View on Chrono24</span>
+        </a>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>

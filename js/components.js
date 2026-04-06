@@ -68,6 +68,9 @@ NM.renderNav = function(activePage = '') {
             </a>
           </div>
         </li>
+        <li><a class="nav-link${activePage==='sell'?' active':''}" href="${root}vendre.html">
+          <span class="fr">Vendre</span><span class="en">Sell</span>
+        </a></li>
         <li><a class="nav-link${activePage==='rdv'?' active':''}" href="${root}prendre-rendez-vous.html">
           <span class="fr">Rendez-vous</span><span class="en">Appointment</span>
         </a></li>
