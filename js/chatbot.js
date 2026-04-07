@@ -1320,7 +1320,7 @@
       .nm-msg li { margin:3px 0; }
       .nm-msg a { color:#c8a96e; text-decoration:none; }
       .nm-msg a:hover { text-decoration:underline; }
-      .nm-bot { background:#1e1e1e; color:#ddd; border-bottom-left-radius:4px; align-self:flex-start; border:1px solid #2a2a2a; }
+      .nm-bot { background:#1e1e1e; color:#fff; border-bottom-left-radius:4px; align-self:flex-start; border:1px solid #2a2a2a; }
       .nm-user { background:#c8a96e; color:#111; border-bottom-right-radius:4px; align-self:flex-end; font-weight:500; }
       .nm-typing { display:flex; gap:5px; align-items:center; padding:12px 16px; }
       .nm-typing span { width:7px; height:7px; background:#555; border-radius:50%; animation:nm-dot 1.3s infinite; }
