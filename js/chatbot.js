@@ -257,34 +257,34 @@
       ) },
 
     { id:'rolex_general', kw:['rolex','rolex paris','couronne d or','crown logo','achat rolex','vente rolex','montre rolex','rolex occasion','rolex secondhand','rolex pre-owned','rolex luxe','marque rolex','histoire rolex','rolex histoire','rolex fondé','rolex 1905','hans wilsdorf','rolex suisse','rolex certifié','rolex watch','rolex watches','rolex models','rolex collection','what rolex','which rolex','rolex available','rolex in stock','rolex you have','rolex do you have','got any rolex','avez vous des rolex','rolex pas cher','cheap rolex','affordable rolex','rolex brand','the rolex','a rolex','rolex dealer','revendeur rolex','buy rolex','acheter rolex','rolex paris 8','rolex 75008'],
-      r:()=>{ ctx.brand='Rolex'; return t(
-        `Rolex fondée en 1905 à Londres par Hans Wilsdorf. Nous avons ${STOCK.filter(w=>w.brand==='Rolex').length} Rolex en stock actuellement (Submariner, Daytona, GMT, Datejust…). Quel modèle vous intéresse ?`,
-        `Rolex founded 1905 in London by Hans Wilsdorf. We currently have ${STOCK.filter(w=>w.brand==='Rolex').length} Rolex in stock (Submariner, Daytona, GMT, Datejust…). Which model interests you?`
+      r:()=>{ ctx.brand='Rolex'; const s=STOCK.filter(w=>w.brand==='Rolex'); return t(
+        `Rolex, fondée en 1905 à Londres par Hans Wilsdorf, est la marque horlogère la plus reconnue au monde. Manufacture intégrée à Genève, inventeur de l'Oyster (premier boîtier étanche, 1926), du rotor Perpetual (1931) et du Datejust (premier affichage date, 1945). Calibres exclusivement manufacture, certifiés Chronomètre Superlatif (-2/+2 sec/jour). Acier 904L (plus résistant que le 316L standard). Nous avons ${s.length} Rolex en stock :\n${s.slice(0,8).map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n${s.length>8?'...et plus. ':''}Dites-moi quel modèle vous intéresse !`,
+        `Rolex, founded 1905 in London by Hans Wilsdorf, is the world's most recognised watch brand. Integrated manufacture in Geneva, inventor of the Oyster (first waterproof case, 1926), the Perpetual rotor (1931) and the Datejust (first date display, 1945). Exclusively manufacture calibres, Superlative Chronometer certified (-2/+2 sec/day). 904L steel (more resistant than standard 316L). We have ${s.length} Rolex in stock:\n${s.slice(0,8).map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n${s.length>8?'...and more. ':''}Tell me which model interests you!`
       );} },
 
-    { id:'rolex_submariner', kw:['submariner','sub','hulk','kermit','126610','116613','16800','submariner date','submariner no date','plongée','diving watch','diver','sousmarin','sous marin','116610','sub date','subno','ref 126610','ref 116613','116610lv','126610lv','116613lb','acier or submariner','rolex submariner','rolex sub','the submariner','a submariner','submariner rolex','submariner watch','submariner model','submariner price','submariner cost','submariner available'],
+    { id:'rolex_submariner', kw:['submariner','sub','126610','116613','16800','submariner date','submariner no date','plongée','diving watch','diver','sousmarin','sous marin','116610','sub date','subno','ref 126610','ref 116613','acier or submariner','rolex submariner','rolex sub','the submariner','a submariner','submariner rolex','submariner watch','submariner model','submariner price','submariner cost','submariner available','tell me about submariner','parlez moi du submariner'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('submariner')); return t(
-        `Nos Submariner :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nÉtanche 300m, verre saphir, lunette céramique (modèles récents). Icône plongée depuis 1953.`,
-        `Our Submariners:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n300m water resistance, sapphire crystal, ceramic bezel (modern). Diving icon since 1953.`
+        `Le Submariner, lancé en 1953, est LA montre de plongée par excellence. Première montre étanche à 100m (aujourd'hui 300m). Lunette tournante unidirectionnelle céramique Cerachrom (depuis 2010), verre saphir, couronne Triplock. Génération actuelle : boîtier Oyster 41mm (avant 2020 : 40mm), calibre 3235 (70h réserve de marche), bracelet Oyster + Glidelock.\n\nNos Submariner en stock :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nLe Submariner est le modèle Rolex le plus iconique avec le Daytona. Forte valeur de revente. Quel Submariner vous intéresse ?`,
+        `The Submariner, launched 1953, is THE quintessential dive watch. First watch water-resistant to 100m (now 300m). Unidirectional rotating Cerachrom ceramic bezel (since 2010), sapphire crystal, Triplock crown. Current generation: 41mm Oyster case (pre-2020: 40mm), calibre 3235 (70h power reserve), Oyster bracelet + Glidelock.\n\nOur Submariners in stock:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nThe Submariner is the most iconic Rolex alongside the Daytona. Strong resale value. Which Submariner interests you?`
       );} },
 
-    { id:'rolex_daytona', kw:['daytona','rolex daytona','cosmograph','paul newman','panda','chronographe rolex','126500','126505','or rose daytona','steel daytona','daytona acier','daytona gold','daytona panda','daytona blanc','daytona noir','daytona cadran','ref 126500','ref 126505','116500','116520','116503'],
+    { id:'rolex_daytona', kw:['daytona','rolex daytona','cosmograph','paul newman','chronographe rolex','126500','126505','or rose daytona','steel daytona','daytona acier','daytona gold','daytona noir','daytona cadran','ref 126500','ref 126505','116500','116520','116503','tell me about daytona','parlez moi du daytona'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('daytona')); return t(
-        `Nos Daytona :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nChronographe légendaire, cal. 4131, tachymètre lunette. Valeur refuge n°1 chez Rolex.`,
-        `Our Daytonas:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nLegendary chronograph, cal. 4131, tachymeter bezel. The #1 investment piece in Rolex.`
+        `Le **Cosmograph Daytona**, lancé en 1963, est le chronographe le plus iconique de l'horlogerie. Nommé d'après le circuit de Daytona Beach, Floride. La montre de Paul Newman (vendu 17,8M$ aux enchères en 2017). Boîtier Oyster 40mm, lunette tachymétrique, calibre manufacture 4131 (72h réserve). Étanche 100m.\n\nVariantes : acier (réf. 126500LN, le plus convoité), or rose (réf. 126505), platine (réf. 126506 cadran météorite), acier/or "Rolesor" (réf. 126503).\n\nNos Daytona en stock :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nLa Daytona est LA valeur refuge Rolex — forte demande, longues listes d'attente.`,
+        `The **Cosmograph Daytona**, launched 1963, is horology's most iconic chronograph. Named after the Daytona Beach circuit, Florida. Paul Newman's watch (sold for $17.8M at auction in 2017). 40mm Oyster case, tachymeter bezel, manufacture calibre 4131 (72h reserve). 100m water resistant.\n\nVariants: steel (ref. 126500LN, most coveted), rose gold (ref. 126505), platinum (ref. 126506 meteorite dial), steel/gold "Rolesor" (ref. 126503).\n\nOur Daytonas in stock:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nThe Daytona is THE Rolex safe-haven investment — high demand, long waitlists.`
       );} },
 
-    { id:'rolex_gmt', kw:['gmt','gmt master','gmt-master','gmt ii','rolex gmt','116710','126710','pepsi','batman','sprite','jubilée gmt','gmt bicolore','gmt rouge bleu','gmt 2 fuseaux','deux fuseaux','second timezone','gmt master ii black','gmt master ii sprite','gmt vintage','16710','gmt acier'],
+    { id:'rolex_gmt', kw:['gmt','gmt master','gmt-master','gmt ii','rolex gmt','116710','126710','pepsi','batman','sprite','jubilée gmt','gmt bicolore','gmt rouge bleu','gmt 2 fuseaux','deux fuseaux','second timezone','gmt master ii black','gmt master ii sprite','gmt vintage','16710','gmt acier','tell me about gmt','parlez moi du gmt'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('gmt')); return t(
-        `Nos GMT-Master II :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n2 fuseaux horaires simultanés, lunette bicolore céramique. Créé pour les pilotes d'Air France en 1955.`,
-        `Our GMT-Master II:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nDual time zones, bicolour ceramic bezel. Originally created for Air France pilots in 1955.`
+        `Le **GMT-Master II** est la montre de voyage par excellence, conçue initialement en 1955 pour les pilotes Pan Am. Permet de lire simultanément 2 fuseaux horaires grâce à l'aiguille 24h et la lunette tournante bidirectionnelle.\n\nGénération actuelle (2018+) : boîtier Oyster 40mm, lunette Cerachrom bicolore en une seule pièce de céramique, calibre 3285 (70h réserve). Surnoms célèbres : **Pepsi** (rouge/bleu, réf. 126710BLRO), **Batman** (noir/bleu, réf. 126710BLNR), **Sprite** (vert/noir, réf. 126720VTNR couronne à gauche).\n\nNos GMT en stock :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nModèle polyvalent, porté aussi bien en voyage qu'au quotidien.`,
+        `The **GMT-Master II** is the ultimate travel watch, originally designed in 1955 for Pan Am pilots. Allows reading 2 time zones simultaneously via the 24h hand and bidirectional rotating bezel.\n\nCurrent generation (2018+): 40mm Oyster case, two-colour Cerachrom bezel in a single ceramic piece, calibre 3285 (70h reserve). Famous nicknames: **Pepsi** (red/blue, ref. 126710BLRO), **Batman** (black/blue, ref. 126710BLNR), **Sprite** (green/black, ref. 126720VTNR left-hand crown).\n\nOur GMTs in stock:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nVersatile model, worn for travel and daily wear alike.`
       );} },
 
 
-    { id:'rolex_datejust', kw:['datejust','rolex datejust','date just','126334','126300','16234','datejust 41','datejust 36','wimbledon','mint','jubilé','jubilee','oyster bracelet','rolesor','datejust acier','datejust or','datejust cadran','fluted bezel','cannelée','datejust vintage','ref 126334','ref 126300','datejust homme','men datejust'],
+    { id:'rolex_datejust', kw:['datejust','rolex datejust','date just','126334','126300','16234','datejust 41','datejust 36','wimbledon','mint','jubilé','jubilee','oyster bracelet','rolesor','datejust acier','datejust or','datejust cadran','fluted bezel','cannelée','datejust vintage','ref 126334','ref 126300','datejust homme','men datejust','tell me about datejust','parlez moi du datejust'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('datejust')&&!w.model.toLowerCase().includes('lady')); return t(
-        `Nos Datejust :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nLa montre la plus vendue au monde. Cal. 3235/3235, date instantanée à 3h.`,
-        `Our Datejusts:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nThe world's best-selling watch. Cal. 3235, instantaneous date at 3 o'clock.`
+        `Le **Datejust**, lancé en 1945, est le pilier de la gamme Rolex — première montre-bracelet automatique avec affichage de la date par guichet. C'est la montre la plus polyvalente de la marque : aussi à l'aise avec un costume qu'en casual.\n\n**Tailles** : 36mm (classique) et 41mm (moderne). **Lunettes** : lisse, cannelée (or blanc), diamants. **Bracelets** : Oyster (sportif) ou Jubilee (élégant). **Cadrans** : +30 options (bleu, noir, ardoise, vert "Mint", Wimbledon slate/vert).\n\nCalibre 3235 (70h réserve), étanche 100m, certifié Chronomètre Superlatif.\n\nNos Datejust en stock :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nLe Datejust est la porte d'entrée idéale dans l'univers Rolex.`,
+        `The **Datejust**, launched 1945, is the cornerstone of the Rolex range — the first automatic wristwatch with a date display window. It's the brand's most versatile watch: equally at home with a suit or casual wear.\n\n**Sizes**: 36mm (classic) and 41mm (modern). **Bezels**: smooth, fluted (white gold), diamond-set. **Bracelets**: Oyster (sporty) or Jubilee (elegant). **Dials**: 30+ options (blue, black, slate, green "Mint", Wimbledon slate/green).\n\nCalibre 3235 (70h reserve), 100m water resistant, Superlative Chronometer certified.\n\nOur Datejusts in stock:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nThe Datejust is the ideal entry point into the Rolex universe.`
       );} },
 
     { id:'rolex_lady_datejust', kw:['lady datejust','lady','179161','177234','6917','69178','datejust femme','women rolex','rolex femme','rolex lady','cadran mop','mop','diamants','diamonds','petite rolex','small rolex','28mm rolex','26mm rolex','lady-datejust'],
@@ -293,10 +293,10 @@
         `Our Lady-Datejusts:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nAvailable in 26mm (vintage) or 28mm (current). MOP or diamond dials available.`
       );} },
 
-    { id:'rolex_explorer', kw:['explorer','explorer ii','226570','216570','214270','114270','explorer 2','explorer ii blanc','orange hand','alpiniste','explorateur','montagne','mountain','exploration','safari dial','ref 226570'],
+    { id:'rolex_explorer', kw:['explorer','explorer ii','226570','216570','214270','114270','explorer 2','explorer ii blanc','orange hand','alpiniste','explorateur','montagne','mountain','exploration','safari dial','ref 226570','rolex explorer','tell me about explorer','parlez moi de l explorer','explorer rolex','explorer watch','explorer 1','explorer i','124270','rolex explorer ii'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('explorer')); return t(
-        `Nos Explorer :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nExplorer II 42mm, aiguille 24h indépendante pour distinguer AM/PM. Robuste, lisible, intemporelle.`,
-        `Our Explorers:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nExplorer II 42mm, independent 24h hand to distinguish AM/PM. Robust, legible, timeless.`
+        `L'**Explorer**, lancé en 1953, commémore l'ascension de l'Everest par Edmund Hillary et Tenzing Norgay avec une Rolex au poignet. C'est la quintessence de la montre d'aventure.\n\n**Explorer I** (réf. 124270) : 36mm, cadran noir 3-6-9, calibre 3230 (70h), 100m. La Rolex la plus épurée — zéro complication, lisibilité maximale. Marché ~7 000–8 000€.\n\n**Explorer II** (réf. 226570) : 42mm, aiguille 24h orange indépendante (AM/PM), cadran blanc ou noir, calibre 3285 (70h), 100m. Conçue pour les spéléologues et explorateurs polaires.\n\n${s.length?`Nos Explorer en stock :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`:'Contactez-nous pour disponibilité.'}\n\nL'Explorer est la Rolex la plus discrète et sous-estimée — parfaite pour un quotidien sans frime.`,
+        `The **Explorer**, launched 1953, commemorates Edmund Hillary and Tenzing Norgay's Everest ascent wearing a Rolex. It is the quintessential adventure watch.\n\n**Explorer I** (ref. 124270): 36mm, black 3-6-9 dial, calibre 3230 (70h), 100m. The purest Rolex — zero complications, maximum legibility. Market ~€7,000–8,000.\n\n**Explorer II** (ref. 226570): 42mm, independent orange 24h hand (AM/PM), white or black dial, calibre 3285 (70h), 100m. Designed for speleologists and polar explorers.\n\n${s.length?`Our Explorers in stock:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`:'Contact us for availability.'}\n\nThe Explorer is the most discreet and underrated Rolex — perfect for understated daily wear.`
       );} },
 
     { id:'rolex_yacht_master', kw:['yacht master','yachtmaster','yacht-master','326935','226659','116622','116655','226655','oysterflex','everose','palladium','platine','rolex voile','nautical rolex','yacht','bateau','boat','326935'],
@@ -306,10 +306,10 @@
       );} },
 
 
-    { id:'rolex_oyster_perpetual', kw:['oyster perpetual','op','124300','124340','124310','op 41','op 36','op 41 rouge','red dial','couleur dial','lac candy','candy color','126000','ref 124300','oyster perpetual red','oyster perpetual coral'],
+    { id:'rolex_oyster_perpetual', kw:['oyster perpetual','op','124300','124340','124310','op 41','op 36','op 41 rouge','red dial','couleur dial','lac candy','candy color','126000','ref 124300','oyster perpetual red','oyster perpetual coral','rolex oyster perpetual','tell me about oyster perpetual','rolex op'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Oyster Perpetual'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('oyster')); return t(
-        `Nos Oyster Perpetual :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nLa Rolex la plus accessible, cadrans couleurs vifs. Cal. 3230, réserve 70h. Intemporelle.`,
-        `Our Oyster Perpetuals:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nMost accessible Rolex, vibrant coloured dials. Cal. 3230, 70h reserve. Timeless.`
+        `L'**Oyster Perpetual**, la Rolex la plus classique — l'essence même de la marque. Successeur direct de l'Oyster originale de 1926.\n\n**OP 41** (réf. 124300) : 41mm, cadrans couleurs vives (rouge corail, turquoise, vert, jaune — très convoités). Cal. 3230 (70h réserve), 100m. Les cadrans "Stella" colorés ont explosé en valeur en 2020-2021 — le rouge et le turquoise se vendent bien au-dessus du retail.\n\n**OP 36** (réf. 126000) : 36mm, même calibre, taille classique.\n\nPas de date, pas de complication — juste l'heure, dans un boîtier Oyster pur. Lunette lisse bombée. C'est la Rolex la plus accessible ET celle qui a vu la plus forte appréciation récente.\n\n${s.length?`Nos OP en stock :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`:'Contactez-nous.'}`,
+        `The **Oyster Perpetual**, the most classic Rolex — the very essence of the brand. Direct successor to the original 1926 Oyster.\n\n**OP 41** (ref. 124300): 41mm, vibrant coloured dials (coral red, turquoise, green, yellow — highly coveted). Cal. 3230 (70h reserve), 100m. The "Stella" coloured dials exploded in value in 2020-2021 — red and turquoise sell well above retail.\n\n**OP 36** (ref. 126000): 36mm, same calibre, classic size.\n\nNo date, no complication — just the time, in a pure Oyster case. Smooth domed bezel. It's the most accessible Rolex AND the one that saw the strongest recent appreciation.\n\n${s.length?`Our OPs in stock:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`:'Contact us.'}`
       );} },
 
     { id:'rolex_turn_o_graph', kw:['turn-o-graph','turno','116264','thunderbird','turn o graph','réf 116264','rolex vintage acier','rolex bicolore acier','datejust lunette tournante','rotating bezel datejust','rolex collector','rolex rare'],
@@ -363,7 +363,572 @@
 
 
     // ── AUDEMARS PIGUET ──────────────────────────────────────────────────────────
-    { id:'ap_general', kw:['audemars piguet','ap','audemars','piguet','ap watch','montre ap','ap paris','achat ap','vente ap','ap occasion','ap secondhand','ap pre-owned','ap luxe','ap histoire','founded ap','1875 ap','le brassus','vallée de joux','manufacture ap','ap watches','ap models','what ap','which ap','ap available','ap in stock','ap you have','avez vous des ap','got any ap','ap brand','the ap','a ap','ap dealer','revendeur ap','buy ap','acheter ap','ap collection','audemars watches','audemars collection','audemars models','audemars available','piguet watch','AP watch','AP brand'],
+    
+// ═══ ROLEX EXPANDED REFERENCES ═══════════════════════════════════════
+
+// SUBMARINER FAMILY — Iconic diving instrument, since 1953
+{ id:'rolex_124060', kw:['124060','submariner no date','submariner nodate 41','rolex submariner no date','rolex 124060','ref 124060','submariner sans date'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner No-Date 41mm'; return t(
+    `**Rolex Submariner réf. 124060** — Le Submariner moderne sans date. Boîtier 41mm acier Oystersteel, lunette unidirectionnelle céramique noire, verre Cyclope bombé. Mouvement Perpetual Rotor, Chronometer certifié COSC, remontage automatique 3230 (70h, 15/20 Hz). Étanchéité 300m (1000ft), bracelet Oyster 3-mailles. Lancé en 2020, ce modèle remplace la légende 114060 avec technologie à la pointe. Réf. actuelle, très demandée par les collectionneurs de Submariner pur (sans date). Les forums horlogers la classent parmi les meilleurs rapports qualité-prix des sports Rolex.`,
+    `**Rolex Submariner ref. 124060** — The modern no-date Submariner. 41mm Oystersteel case, unidirectional ceramic black bezel, domed cyclops crystal. Perpetual rotor, COSC-certified chronometer, automatic 3230 movement (70h, 15/20 Hz). 300m water resistance, 3-link Oyster bracelet. Introduced 2020, replacing the legendary 114060 with state-of-the-art tech. Current reference, highly sought by pure Submariner collectors. Watch forums rank it among the best value in sports Rolex.`
+  );} },
+
+{ id:'rolex_116610ln', kw:['116610ln','submariner black 40','submariner date 40mm','rolex 116610ln','ref 116610ln','submariner generation 2','previous gen submariner'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Date 40mm'; return t(
+    `**Rolex Submariner réf. 116610LN** — La génération précédente, 40mm acier, lunette céramique noire. Mouvement 3135 (48h réserve), Chronometer. Fenêtre de date avec loupe Cyclope, bracelet Oyster. Produit 2009-2020, très fiable et abordable face au 126610. Cas intermédiaire : plus tard que le 16610, plus tôt que le 124060/126610. Recherché des collectionneurs budget et des plongeurs de terrain. Les prix de seconde main restent stables, excellente entrée dans les Submariner sports Rolex.`,
+    `**Rolex Submariner ref. 116610LN** — The previous generation, 40mm steel, black ceramic bezel. 3135 movement (48h power reserve), Chronometer-certified. Date window with magnifying cyclops, Oyster bracelet. Made 2009–2020, bulletproof reliability and more affordable than 126610. Sweet spot: later than 16610, earlier than 124060/126610. Collected by budget-conscious collectors and field divers. Secondary market prices remain stable—excellent entry point to sports Rolex Submariners.`
+  );} },
+
+{ id:'rolex_126610ln', kw:['126610ln','submariner 41mm black','submariner date current','rolex 126610ln','ref 126610ln','new submariner','submariner 2020'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Date 41mm'; return t(
+    `**Rolex Submariner réf. 126610LN** — Le Submariner Date actuel, 41mm acier, lunette céramique noire, verre Cyclope. Calibre 3235 (70h, nouvelle génération). Étanchéité 300m, bracelet Oyster. Lancé 2020 en même temps que le 124060 (no-date). Boîtier légèrement plus grand que le 116610, plus mince et léger. C'est le sport Rolex le plus demandé du moment, avec listes d'attente dans les boutiques. Excellent investissement à long terme, très collectionné.`,
+    `**Rolex Submariner ref. 126610LN** — The current Submariner Date, 41mm steel, black ceramic bezel, cyclops crystal. 3235 movement (70h, next-gen). 300m water resistance, Oyster bracelet. Launched 2020 alongside the 124060. Slightly larger than 116610, thinner and lighter. Currently the most-demanded sports Rolex, with waiting lists at ADs. Excellent long-term investment, heavily collected.`
+  );} },
+
+{ id:'rolex_116610lv', kw:['116610lv','hulk','submariner green','green dial green bezel','rolex hulk','discontinued submariner','ref 116610lv'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner "Hulk" 40mm'; return t(
+    `**Rolex Submariner réf. 116610LV "Hulk"** — Légende discontinuée 2020, 40mm acier, cadran ET lunette verts uniques. Mouvement 3135 (48h). Seul Submariner sport avec deux verts, jamais reproduit. Produit 2010–2020, recherchissime en occasion. La discontinuation en 2020 (remplacée par le noir 126610) a créé une aura de rareté. Prix de seconde main: 2–3× la valeur d'un noir. Symbole collector des années 2010, très demandé par les investisseurs horlogers.`,
+    `**Rolex Submariner ref. 116610LV "Hulk"** — Discontinued legend, 2020. 40mm steel, unique green dial AND bezel. 3135 movement (48h). Only sports Submariner ever with dual green colorway—never repeated. Made 2010–2020, highly prized on secondary market. Discontinuation in 2020 (replaced by black 126610) created scarcity mythology. Secondary prices: 2–3× black. Iconic 2010s collector symbol, heavily pursued by watch investors.`
+  );} },
+
+{ id:'rolex_114060', kw:['114060','submariner no date 40','rolex 114060','ref 114060','previous no date','2012 submariner'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner No-Date 40mm'; return t(
+    `**Rolex Submariner réf. 114060** — Prédécesseur du 124060, 40mm acier, lunette céramique, mouvement 3130. Produit 2012–2020, transition entre le 14060M et le 124060. 300m étanchéité, très apprécié des puristes sans-date. Moins cher que le 124060 actuel mais les prix montent. Excellent collector's piece, spécification vintage au design moderne. Les forums considèrent cette "génération intermédiaire" comme équilibrée.`,
+    `**Rolex Submariner ref. 114060** — Predecessor to 124060, 40mm steel, ceramic bezel, 3130 movement. Made 2012–2020, bridge between 14060M and 124060. 300m water resistance, beloved by no-date purists. Less expensive than current 124060 but prices climbing. Excellent collector's piece—vintage spec in modern design. Forums call this "middle generation" a balanced sweet spot.`
+  );} },
+
+{ id:'rolex_16610', kw:['16610','submariner date 40','rolex 16610','ref 16610','1989 submariner','vintage submariner steel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Date 40mm'; return t(
+    `**Rolex Submariner réf. 16610** — Classique intemporel, 40mm acier, lunette aluminium (pré-céramique), mouvement 3135 (48h). Produit 1989–2010, le Submariner des années 1990-2000. Lunette peinte, plus rustique que céramique mais très collectée. Étanchéité 300m. Référence de transition du vintage au moderne, Prix affichent forte demande: 8–12k EUR en bon état. Montre outil robuste, investissement sûr.`,
+    `**Rolex Submariner ref. 16610** — Timeless classic, 40mm steel, aluminum bezel (pre-ceramic), 3135 movement (48h). Made 1989–2010, the Submariner of the 1990s–2000s. Painted bezel, more utilitarian than ceramic but heavily collected. 300m rating. Bridge between vintage and modern—reference era. Prices show strong demand: 8–12k EUR in fine condition. Robust tool watch, safe investment.`
+  );} },
+
+{ id:'rolex_14060m', kw:['14060m','submariner no date vintage','rolex 14060m','ref 14060m','no date 40mm 1990s','maxi dial'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner No-Date 40mm'; return t(
+    `**Rolex Submariner réf. 14060M** — Modèle sans-date culte des années 1990-2006, 40mm acier, lunette aluminium peinte, cadran "maxi" très lisible. Mouvement 3000 puis 3130. Étanchéité 300m, bracelet Oyster. Très apprécié des minimalistes et des plongeurs. Rareté sur le marché secondaire car jamais remplacé directement (sauts vers 114060 ou versions date). Excellent vintage, investissement stable.`,
+    `**Rolex Submariner ref. 14060M** — Cult no-date model 1990s–2006, 40mm steel, painted aluminum bezel, prominent "maxi" dial. 3000 then 3130 movement. 300m rating, Oyster bracelet. Beloved by minimalists and field divers. Scarce on secondary market—never directly succeeded (jumps to 114060 or date versions). Excellent vintage, stable investment.`
+  );} },
+
+{ id:'rolex_5513', kw:['5513','vintage submariner no date','rolex 5513','ref 5513','1960s submariner','early submariner'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner No-Date Vintage'; return t(
+    `**Rolex Submariner réf. 5513** — Légende vintage sans date, produit 1962–1989. 40mm acier, lunette aluminium peinte, verre plexiglas, mouvement 1530 ou 1575. Montre de plongée d'époque, très recherchée des vintage-enthusiastes. Production massive mais usure inévitable sur les spécimens de 60+ ans. Excellent pour son époque, prix: 4–8k EUR selon condition. Icône des années 1960-1970, rêve de collectionneurs.`,
+    `**Rolex Submariner ref. 5513** — Vintage no-date legend, made 1962–1989. 40mm steel, painted aluminum bezel, plexiglass crystal, 1530 or 1575 movement. Period diving tool, highly coveted by vintage enthusiasts. Large production but inevitable wear on 60+ year old examples. Historic for its era, prices: 4–8k EUR depending on condition. Icon of 1960s–1970s, collector's dream.`
+  );} },
+
+{ id:'rolex_5512', kw:['5512','submariner cosc','rolex 5512','ref 5512','1950s submariner','chronometer submariner'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner COSC Vintage'; return t(
+    `**Rolex Submariner réf. 5512** — Très rare, 1959–1980, Chronometer-certifié. 40mm acier, lunette aluminium, verre plexiglas, mouvement 1575 (18000 A/h). Moins produit que le 5513, premium vintage recherché. Désacralisation complète: exemplaires de 65 ans avec patine légendaire. Référence "pré-PCG" (avant guichet de date), culte des collectionneurs vintage extrêmes. Prix: 8–15k EUR selon provenance et condition.`,
+    `**Rolex Submariner ref. 5512** — Very rare, 1959–1980, COSC-Chronometer-certified. 40mm steel, aluminum bezel, plexiglass crystal, 1575 movement (18000 A/h). Smaller production than 5513, premium vintage seek. Mystique complete: 65-year-old examples with legendary patina. Reference "pre-date window" (pre-PCG), cult among extreme vintage collectors. Prices: 8–15k EUR depending on provenance and condition.`
+  );} },
+
+{ id:'rolex_6538', kw:['6538','james bond submariner','rolex 6538','ref 6538','1950s bond watch','original submariner'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner "James Bond" Vintage'; return t(
+    `**Rolex Submariner réf. 6538 "James Bond"** — Submariner originel de Sean Connery, 1955–1959. Rare, 40mm acier, lunette rotative unidirectionnelle, verre plexiglas, mouvement 1575. Poussoirs bomb (crown guards), sans guichet de date. Mythologie horlogère: c'est LE Submariner des débuts. Production très limitée, 150–300 pièces seulement. Prix: 25–50k EUR+ pour exemplaires authentiques documentés. Réservé aux ultra-collectionneurs et musées.`,
+    `**Rolex Submariner ref. 6538 "James Bond"** — Original Submariner worn by Sean Connery, 1955–1959. Rare, 40mm steel, unidirectional rotating bezel, plexiglass crystal, 1575 movement. Bulbous crown guards, no date window. Watchmaking mythology: THE original Submariner. Very limited production, 150–300 pieces only. Price: 25–50k EUR+ for authenticated documented examples. Reserved for ultra-collectors and museums.`
+  );} },
+
+// DAYTONA FAMILY — Chronograph racing icon, since 1963
+{ id:'rolex_116500ln', kw:['116500ln','daytona ceramic','daytona white','steel daytona modern','rolex 116500ln','ref 116500ln','2016 daytona'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona 40mm Steel/Ceramic'; return t(
+    `**Rolex Daytona réf. 116500LN** — Référence moderne acier-céramique, 2016–2023. 40mm acier Oystersteel, lunette céramique noire avec échelle Tachymetre, chronographe 4130 (72h, COSC). Index en or blanc et or jaune sur cadran blanc. Étanchéité 100m, bracelet Oyster 3-mailles. Transition majeure: introduction de la céramique et du mouvement 4130 maison. Arrêt production 2023 (remplacé par 126500). Très demandé, liste d'attente massive aux ADs. Investissement à long terme stable.`,
+    `**Rolex Daytona ref. 116500LN** — Modern steel-ceramic reference, 2016–2023. 40mm Oystersteel, black ceramic bezel with Tachymetre scale, 4130 chronograph (72h, COSC). White and yellow gold indices on white dial. 100m rating, 3-link Oyster bracelet. Major transition: introduction of ceramic and in-house 4130 movement. Production ended 2023 (replaced by 126500). Heavily sought, massive waitlists at ADs. Stable long-term investment.`
+  );} },
+
+{ id:'rolex_116520', kw:['116520','daytona zenith','steel daytona 1988','rolex 116520','ref 116520','el primero daytona','zenith movement'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona 40mm Zenith'; return t(
+    `**Rolex Daytona réf. 116520** — Légende El Primero, 1988–2000. 40mm acier, lunette aluminium peinte, mouvement Zenith El Primero 4002 (36000 A/h, 50h réserve). Avant Rolex in-house 4130. Très collecté: c'est le "Daytona intermédiaire" entre vintage et moderne. Chronographe exceptionnel, histoire fabuleuse. Prix: 15–25k EUR selon condition. Tous les puristes possèdent un 116520. Investissement patrimoine.`,
+    `**Rolex Daytona ref. 116520** — El Primero legend, 1988–2000. 40mm steel, painted aluminum bezel, Zenith El Primero 4002 movement (36000 A/h, 50h power reserve). Pre in-house Rolex 4130. Heavily collected: the "middle Daytona" between vintage and modern. Exceptional chronograph, fabulous history. Price: 15–25k EUR depending on condition. Every purist owns a 116520. Heritage investment.`
+  );} },
+
+{ id:'rolex_16520', kw:['16520','daytona white gold','vintage daytona 1988','rolex 16520','ref 16520','daytona two tone'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona 40mm Two-Tone'; return t(
+    `**Rolex Daytona réf. 16520** — Version deux-tons classique, 1988–1992. 40mm acier & or blanc, lunette aluminium peinte, mouvement Zenith El Primero 4002. Très rare combinaison: acier + or blanc à cette époque (normalement tout or ou tout acier). Pièce transitoire, très respectée des collectionneurs. Petit production run. Prix: 20–35k EUR. Graal des Daytona-philes.`,
+    `**Rolex Daytona ref. 16520** — Classic two-tone version, 1988–1992. 40mm steel & white gold, painted aluminum bezel, Zenith El Primero 4002 movement. Very rare combo: steel + white gold at this time (normally all-gold or all-steel). Transitional piece, highly respected by collectors. Small production run. Price: 20–35k EUR. Holy grail for Daytona enthusiasts.`
+  );} },
+
+{ id:'rolex_6239', kw:['6239','paul newman daytona','rolex 6239','ref 6239','cosmograph daytona','vintage daytona exotic dial'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona "Paul Newman" Vintage'; return t(
+    `**Rolex Daytona réf. 6239 "Paul Newman"** — Légende absolue, 1963–1969. 40mm acier, lunette aluminium peinte, cadran exotique ("exotic" ou "Paul Newman" dial) avec sous-cadrans carrés uniques. Mouvement Valjoux 72 (mécanique manuelle). Montre de Paul Newman lui-même pendant 36 ans. Rareté extrême: moins de 1000 produites. Prix: 100k–300k EUR+ pour authentic documented. Montre la plus célèbre jamais créée.`,
+    `**Rolex Daytona ref. 6239 "Paul Newman"** — Absolute legend, 1963–1969. 40mm steel, painted aluminum bezel, exotic dial (nicknamed "Paul Newman dial") with unique square sub-dials. Valjoux 72 manual-wind movement. Worn by Paul Newman himself for 36 years. Extreme rarity: under 1,000 made. Price: 100k–300k EUR+ for authenticated documented examples. Most famous watch ever created.`
+  );} },
+
+{ id:'rolex_6263', kw:['6263','daytona manual wind','rolex 6263','ref 6263','pump pushers daytona','vintage hand wind'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona Manual-Wind Vintage'; return t(
+    `**Rolex Daytona réf. 6263** — Variante manuelle rare, 1969–1977. 40mm acier, poussoirs "pump" caractéristiques, lunette aluminium, mouvement Valjoux 727 (mécanique manuelle). Moins connu que 6239 mais culte. Production limitée, condition rarement vue. Prix: 50–120k EUR selon état. Collectionneurs hardcore recherchent cette "génération manuelle". Pièce d'exception.`,
+    `**Rolex Daytona ref. 6263** — Rare manual variant, 1969–1977. 40mm steel, characteristic "pump" pushers, aluminum bezel, Valjoux 727 manual-wind movement. Less known than 6239 but cult. Limited production, rarely seen in good condition. Price: 50–120k EUR depending on state. Hardcore collectors seek this "manual generation." Exceptional piece.`
+  );} },
+
+{ id:'rolex_116508', kw:['116508','daytona yellow gold green dial','rolex 116508','ref 116508','gold daytona green','two tone daytona'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona 40mm Yellow Gold'; return t(
+    `**Rolex Daytona réf. 116508** — Or jaune pur, cadran vert lime, 2009–2016. 40mm or jaune massif, lunette céramique noire, mouvement 4130 (72h). Combinaison striking: or jaune (non-sport habituellement) + cadran vert moderne. Très rare, environ 1000–2000 pièces. Arrêtée 2016. Prix: 30–50k EUR. Pièce d'investissement de prestige.`,
+    `**Rolex Daytona ref. 116508** — Solid yellow gold, lime green dial, 2009–2016. 40mm solid yellow gold, black ceramic bezel, 4130 movement (72h). Striking combo: yellow gold (non-sports typically) + modern green dial. Very rare, approximately 1000–2000 made. Discontinued 2016. Price: 30–50k EUR. Prestige investment piece.`
+  );} },
+
+{ id:'rolex_116519ln', kw:['116519ln','daytona white gold oysterflex','rolex 116519ln','ref 116519ln','platinum daytona','daytona rubber strap'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona 40mm White Gold Oysterflex'; return t(
+    `**Rolex Daytona réf. 116519LN** — Or blanc élégant, bracelet Oysterflex révolutionnaire, 2015–2023. 40mm or blanc massif, lunette céramique noire, mouvement 4130 (72h). Bracelet Oysterflex caoutchouc noir (innovation 2015). Très recherché par collectionneurs de prestige. Production limitée. Prix: 35–60k EUR. Arrêtée 2023. Combinaison ultra-luxe: or blanc + Oysterflex (design moderne futuriste).`,
+    `**Rolex Daytona ref. 116519LN** — Elegant white gold, revolutionary Oysterflex bracelet, 2015–2023. 40mm solid white gold, black ceramic bezel, 4130 movement (72h). Black rubber Oysterflex bracelet (2015 innovation). Highly sought by luxury collectors. Limited production. Price: 35–60k EUR. Discontinued 2023. Ultra-luxury combo: white gold + Oysterflex (futuristic modern design).`
+  );} },
+
+{ id:'rolex_126500ln', kw:['126500ln','daytona current 2023','new daytona','rolex 126500ln','ref 126500ln','daytona latest'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona 40mm Steel Ceramic'; return t(
+    `**Rolex Daytona réf. 126500LN** — La génération 2023+, acier-céramique actuelle. 40mm Oystersteel, lunette Cerachrom noire, cadran blanc avec index or, mouvement 4130 (72h, Chronometer). Bracelet Oyster 3-mailles renforcé. Évolution subtile du 116500: châssis affiné, technologie consolidée, mouvement +2 ans réserve marche. Référence actuelle, liste d'attente énorme. Investissement de prestige moderne.`,
+    `**Rolex Daytona ref. 126500LN** — Current 2023+ generation, steel-ceramic. 40mm Oystersteel, black Cerachrom bezel, white dial with gold indices, 4130 movement (72h, Chronometer). Reinforced 3-link Oyster bracelet. Subtle evolution from 116500: refined case, consolidated tech, +2 years power reserve. Current reference, enormous waitlist. Modern prestige investment.`
+  );} },
+
+{ id:'rolex_126529ln', kw:['126529ln','daytona reverse panda','white dial black subdials','rolex 126529ln','ref 126529ln','2023 panda daytona'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona 40mm "Reverse Panda"'; return t(
+    `**Rolex Daytona réf. 126529LN "Reverse Panda"** — Nouvelle couleur 2023, acier blanc avec cadran noir inversé. 40mm Oystersteel, lunette Cerachrom noire, cadran NOIR avec sous-cadrans blancs (inverse du "panda" classique). Mouvement 4130 (72h). Couleur électrisante, très demandée. Très limité, listes d'attente. Pièce de collection immédiate, investissement garanti. Rolex innovation couleur rare.`,
+    `**Rolex Daytona ref. 126529LN "Reverse Panda"** — New 2023 color, steel white with inverted black dial. 40mm Oystersteel, black Cerachrom bezel, BLACK dial with white sub-dials (inverse of classic "panda"). 4130 movement (72h). Electric color, highly demanded. Very limited, waitlists. Instant collectible, guaranteed investment. Rare Rolex color innovation.`
+  );} },
+
+// GMT-MASTER FAMILY — Traveler's instrument, since 1954
+{ id:'rolex_126710blro', kw:['126710blro','gmt pepsi current','gmt jubilee','rolex 126710blro','ref 126710blro','2023 gmt pepsi','gmt master ii pepsi'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II "Pepsi" Jubilee'; return t(
+    `**Rolex GMT-Master II réf. 126710BLRO** — Pepsi actuel, bracelet Jubilee, 2023+. 40mm acier Oystersteel, lunette bi-directionnelle Cerachrom rouge/bleu, cadran noir, mouvement 3285 (70h). Bracelet Jubilee 5-mailles iconic (en alternance avec Oyster 3-mailles). Lunette "Pepsi" (rouge-bleu) recherchissime. Référence actuelle ultra-demandée. Prix élevé, liste d'attente massive. Investissement prestige incontournable.`,
+    `**Rolex GMT-Master II ref. 126710BLRO** — Current Pepsi, Jubilee bracelet, 2023+. 40mm Oystersteel, bidirectional Cerachrom red/blue bezel, black dial, 3285 movement (70h). Iconic 5-link Jubilee bracelet (alternating with 3-link Oyster option). "Pepsi" bezel (red-blue) highly sought. Current reference, ultra-demanded. High price, massive waitlist. Essential prestige investment.`
+  );} },
+
+{ id:'rolex_126710blnr', kw:['126710blnr','gmt batman current','rolex 126710blnr','ref 126710blnr','batman gmt jubilee','2023 batman'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II "Batman" Jubilee'; return t(
+    `**Rolex GMT-Master II réf. 126710BLNR** — Batman actuel, bracelet Jubilee, 2023+. 40mm acier Oystersteel, lunette Cerachrom noir/bleu (24h), cadran noir mat, mouvement 3285 (70h, Chronometer). Bracelet Jubilee 5-mailles signature. Lunette "Batman" nuit-jour très lisible, très populaire auprès des voyageurs. Référence actuelle, disponibilité limitée. Investissement sûr.`,
+    `**Rolex GMT-Master II ref. 126710BLNR** — Current Batman, Jubilee bracelet, 2023+. 40mm Oystersteel, black/blue Cerachrom bezel (24h), matte black dial, 3285 movement (70h, Chronometer). Signature 5-link Jubilee bracelet. "Batman" night-day bezel highly readable, popular with travelers. Current reference, limited availability. Safe investment.`
+  );} },
+
+{ id:'rolex_116710blnr', kw:['116710blnr','gmt batman previous','rolex 116710blnr','ref 116710blnr','2010 batman gmt','gmt-master batman steel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II "Batman" Steel'; return t(
+    `**Rolex GMT-Master II réf. 116710BLNR** — Batman génération antérieure, 2010–2023. 40mm acier, lunette aluminium peinte noir/bleu (plus fragile que céramique), mouvement 3186 (48h). Très populaire avant arrivée céramique. Prix secondaire: 8–12k EUR. Bon entrée de gamme GMT-Master. Robustesse éprouvée. Investissement stable.`,
+    `**Rolex GMT-Master II ref. 116710BLNR** — Previous Batman generation, 2010–2023. 40mm steel, painted aluminum black/blue bezel (less durable than ceramic), 3186 movement (48h). Very popular before ceramic arrival. Secondary price: 8–12k EUR. Good entry-level GMT-Master. Proven robustness. Stable investment.`
+  );} },
+
+{ id:'rolex_16750', kw:['16750','gmt vintage 1981','rolex 16750','ref 16750','quickset date gmt','vintage traveler watch'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master 40mm Vintage'; return t(
+    `**Rolex GMT-Master réf. 16750** — Classique vintage, 1981–1988. 40mm acier, lunette aluminium peinte rouge/bleu, mouvement 3075 (48h, quickset date). Premier GMT avec changement rapide de date. Très collecté, qualité horlogère excellente. Prix: 5–8k EUR selon condition. Montre outil de voyageur légendaire, très demandée.`,
+    `**Rolex GMT-Master ref. 16750** — Vintage classic, 1981–1988. 40mm steel, red/blue painted aluminum bezel, 3075 movement (48h, quickset date). First GMT with rapid-set date change. Heavily collected, excellent watchmaking quality. Price: 5–8k EUR depending on condition. Legendary traveler tool watch, highly sought.`
+  );} },
+
+{ id:'rolex_1675', kw:['1675','gmt-master original','rolex 1675','ref 1675','1950s gmt','original gmt watch'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master Vintage'; return t(
+    `**Rolex GMT-Master réf. 1675** — Originel légendaire, 1959–1980. 40mm acier, lunette aluminium peinte "tropical" virant au brun, mouvement 1575 (18000 A/h). Montre outil des pilotes, très rare. Condition variable (tropicalization), très respectée. Prix: 10–25k EUR selon état. Graal des collectionneurs GMT. Symbole du voyage haute horlogerie.`,
+    `**Rolex GMT-Master ref. 1675** — Legendary original, 1959–1980. 40mm steel, "tropical" painted aluminum bezel (fades to brown), 1575 movement (18000 A/h). Pilot tool watch, very rare. Variable condition (tropicalization), highly respected. Price: 10–25k EUR depending on state. Holy grail for GMT collectors. Symbol of high-watch travel.`
+  );} },
+
+{ id:'rolex_126720vtnr', kw:['126720vtnr','gmt destro left handed','left-hand gmt','rolex 126720vtnr','ref 126720vtnr','southpaw gmt','2023 destro'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II "Destro" 40mm'; return t(
+    `**Rolex GMT-Master II réf. 126720VTNR "Destro"** — Gaucher révolutionnaire, 2023. 40mm acier Oystersteel, couronne positionnée à GAUCHE (innovation rare Rolex), lunette Cerachrom noir/bleu, cadran noir, mouvement 3285 (70h). Bracelet Oyster 3-mailles. Pièce ultra-spécialisée pour gauchers. Production très limitée. Prix: 15–20k EUR. Montre d'exception, investissement de collection.`,
+    `**Rolex GMT-Master II ref. 126720VTNR "Destro"** — Revolutionary left-handed, 2023. 40mm Oystersteel, crown positioned on LEFT side (rare Rolex innovation), black/blue Cerachrom bezel, black dial, 3285 movement (70h). 3-link Oyster bracelet. Ultra-specialized piece for left-handers. Very limited production. Price: 15–20k EUR. Exceptional watch, collection investment.`
+  );} },
+
+// DAY-DATE (PRESIDENT) FAMILY — Dress sport prestige, since 1956
+{ id:'rolex_228238', kw:['228238','day date 40 yellow gold','rolex 228238','ref 228238','daydate president gold 40','2023 day date yellow'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Day-Date 40 Yellow Gold'; return t(
+    `**Rolex Day-Date réf. 228238** — Or jaune massif, 40mm, 2023+. Lunette cannelée, cadran champagne, jour ET date en majuscules dorés. Mouvement 3255 (70h, perpetual rotor, Chronometer). Bracelet President 3-mailles or jaune. Montre présidentielle de luxe absolu. Très demandée par executives et collectionneurs. Prix: 35–50k EUR. Investissement patrimoine intemporelle.`,
+    `**Rolex Day-Date ref. 228238** — Solid yellow gold, 40mm, 2023+. Fluted bezel, champagne dial, day AND date in gold capitals. 3255 movement (70h, perpetual rotor, Chronometer). President 3-link yellow gold bracelet. Ultimate presidential luxury watch. Highly sought by executives and collectors. Price: 35–50k EUR. Timeless heritage investment.`
+  );} },
+
+{ id:'rolex_228235', kw:['228235','day date 40 everose gold','rolex 228235','ref 228235','daydate president everose','rose gold day date'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Day-Date 40 Everose Gold'; return t(
+    `**Rolex Day-Date réf. 228235** — Or rose Everose massif, 40mm, 2023+. Lunette cannelée, cadran chocolat ou champagne, jour ET date dorés. Mouvement 3255 (70h). Bracelet President 3-mailles Everose. Couleur rose tendance, prestige discret. Très prisée des femmes executives et collectionneurs de prestige. Prix: 35–50k EUR. Montre d'exception.`,
+    `**Rolex Day-Date ref. 228235** — Solid Everose gold, 40mm, 2023+. Fluted bezel, chocolate or champagne dial, day AND date in gold. 3255 movement (70h). President 3-link Everose bracelet. Trendy rose color, discrete prestige. Highly valued by female executives and luxury collectors. Price: 35–50k EUR. Exceptional watch.`
+  );} },
+
+{ id:'rolex_228239', kw:['228239','day date 40 white gold','rolex 228239','ref 228239','daydate platinum watch','white gold president'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Day-Date 40 White Gold'; return t(
+    `**Rolex Day-Date réf. 228239** — Or blanc massif, 40mm, 2023+. Lunette cannelée, cadran bleu ou argent. Jour ET date en majuscules dorées très visibles. Mouvement 3255 (70h, Chronometer COSC). Bracelet President 3-mailles or blanc. Montre présidentielle à la fois sportive et élégante. Très demandée. Prix: 35–50k EUR. Ultimate luxury dresswear.`,
+    `**Rolex Day-Date ref. 228239** — Solid white gold, 40mm, 2023+. Fluted bezel, blue or silver dial. Day AND date in prominent gold capitals. 3255 movement (70h, COSC Chronometer). President 3-link white gold bracelet. Presidential watch that's both sporty and elegant. Highly sought. Price: 35–50k EUR. Ultimate luxury dresswear.`
+  );} },
+
+{ id:'rolex_118238', kw:['118238','day date 36 yellow gold','rolex 118238','ref 118238','president 36mm yellow','classic daydate gold'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Day-Date 36 Yellow Gold'; return t(
+    `**Rolex Day-Date réf. 118238** — Or jaune massif, 36mm, génération antérieure (2000–2008). Taille classique élégante. Lunette cannelée, cadran champagne, jour ET date. Mouvement 3155 (48h). Bracelet President 3-mailles. Très apprécié avant agrandissement à 40mm. Excellent rapport qualité-prix occasion. Prix: 20–30k EUR selon condition. Taille vintage, prestige éternel.`,
+    `**Rolex Day-Date ref. 118238** — Solid yellow gold, 36mm, previous generation (2000–2008). Classic elegant size. Fluted bezel, champagne dial, day AND date. 3155 movement (48h). President 3-link bracelet. Highly valued before size increase to 40mm. Excellent secondary market value. Price: 20–30k EUR depending on condition. Vintage size, eternal prestige.`
+  );} },
+
+{ id:'rolex_18038', kw:['18038','day date vintage gold 36','rolex 18038','ref 18038','president 1977','daydate earlier generation'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Day-Date 36 Vintage Gold'; return t(
+    `**Rolex Day-Date réf. 18038** — Or massif vintage, 36mm, 1977+. Lunette cannelée classique, cadran champagne/argent, jour ET date or. Mouvement automatique 3035 (48h). Bracelet President 3-mailles. Très recherché par vintage-lovers. Bon marché secondaire: 15–25k EUR selon or utilisé (jaune, blanc). Prestige intemporel, très collecté.`,
+    `**Rolex Day-Date ref. 18038** — Vintage solid gold, 36mm, 1977+. Classic fluted bezel, champagne/silver dial, day AND date in gold. Automatic 3035 movement (48h). President 3-link bracelet. Highly sought by vintage lovers. Good secondary market: 15–25k EUR depending on gold type (yellow, white). Timeless prestige, heavily collected.`
+  );} },
+
+// DATEJUST FAMILY — Dress sport icon, since 1945
+{ id:'rolex_126334', kw:['126334','datejust 41 white gold','rolex 126334','ref 126334','datejust 41 fluted','2020 datejust 41mm'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 41 White Gold'; return t(
+    `**Rolex Datejust réf. 126334** — Or blanc massif, 41mm, 2020+. Lunette cannelée (fluted), cadran blanc ou bleu, fenêtre de date loupe Cyclope. Mouvement 3235 (70h, Chronometer perpetual rotor). Bracelet Oyster 3-mailles or blanc. Montre élégante et robuste. Très demandée. Prix: 22–35k EUR. Investissement prestige stable.`,
+    `**Rolex Datejust ref. 126334** — Solid white gold, 41mm, 2020+. Fluted bezel, white or blue dial, magnifying cyclops date window. 3235 movement (70h, Chronometer perpetual rotor). 3-link Oyster white gold bracelet. Elegant and robust watch. Highly sought. Price: 22–35k EUR. Stable prestige investment.`
+  );} },
+
+{ id:'rolex_126234', kw:['126234','datejust 36 white gold','rolex 126234','ref 126234','datejust 36 fluted','classic datejust 36mm'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 36 White Gold'; return t(
+    `**Rolex Datejust réf. 126234** — Or blanc massif, 36mm, taille classique, 2020+. Lunette cannelée, cadran bleu, date cyclope. Mouvement 3235 (70h). Bracelet Oyster 3-mailles or blanc. Très apprécié pour proportions parfaites. Très demandé. Prix: 20–32k EUR. Montre intemporelle, investissement patrimonial.`,
+    `**Rolex Datejust ref. 126234** — Solid white gold, 36mm classic size, 2020+. Fluted bezel, blue dial, cyclops date. 3235 movement (70h). 3-link Oyster white gold bracelet. Highly valued for perfect proportions. Heavily sought. Price: 20–32k EUR. Timeless watch, heritage investment.`
+  );} },
+
+{ id:'rolex_126200', kw:['126200','datejust 36 steel smooth bezel','rolex 126200','ref 126200','smooth datejust 36','2020 datejust steel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 36 Steel'; return t(
+    `**Rolex Datejust réf. 126200** — Acier Oystersteel, 36mm, lunette lisse (smooth), 2020+. Cadran blanc ou noir, date cyclope. Mouvement 3235 (70h, Chronometer perpetual). Bracelet Oyster 3-mailles acier. Option sports-elegante, plus discrète que cannelée. Très populaire. Prix: 8–11k EUR. Excellent rapport qualité-prix Rolex actuel.`,
+    `**Rolex Datejust ref. 126200** — Oystersteel, 36mm, smooth bezel, 2020+. White or black dial, cyclops date. 3235 movement (70h, Chronometer perpetual). 3-link Oyster steel bracelet. Sports-elegant option, more discrete than fluted. Very popular. Price: 8–11k EUR. Excellent current Rolex value.`
+  );} },
+
+{ id:'rolex_116234', kw:['116234','datejust 36 previous','rolex 116234','ref 116234','older datejust 36mm','2000s datejust'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 36 Steel'; return t(
+    `**Rolex Datejust réf. 116234** — Acier, 36mm, génération antérieure (2000–2009). Mouvement 3135 (48h, très fiable). Lunette lisse, très sobre. Excellent sportwear discret. Prix secondaire: 6–8k EUR. Entrée très accessible Datejust/Rolex. Très collecté, investissement sûr.`,
+    `**Rolex Datejust ref. 116234** — Steel, 36mm, previous generation (2000–2009). 3135 movement (48h, very reliable). Smooth bezel, very understated. Excellent discrete sportwear. Secondary price: 6–8k EUR. Very accessible Datejust/Rolex entry. Heavily collected, safe investment.`
+  );} },
+
+{ id:'rolex_1601', kw:['1601','datejust vintage 1960s','rolex 1601','ref 1601','classic vintage datejust','1960 datejust steel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 36 Vintage'; return t(
+    `**Rolex Datejust réf. 1601** — Légende vintage acier, 36mm, 1960s–1977. Lunette lisse ou cannelée, cadran variés, mouvement 1570/1575 (18000 A/h ou 19800 A/h). Très collecté pour rareté et prestige. Condition variable mais très apprécié. Prix: 5–12k EUR selon condition et variante. Icône horlogère absolue, "original Datejust".`,
+    `**Rolex Datejust ref. 1601** — Vintage steel legend, 36mm, 1960s–1977. Smooth or fluted bezel, varied dials, 1570/1575 movements (18000 A/h or 19800 A/h). Heavily collected for rarity and prestige. Variable condition but highly valued. Price: 5–12k EUR depending on condition and variant. Absolute watchmaking icon, "original Datejust."`
+  );} },
+
+{ id:'rolex_16013', kw:['16013','datejust two tone vintage','rolex 16013','ref 16013','gold and steel datejust','two tone classic'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust Two-Tone Vintage'; return t(
+    `**Rolex Datejust réf. 16013** — Deux-tons or/acier vintage, 36mm, 1982–1990. Lunette cannelée, cadran variés, mouvement 3035 (48h). Très élégante combinaison couleur. Moins produite que versions monomatière. Recherchée. Prix: 8–15k EUR selon or utilisé. Prestige intermédiaire, vintage chic.`,
+    `**Rolex Datejust ref. 16013** — Vintage two-tone gold/steel, 36mm, 1982–1990. Fluted bezel, varied dials, 3035 movement (48h). Very elegant color combo. Less produced than single-material versions. Sought after. Price: 8–15k EUR depending on gold used. Intermediate prestige, vintage chic.`
+  );} },
+
+{ id:'rolex_278271', kw:['278271','datejust 31 rolesor rose','rolex 278271','ref 278271','datejust rose gold steel','rose gold datejust womens'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 31 Rolesor Rose'; return t(
+    `**Rolex Datejust réf. 278271** — Rolesor® rose/acier, 31mm, dame, 2023+. Lunette cannelée, cadran rose ou chocolat, date cyclope. Mouvement 2235 (55h, automatique, COSC). Bracelet Jubilee 5-mailles Rolesor rose. Très féminin, prestige élégant. Prix: 12–18k EUR. Investissement prestige classique pour femmes.`,
+    `**Rolex Datejust ref. 278271** — Rolesor® rose/steel, 31mm lady, 2023+. Fluted bezel, rose or chocolate dial, cyclops date. 2235 movement (55h, automatic, COSC). 5-link Jubilee Rolesor rose bracelet. Very feminine, elegant prestige. Price: 12–18k EUR. Classic prestige investment for women.`
+  );} },
+
+// EXPLORER FAMILY — Field instrument, since 1953
+{ id:'rolex_224270', kw:['224270','explorer 40mm current','rolex 224270','ref 224270','2023 explorer','explorer i 40'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer I 40mm'; return t(
+    `**Rolex Explorer réf. 224270** — Acier, 40mm, 2023+. Lunette unie noire, cadran noir très sobre "mercedes" (aiguilles caractéristiques), mouvement 3230 (70h, Chronometer perpetual). Bracelet Oyster 3-mailles. Montre pilote/aventurier moderne, très épurée. Excellent rapport qualité-prix. Prix: 6–8k EUR. Rolex accessibilité, investissement stable.`,
+    `**Rolex Explorer ref. 224270** — Steel, 40mm, 2023+. Unified black bezel, very simple black dial with "Mercedes" hands (characteristic), 3230 movement (70h, Chronometer perpetual). 3-link Oyster bracelet. Modern pilot/adventurer watch, very minimalist. Excellent value. Price: 6–8k EUR. Accessible Rolex, stable investment.`
+  );} },
+
+{ id:'rolex_124270', kw:['124270','explorer 36mm current','rolex 124270','ref 124270','2021 explorer 36','explorer classic size'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer I 36mm'; return t(
+    `**Rolex Explorer réf. 124270** — Acier, 36mm, taille classique, 2021+. Lunette unie, cadran noir, aiguilles "mercedes". Mouvement 3130 (70h, COSC Chronometer). Bracelet Oyster 3-mailles. Très apprécié pour proportions équilibrées. Moins produit que 40mm. Prix: 6–7.5k EUR. Excellent entrée Rolex sport-elegante.`,
+    `**Rolex Explorer ref. 124270** — Steel, 36mm classic size, 2021+. Unified bezel, black dial, "Mercedes" hands. 3130 movement (70h, COSC Chronometer). 3-link Oyster bracelet. Valued for balanced proportions. Less produced than 40mm. Price: 6–7.5k EUR. Excellent entry sports-elegant Rolex.`
+  );} },
+
+{ id:'rolex_214270', kw:['214270','explorer 39mm previous','rolex 214270','ref 214270','2010 explorer','older explorer generation'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer I 39mm'; return t(
+    `**Rolex Explorer réf. 214270** — Acier, 39mm, génération intermédiaire, 2010–2021. Mouvement 3130 (70h). Lunette unie, très robuste. Excellent pont entre 36mm classique et 40mm moderne. Prix secondaire: 5–6.5k EUR. Très fiable, très accessibilité. Investissement stable, rapport qualité-prix remarquable.`,
+    `**Rolex Explorer ref. 214270** — Steel, 39mm, intermediate generation, 2010–2021. 3130 movement (70h). Unified bezel, very robust. Excellent bridge between classic 36mm and modern 40mm. Secondary price: 5–6.5k EUR. Bulletproof, very accessible. Stable investment, remarkable value.`
+  );} },
+
+{ id:'rolex_1016', kw:['1016','explorer vintage legendary','rolex 1016','ref 1016','1960s explorer','explorer original'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer I Vintage'; return t(
+    `**Rolex Explorer réf. 1016** — Légende absolue, 36mm acier, 1963–1989. Cadran noir sobriquet "W" ou "3-6-9" (numéros pointeur). Mouvement 1560 ou 1570 (18000/19800 A/h). Montre d'explorateur pur-sang, jamais "sportive" ostentatoire. Très recherchée. Prix: 8–20k EUR selon condition et variante. Graal des minimalistes. Investissement patrimoine.`,
+    `**Rolex Explorer ref. 1016** — Absolute legend, 36mm steel, 1963–1989. Simple black dial with "W" or "3-6-9" (hour markers). 1560 or 1570 movement (18000/19800 A/h). Pure explorer watch, never showy sports. Highly sought. Price: 8–20k EUR depending on condition and variant. Holy grail for minimalists. Heritage investment.`
+  );} },
+
+{ id:'rolex_226570', kw:['226570','explorer ii 42mm white','rolex 226570','ref 226570','2021 explorer ii','current explorer ii'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer II 42mm'; return t(
+    `**Rolex Explorer II réf. 226570** — Acier, 42mm, cadran blanc, 2021+. Lunette 24h GMT fixe (orange), aiguilles Mercedes blanc. Mouvement 3285 (70h, Chronometer perpetual). Bracelet Oyster 3-mailles. Fonction GMT intégrée (pas de second fuseau mais 24h). Très robuste, excellent pour expédition/survie. Prix: 8–10k EUR. Investissement fiabilité absolue.`,
+    `**Rolex Explorer II ref. 226570** — Steel, 42mm white dial, 2021+. Fixed 24h GMT bezel (orange), white Mercedes hands. 3285 movement (70h, Chronometer perpetual). 3-link Oyster bracelet. Integrated GMT function (not dual time but 24h). Very robust, excellent for expedition/survival. Price: 8–10k EUR. Investment in absolute reliability.`
+  );} },
+
+{ id:'rolex_216570', kw:['216570','explorer ii previous generation','rolex 216570','ref 216570','older explorer ii','2009 explorer ii'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer II 42mm'; return t(
+    `**Rolex Explorer II réf. 216570** — Acier, 42mm, génération antérieure, 2011–2021. Mouvement 3186 (48h). Cadran blanc ou noir, lunette GMT 24h orange fixe. Très fiable. Prix secondaire: 7–9k EUR. Excellent rapport qualité-prix en occasion. Investissement robuste.`,
+    `**Rolex Explorer II ref. 216570** — Steel, 42mm, previous generation, 2011–2021. 3186 movement (48h). White or black dial, orange fixed 24h GMT bezel. Very reliable. Secondary price: 7–9k EUR. Excellent secondary market value. Robust investment.`
+  );} },
+
+{ id:'rolex_16570', kw:['16570','explorer ii 40mm vintage','rolex 16570','ref 16570','1991 explorer ii','older gmt explorer'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer II 40mm Vintage'; return t(
+    `**Rolex Explorer II réf. 16570** — Acier, 40mm, 1991–2011. Mouvement 3185 (48h). Cadran blanc, lunette GMT aluminium peinte rouge/blanc. Très collecté, excellent état encore trouvable. Prix: 6–10k EUR selon condition. Très apprécié pour taille 40mm "moyenne" (avant agrandissement 42mm). Investissement stable.`,
+    `**Rolex Explorer II ref. 16570** — Steel, 40mm, 1991–2011. 3185 movement (48h). White dial, painted aluminum red/white GMT bezel. Heavily collected, good condition examples still findable. Price: 6–10k EUR depending on state. Valued for 40mm "middle" size (before 42mm enlargement). Stable investment.`
+  );} },
+
+// SEA-DWELLER FAMILY — Deep diving specialist, since 1967
+{ id:'rolex_126600', kw:['126600','sea dweller red','rolex 126600','ref 126600','2023 sea dweller','current sea dweller 43mm'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Sea-Dweller 43mm'; return t(
+    `**Rolex Sea-Dweller réf. 126600** — Acier, 43mm, "Red Writing" actuel, 2023+. Lunette bi-directionnelle Cerachrom noire, cadran noir, texte "Sea-Dweller" EN ROUGE (distinction iconique). Mouvement 3235 (70h, Chronometer). Étanchéité 4000 pieds (1220m). Helium valve exclusive. Bracelet Oyster 3-mailles. Montre plongée extrême, très demandée. Prix: 12–15k EUR. Investissement prestige professionnel.`,
+    `**Rolex Sea-Dweller ref. 126600** — Steel, 43mm, current "Red Writing," 2023+. Black bidirectional Cerachrom bezel, black dial, "Sea-Dweller" text IN RED (iconic distinction). 3235 movement (70h, Chronometer). 4000 feet (1220m) water resistance. Exclusive helium valve. 3-link Oyster bracelet. Extreme diving watch, highly sought. Price: 12–15k EUR. Professional prestige investment.`
+  );} },
+
+{ id:'rolex_126660', kw:['126660','deepsea 44mm','rolex 126660','ref 126660','deepsea current','3900m deepsea'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Deepsea 44mm'; return t(
+    `**Rolex Deepsea réf. 126660** — Acier spécial, 44mm, 3900m plongée extrême, 2023+. Lunette Cerachrom bidirectionnelle noire, cadran noir, mouvement 3235 (70h). Helium valve. Boîtier massif avec "Ring Lock" (innovation Rolex pour pression). Bracelet Oyster renforcé. Montre légendaire pour plongeurs professionnels. Très rare civilian. Prix: 14–18k EUR. Investissement exceptionnel.`,
+    `**Rolex Deepsea ref. 126660** — Special steel, 44mm, 3900m extreme diving, 2023+. Black bidirectional Cerachrom bezel, black dial, 3235 movement (70h). Helium valve. Massive case with "Ring Lock" (Rolex innovation for pressure). Reinforced Oyster bracelet. Legendary watch for professional divers. Very rare civilian. Price: 14–18k EUR. Exceptional investment.`
+  );} },
+
+{ id:'rolex_136660', kw:['136660','deepsea challenge 50mm','rolex 136660','ref 136660','titanium deepsea','11000m challenger'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Deepsea Challenge 50mm'; return t(
+    `**Rolex Deepsea Challenge réf. 136660** — Titane, 50mm, 11000m (Challenger Deep), 2023+. Mouvement 3230 (70h) spécialisé. Helium valve, Ring Lock. Lunette Cerachrom noire. Montre d'expédition ultra-rare, très limitée (100–200/an). Seule Rolex capable d'atteindre les profondeurs absolues. Prix: 60–100k EUR+. Réservée aux collectionneurs extrêmes et expéditions.`,
+    `**Rolex Deepsea Challenge ref. 136660** — Titanium, 50mm, 11000m (Challenger Deep), 2023+. Specialized 3230 movement (70h). Helium valve, Ring Lock. Black Cerachrom bezel. Ultra-rare expedition watch, very limited (100–200/year). Only Rolex capable of absolute depths. Price: 60–100k EUR+. Reserved for extreme collectors and expeditions.`
+  );} },
+
+{ id:'rolex_116600', kw:['116600','sea dweller 40mm','rolex 116600','ref 116600','2014 sea dweller','brief production sea dweller'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Sea-Dweller 40mm'; return t(
+    `**Rolex Sea-Dweller réf. 116600** — Acier, 40mm, production brève 2014–2017. Mouvement 3135 (48h). Helium valve, étanchéité 4000 pieds. Taille intermédiaire, très rare. Très collectée car production très courte. Prix secondaire: 10–14k EUR. Pièce exceptionnelle, investissement collector.`,
+    `**Rolex Sea-Dweller ref. 116600** — Steel, 40mm, brief production 2014–2017. 3135 movement (48h). Helium valve, 4000 feet rating. Intermediate size, very rare. Heavily collected—short production run. Secondary price: 10–14k EUR. Exceptional piece, collector investment.`
+  );} },
+
+// SKY-DWELLER FAMILY — Complication prestige, since 2012
+{ id:'rolex_326934', kw:['326934','sky dweller steel white gold','rolex 326934','ref 326934','sky dweller oyster','steel wg skydweller'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Sky-Dweller Steel/WG'; return t(
+    `**Rolex Sky-Dweller réf. 326934** — Acier & or blanc Rolesor®, 42mm, 2023+. Complication annuelle (calendrier perpétuel). Lunette rotative "Ring Command" innovante, affichage GMT. Mouvement 9001 (72h, perpétuel, Chronometer). Bracelet Oyster 3-mailles Rolesor. Montre à complication horlogère finest, très rare. Prix: 40–60k EUR. Investissement compliqué, prestige absolu.`,
+    `**Rolex Sky-Dweller ref. 326934** — Steel & white gold Rolesor®, 42mm, 2023+. Annual complication (perpetual calendar). Innovative "Ring Command" rotatable bezel, GMT display. 9001 movement (72h, perpetual, Chronometer). 3-link Oyster Rolesor bracelet. Horologically complex, very rare. Price: 40–60k EUR. Complicated investment, absolute prestige.`
+  );} },
+
+{ id:'rolex_326238', kw:['326238','sky dweller yellow gold','rolex 326238','ref 326238','gold skydweller','yellow gold sky dweller'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Sky-Dweller Yellow Gold'; return t(
+    `**Rolex Sky-Dweller réf. 326238** — Or jaune massif, 42mm, 2023+. Complication annuelle (calendrier perpétuel jusqu'à 2100). Lunette Ring Command. Mouvement 9001 (72h). Bracelet President 3-mailles or jaune. Montre présidentielle de haute complication. Extrêmement rare. Prix: 60–90k EUR. Réservée ultra-collectionneurs, rêve de prestige.`,
+    `**Rolex Sky-Dweller ref. 326238** — Solid yellow gold, 42mm, 2023+. Annual complication (perpetual calendar through 2100). Ring Command bezel. 9001 movement (72h). President 3-link yellow gold bracelet. Presidential ultra-complicated watch. Extremely rare. Price: 60–90k EUR. Reserved for ultra-collectors, prestige dream.`
+  );} },
+
+// YACHT-MASTER FAMILY — Sailing sports watch, since 1992
+{ id:'rolex_226659', kw:['226659','yacht master 42 white gold oysterflex','rolex 226659','ref 226659','luxury yacht master','wg yacht master'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Yacht-Master 42 White Gold'; return t(
+    `**Rolex Yacht-Master réf. 226659** — Or blanc massif, 42mm, bracelet Oysterflex noir, 2023+. Lunette rotative unidirectionnelle, cadran bleu ou noir. Mouvement 3235 (70h, Chronometer). Rare combinaison or blanc + caoutchouc sport. Très élégant, sailing prestige. Prix: 30–45k EUR. Investissement luxe naval.`,
+    `**Rolex Yacht-Master ref. 226659** — Solid white gold, 42mm, black Oysterflex bracelet, 2023+. Unidirectional rotating bezel, blue or black dial. 3235 movement (70h, Chronometer). Rare combo: white gold + sports rubber. Very elegant, sailing prestige. Price: 30–45k EUR. Luxury naval investment.`
+  );} },
+
+{ id:'rolex_126655', kw:['126655','yacht master 40 everose oysterflex','rolex 126655','ref 126655','rose gold yacht master','everose sailing'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Yacht-Master 40 Everose'; return t(
+    `**Rolex Yacht-Master réf. 126655** — Or rose Everose massif, 40mm, Oysterflex noir, 2023+. Lunette unidirectionnelle, cadran bleu. Mouvement 3235 (70h). Très tendance rose, sailing sportif. Prix: 28–40k EUR. Montre élégante, investissement moderne prestige.`,
+    `**Rolex Yacht-Master ref. 126655** — Solid Everose gold, 40mm, black Oysterflex, 2023+. Unidirectional bezel, blue dial. 3235 movement (70h). Trendy rose, sports sailing. Price: 28–40k EUR. Elegant watch, modern prestige investment.`
+  );} },
+
+{ id:'rolex_268655', kw:['268655','yacht master 37 everose','rolex 268655','ref 268655','rose gold yacht master 37','dame yacht master'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Yacht-Master 37 Everose'; return t(
+    `**Rolex Yacht-Master réf. 268655** — Or rose Everose, 37mm dame, Oysterflex noir, 2023+. Lunette rotative, cadran bleu. Mouvement 2236 (55h). Excellent taille pour femmes, très féminin. Prix: 25–35k EUR. Prestige sailing élégant pour dames.`,
+    `**Rolex Yacht-Master ref. 268655** — Everose gold, 37mm lady, black Oysterflex, 2023+. Rotating bezel, blue dial. 2236 movement (55h). Excellent ladies' size, very feminine. Price: 25–35k EUR. Elegant sailing prestige for women.`
+  );} },
+
+// OTHER REFERENCES
+{ id:'rolex_126000', kw:['126000','oyster perpetual 36','rolex 126000','ref 126000','2023 oyster perpetual','basic rolex entry'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Oyster Perpetual 36mm'; return t(
+    `**Rolex Oyster Perpetual réf. 126000** — Acier Oystersteel, 36mm, pas de date, 2023+. Cadran coloré (rouge, bleu, turquoise). Mouvement 3230 (70h, Chronometer). Bracelet Oyster 3-mailles. Entrée Rolex authentique, couleurs vives modernes. Excellent accessibilité. Prix: 6–7k EUR. Premier Rolex idéal.`,
+    `**Rolex Oyster Perpetual ref. 126000** — Oystersteel, 36mm, no date, 2023+. Colored dial (red, blue, turquoise). 3230 movement (70h, Chronometer). 3-link Oyster bracelet. Authentic Rolex entry, vibrant modern colors. Excellent accessibility. Price: 6–7k EUR. Ideal first Rolex.`
+  );} },
+
+{ id:'rolex_124300', kw:['124300','oyster perpetual 41 tiffany','rolex 124300','ref 124300','2020 oyster perpetual','41mm entry rolex'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Oyster Perpetual 41mm'; return t(
+    `**Rolex Oyster Perpetual réf. 124300** — Acier, 41mm, 2020+. Taille moderne, cadrans colorés y compris "Tiffany blue" édition spéciale. Mouvement 3230 (70h). Très populaire, couleurs exclusives créent demande. Prix: 6.5–8k EUR selon couleur. Premier moderne élémentaire Rolex, très collectionné.`,
+    `**Rolex Oyster Perpetual ref. 124300** — Steel, 41mm, 2020+. Modern size, colored dials including special "Tiffany blue" edition. 3230 movement (70h). Very popular—exclusive colors drive demand. Price: 6.5–8k EUR depending on color. Modern elementary first Rolex, heavily collected.`
+  );} },
+
+{ id:'rolex_116400gv', kw:['116400gv','milgauss green crystal','rolex 116400gv','ref 116400gv','green sapphire milgauss','vintage milgauss'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Milgauss Green Sapphire'; return t(
+    `**Rolex Milgauss réf. 116400GV** — Acier, 40mm, cristal saphir VERT unique, 2007–2014. Lunette unie noire, cadran blanc ou noir. Mouvement 3131 (48h, antimagnetique jusqu'à 1000 gauss). Protection blindée magnétique. Très collectée pour cristal vert rare. Prix: 8–12k EUR. Excellent rapport qualité-prix vintage Rolex. Investissement intéressant.`,
+    `**Rolex Milgauss ref. 116400GV** — Steel, 40mm, unique GREEN sapphire crystal, 2007–2014. Black unified bezel, white or black dial. 3131 movement (48h, antimagnetic to 1000 gauss). Magnetic shielding. Heavily collected for rare green crystal. Price: 8–12k EUR. Excellent value vintage Rolex. Interesting investment.`
+  );} },
+
+{ id:'rolex_50535', kw:['50535','cellini moonphase','rolex 50535','ref 50535','cellini dress watch','moonphase elegance'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Cellini Moonphase'; return t(
+    `**Rolex Cellini réf. 50535** — Or blanc massif, 42mm, montre de soirée avec phase lune, 2023+. Mouvement 3195 (72h, perpétuel, complication lune). Très élégante. Bracelet cuir noisette ou maille or blanc. Montre prestige pure, non sportive. Très rare. Prix: 30–45k EUR. Réservée aux collectionneurs elegance.`,
+    `**Rolex Cellini ref. 50535** — Solid white gold, 42mm, evening watch with moonphase, 2023+. 3195 movement (72h, perpetual, moon complication). Very elegant. Hazelnut leather or white gold mesh bracelet. Pure prestige, non-sport watch. Very rare. Price: 30–45k EUR. Reserved for elegance collectors.`
+  );} },
+
+{ id:'rolex_50505', kw:['50505','cellini time 39mm','rolex 50505','ref 50505','cellini dress','white gold elegance'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Cellini Time 39mm'; return t(
+    `**Rolex Cellini réf. 50505** — Or blanc massif, 39mm, montre d'elegance pure, 2023+. Mouvement 3001 (48h, automatique). Cadran blanc ou noir très sobre. Bracelet cuir ou maille. Montre dressy intemporelle. Très rarement vue. Prix: 18–28k EUR. Graal prestige discret.`,
+    `**Rolex Cellini ref. 50505** — Solid white gold, 39mm, pure elegance watch, 2023+. 3001 movement (48h, automatic). Very simple white or black dial. Leather or mesh bracelet. Timeless dressy watch. Rarely seen. Price: 18–28k EUR. Holy grail of discrete prestige.`
+  );} },
+
+// ═══ ROLEX PRECIOUS METALS EXPANDED ═══════════════════════════════════
+
+// SUBMARINER PRECIOUS METALS
+{ id:'rolex_126613lb', kw:['126613lb','submariner two tone','submariner blue 41','two tone submariner','submariner oystersteel gold','submariner everose','submariner gold blue','rolex blue dial'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Two-Tone 41mm'; return t(
+    `**Rolex Submariner réf. 126613LB** — Boîtier 41mm bi-matière Oystersteel & or Everose 18K, cadran bleu sunburst, lunette céramique bleue Cerachrom, bracelet Oyster à système Glidelock. Mouvement Cal. 3235 (70h puissance, chronométrie COSC). Étanche 300m. Production 2020+. Marché : 22 000–28 000€. Très demandé, liste d'attente Rolex significative.`,
+    `**Rolex Submariner ref. 126613LB** — 41mm two-tone Oystersteel & 18K Everose gold case, sunburst blue dial, blue Cerachrom ceramic bezel, Oyster bracelet with Glidelock system. Cal. 3235 movement (70h power reserve, COSC). 300m water-resistant. Made 2020+. Market: €22,000–28,000. Highly sought after with long Rolex waitlists.`
+  );} },
+
+{ id:'rolex_126613ln', kw:['126613ln','submariner two tone black','submariner black dial two tone','submariner oystersteel gold','two tone black submariner','submariner everose black','41mm two tone'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Two-Tone Black 41mm'; return t(
+    `**Rolex Submariner réf. 126613LN** — Boîtier 41mm Oystersteel & or Everose, cadran noir, lunette céramique noire Cerachrom, bracelet Oyster intégré Glidelock. Cal. 3235 (70h, COSC chronométré). Étanche 300m. Production 2020+. L'alternative classique au 126613LB. Marché : 20 000–26 000€. Discrétion élégante.`,
+    `**Rolex Submariner ref. 126613LN** — 41mm Oystersteel & 18K Everose gold case, black dial, black Cerachrom ceramic bezel, Oyster bracelet with Glidelock. Cal. 3235 (70h power, COSC). 300m WR. Made 2020+. Classic alternative to the blue. Market: €20,000–26,000. Elegant restraint.`
+  );} },
+
+{ id:'rolex_126618lb', kw:['126618lb','submariner yellow gold','submariner oro giallo','submariner gold blue','yellow gold submariner','submariner 18k oro','full gold blue'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Yellow Gold 41mm'; return t(
+    `**Rolex Submariner réf. 126618LB** — Boîtier 41mm or jaune massif 18K, cadran bleu sunburst, lunette céramique bleue, bracelet Oyster or. Mouvement Cal. 3235 (70h, COSC). Étanche 300m. Production 2020+. Montre de prestige absolu en or massif. Très rare en stock. Marché : 45 000–65 000€. Pour collectionneurs or/bleu.`,
+    `**Rolex Submariner ref. 126618LB** — 41mm solid 18K yellow gold case, sunburst blue dial, blue Cerachrom ceramic bezel, yellow gold Oyster bracelet. Cal. 3235 (70h power, COSC). 300m WR. Made 2020+. Absolute prestige in solid gold. Rarely stocked. Market: €45,000–65,000. For yellow gold & blue collectors.`
+  );} },
+
+{ id:'rolex_126618ln', kw:['126618ln','submariner yellow gold black','submariner oro giallo nero','yellow gold submariner black','oro giallo submariner','full yellow gold'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Yellow Gold Black 41mm'; return t(
+    `**Rolex Submariner réf. 126618LN** — Boîtier 41mm or jaune massif 18K, cadran noir, lunette céramique noire, bracelet Oyster or massif. Cal. 3235 (70h, COSC). Étanche 300m. Production 2020+. Reference classique en or complet. Ultra-tradition horlogère. Marché : 42 000–62 000€. Le symbole de la réussite discrète.`,
+    `**Rolex Submariner ref. 126618LN** — 41mm solid 18K yellow gold case, black dial, black Cerachrom ceramic bezel, solid gold Oyster bracelet. Cal. 3235 (70h power, COSC). 300m WR. Made 2020+. Classic reference in full gold. Pure watchmaking tradition. Market: €42,000–62,000. Symbol of understated success.`
+  );} },
+
+{ id:'rolex_126619lb', kw:['126619lb','submariner white gold','submariner platine','submariner or blanc','white gold submariner blue','platine submariner','pt950','full white gold'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner White Gold 41mm'; return t(
+    `**Rolex Submariner réf. 126619LB** — Boîtier 41mm or blanc massif 18K, cadran bleu sunburst, lunette céramique bleue, bracelet Oyster or blanc. Cal. 3235 (70h, COSC). Étanche 300m. Production 2020+. Montre royale en or blanc & bleu. Très prestigieuse. Marché : 48 000–68 000€. Pour les collectionneurs de prestige maximal.`,
+    `**Rolex Submariner ref. 126619LB** — 41mm solid 18K white gold case, sunburst blue dial, blue Cerachrom ceramic bezel, white gold Oyster bracelet. Cal. 3235 (70h power, COSC). 300m WR. Made 2020+. Royal watch in white gold & blue. Highly prestigious. Market: €48,000–68,000. For maximum prestige collectors.`
+  );} },
+
+// DAYTONA PRECIOUS METALS
+{ id:'rolex_116503', kw:['116503','daytona two tone','daytona gold steel','daytona oro acciaio','two tone daytona','daytona everose','daytona bicolore'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona Two-Tone'; return t(
+    `**Rolex Daytona réf. 116503** — Chronographe 40mm bi-matière Acier & or Everose, lunette aluminium peinte blanche, cadran noir, mouvement Zenith El Primero. Référence précédente très classique, 2000–2023. Marché : 16 000–22 000€. Moins cher que le moderne 116500LN mais très appréciée des amateurs.`,
+    `**Rolex Daytona ref. 116503** — 40mm two-tone steel & Everose chronograph, white painted aluminum bezel, black dial, Zenith El Primero movement. Classic reference 2000–2023. Market: €16,000–22,000. Less expensive than the modern 116500LN but highly valued by enthusiasts.`
+  );} },
+
+{ id:'rolex_116518ln', kw:['116518ln','daytona yellow gold','daytona oysterflex','daytona oro','daytona elastomer','rubber daytona','yellow gold chronograph'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona Yellow Gold Oysterflex'; return t(
+    `**Rolex Daytona réf. 116518LN** — Chronographe 40mm or jaune massif 18K, lunette aluminium peinte noire, cadran noir, bracelet Oysterflex (caoutchouc haute tech) noir. Mouvement Cal. 4130 (interne Rolex). Production 2015–2020 environ. Très moderne et sportive. Marché : 35 000–50 000€. Amateurs or & caoutchouc technique.`,
+    `**Rolex Daytona ref. 116518LN** — 40mm solid 18K yellow gold chronograph, black painted aluminum bezel, black dial, black Oysterflex bracelet (high-tech elastomer). Cal. 4130 movement (in-house Rolex). Made circa 2015–2020. Very modern and sporty. Market: €35,000–50,000. For gold & technical elastomer fans.`
+  );} },
+
+{ id:'rolex_126506', kw:['126506','daytona platinum','daytona platine','daytona ice blue','platinum daytona','pt950 daytona','daytona white','ultra prestige'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona Platinum Ice Blue'; return t(
+    `**Rolex Daytona réf. 126506** — Chronographe 40mm platine massif PT950, cadran gris glace unique, lunette céramique noire Cerachrom, bracelet Oyster platine. Cal. 4130 (70h puissance). Étanche 100m (chronographes moins résistants). Production 2021+. Montre hyperministérielle ultra-rare. Marché : 90 000–140 000€. Collection de légende.`,
+    `**Rolex Daytona ref. 126506** — 40mm solid PT950 platinum chronograph, unique ice gray dial, black Cerachrom ceramic bezel, platinum Oyster bracelet. Cal. 4130 (70h power reserve). 100m WR. Made 2021+. Ultra-rare ministerial watch. Market: €90,000–140,000. Legendary collection piece.`
+  );} },
+
+// GMT-MASTER PRECIOUS METALS
+{ id:'rolex_126711chnr', kw:['126711chnr','gmt root beer','gmt oro','gmt two tone','gmt everose','root beer daytona','two tone gmt','gmt gold steel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II Root Beer Two-Tone'; return t(
+    `**Rolex GMT-Master II réf. 126711CHNR "Root Beer"** — Boîtier 40mm bi-matière Acier & or Everose, lunette Cerachrom noire-or-noire (Root Beer), cadran noir, mouvement Cal. 3285 (70h, COSC). Étanche 100m. Production 2019+. Combinaison prestigieuse très demandée. Marché : 18 000–24 000€. Liste d'attente longue Rolex.`,
+    `**Rolex GMT-Master II ref. 126711CHNR "Root Beer"** — 40mm two-tone steel & Everose case, black-gold-black Cerachrom bezel (Root Beer), black dial, Cal. 3285 movement (70h, COSC). 100m WR. Made 2019+. Highly coveted prestige combination. Market: €18,000–24,000. Long Rolex waitlists.`
+  );} },
+
+{ id:'rolex_126715chnr', kw:['126715chnr','gmt everose','gmt full gold','gmt gold only','gmt rose gold','root beer full oro','gmt oro rosa','burgundy bezel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II Everose Root Beer'; return t(
+    `**Rolex GMT-Master II réf. 126715CHNR "Root Beer"** — Boîtier 40mm or Everose massif 18K, lunette Cerachrom or-noir-or (Root Beer rose), cadran noir, bracelet Oyster or Everose. Cal. 3285 (70h, COSC). Étanche 100m. Production 2019+. Prestige maximal en or rose. Très rare. Marché : 55 000–80 000€. Pour amateurs or Everose signature Rolex.`,
+    `**Rolex GMT-Master II ref. 126715CHNR "Root Beer"** — 40mm solid 18K Everose gold case, rose-gold-black Cerachrom bezel (Root Beer rose), black dial, Everose Oyster bracelet. Cal. 3285 (70h, COSC). 100m WR. Made 2019+. Maximum prestige in rose gold. Very rare. Market: €55,000–80,000. For Rolex Everose signature gold fans.`
+  );} },
+
+// DATEJUST PRECIOUS METALS
+{ id:'rolex_126331', kw:['126331','datejust 41','dj41 two tone','datejust everose','datejust chocolate','two tone dj','dj41 oro','dj chocolate'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 41 Two-Tone Everose'; return t(
+    `**Rolex Datejust réf. 126331** — Boîtier 41mm bi-matière Acier & or Everose, cadran chocolat sunburst signature, lunette lisse or Everose, bracelet Jubilée bi-matière. Cal. 3235 (70h, COSC). Étanche 100m. Production 2020+. Datejust moderne & sophistiqué, cadran ultra-demandé. Marché : 14 000–18 000€. Classique intemporel.`,
+    `**Rolex Datejust ref. 126331** — 41mm two-tone steel & Everose case, signature chocolate sunburst dial, smooth Everose bezel, two-tone Jubilée bracelet. Cal. 3235 (70h, COSC). 100m WR. Made 2020+. Modern & sophisticated Datejust, ultra-sought dial. Market: €14,000–18,000. Timeless classic.`
+  );} },
+
+{ id:'rolex_126333', kw:['126333','datejust 41 yellow gold','dj41 oro','datejust oro giallo','yellow gold datejust','dj41 full gold','oro completo'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 41 Yellow Gold'; return t(
+    `**Rolex Datejust réf. 126333** — Boîtier 41mm or jaune massif 18K, cadran at choix (arabe, index, sunburst), lunette lisse or, bracelet Jubilée or. Cal. 3235 (70h, COSC). Étanche 100m. Production 2020+. Montre dressy prestigieuse en or classique. Très portée par cadres/entrepreneurs. Marché : 28 000–38 000€. Pour amateurs or jaune traditionnel.`,
+    `**Rolex Datejust ref. 126333** — 41mm solid 18K yellow gold case, choice of dials (Arabic, indices, sunburst), smooth gold bezel, Jubilée bracelet in gold. Cal. 3235 (70h, COSC). 100m WR. Made 2020+. Prestige dress watch in classic gold. Worn by executives/entrepreneurs. Market: €28,000–38,000. For traditional yellow gold lovers.`
+  );} },
+
+{ id:'rolex_278278', kw:['278278','datejust 31','dj31 yellow gold','datejust 31 oro','small datejust gold','dj 31 giallo','ladies gold dj'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 31 Yellow Gold'; return t(
+    `**Rolex Datejust réf. 278278** — Boîtier 31mm or jaune massif 18K, cadran champagne ou bleu, lunette lisse or, bracelet Jubilée or. Cal. 2235 (automatique 55h). Étanche 100m. Production 2020+. Datejust compact & très féminim en or. Alternative aux dames Datejust plus grandes. Marché : 18 000–24 000€. Pour femmes executive prestige.`,
+    `**Rolex Datejust ref. 278278** — 31mm solid 18K yellow gold case, champagne or blue dial, smooth gold bezel, Jubilée bracelet in gold. Cal. 2235 movement (automatic, 55h). 100m WR. Made 2020+. Compact & highly feminine Datejust in gold. Alternative to larger ladies Datejust. Market: €18,000–24,000. For prestige executive women.`
+  );} },
+
+{ id:'rolex_126300', kw:['126300','datejust 41 steel','dj 41 smooth','datejust acier lisse','smooth dj','steel datejust','dj 41 current','modern dj steel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 41 Steel Smooth'; return t(
+    `**Rolex Datejust réf. 126300** — Boîtier 41mm Oystersteel, cadran gris sunburst, lunette lisse acier, bracelet Oyster acier Glidelock. Cal. 3235 (70h, COSC). Étanche 100m. Production 2020+. Le Datejust acier moderne & pur, sans relief. Très classique. Marché : 9 000–12 000€. Entrée de gamme DJ prestige.`,
+    `**Rolex Datejust ref. 126300** — 41mm Oystersteel case, gray sunburst dial, smooth steel bezel, steel Oyster bracelet with Glidelock. Cal. 3235 (70h, COSC). 100m WR. Made 2020+. Modern & pure steel Datejust, smooth finish. Very classic. Market: €9,000–12,000. Entry-level DJ prestige.`
+  );} },
+
+// DAY-DATE PRECIOUS METALS
+{ id:'rolex_228206', kw:['228206','day date 40','day date platinum','platine day date','platinum president','pt950 day date','ice blue day date'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Day-Date 40 Platinum'; return t(
+    `**Rolex Day-Date réf. 228206** — Boîtier 40mm platine massif PT950, cadran gris glace unique, lunette lisse platine, bracelet President platine. Cal. 3255 (70h, COSC). Étanche 100m. Production 2021+. La montre présidentielle ultime en platine. Extrêmement rare. Marché : 95 000–150 000€. Pour collection hyperministérielle.`,
+    `**Rolex Day-Date ref. 228206** — 40mm solid PT950 platinum case, unique ice gray dial, smooth platinum bezel, platinum President bracelet. Cal. 3255 (70h, COSC). 100m WR. Made 2021+. The ultimate presidential watch in platinum. Extremely rare. Market: €95,000–150,000. For top-level collection.`
+  );} },
+
+{ id:'rolex_128238', kw:['128238','day date 36','day date yellow gold','day date oro giallo','president 36','small day date','daj 36 oro'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Day-Date 36 Yellow Gold'; return t(
+    `**Rolex Day-Date réf. 128238** — Boîtier 36mm or jaune massif 18K, cadran or/champagne, lunette lisse or, bracelet President or. Cal. 3255 (70h, COSC). Étanche 100m. Production 2020+. La Day-Date classique en petit format or. Très élégante & compacte. Marché : 32 000–45 000€. Pour femmes/hommes aux poignets fins prestige.`,
+    `**Rolex Day-Date ref. 128238** — 36mm solid 18K yellow gold case, champagne gold dial, smooth gold bezel, gold President bracelet. Cal. 3255 (70h, COSC). 100m WR. Made 2020+. The classic Day-Date in smaller gold format. Very elegant & compact. Market: €32,000–45,000. For prestige ladies/men with slender wrists.`
+  );} },
+
+// YACHT-MASTER PRECIOUS METALS & SPECIAL
+{ id:'rolex_226627', kw:['226627','yacht master 42','yacht master titanium','rlx titanium','yacht master grey','yacht master modern','sport tool watch'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Yacht-Master 42 Titanium RLX'; return t(
+    `**Rolex Yacht-Master réf. 226627** — Boîtier 42mm RLX Titanium™ (alliage Rolex), cadran gris, lunette Cerachrom grise bidirectionnelle, bracelet Oyster RLX. Cal. 3235 (70h, COSC). Étanche 300m. Production 2023+. Matériau ultra-moderne RLX pour montre sport nautique. Très technique. Marché : 12 000–16 000€. Futur classique.`,
+    `**Rolex Yacht-Master ref. 226627** — 42mm RLX Titanium™ (Rolex alloy) case, gray dial, gray bidirectional Cerachrom bezel, RLX Oyster bracelet. Cal. 3235 (70h, COSC). 300m WR. Made 2023+. Ultra-modern RLX material for nautical sport watch. Highly technical. Market: €12,000–16,000. Future classic.`
+  );} },
+
+{ id:'rolex_116680', kw:['116680','yacht master ii','yacht master regatta','chronographe yacht','chronograph regatta','yacht master countdown'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Yacht-Master II Regatta'; return t(
+    `**Rolex Yacht-Master II réf. 116680** — Chronographe 44mm acier, cadran bleu, compte à rebours mécanique intégré pour régates, lunette Cerachrom bleu, mouvement Cal. 4161 (72h). Étanche 100m (chronographe moins WR). Production 2007–2019. Montre de régate absolue, ultra-spécialisée. Marché : 16 000–22 000€. Pour skipper passionné.`,
+    `**Rolex Yacht-Master II ref. 116680** — 44mm steel chronograph, blue dial, integrated mechanical regatta countdown bezel, blue Cerachrom, Cal. 4161 movement (72h). 100m WR. Made 2007–2019. Absolute regatta watch, ultra-specialized. Market: €16,000–22,000. For passionate skippers.`
+  );} },
+
+// COSMOGRAPH DAYTONA SPECIAL EDITIONS
+{ id:'rolex_116595rbow', kw:['116595rbow','daytona rainbow','daytona gemset','bezel sertis','daytona everose','rainbow bezel','precious stones'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona Rainbow Everose Gemset'; return t(
+    `**Rolex Daytona réf. 116595RBOW** — Chronographe 40mm or Everose massif, lunette Cerachrom sertie de saphirs/rubis arc-en-ciel (gemset bezel), cadran noir/platine, bracelet Oyster or Everose. Cal. 4130 (70h). Étanche 100m. Production rare/limité 2015+. Montre joaillerie d'exception Rolex. Marché : 80 000–130 000€. Pièce de collection unique.`,
+    `**Rolex Daytona ref. 116595RBOW** — 40mm solid Everose gold chronograph, Cerachrom bezel set with rainbow sapphires/rubies (gemset), black/platinum dial, Everose Oyster bracelet. Cal. 4130 (70h). 100m WR. Rare/limited production 2015+. Rolex's exceptional jewellery chronograph. Market: €80,000–130,000. Unique collection piece.`
+  );} },
+
+{ id:'rolex_116505', kw:['116505','daytona everose','daytona rose gold','daytona oro rosa','full rose gold daytona','daytona chocolate','everose sportive'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona Everose Chocolate'; return t(
+    `**Rolex Daytona réf. 116505** — Chronographe 40mm or Everose massif 18K, cadran chocolat sunburst, lunette aluminium peinte (ancien style), bracelet Oyster or Everose. Mouvement Cal. 4130. Étanche 100m. Production 2004–2023. Très appréciée pour ses proportions classiques & couleur or rose chaud. Marché : 28 000–42 000€. Favorite des collectionneurs or.`,
+    `**Rolex Daytona ref. 116505** — 40mm solid 18K Everose gold chronograph, chocolate sunburst dial, painted aluminum bezel (classic style), Everose Oyster bracelet. Cal. 4130 movement. 100m WR. Made 2004–2023. Highly appreciated for classic proportions & warm rose gold. Market: €28,000–42,000. Favourite of gold collectors.`
+  );} },
+
+// VINTAGE ICONS
+{ id:'rolex_1655', kw:['1655','explorer ii','steve mcqueen','vintage explorer','modern explorer','gmt explorer','orange hand'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer II Steve McQueen'; return t(
+    `**Rolex Explorer II réf. 1655 "Steve McQueen"** — Montre vintage 40mm acier, cadran orange sunburst signature, lunette GMT (deux fuseaux), mouvement cal. 1575 ou 1625 (27 000 tph). Étanche 100m. Production 1971–1980. Portée par l'acteur/pilote Steve McQueen. Montre de légende absolue. Marché : 35 000–65 000€ selon état. Très rare & très demandée.`,
+    `**Rolex Explorer II ref. 1655 "Steve McQueen"** — Vintage 40mm steel watch, signature orange sunburst dial, GMT bezel (dual time), cal. 1575 or 1625 movement (27,000 tph). 100m WR. Made 1971–1980. Worn by actor/driver Steve McQueen. Absolute legend watch. Market: €35,000–65,000 depending on condition. Very rare & highly sought.`
+  );} },
+
+{ id:'rolex_6542', kw:['6542','gmt original','bakelite bezel','original gmt','bakelite vintage','vintage bakelite','gmt bakelite','first gmt'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT Original Bakelite'; return t(
+    `**Rolex GMT-Master réf. 6542** — Montre vintage 40mm acier, cadran noir, lunette bakelite marron iconique (première génération GMT 1955–1959), mouvement cal. 1016 (27 000 tph). Étanche 100m. Production rares années 1950s. Montre génératrice de gamme. Bakelite très fragile (beaucoup détériorés). Marché : 50 000–100 000€ si bakelite intacte. Graal collectionneurs.`,
+    `**Rolex GMT-Master ref. 6542** — Vintage 40mm steel watch, black dial, iconic brown bakelite bezel (first GMT generation 1955–1959), cal. 1016 movement (27,000 tph). 100m WR. Rare production in 1950s. Generation-defining watch. Bakelite very fragile (many deteriorated). Market: €50,000–100,000 if bakelite intact. Holy grail for collectors.`
+  );} },
+
+{ id:'rolex_1680', kw:['1680','red submariner','submariner rouge','vintage submarine','red dial submariner','ultra rare','maxi dial'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner Red Dial'; return t(
+    `**Rolex Submariner réf. 1680** — Montre vintage 40mm acier, cadran ROUGE texturé (extrêmement rare), lunette aluminium peinte noire (pré-céramique), mouvement cal. 1575 (27 000 tph). Étanche 100m. Production années 1960s-early 70s seulement. Très peu fabriquées en rouge. Marché : 80 000–150 000€ selon authenticité. Ultra-rare, presque impossible à trouver.`,
+    `**Rolex Submariner ref. 1680** — Vintage 40mm steel watch, RED textured dial (extremely rare), black painted aluminum bezel (pre-ceramic), cal. 1575 movement (27,000 tph). 100m WR. Made 1960s–early 1970s only. Very few produced in red. Market: €80,000–150,000 depending on authentication. Ultra-rare, nearly impossible to find.`
+  );} },
+
+{ id:'rolex_6265', kw:['6265','daytona big red','big red daytona','red daytona vintage','cosmograph big red','daytona rouge','daytona paul newman era'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona Big Red Vintage'; return t(
+    `**Rolex Daytona réf. 6265 "Big Red"** — Chronographe vintage 37mm acier, inscriptions "BIG RED" sur le cadran (années 1978–1982), lunette aluminium peinte, mouvement cal. 727 (19 800 tph, Valjoux). Étanche 100m (chronographe moins WR). Production limitée. Marché : 40 000–80 000€. Très demandée des fans vintage Daytona. Référence culte pré-Paul Newman.`,
+    `**Rolex Daytona ref. 6265 "Big Red"** — Vintage 37mm steel chronograph, "BIG RED" dial inscriptions (1978–1982), painted aluminum bezel, cal. 727 movement (19,800 tph, Valjoux). 100m WR. Limited production. Market: €40,000–80,000. Highly sought by vintage Daytona fans. Cult reference pre-Paul Newman era.`
+  );} },
+
+
+
+
+{ id:'rolex_126710blro_oyster', kw:['GMT-Master II','Pepsi Oyster','ceramic bezel'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II 126710BLRO'; return t(
+    `FR: La GMT-Master II 126710BLRO est la version 2023 du legendaire chronographe bizone de Rolex, montee sur bracelet Oyster acier au lieu du Jubilee habituel. Equipee du calibre 3285 de derniere generation (70h reserve de marche, remontage automatique), cette montre 40mm propose la celebre lunette ceramique Pepsi (rouge et bleu) - symbole iconique du modele depuis 1960. L'etanche 100m WR convient aux activites nautiques. Le cadran gris avec aiguille GMT orange offre une lisibilite exceptionnelle pour les voyageurs internationaux. Production limitee, liste d'attente importante. Prix catalogue: €15,950. Successeur de l'ancienne ref 16710 avec mouvements vintage plus lents (48h). Cette version Oyster (vs Jubilee) cible les porteurs preferant un style plus sportif et viril. Collecteurs: modele de transition pendant l'ere CEL/non-CEL du mouvement 3285.`,
+    `EN: The 2023 Rolex GMT-Master II reference 126710BLRO is the steel sports watch icon worn by pilots and traders globally, now offered on Oyster bracelet instead of the standard Jubilee. Housing the brand-new caliber 3285 (automatic, 70-hour power reserve, anti-magnetic, certified chronometer), this 40mm wristwatch features the legendary ceramic Pepsi bezel—red and blue—unchanged since 1960. Water-resistant to 100m (330 feet), suitable for recreational diving and water sports. The grey sunburst dial with orange GMT hand enables precise timekeeping across two time zones. Waiting lists at Rolex ADs stretch 2-4 years. Retail price: USD 14,800. This Oyster configuration delivers a sportier aesthetic compared to the traditional Jubilee, preferred by tool-watch enthusiasts. The 3285 movement represents a major upgrade from the 3186/3187 in vintage references—better chronometry, extended longevity, and improved anti-magnetism. Investment grade: consistent secondary market appreciation.`
+  );} },
+
+{ id:'rolex_m126234', kw:['Datejust 36','Fluted Jubilee','steel gold'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust 36 M126234'; return t(
+    `FR: Le Datejust 36 M126234 est le champion toutes categories pour la premiere montre Rolex classique, combinant elegance intemporelle et polyvalence. Cette montre 36mm en acier ou or blanc avec lunette cannele et bracelet Jubilee represente le summum du design horloger conservateur. Le mouvement calibre 3235 (70h reserve, chronometer certifie) offre fiabilite absolue. Les cadrans disponibles - bleu, gris, noir, blanc - conviennent a tous les environnements professionnels. L'etanche 100m WR suffit pour l'usage quotidien intensif. Ref M (non-Ref A) introduite en 2020 avec amortisseurs suspendus ameliores du garde-temps. Prix: €7,800 acier; €16,950 or blanc. Configuration la plus demandee par les collecteurs novices - equilibre parfait entre prix, style, et desirabilite.`,
+    `EN: The Rolex Datejust 36 reference M126234 is the quintessential first luxury watch for discerning collectors, pairing timeless classical design with outstanding versatility. Available in steel or white gold with fluted bezel and Jubilee bracelet, this 36mm dress-sports piece suits boardroom and casual environments equally. The caliber 3235 (70-hour PR, COSC chronometer-certified) delivers exceptional accuracy and reliability—typical 5-8 second/month deviation. Dial choices span slate, blue, black, and champagne—each appropriate for formal occasions and daily wear. Water resistance: 100m (330 feet), adequate for all non-diving activities. The M-series (post-2020) features improved damping and refined dial printing. Retail: USD 7,400 steel; USD 15,450 white gold. Most recommended entry point into Rolex collecting; waitlist 1-2 years at authorized dealers.`
+  );} },
+
+{ id:'rolex_126621', kw:['Yacht-Master 40','Everose','two tone'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Yacht-Master 40 126621'; return t(
+    `FR: Le Yacht-Master 40 126621 conjugue acier Oystersteel et or Everose Rolex en 40mm, offrant un equilibre luxueux entre robustesse et elegance. La lunette tournante unidirectionnelle balistique facilite les calculs de temps de course aux regattas. Le calibre 3235 garantit 70h de reserve de marche et une chronometrie certifiee. Le cadran chocolat caracteristique avec aiguilles Chromalight offre un rendu classique et haut de gamme. Etanche 100m, appropriee pour la navigation et les sports nautiques. Production fine: les deux-tons Rolex sont manufactures avec une precision d'ajustement superieure aux montres monocouleur. Prix: €10,450. Statut de collecteur: moins populaire que Submariner/GMT mais apprecie des aficionados de design minimaliste et de sports nautiques.`,
+    `EN: The Rolex Yacht-Master 40 reference 126621 combines Oystersteel and rose gold (Everose) in a 40mm case, balancing sporty durability with refined luxury aesthetics. The unidirectional rotatable bezel with race-timing minute markers simplifies regatta countdown calculations. Powered by the caliber 3235 (automatic, 70-hour power reserve, chronometer-certified), this watch delivers reliability expected of professional maritime instruments. The chocolate dial with Chromalight luminosity coating evokes luxury instrument watches favored by yacht captains. Water-resistant to 100m (330 feet), suitable for recreational sailing and water activities. Two-tone manufacturing demands tighter tolerances than mono-metal cases—visible in superior fit/finish. Retail: USD 9,500. Collecting perspective: less iconic than Submariner/GMT-Master II, but cherished by minimalist collectors and nautical enthusiasts for understated elegance.`
+  );} },
+
+{ id:'rolex_226570_white', kw:['Explorer II','White Dial','42mm'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer II 226570 White'; return t(
+    `FR: Le nouvel Explorer II 226570 cadran blanc (2021) marque la renaissance d'une legende Rolex, offrant une montre d'expedition authentique en 42mm acier. Equipee du calibre 3285 derniere generation (70h reserve, remontage chronometer), cette montre incarne l'heritage Steve McQueen et des expeditions polaires. Le cadran blanc pur avec aiguille GMT orange et index appliques confere une lisiblite polaire absolue. La fonction 24h aide les explorateurs a mesurer jours et nuits aux latitudes extremes. L'etanche 100m suffit pour l'expedition en montagne et forages arktiques. Prix: €6,200. Successeur du 216570, cette version 3285 beneficie d'une chronometrie superieure et d'une anti-magnetisme amelioree (precision montre de poche). Tres demandee par les collecteurs sport-modernes.`,
+    `EN: The 2021 Explorer II reference 226570 with white dial resurrects Rolex's expedition-watch heritage in a robust 42mm steel case. Powered by the caliber 3285 (automatic, 70-hour power reserve, COSC chronometer-certified), this tool watch honors the legacy of polar expeditions and Steve McQueen's legendary adventures. The pure white dial with orange 24-hour GMT hand and applied indices provides exceptional readability in snow-glare conditions. The 24-hour hand assists arctic explorers in tracking day/night cycles at extreme latitudes. Water-resistant 100m (330 feet), adequate for mountaineering and polar expeditions. Retail: USD 5,625. Successor to the 216570; this 3285-powered generation achieves superior chronometric performance and enhanced magnetism resistance. Highly sought by modern sport-watch collectors.`
+  );} },
+
+{ id:'rolex_226570_black', kw:['Explorer II','Black Dial','tool watch'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Explorer II 226570 Black'; return t(
+    `FR: La version cadran noir du meme Explorer II 226570 (2021) perpetue l'aesthetic intemporelle des montres de terrain Rolex, avec meme precision 3285 et etanche 100m WR. Le contraste entre cadran noir mate et aiguille GMT orange accentue la lisibilite dans les conditions extremes. Configuration preferee par les collecteurs apprisant une esthetique plutot militaire et tool-watch. Moins demandee que la version blanche polaire, mais appreciee des amateurs de style classique intemporel. Prix identique a la version blanche: €6,200. Authentique instrument d'expedition moderne.`,
+    `EN: The black dial variant of the 2021 Explorer II 226570 maintains Rolex's timeless tool-watch aesthetic, retaining the same caliber 3285 movement and 100m water resistance. The contrast between matte black dial and orange 24-hour GMT hand enhances legibility in harsh field conditions. Preferred by collectors embracing military minimalism and pure tool-watch philosophy. Less pursued than the white Polar variant but appreciated by classicists valuing understated durability. Retail price identical: USD 5,625. A genuine modern expedition instrument without compromise.`
+  );} },
+
+{ id:'rolex_326235', kw:['326235','sky dweller everose','rolex sky dweller','sky dweller rose','rolex annual calendar'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Sky-Dweller 326235'; return t(
+    `FR: Le Sky-Dweller 326235 en or Everose 42mm est le chef-d'oeuvre ultra-complexe de Rolex pour les pilotes et voyageurs perpetuels. Le calibre 9001 (remontage automatique, 72h reserve, 13 complications) integre un calendrier annuel ne necessitant correction qu'une fois par an. La lunette Command reglee par corone segmentee permet reglages precis du fuso horaire local et heure secondaire. Verre acrylique bombé avec cyclope retro offre charisme vintage. Etanche 100m. Prix: €39,600. Montre la plus techniquement sophistiquee de Rolex - reserve des collecteurs ultra-experts et cadres d'entreprise volant internationalement. Edition limitee annuellement.`,
+    `EN: The Rolex Sky-Dweller reference 326235 in 42mm rose gold (Everose) represents Rolex's pinnacle horological complexity, engineered for international pilots and perpetual travelers. The in-house caliber 9001 (automatic, 72-hour power reserve, 13 complications) features an annual calendar requiring only one correction per calendar year. The Command bezel with segmented crown crown allows precise local-time and secondary-time adjustments. The domed acrylic crystal with cyclope magnifier delivers vintage charisma alongside modern legibility. Water-resistant to 100m (330 feet). Retail: USD 36,000. Rolex's most technically sophisticated production watch—reserved for expert collectors and international executives. Annual limited production.`
+  );} },
+
+{ id:'rolex_50509', kw:['50509','cellini date','cellini white gold','rolex cellini date','rolex dress watch'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='Cellini Date 50509'; return t(
+    `FR: Le Cellini Date 50509 39mm en or blanc Rolex incarne le summum de la montre de ceremonie moderne, avec chaste lunette cannele doublee et boitier lisse reminiscent des montres anciennes. Le calibre 3165 (remontage automatique, 48h reserve) assure precision et fiabilite. Double couronne (une pour date, une pour remontage) offre interface sophistiquee. Etanche 50m - une limite deliberee affirm ant son role comme montre de salon exclusif plutot que quotidienne. Cadran blanc ou noir argent. Prix: €17,500. Rarity absolue dans les portfolios collecteurs Rolex - moins de 2% des montres Rolex vendues. Appreciation historique exceptionnelle.`,
+    `EN: The Rolex Cellini Date reference 50509 in 39mm white gold exemplifies modern dress-watch supremacy, with its chaste fluted bezel and polished case echoing vintage timepieces. The caliber 3165 (automatic, 48-hour power reserve) ensures reliable accuracy for formal occasions. Twin crown design (one for date-setting, one for winding) provides sophisticated operational interface. Water-resistant to 50m (164 feet)—deliberately limited to reinforce its exclusive salon-watch positioning rather than daily sports utility. Dial choices: white or silver. Retail: USD 15,950. Absolute rarity within Rolex collector portfolios—fewer than 2% of Rolex annual production. Exceptional historical appreciation trajectory.`
+  );} },
+
+{ id:'rolex_m126710blnr_oyster', kw:['GMT-Master II','Batman','Oyster bracelet'],
+  r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II M126710BLNR'; return t(
+    `FR: Le GMT-Master II M126710BLNR sur bracelet Oyster (2023) est la version sportive du mythique Batman noir-bleu, offrant meme calibre 3285 et ceramique lunette mais avec cadran noir plutot que gris. Montee sur bracelet Oyster acier (au lieu du Jubilee standard), cette montre 40mm offre esthetique more robuste et masculine. Reserve 70h, etanche 100m WR. Configuration moins demandee que la version 126710BLRO grise mais appriciee des amateurs de "tool watch" trop purs. Prix: €15,950. Meme famille de references que le Pepsi mais avec colorimetrie inverse pour des collecteurs priorisant une presentation noir-sportive.`,
+    `EN: The 2023 GMT-Master II reference M126710BLNR on Oyster bracelet delivers the iconic Batman black-and-blue ceramic bezel in a sportier presentation. Identical caliber 3285 (70-hour power reserve, chronometer-certified) and same 100m water resistance as the Pepsi variant, but with a contrasting black dial. Mounted on Oyster bracelet (rather than standard Jubilee), this 40mm sports watch conveys heightened masculinity and tool-watch ruggedness. Less pursued than the grey-dial Pepsi but favored by pure-sport collectors prioritizing sinister aesthetics. Retail: USD 14,800. Sibling to the Pepsi within the contemporary GMT lineage—preferred by collectors seeking inverted colorimetry.`
+  );} },
+{ id:'ap_general', kw:['audemars piguet','ap','audemars','piguet','ap watch','montre ap','ap paris','achat ap','vente ap','ap occasion','ap secondhand','ap pre-owned','ap luxe','ap histoire','founded ap','1875 ap','le brassus','vallée de joux','manufacture ap','ap watches','ap models','what ap','which ap','ap available','ap in stock','ap you have','avez vous des ap','got any ap','ap brand','the ap','a ap','ap dealer','revendeur ap','buy ap','acheter ap','ap collection','audemars watches','audemars collection','audemars models','audemars available','piguet watch','AP watch','AP brand'],
       r:()=>{ ctx.brand='Audemars Piguet'; return t(
         `AP fondée en 1875 au Brassus, Suisse. Nous avons ${STOCK.filter(w=>w.brand==='Audemars Piguet').length} AP en stock (Royal Oak, Offshore). Quel modèle vous intéresse ?`,
         `AP founded 1875 in Le Brassus, Switzerland. We have ${STOCK.filter(w=>w.brand==='Audemars Piguet').length} AP in stock (Royal Oak, Offshore). Which model interests you?`
@@ -439,7 +1004,317 @@
 
 
     // ── PATEK PHILIPPE ──────────────────────────────────────────────────────────
-    { id:'patek_general', kw:['patek philippe','patek','pp','patek genève','patek paris','achat patek','vente patek','patek occasion','patek pre-owned','patek histoire','calatrava patek','patek suisse','genève manufacture','patek fondé','1839 patek','stern patek','patek collection','patek watches','patek models','what patek','which patek','patek available','patek in stock','patek you have','avez vous des patek','got any patek','patek brand','patek dealer','buy patek','acheter patek','patek philippe watch','patek philippe collection','patek philippe available','patek philippe models','patek most expensive','most expensive patek','patek best','best patek','patek worth it','is patek worth it'],
+    
+    // ═══════════════════════════════════════════════════════════════════════════
+    // AP EXPANDED REFERENCES (Royal Oak, Royal Oak Offshore, Code 11.59, Millenary)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    { id:'ap_15500st', kw:['15500st','15500','royal oak 41 blue','royal oak bleu','royal oak 41mm','royal oak steel','royal oak acier','blue dial','four digit ref','cal 4302','4302 movement'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 41mm Steel'; return t(
+        `Royal Oak réf. 15500ST (41mm, acier, cal. 4302, 70h). Le 15500 (2019-présent) est le cœur actuel de la gamme Royal Oak, remplaçant le 15400 depuis 2019. Trois principales variantes de cadran : bleu tropical (le plus demandé), gris ardoise, et noir. Boîtier acier massif avec Grand Tapisserie, bracelet Oyster, fond transparent. Marché : 35 000–48 000€ selon cadran et condition.`,
+        `Royal Oak ref. 15500ST (41mm, steel, cal. 4302, 70h). The 15500 (2019-present) is the current heart of the Royal Oak line, replacing the 15400 since 2019. Three main dial variants: tropical blue (most sought), slate grey, black. Solid steel case with Grand Tapisserie, Oyster bracelet, transparent caseback. Market: €35,000–48,000 depending on dial and condition.`
+      );} },
+
+    { id:'ap_15510st', kw:['15510st','15510','royal oak gen 2','new generation','generation 2','2022 royal oak','2022 model','cal 4302 new','updated 15500'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 41mm Generation 2'; return t(
+        `Royal Oak réf. 15510ST (41mm, acier, cal. 4302, 2022+). Version "Gen 2" du 15500 avec trois améliorations clés : nouveau calibre 4302 Plus (vs 4302), bracelet Oyster refondu avec maillon fermé au centre, et finitions boîtier légèrement affinées. Launched 2022, remplace graduellement le 15500. Marché acier : 38 000–50 000€.`,
+        `Royal Oak ref. 15510ST (41mm, steel, cal. 4302, 2022+). "Gen 2" version of 15500 with three key upgrades: new 4302 Plus calibre (vs 4302), redesigned Oyster bracelet with solid center link, refined case finishes. Launched 2022, gradually replacing 15500. Market steel: €38,000–50,000.`
+      );} },
+
+    { id:'ap_15550st', kw:['15550st','15550','ap selfwinding','royal oak selfwinding 2024','ap 2024','royal oak new 2024','cal 4309','4309'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 41mm Selfwinding'; return t(
+        `Royal Oak réf. 15550ST (41mm, acier, cal. 4309, 2024+, 70h). Nouvel arrivage 2024 : version "Selfwinding" pure du Royal Oak, mouvement automatique à remontage naturel uniquement (no hand-winding). Calibre 4309 est conçu spécifiquement pour cette ligne. Marché : 40 000–52 000€ (estimé).`,
+        `Royal Oak ref. 15550ST (41mm, steel, cal. 4309, 2024+, 70h). New 2024 arrival: pure "Selfwinding" version of Royal Oak, automatic movement with natural winding only (no hand-winding). Calibre 4309 designed specifically for this line. Market: €40,000–52,000 (estimated).`
+      );} },
+
+    { id:'ap_16202st', kw:['16202st','16202','jumbo 39mm','extra thin','ultra thin','jumbo replacement','39mm jumbo','2022 jumbo','2022 replacement','newer jumbo'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak "Jumbo" Extra-Thin 39mm'; return t(
+        `Royal Oak réf. 16202ST (39mm, acier, 8.1mm épaisseur, cal. 3120, 2022+). Le 16202 est le successeur direct du 15202ST (Jumbo classique). Même boîtier ultra-plat légendaire, même mouvement cal. 3120, mais finitions légèrement modernisées (lunette, bracelet). Remplace le 15202 depuis 2022. Marché : 65 000–95 000€ selon condition.`,
+        `Royal Oak ref. 16202ST (39mm, steel, 8.1mm thickness, cal. 3120, 2022+). Direct successor to 15202ST (classic Jumbo). Same legendary ultra-thin case, same 3120 calibre, but refined finishes (bezel, bracelet). Replaces 15202 since 2022. Market: €65,000–95,000 depending on condition.`
+      );} },
+
+    { id:'ap_15300st', kw:['15300st','15300','39mm royal oak','39mm','2005 2012','older 39','vintage 39','cal 3120','previous generation','early 2000s'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 39mm (2005–2012)'; return t(
+        `Royal Oak réf. 15300ST (39mm, acier, cal. 3120, 2005–2012). Version précédente de Royal Oak 39mm, avant le 15400. Calibre 3120 (le même que le Jumbo 15202). Boîtier légèrement différent du 15400 (finitions, petit Tapisserie vs Grand Tapisserie débattue). Modèle très recherché en marché secondaire. Marché : 35 000–50 000€ selon état.`,
+        `Royal Oak ref. 15300ST (39mm, steel, cal. 3120, 2005–2012). Earlier 39mm Royal Oak before 15400. 3120 calibre (same as Jumbo 15202). Case slightly different from 15400 (finishes, dial tapisserie). Highly sought in secondary market. Market: €35,000–50,000 depending on condition.`
+      );} },
+
+    { id:'ap_15400st', kw:['15400st','15400','15400st','41mm 2012 2021','older 41mm','previous 41mm','2012 2021 model','before 15500','cal 3120 41mm'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 41mm (2012–2021)'; return t(
+        `Royal Oak réf. 15400ST (41mm, acier, cal. 3120, 2012–2021). Version précédente du 41mm Royal Oak, avant le 15500 (2019). Mouvement cal. 3120. Remplacé par le 15500 à partir de 2019, puis le 15510 en 2022. Marché secondaire : 32 000–45 000€ selon condition et cadran.`,
+        `Royal Oak ref. 15400ST (41mm, steel, cal. 3120, 2012–2021). Earlier 41mm Royal Oak before 15500 (2019). 3120 calibre. Replaced by 15500 starting 2019, then 15510 in 2022. Secondary market: €32,000–45,000 depending on condition and dial.`
+      );} },
+
+    { id:'ap_15450st', kw:['15450st','15450','37mm','small','smaller','37mm steel','ladies size','dress','dress code','mini royal oak'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 37mm Steel'; return t(
+        `Royal Oak réf. 15450ST (37mm, acier, cal. 4302, 2022+). Version 37mm du Royal Oak, positionnée comme "petite" ou "dress" Royal Oak. Parfois portée par femmes et hommes ayant un poignet fin. Cadrans disponibles : bleu, noir, gris. Marché : 30 000–40 000€.`,
+        `Royal Oak ref. 15450ST (37mm, steel, cal. 4302, 2022+). 37mm version of Royal Oak, positioned as "small" or "dress" Royal Oak. Sometimes worn by women and thin-wrist men. Available dials: blue, black, grey. Market: €30,000–40,000.`
+      );} },
+
+    { id:'ap_15500or', kw:['15500or','15500 rose gold','rose gold 41mm','or rose','royal oak or','pink gold','yellow gold','gold royal oak'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 41mm Rose Gold'; return t(
+        `Royal Oak réf. 15500OR (41mm, or rose 18k, cal. 4302, 70h). Version or rose du 15500 actuel. Boîtier massif or rose 18 carats avec Grand Tapisserie, bracelet or rose Oyster. Trois cadrans : bleu, gris, noir. Marché : 85 000–120 000€ selon cadran et condition.`,
+        `Royal Oak ref. 15500OR (41mm, 18k rose gold, cal. 4302, 70h). Rose gold version of current 15500. Solid 18k rose gold case with Grand Tapisserie, rose gold Oyster bracelet. Three dials: blue, grey, black. Market: €85,000–120,000 depending on dial and condition.`
+      );} },
+
+    { id:'ap_26574st', kw:['26574st','26574','ap perpetual calendar','perpetual calendar ap','perpetuel 41','royal oak perpetual calendar','4100 calibre','cal 4100','ap calendrier perpetuel'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Perpetual Calendar 41mm'; return t(
+        `Royal Oak réf. 26574ST (41mm, acier, cal. 4100, perpétuel, 41mm, 40h). L'une des complications phares d'AP : jour, date, mois, phase de lune, cycle bissextile. Calibre 4100 visible via fond transparent (squelette partiel). Remontage manuel, 40h. Marché : 180 000–250 000€.`,
+        `Royal Oak ref. 26574ST (41mm, steel, cal. 4100, perpetual, 40h). One of AP's flagship complications: day, date, month, moon phase, leap year. 4100 calibre visible via transparent caseback (partial skeletonization). Manual winding, 40h. Market: €180,000–250,000.`
+      );} },
+
+    { id:'ap_26574or', kw:['26574or','26574 rose gold','perpetual or','perpetual rose gold','perpetual calendar gold','or rose perpetuel','gold calendar'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Perpetual Calendar Rose Gold'; return t(
+        `Royal Oak réf. 26574OR (41mm, or rose 18k, cal. 4100, perpétuel, 40h). Version or rose de la perpétuelle calendrier. Boîtier massif or rose, mêmes complications (jour, date, mois, phase lune, cycle bissextile), cal. 4100. Très rare. Marché : 280 000–380 000€.`,
+        `Royal Oak ref. 26574OR (41mm, 18k rose gold, cal. 4100, perpetual, 40h). Rose gold version of perpetual calendar. Solid rose gold case, same complications (day, date, month, moon phase, leap year), 4100 calibre. Very rare. Market: €280,000–380,000.`
+      );} },
+
+    { id:'ap_26315st', kw:['26315st','26315','chronograph 38mm','38mm chrono','vintage chronograph','2015 2020','small chrono','cal 2385','2385 movement','flyback'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Chronograph 38mm'; return t(
+        `Royal Oak réf. 26315ST (38mm, acier, cal. 2385 (flyback), 2015–2020). Version compacte du chronographe Royal Oak. Calibre 2385 automatique avec chronographe flyback. Discontinued environ 2020, remplacé par le 26510 (41mm). Marché secondaire : 55 000–75 000€.`,
+        `Royal Oak ref. 26315ST (38mm, steel, cal. 2385 flyback, 2015–2020). Compact version of Royal Oak Chronograph. 2385 automatic calibre with flyback chronograph. Discontinued around 2020, replaced by 26510 (41mm). Secondary market: €55,000–75,000.`
+      );} },
+
+    { id:'ap_26510st', kw:['26510st','26510','chronograph 41mm','41mm chrono','current chrono','2022','new chrono','flyback chrono','cal 2385','2385','integrated chronograph'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Chronograph 41mm (2022+)'; return t(
+        `Royal Oak réf. 26510ST (41mm, acier, cal. 2385 (flyback), 2022+). Le chronographe Royal Oak actuel, nouveau design 2022. Mouvement automatique 2385 avec chrono flyback intégré (non-modular). Boîtier 41mm Grand Tapisserie, lunette tachymétrique, bracelet Oyster. Marché : 60 000–85 000€.`,
+        `Royal Oak ref. 26510ST (41mm, steel, cal. 2385 flyback, 2022+). Current Royal Oak Chronograph, new 2022 design. 2385 automatic with integrated flyback chrono (non-modular). 41mm case with Grand Tapisserie, tachymetric bezel, Oyster bracelet. Market: €60,000–85,000.`
+      );} },
+
+    { id:'ap_26230st', kw:['26230st','26230','older chronograph','vintage chrono','2000s chrono','previous chrono','retro chrono','cal 2225','2225 movement'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Chronograph 41mm (Vintage)'; return t(
+        `Royal Oak réf. 26230ST (41mm, acier, cal. 2225, 2000–2015 env.). Version plus ancienne du Royal Oak chronographe. Calibre 2225. Discontinued et remplacé par des nouveaux modèles. Marché secondaire : 45 000–65 000€ selon condition et patine.`,
+        `Royal Oak ref. 26230ST (41mm, steel, cal. 2225, circa 2000–2015). Older version of Royal Oak Chronograph. 2225 calibre. Discontinued and replaced by newer models. Secondary market: €45,000–65,000 depending on condition and patina.`
+      );} },
+
+    { id:'ap_26331st', kw:['26331st','26331','two tone','white gold steel','chronograph two tone','bi-metal','40mm bi metal','cal 2385'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Chronograph 41mm Two-Tone'; return t(
+        `Royal Oak réf. 26331ST (41mm, acier + or blanc 18k, cal. 2385, 2010–2020 env.). Chronographe bi-métal : lunette and bracelet or blanc, boîtier acier. Très équilibré. Cal. 2385 automatique flyback. Marché : 75 000–105 000€.`,
+        `Royal Oak ref. 26331ST (41mm, steel + 18k white gold, cal. 2385, circa 2010–2020). Bi-metal chronograph: white gold bezel and bracelet, steel case. Highly balanced. 2385 automatic flyback. Market: €75,000–105,000.`
+      );} },
+
+    { id:'ap_15407st', kw:['15407st','15407','double balance','double balancier','ap openworked','ap skeleton','royal oak skeleton','visible mouvement','open work','balance wheel visible','cal 3109'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Double Balance Openworked'; return t(
+        `Royal Oak réf. 15407ST (41mm, acier, cal. 3109 double-balancier, squelette/openworked, 40h). Ligne "horloger" du Royal Oak : mouvement double balancier visible au cadran et au dos. Remontage manuel. Très technique, très rare. Marché : 120 000–170 000€.`,
+        `Royal Oak ref. 15407ST (41mm, steel, cal. 3109 double-balance, skeletonized/openworked, 40h). "Master watchmaker" line of Royal Oak: double-balance movement visible front and back. Manual winding. Highly technical, very rare. Market: €120,000–170,000.`
+      );} },
+
+    { id:'ap_15416ce', kw:['15416ce','15416','ceramic','perpetual ceramic','perpetual calendar ceramic','ceramic case','white ceramic','cal 4100'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Perpetual Calendar Ceramic'; return t(
+        `Royal Oak réf. 15416CE (41mm, céramique blanche, cal. 4100, perpétuel). Une des rares AP en céramique : boîtier blanc céramique. Perpétuelle calendrier complète (jour, date, mois, phase lune, bissextile), cal. 4100. Extrêmement rare. Marché : 250 000–350 000€+.`,
+        `Royal Oak ref. 15416CE (41mm, white ceramic, cal. 4100, perpetual). One of the rare AP in ceramic: white ceramic case. Full perpetual calendar (day, date, month, moon phase, leap year), 4100 calibre. Extremely rare. Market: €250,000–350,000+.`
+      );} },
+
+    { id:'ap_15202ip', kw:['15202ip','15202','titanium platinum','50th anniversary','anniversary jumbo','ti pt','ti platinum','special edition','jubilee'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Jumbo 50th Anniversary'; return t(
+        `Royal Oak réf. 15202IP (39mm, titane + platine, 8.1mm ultra-thin, cal. 3120, 2022). Édition 50e anniversaire du Jumbo original (1972–2022). Boîtier composé : lunette/bracelet en titane, bezel en platine. Ultra limité. Marché : 120 000–180 000€.`,
+        `Royal Oak ref. 15202IP (39mm, titanium + platinum, 8.1mm ultra-thin, cal. 3120, 2022). 50th anniversary edition of original Jumbo (1972–2022). Composite case: titanium bezel/bracelet, platinum crown. Ultra-limited. Market: €120,000–180,000.`
+      );} },
+
+    // ─── OFFSHORE FAMILY ───
+
+    { id:'ap_26470st', kw:['26470st','26470','offshore chronograph 42','offshore 42 chrono','current offshore','2022 offshore','42mm offshore','cal 2385 offshore','integrated flyback'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore Chronograph 42mm'; return t(
+        `Royal Oak Offshore réf. 26470ST (42mm, acier, cal. 2385 flyback, 2022+). Le chronographe Offshore actuel. Boîtier 42mm massif acier avec Grande Tapisserie (plus épais que la Royal Oak). Lunette tachymétrique, cadrans sportifs (noir, bleu tropical, gris). Marché : 75 000–105 000€.`,
+        `Royal Oak Offshore ref. 26470ST (42mm, steel, cal. 2385 flyback, 2022+). Current Offshore Chronograph. Solid 42mm steel case with Grande Tapisserie (thicker than Royal Oak). Tachymetric bezel, sporty dials (black, tropical blue, grey). Market: €75,000–105,000.`
+      );} },
+
+    { id:'ap_26238or', kw:['26238or','26238','offshore 42mm rose gold','offshore rose gold','or rose offshore','gold offshore','42mm or'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore 42mm Rose Gold'; return t(
+        `Royal Oak Offshore réf. 26238OR (42mm, or rose 18k, cal. 3120 auto, 2010–2020 env.). Version or rose du Offshore. Boîtier massif or rose 42mm avec Grande Tapisserie plus prononcée, bracelet or rose. Cadrans noir ou bleu tropical. Marché : 150 000–220 000€.`,
+        `Royal Oak Offshore ref. 26238OR (42mm, 18k rose gold, cal. 3120 auto, circa 2010–2020). Rose gold version of Offshore. Solid 42mm rose gold case with pronounced Grande Tapisserie, rose gold bracelet. Black or tropical blue dials. Market: €150,000–220,000.`
+      );} },
+
+    { id:'ap_15720st', kw:['15720st','15720','offshore diver','diver 42mm','diving watch','diver offshore','rubber strap','diver steel','cal 4161'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore Diver 42mm'; return t(
+        `Royal Oak Offshore réf. 15720ST (42mm, acier, cal. 4161, 300m water resistance, 2019+). Montre de plongée intégrée à la gamme Offshore. Calibre 4161 automatique. Chronographe intégré, bracelet caoutchouc. 300m étanche. Marché : 65 000–90 000€.`,
+        `Royal Oak Offshore ref. 15720ST (42mm, steel, cal. 4161, 300m water resistance, 2019+). Diving watch integrated in Offshore line. 4161 automatic calibre. Integrated chronograph, rubber bracelet. 300m water resistant. Market: €65,000–90,000.`
+      );} },
+
+    { id:'ap_26400io', kw:['26400io','26400','rubberclad ceramic','ceramic offshore','black ceramic','rubberclad','integrated rubber','ceramic case','special coating'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore "Rubberclad" Ceramic'; return t(
+        `Royal Oak Offshore réf. 26400IO (42mm, céramique noire + "rubberclad", 2018+). Matériau exclusif AP : boîtier céramique noir avec revêtement caoutchouc tendre intégré. Aspect mat/sportif extrême. Marché : 180 000–280 000€.`,
+        `Royal Oak Offshore ref. 26400IO (42mm, black ceramic + "rubberclad", 2018+). Exclusive AP material: black ceramic case with integrated soft rubber coating. Extreme matte/sporty look. Market: €180,000–280,000.`
+      );} },
+
+    { id:'ap_26405ce', kw:['26405ce','26405','ceramic camouflage','camo','camouflage offshore','offshore camo','black ceramic camo','sporty camo'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore Chronograph Ceramic Camo'; return t(
+        `Royal Oak Offshore réf. 26405CE (42mm, céramique noire avec motif camouflage, 2016–2020 env.). Édition Offshore avec cadran camouflage imprimé et boîtier/lunette céramique noire. Aspect très agressif. Marché : 160 000–240 000€.`,
+        `Royal Oak Offshore ref. 26405CE (42mm, black ceramic with camouflage dial, circa 2016–2020). Offshore edition with printed camo dial and black ceramic case/bezel. Very aggressive look. Market: €160,000–240,000.`
+      );} },
+
+    { id:'ap_26170st', kw:['26170st','26170','offshore chronograph previous','older offshore chrono','vintage offshore','2005 2015','cal 2225 offshore'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore Chronograph (Previous Gen)'; return t(
+        `Royal Oak Offshore réf. 26170ST (42mm, acier, cal. 2225, 2005–2015 env.). Version antérieure du chronographe Offshore. Calibre 2225. Discontinued. Marché secondaire : 50 000–75 000€ selon état.`,
+        `Royal Oak Offshore ref. 26170ST (42mm, steel, cal. 2225, circa 2005–2015). Earlier Offshore Chronograph. 2225 calibre. Discontinued. Secondary market: €50,000–75,000 depending on condition.`
+      );} },
+
+    { id:'ap_26231st', kw:['26231st','26231','chronograph glass back','offshore glass back','exhibition caseback','display back','vintage display'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore Chronograph Glass Back'; return t(
+        `Royal Oak Offshore réf. 26231ST (42mm, acier, cal. 2225, exhibition caseback, 2000–2010 env.). Variante rare Offshore avec boîtier verre arrière transparent (monvement visible). Discontinued. Marché : 60 000–90 000€.`,
+        `Royal Oak Offshore ref. 26231ST (42mm, steel, cal. 2225, exhibition caseback, circa 2000–2010). Rare Offshore variant with transparent glass caseback (visible movement). Discontinued. Market: €60,000–90,000.`
+      );} },
+
+    // ─── CODE 11.59 FAMILY ───
+
+    { id:'ap_26393or', kw:['26393or','26393','code 11.59 chronograph','code 11.59 chrono','code 11.59 rose gold','code chrono or','integrated chronograph code'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Code 11.59 Chronograph Rose Gold'; return t(
+        `Code 11.59 réf. 26393OR (41mm, or rose 18k, cal. 4401 intégré, 2019+). La ligne CODE 11.59 ("11:59", dernière minute) est la nouvelle collection sport/dress d'AP (lancée 2019). Boîtier octogonal inédit avec chronographe intégré au mouvement. Marché : 180 000–260 000€.`,
+        `Code 11.59 ref. 26393OR (41mm, 18k rose gold, cal. 4401 integrated, 2019+). CODE 11.59 line ("11:59", last minute) is AP's new sport/dress collection (launched 2019). Unique octagonal case with integrated chronograph. Market: €180,000–260,000.`
+      );} },
+
+    { id:'ap_15210cr', kw:['15210cr','15210','code 11.59 selfwinding','code selfwinding','code 11.59 auto','code rose gold','white gold code','41mm code selfwinding'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Code 11.59 Selfwinding Rose Gold'; return t(
+        `Code 11.59 réf. 15210CR (41mm, or rose 18k, cal. 4202 auto, 2019+). Montre 3-aiguilles pure de la ligne CODE 11.59. Boîtier octogonal signature avec cadrans variés. Calibre 4202 automatique, 70h. Marché : 140 000–190 000€.`,
+        `Code 11.59 ref. 15210CR (41mm, 18k rose gold, cal. 4202 auto, 2019+). Pure 3-hand version of CODE 11.59 line. Signature octagonal case with varied dials. 4202 automatic, 70h. Market: €140,000–190,000.`
+      );} },
+
+    { id:'ap_26396or', kw:['26396or','26396','code 11.59 perpetual calendar','code perpétuelle','code calendar','code 4400','annual calendar code'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Code 11.59 Perpetual Calendar'; return t(
+        `Code 11.59 réf. 26396OR (41mm, or rose 18k, cal. 4400 perpétuel, 2019+). Calendrier perpétuel intégré à la gamme CODE 11.59. Jour, date, mois, phase lune, cycle bissextile. Très complex. Marché : 250 000–360 000€.`,
+        `Code 11.59 ref. 26396OR (41mm, 18k rose gold, cal. 4400 perpetual, 2019+). Perpetual calendar integrated into CODE 11.59 line. Day, date, month, moon phase, leap year. Highly complex. Market: €250,000–360,000.`
+      );} },
+
+    { id:'ap_26397or', kw:['26397or','26397','code 11.59 minute repeater','code repeater','code minute repeater','code sonerie','minute repeater code','haute complication'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Code 11.59 Minute Repeater'; return t(
+        `Code 11.59 réf. 26397OR (41mm, or rose 18k, cal. 4403 répétition minutes, 2019+). L'une des complications ultimes : répétition minutes (sonnerie heures-quarts-minutes). Pièce de manufacture, ultra-limitée. Marché : 380 000–520 000€+.`,
+        `Code 11.59 ref. 26397OR (41mm, 18k rose gold, cal. 4403 minute repeater, 2019+). One of the ultimate complications: minute repeater (hour-quarter-minute chime). Manufacture piece, ultra-limited. Market: €380,000–520,000+.`
+      );} },
+
+    // ─── OTHER COLLECTIONS ───
+
+    { id:'ap_77244or', kw:['77244or','77244','royal oak mini 34mm','royal oak mini','royal oak ladies','34mm','petit royal oak','mini','compact royal oak','cal 2671'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Mini 34mm Ladies'; return t(
+        `Royal Oak réf. 77244OR (34mm, or rose 18k, cal. 2671 auto, 2019+). La Royal Oak compacte (parfois appelée "Mini" bien qu'officiellement "mini" ne soit pas le nom). 34mm, mouvement automatique 2671. Très demandée. Marché : 75 000–110 000€.`,
+        `Royal Oak ref. 77244OR (34mm, 18k rose gold, cal. 2671 auto, 2019+). The compact Royal Oak (sometimes called "Mini" though officially not). 34mm, automatic 2671 movement. Highly sought. Market: €75,000–110,000.`
+      );} },
+
+    { id:'ap_67651st', kw:['67651st','67651','royal oak quartz 33mm','royal oak quartz','quartz ladies','33mm quartz','battery royal oak','affordable royal oak'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Quartz 33mm Ladies'; return t(
+        `Royal Oak réf. 67651ST (33mm, acier, quartz, 2010–2020 env.). Montre quartz AP : Royal Oak compacte avec mouvement à quartz (batterie, non mécanique). Moins chère. Marché secondaire : 20 000–30 000€.`,
+        `Royal Oak ref. 67651ST (33mm, steel, quartz, circa 2010–2020). AP quartz watch: compact Royal Oak with battery-powered quartz movement (non-mechanical). More affordable. Secondary market: €20,000–30,000.`
+      );} },
+
+    { id:'ap_26600ce', kw:['26600ce','26600','offshore flyback chronograph','offshore flyback','ceramic offshore chronograph','special edition offshore','44mm offshore'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Offshore Flyback Chronograph'; return t(
+        `Royal Oak Offshore réf. 26600CE (44mm, céramique noire, cal. 2385 flyback, 2020+). Version ultime Offshore : 44mm céramique (plus grand que la standard 42mm), chronographe flyback intégré. Très imposant et rare. Marché : 200 000–300 000€.`,
+        `Royal Oak Offshore ref. 26600CE (44mm, black ceramic, cal. 2385 flyback, 2020+). Ultimate Offshore: 44mm ceramic (larger than standard 42mm), integrated flyback chronograph. Very imposing and rare. Market: €200,000–300,000.`
+      );} },
+
+    { id:'ap_millenary_4101', kw:['4101','millenary 4101','millenary open work','open work','skeleton millenary','oval millenary','movement visible','décentré'],
+      r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Millenary 4101 Openworked'; return t(
+        `Millenary réf. 15350 (cal. 4101 openworked, 47mm ovale, 2017+). Ligne Millenary : boîtier ovale signature AP avec mouvement visible au cadran décentré. Calibre 4101 squelette. Très technique et très rare. Marché : 150 000–220 000€.`,
+        `Millenary ref. 15350 (cal. 4101 openworked, 47mm oval, 2017+). Millenary line: AP's signature oval case with off-center movement visible on dial. Skeletonized 4101 calibre. Highly technical and rare. Market: €150,000–220,000.`
+      );} },
+
+// ═══ AUDEMARS PIGUET EXPANDED REFERENCES ═══════════════════════════════════
+
+// ROYAL OAK ADVANCED REFERENCES
+{ id:'ap_15500ti', kw:['15500ti','royal oak titanium','royal oak titane','ro titanium','ap titanium','lightweight royal oak','titanium sports'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 41mm Titanium'; return t(
+    `**Audemars Piguet Royal Oak réf. 15500ST (Titanium)** — Boîtier 41mm titane ultra-léger (seulement quelques références), cadran bleu ou gris, lunette intégrée titane, bracelet Royal Oak titane. Cal. 4302 (70h, chronométrie COSC). Étanche 100m. Production très limitée 2021+. Montre sport-technique en matériau ultra-premium. Marché : 65 000–95 000€. Pour amateurs titane prestige.`,
+    `**Audemars Piguet Royal Oak ref. 15500ST (Titanium)** — 41mm ultra-lightweight titanium case (only select references), blue or gray dial, integrated titanium bezel, titanium Royal Oak bracelet. Cal. 4302 (70h, COSC). 100m WR. Very limited production 2021+. Sport-technical watch in ultra-premium material. Market: €65,000–95,000. For prestige titanium enthusiasts.`
+  );} },
+
+{ id:'ap_26591ti', kw:['26591ti','royal oak chronograph','royal oak chrono titanium','ro chrono','ap titanium chrono','integrated chronograph','sports chronograph'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Chronograph Titanium'; return t(
+    `**Audemars Piguet Royal Oak Chronograph réf. 26591TI** — Chronographe 41mm titane, cadran bleu ou noir, compteurs intégrés, lunette octogonale titane, bracelet Royal Oak titane. Cal. 4401 (70h, chronométrie COSC). Étanche 100m. Production 2023+. Chronographe sport prestigieux ultra-moderne. Très rare. Marché : 120 000–180 000€. Pièce technique ultime.`,
+    `**Audemars Piguet Royal Oak Chronograph ref. 26591TI** — 41mm titanium chronograph, blue or black dial, integrated chronograph counters, octagonal titanium bezel, titanium Royal Oak bracelet. Cal. 4401 (70h, COSC). 100m WR. Made 2023+. Ultra-modern prestige sports chronograph. Very rare. Market: €120,000–180,000. Ultimate technical piece.`
+  );} },
+
+{ id:'ap_15202xt', kw:['15202xt','royal oak jumbo','royal oak titanium gold','50th anniversary','limited edition','two tone oak'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Jumbo 50th Anniversary'; return t(
+    `**Audemars Piguet Royal Oak Jumbo réf. 15202XT (50th Anniversaire)** — Boîtier 39mm bi-matière titane & or blanc (édition spéciale 50 ans), cadran bleu, lunette intégrée, bracelet mixte. Cal. 3132 (automatique, 54h). Étanche 100m. Production édition limitée 2022. Montre commémorative prestigieuse. Marché : 85 000–130 000€. Collectionneurs anniversaire.`,
+    `**Audemars Piguet Royal Oak Jumbo ref. 15202XT (50th Anniversary)** — 39mm two-tone titanium & white gold case (special 50-year edition), blue dial, integrated bezel, mixed bracelet. Cal. 3132 movement (automatic, 54h). 100m WR. Limited edition production 2022. Prestigious commemorative watch. Market: €85,000–130,000. Anniversary collectors.`
+  );} },
+
+{ id:'ap_77350sr', kw:['77350sr','royal oak ladies','royal oak 34','small royal oak','womens royal oak','rose gold oak','ladies prestige'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 34mm Ladies Rose Gold'; return t(
+    `**Audemars Piguet Royal Oak réf. 77350SR** — Boîtier 34mm or rose massif 18K, cadran bleu, lunette intégrée or rose, bracelet Royal Oak or rose. Cal. 3120 (55h). Étanche 100m. Production 2020+. Montre féminine prestige signature AP. Très élégante & compacte. Marché : 55 000–80 000€. Pour femmes executives prestige.`,
+    `**Audemars Piguet Royal Oak ref. 77350SR** — 34mm solid 18K rose gold case, blue dial, integrated rose gold bezel, rose gold Royal Oak bracelet. Cal. 3120 movement (55h). 100m WR. Made 2020+. Signature AP prestige ladies watch. Very elegant & compact. Market: €55,000–80,000. For prestige executive women.`
+  );} },
+
+// OFFSHORE EXPANDED
+{ id:'ap_26420so', kw:['26420so','offshore 43','offshore steel','offshore ceramic','modern offshore','offshore chronograph','sport offshore'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Offshore 43mm Steel/Ceramic'; return t(
+    `**Audemars Piguet Offshore réf. 26420SO** — Chronographe 43mm acier & céramique noire, cadran noir, lunette Cerachrom noire bidirectionnelle, bracelet intégré acier. Cal. 4401 (70h, COSC). Étanche 300m. Production 2023+. Montre ultra-sportive & aquatique moderne. Très technique. Marché : 75 000–110 000€. Pour passionnés offshore sport.`,
+    `**Audemars Piguet Offshore ref. 26420SO** — 43mm steel & black ceramic chronograph, black dial, black bidirectional Cerachrom bezel, integrated steel bracelet. Cal. 4401 (70h, COSC). 300m WR. Made 2023+. Ultra-modern sporty & aquatic watch. Highly technical. Market: €75,000–110,000. For offshore sport enthusiasts.`
+  );} },
+
+{ id:'ap_26420ti', kw:['26420ti','offshore titanium','offshore vert','offshore green','titanium offshore','lightweight offshore','sports titanium'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Offshore Titanium Green'; return t(
+    `**Audemars Piguet Offshore réf. 26420TI** — Chronographe 43mm titane ultra-léger, cadran vert distinctif, lunette Cerachrom verte, bracelet Offshore titane intégré. Cal. 4401 (70h, COSC). Étanche 300m. Production 2021+. Montre sport ultra-premium en titane avec couleur contemporaine. Marché : 95 000–140 000€. Amateurs titane & couleur.`,
+    `**Audemars Piguet Offshore ref. 26420TI** — 43mm ultra-lightweight titanium chronograph, distinctive green dial, green Cerachrom bezel, integrated titanium Offshore bracelet. Cal. 4401 (70h, COSC). 300m WR. Made 2021+. Ultra-premium sport watch in titanium with contemporary color. Market: €95,000–140,000. Titanium & color enthusiasts.`
+  );} },
+
+{ id:'ap_15710st', kw:['15710st','offshore diver','offshore 42mm','diving offshore','underwater offshore','previous generation','discontinued offshore'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Offshore Diver 42mm Previous Gen'; return t(
+    `**Audemars Piguet Offshore Diver réf. 15710ST** — Chronographe 42mm acier, cadran noir, lunette Cerachrom noire, bracelet intégré acier. Cal. 3125 ou 4401 selon année. Étanche 300m. Production 2016–2023. Montre de plongée/sport signature Offshore. Très portée. Marché : 45 000–65 000€ (ancien modèle moins cher). Excellent rapport qualité-prix.`,
+    `**Audemars Piguet Offshore Diver ref. 15710ST** — 42mm steel chronograph, black dial, black Cerachrom bezel, integrated steel bracelet. Cal. 3125 or 4401 depending on year. 300m WR. Made 2016–2023. Signature Offshore diving/sport watch. Widely worn. Market: €45,000–65,000 (older model less expensive). Excellent value-to-quality ratio.`
+  );} },
+
+// CODE 11.59 SPECIAL
+{ id:'ap_26395bc', kw:['26395bc','code 11.59 starwheel','code starwheel','white gold code','ap starwheel','code 11.59 blanc'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Code 11.59 Starwheel White Gold'; return t(
+    `**Audemars Piguet Code 11.59 Starwheel réf. 26395BC** — Montre haute complication 41mm or blanc massif 18K, cadran très complexe avec roue Starwheel étoilée, mouvement perpétuel perpétuel. Cal. 4600 ultra-complexe. Étanche 100m. Production très rare 2020+. Montre horlogère d'exception AP. Marché : 200 000–350 000€. Pour collectionneurs haute complication.`,
+    `**Audemars Piguet Code 11.59 Starwheel ref. 26395BC** — 41mm solid 18K white gold haute complication watch, highly complex dial with iconic Starwheel design, perpetual calendar movement. Ultra-complex Cal. 4600. 100m WR. Very rare production 2020+. Exceptional AP watchmaking. Market: €200,000–350,000. For haute complication collectors.`
+  );} },
+
+{ id:'ap_26398or', kw:['26398or','code 11.59 tourbillon','flying tourbillon ap','ap tourbillon','or rose code','rose gold code','code 11.59 flying'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Code 11.59 Flying Tourbillon'; return t(
+    `**Audemars Piguet Code 11.59 Flying Tourbillon réf. 26398OR** — Montre ultra-complication 41mm or rose massif 18K, tourbillon volant visible au-dessus du cadran, mécanisme haute horlogerie. Cal. 4603 (ultra-complexe, 72h). Étanche 100m. Production très limitée 2018+. Montre de génie horloger pur. Marché : 180 000–300 000€. Pièce d'art pour collectionneurs élite.`,
+    `**Audemars Piguet Code 11.59 Flying Tourbillon ref. 26398OR** — 41mm solid 18K rose gold ultra-complication watch, flying tourbillon visible above dial, haute horlogerie mechanism. Ultra-complex Cal. 4603 (72h). 100m WR. Very limited production 2018+. Pure horological genius. Market: €180,000–300,000. Art piece for elite collectors.`
+  );} },
+
+// RARE & SPECIAL EDITIONS
+{ id:'ap_26610oi', kw:['26610oi','offshore music','selfwinding music','offshore special','art watch','specialized offshore','limited edition art'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Offshore Selfwinding Music Edition'; return t(
+    `**Audemars Piguet Offshore Selfwinding Music Edition réf. 26610OI** — Chronographe 42mm acier, cadran spécialisé avec motifs musicaux gravés, mouvement automate musical intégré (très rare). Cal. 3186 modifié. Étanche 300m. Production ultra-limitée 2010+. Montre d'art horloger exceptionnelle. Marché : 120 000–220 000€. Amateurs art/musique horlogère.`,
+    `**Audemars Piguet Offshore Selfwinding Music Edition ref. 26610OI** — 42mm steel chronograph, specialized dial with engraved musical motifs, integrated musical automaton movement (very rare). Modified Cal. 3186. 300m WR. Ultra-limited production 2010+. Exceptional horological art watch. Market: €120,000–220,000. Art/horological music enthusiasts.`
+  );} },
+
+{ id:'ap_26579ce', kw:['26579ce','royal oak perpetual openworked','ap perpetual openworked','ap calendar openworked','ap skeleton calendar','ap ceramic perpetual'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Perpetual Calendar Openworked'; return t(
+    `**Audemars Piguet Royal Oak Perpetual Calendar Openworked réf. 26579CE** — Montre calendrier perpétuel 41mm céramique noire, squelettisée (mouvement visible), affichage perpétuel complet (jour/date/mois/année). Cal. 4601 extrêmement complexe. Étanche 100m. Production rare 2019+. Montre d'exception technique & artistique. Marché : 380 000–550 000€. Graal de la haute horlogerie AP.`,
+    `**Audemars Piguet Royal Oak Perpetual Calendar Openworked ref. 26579CE** — 41mm black ceramic perpetual calendar watch, skeletonized (movement visible), full perpetual display (day/date/month/year). Extremely complex Cal. 4601. 100m WR. Rare production 2019+. Exception in technical & artistic watchmaking. Market: €380,000–550,000. Holy grail of AP haute horlogerie.`
+  );} },
+
+{ id:'ap_26470io', kw:['Offshore 42mm','ceramic titanium','dive watch'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Offshore 26470IO'; return t(
+    `FR: L'Offshore 26470IO 2024 conjugue ceramique noire et titane ultra-legers en 42mm pour une montre de plongee sport-luxe absolue. Le calibre 2385 (remontage automatique, 40h reserve) offre une precision acceptable. Le design futuriste avec boitier ceramique/titane et lunette tournante unidirectionnelle rappelle l'heritage Offshore depuis 1993. Etanche 300m pour la plongee recreational et professionnelle. Avec cassette "Chronograph" - complications additionnelles mesures pour expeditions. La riche palette ceramique /titane (poids leger) attire les collecteurs modernes cherchant techno-materialite. Prix: €32,000. Production limitee annuellement.`,
+    `EN: The 2024 Audemars Piguet Offshore reference 26470IO unites black ceramic and ultra-light titanium in a 42mm sports-diving package combining functionality with avant-garde aesthetics. The caliber 2385 (automatic, 40-hour power reserve, chronometer-certified) delivers solid chronometric performance. The futuristic case design—ceramic/titanium—and unidirectional rotating bezel echo the Offshore legacy since 1993. Water-resistant to 300m (984 feet) for recreational and professional diving. Available with integrated chronograph complication for expedition timing. The ceramic/titanium palette appeals to contemporary collectors valuing material innovation and reduced weight. Retail: USD 29,000. Annual limited production.`
+  );} },
+
+{ id:'ap_15530st', kw:['Royal Oak 41mm','self-winding','newest generation'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 15530ST'; return t(
+    `FR: Le Royal Oak 15530ST acier 41mm est la montre de prestige absolute d'AP, combinant design octagonale avant-gardiste (depuis 1972) avec precision horlogere contemporaine. Le calibre 4302/4309 (remontage automatique, 70h reserve, chronometer) offre chronometrie exceptionnelle et resistance magnetique renforcee. Le bracelet integre fond taper est iconique - reconnaissable instantanement. Etanche 50m pour usage quotidien raffiné. Cadrans options: bleu, noir, blanc, gris gradient. Prix: €26,500. Montre de retraite pour collecteurs avertis - symbol absolu du luxury sports-watch. Liste d'attente 3-5 ans chez revendeurs authorises.`,
+    `EN: The Audemars Piguet Royal Oak 15530ST in 41mm steel is the ultimate prestige sports watch, melding the avant-garde octagonal case (since 1972) with contemporary watchmaking precision. The caliber 4302/4309 (automatic, 70-hour power reserve, chronometer-certified) achieves exceptional accuracy and reinforced magnetic resistance. The integrated tapered bracelet is instantly iconic—recognized globally as a status symbol. Water-resistant 50m (164 feet) for refined daily wear. Dial options: blue, black, white, grey gradient. Retail: USD 24,000. The retirement watch for expert collectors—absolute symbol of luxury sports-watch supremacy. Waiting lists: 3-5 years at authorized dealers.`
+  );} },
+
+{ id:'ap_26231st_glass', kw:['Offshore Chronograph','sapphire caseback','exhibition'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Offshore Chronograph 26231ST'; return t(
+    `FR: L'Offshore Chronograph 26231ST 42mm avec fond saphir expose le calibre 3126/3840 (chronographe integre) a travers le verre, offrant theatre horloger pour collecteurs techno-curieux. Acier massif, lunette tournante unidirectionnelle ceramique noire, compteurs de chronographe visibles cadran. L'exhibition caseback revele balancier oscillant et ressorts en spirale - element essentiel pour appreciateurs du mecanisme. Etanche 300m pour plongee professionnelle. Remontage automatique, 50h reserve. Prix: €29,500. Moins demandee que la version à fond lisse (plus cher en fabrication) mais appriciee des collecteurs horlogers sinceres.`,
+    `EN: The Audemars Piguet Offshore Chronograph reference 26231ST in 42mm steel with exhibition caseback exposes the integrated chronograph caliber 3126/3840 through sapphire crystal, offering horological theatre for technically curious collectors. Solid steel case, ceramic unidirectional rotating bezel, chronograph counters integrated on dial. The exhibition case-back reveals the oscillating balance wheel and spiral springs—essential for mechanism aficionados. Water-resistant to 300m (984 feet) for professional diving. Automatic winding, 50-hour power reserve. Retail: USD 26,800. Less pursued than closed case-back variants (more costly fabrication) but valued by serious horological collectors.`
+  );} },
+
+{ id:'ap_77351or', kw:['Royal Oak Ladies','34mm rose gold','pave diamond'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak Ladies 77351OR'; return t(
+    `FR: Le Royal Oak Dames 77351OR 34mm or rose avec lunette pavee de diamants offre luxe feminin intemporel a travers l'iconic octagon. Calibre 2061 (remontage manuel, 40h reserve) assure mouvement visible et traditionnel. Cadran blanc ou gris. Etanche 50m. La pavage diamant lunette cible collectrices nantis cherchant elegance sportive avec prestige gemologique. Production tres limitee. Prix: €42,000+. Apprieciation constante due a l'acier or rose et diamants naturels.`,
+    `EN: The Audemars Piguet Royal Oak Ladies reference 77351OR in 34mm rose gold with pave diamond-set bezel delivers timeless feminine luxury through the iconic octagonal case. The caliber 2061 (manual winding, 40-hour power reserve) offers visible traditional mechanism—appealing to purists valuing craftsmanship transparency. Dial options: white or grey. Water-resistant 50m (164 feet). The diamond pavé bezel targets affluent collectors seeking sports-watch elegance combined with gemological prestige. Very limited production. Retail: USD 38,000+. Consistent appreciation driven by rose gold and natural diamond scarcity.`
+  );} },
+
+{ id:'ap_15500st_grey', kw:['Royal Oak 41mm','grey dial','modern classic'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Royal Oak 15500ST Grey'; return t(
+    `FR: Le Royal Oak 15500ST 41mm cadran gris gradient est la configuration la plus demandee actuellement, combinant subtilité colorimetrique avec esthétique moderne. Meme calibre 4302 (70h reserve, chronometer certifie) et bracelet integré taper. Le cadran gris gradient offre transitions subtiles du gris clair au fonce, revelant la qualité de finition AP supreme. Etanche 50m. Prix: €26,500. Configuration reine pour collecteurs novices cherchant Royal Oak authentic mais avec presentation contemporaine. Moins de liste d'attente que le noir mais toujours 2-3 ans chez revendeurs.`,
+    `EN: The Audemars Piguet Royal Oak 15500ST in 41mm with grey gradient dial is currently the most sought configuration, pairing subtle colorimetry with contemporary aesthetics. Same caliber 4302 (70-hour power reserve, chronometer-certified) and integrated tapered bracelet. The grey gradient dial reveals subtle light-to-dark transitions—showcasing AP's supreme finishing quality. Water-resistant 50m (164 feet). Retail: USD 24,000. The gold-standard entry configuration for novice collectors seeking authentic Royal Oak with modern presentation. Shorter waiting lists than black dial but still 2-3 years at authorized dealers.`
+  );} },
+
+{ id:'ap_26574or_blue', kw:['Perpetual Calendar rose gold','blue dial','collector holy grail'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.model='Perpetual Calendar 26574OR'; return t(
+    `FR: Le Perpetual Calendar 26574OR 41mm or rose cadran bleu laque est le graal des collecteurs AP, conjuguant 6 complications horlogeres majeures (perpetuel calendar, chronographe flyback, GMT, reserve de marche) en un seul mecanisme. Le calibre 2120/2800 (remontage automatique, 68h reserve) integre balancier a couronne et spiral Parachrom pour chrononmetrie exceptionnelle. Cadran bleu laque lisse confere elegance intemporelle. Etanche 50m. Production extremement limitee - moins de 50 pieces par an. Prix: €325,000. Appreciation rare > 100% a la revente. Montre d'exception pour collecteurs multi-milliardaires.`,
+    `EN: The Audemars Piguet Perpetual Calendar reference 26574OR in 41mm rose gold with lacquered blue dial is the holy grail for AP collectors, integrating six major horological complications (perpetual calendar, flyback chronograph, GMT, moonphase, power-reserve, date) into a unified mechanism. The caliber 2120/2800 (automatic, 68-hour power reserve) features crown balance and Parachrom spiral for exceptional chronometry resistant to gravity and magnetism. The smooth lacquered blue dial conveys timeless elegance. Water-resistant 50m (164 feet). Extremely limited production—fewer than 50 pieces annually worldwide. Retail: USD 295,000. Rare secondary-market appreciation exceeds 100%. Exceptional timepiece for ultra-high-net-worth collectors only.`
+  );} },
+{ id:'patek_general', kw:['patek philippe','patek','pp','patek genève','patek paris','achat patek','vente patek','patek occasion','patek pre-owned','patek histoire','calatrava patek','patek suisse','genève manufacture','patek fondé','1839 patek','stern patek','patek collection','patek watches','patek models','what patek','which patek','patek available','patek in stock','patek you have','avez vous des patek','got any patek','patek brand','patek dealer','buy patek','acheter patek','patek philippe watch','patek philippe collection','patek philippe available','patek philippe models','patek most expensive','most expensive patek','patek best','best patek','patek worth it','is patek worth it'],
       r:()=>{ ctx.brand='Patek Philippe'; return t(
         `Patek Philippe fondée en 1839 à Genève. Manufacture indépendante. Nous avons ${STOCK.filter(w=>w.brand==='Patek Philippe').length} Patek en stock (Nautilus, Annual Calendar, Complications). Quel modèle ?`,
         `Patek Philippe founded 1839 in Geneva. Independent manufacture. We have ${STOCK.filter(w=>w.brand==='Patek Philippe').length} Patek in stock (Nautilus, Annual Calendar, Complications). Which model?`
@@ -520,7 +1395,392 @@
 
 
     // ── RICHARD MILLE ───────────────────────────────────────────────────────────
-    { id:'rm_general', kw:['richard mille','rm','richard mille paris','rm montre','rm occasion','rm pre-owned','achat richard mille','vente richard mille','rm suisse','rm prix','richard mille cher','rm combien','rm investment','rm cote','rm watch','rm watches','rm models','what rm','which rm','rm available','rm in stock','rm you have','avez vous des rm','got any rm','rm brand','rm dealer','buy rm','acheter rm','richard mille collection','richard mille available','richard mille models','richard mille price','richard mille worth','most expensive watch','watches over 100k','watches over 200k','six figure watch','six figure watches'],
+    
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PATEK PHILIPPE EXPANDED REFERENCES — Comprehensive Model Coverage
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // NAUTILUS COLLECTION (40mm Sport Icon)
+    // ──────────────────────────────────────────────────────────────────────────
+    
+    { id:'patek_5711', kw:['5711','5711 1a','5711a','nautilus 5711','patek nautilus 5711','5711 steel','5711 bleu','nautilus blue steel','nautilus discontinued','5711 gérald genta'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus 5711'; return t(
+        `Nautilus réf. 5711A-001 (40mm acier, cadran bleu Sunburst). Calibre 26-330 SC (45h réserve). Bracelet intégré trois mailles. Icône sport-chic par Gérald Genta (1976). Discontinué août 2021 après 45 ans — le plus recherché de tous les Patek. Cote marché 85 000–120 000€ selon état.`,
+        `Nautilus ref. 5711A-001 (40mm steel, Sunburst blue dial). Calibre 26-330 SC (45h power reserve). Integrated three-link bracelet. Sport-chic icon by Gérald Genta (1976). Discontinued August 2021 after 45 years — the most sought Patek ever. Market: €85,000–120,000 depending on condition.`
+      );} },
+
+    { id:'patek_5711_tiffany', kw:['5711 tiffany','tiffany co patek','5711 tiffany blue','patek tiffany nautilus','5711 turquoise','tiffany collaboration','limited 170','patek tiffany','nautilus tiffany','ref 5711'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus 5711 Tiffany & Co'; return t(
+        `Nautilus réf. 5711/1A-018 Tiffany & Co (40mm acier, cadran bleu Tiffany exclusif). Calibre 26-330 SC. Édition limitée à 170 pièces (2022). Collaboration Patek Philippe × Tiffany New York. Ultra-rare. Marché 200 000€+. La plus désirée au-delà du prix.`,
+        `Nautilus ref. 5711/1A-018 Tiffany & Co (40mm steel, exclusive Tiffany blue dial). Calibre 26-330 SC. Limited to 170 pieces (2022). Patek Philippe × Tiffany New York collaboration. Ultra-rare. Market €200,000+. The most desired beyond price.`
+      );} },
+
+    { id:'patek_5712', kw:['5712','5712a','nautilus 5712','nautilus power reserve','nautilus moonphase','5712 lune','5712 réserve','moonphase nautilus','patek nautilus calendar'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus 5712'; return t(
+        `Nautilus réf. 5712A-001 (40mm acier, cadran noir). Calibre 240 PS IRM C LU : réserve de marche (jour/nuit) + indication lune. Produit depuis 2006. Plus robuste que le 5711, complication bonus. Marché acier 65 000–80 000€.`,
+        `Nautilus ref. 5712A-001 (40mm steel, black dial). Calibre 240 PS IRM C LU: power reserve (day/night) + moon phase. In production since 2006. More robust than the 5711, bonus complication. Market: €65,000–80,000.`
+      );} },
+
+    { id:'patek_5740', kw:['5740','5740g','5740/1g','perpetual calendar nautilus','nautilus perpetual','perpetual nautilus','white gold nautilus','5740 or blanc'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus Perpetual Calendar 5740'; return t(
+        `Nautilus réf. 5740/1G-001 (40mm or blanc, cadran argenté). Calibre 240 Q (complication perpétuelle manufacture). Calendrier perpétuel Nautilus : extrêmement rare. Lancé 2010. Marché 120 000–180 000€ selon année/état.`,
+        `Nautilus ref. 5740/1G-001 (40mm white gold, silver dial). Calibre 240 Q (manufacture perpetual complication). Perpetual Calendar Nautilus: extremely rare. Launched 2010. Market: €120,000–180,000 depending on year/condition.`
+      );} },
+
+    { id:'patek_5811', kw:['5811','5811a','5811/1a','nautilus white gold','nautilus 41mm','nautilus or blanc','5811 replacement','nautilus successor','new nautilus'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus 5811'; return t(
+        `Nautilus réf. 5811/1A-001 (41mm or blanc, cadran bleu fumé). Calibre 26-330 SC. Remplacant du légendaire 5711 acier. Lancé 2021. Boîtier plus imposant, finition affinée, or blanc exclut des acheteurs spéculatifs. Marché 60 000–85 000€.`,
+        `Nautilus ref. 5811/1A-001 (41mm white gold, smoked blue dial). Calibre 26-330 SC. Successor to legendary steel 5711. Launched 2021. Larger case, refined finishing, white gold excludes speculative buyers. Market: €60,000–85,000.`
+      );} },
+
+    { id:'patek_5819', kw:['5819','5819g','5819/1g','nautilus travel time','travel time nautilus','world time nautilus','dual time nautilus','patek 5819','5819 world'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus Travel Time 5819'; return t(
+        `Nautilus réf. 5819/1G-001 (40mm or blanc, cadran bleu). Calibre 324 S C FUS. Indication GMT/Travel Time. Calendrier annuel. 2023 collection. Rarement produit — Nautilus compliqué. Marché 75 000–95 000€.`,
+        `Nautilus ref. 5819/1G-001 (40mm white gold, blue dial). Calibre 324 S C FUS. GMT/Travel Time indication. Annual calendar. 2023 collection. Rarely produced — complicated Nautilus. Market: €75,000–95,000.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // AQUANAUT COLLECTION (42mm Modern Sports Watch)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5167', kw:['5167','5167a','5167a-001','aquanaut 5167','aquanaut steel','aquanaut acier','5167 bracelet composite','aquanaut composite','5167 cadran'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut 5167'; return t(
+        `Aquanaut réf. 5167A-001 (40mm acier, cadran bleu tropical). Calibre 324 S C (45h). Bracelet composite « caoutchouc sport » signature. Ceinture de sécurité sous-marine textile. Design moderne 1997, toujours en production. Marché 50 000–70 000€ acier.`,
+        `Aquanaut ref. 5167A-001 (40mm steel, tropical blue dial). Calibre 324 S C (45h). Signature composite « sport rubber » bracelet. Textile underwater safety belt. Modern design 1997, still in production. Market: €50,000–70,000 steel.`
+      );} },
+
+    { id:'patek_5168', kw:['5168','5168g','5168g-001','aquanaut white gold','aquanaut 42mm','aquanaut or blanc','5168 bleu','aquanaut larger'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut 5168'; return t(
+        `Aquanaut réf. 5168G-001 (42mm or blanc, cadran bleu). Calibre 26-330 SC. Mouvement Nautilus monté dans l'Aquanaut. Case de 42mm plus imposante. Collection 2020. Marché 65 000–90 000€.`,
+        `Aquanaut ref. 5168G-001 (42mm white gold, blue dial). Calibre 26-330 SC. Nautilus movement mounted in Aquanaut. Larger 42mm case. 2020 collection. Market: €65,000–90,000.`
+      );} },
+
+    { id:'patek_5164', kw:['5164','5164a','5164a-001','aquanaut travel time','aquanaut world time','5164 gmt','aquanaut dual time','patek 5164'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut Travel Time 5164'; return t(
+        `Aquanaut réf. 5164A-001 (40mm acier, cadran gris fumé). Calibre 324 S C FUS (Travel Time). Indication GMT, calendrier annuel. Bracelet composite. 2021 introduction. Montre sportive avec complication. Marché 60 000–80 000€.`,
+        `Aquanaut ref. 5164A-001 (40mm steel, smoked gray dial). Calibre 324 S C FUS (Travel Time). GMT indication, annual calendar. Composite bracelet. 2021 introduction. Sports watch with complication. Market: €60,000–80,000.`
+      );} },
+
+    { id:'patek_5968', kw:['5968','5968a','5968a-001','aquanaut chronograph','aquanaut chrono','aquanaut flyback','5968 steel','aquanaut rattrapante'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut Chronograph 5968'; return t(
+        `Aquanaut réf. 5968A-001 (42mm acier, cadran bleu). Calibre CH 28-520 C (flyback rattrapante intégrée). Chronographe sports-chic Aquanaut. Bracelet composite. Lancé 2021. Ultra-rare. Marché 80 000–120 000€.`,
+        `Aquanaut ref. 5968A-001 (42mm steel, blue dial). Calibre CH 28-520 C (integrated flyback split-seconds). Sports-chic Aquanaut chronograph. Composite bracelet. Launched 2021. Ultra-rare. Market: €80,000–120,000.`
+      );} },
+
+    { id:'patek_5269', kw:['5269','5269r','5269r-001','aquanaut ladies','patek ladies','luce aquanaut','5269 rose gold','aquanaut femme','aquanaut rose'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut Luce 5269'; return t(
+        `Aquanaut Luce réf. 5269/1R-001 (35.2mm or rose, cadran rose). Calibre 324 S C. Montre féminine Aquanaut. Bracelet composite rose-gold tissé. Collection 2020. Marché 55 000–75 000€.`,
+        `Aquanaut Luce ref. 5269/1R-001 (35.2mm rose gold, rose dial). Calibre 324 S C. Ladies' Aquanaut watch. Rose-gold woven composite bracelet. 2020 collection. Market: €55,000–75,000.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // CALATRAVA COLLECTION (37–40mm Dress Classics)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5196', kw:['5196','5196j','5196j-001','calatrava rose gold','calatrava 37mm','calatrava classic','5196 or rose','calatrava eternal'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava 5196'; return t(
+        `Calatrava réf. 5196/1R-001 (37mm or rose, cadran champagne). Calibre 324 S C. Montre d'habillé par excellence — le classique Patek. Bracelet cuir Patek. Lancé 2010. Linéale épurée. Marché 30 000–45 000€.`,
+        `Calatrava ref. 5196/1R-001 (37mm rose gold, champagne dial). Calibre 324 S C. The quintessential dress watch — classic Patek. Patek leather strap. Launched 2010. Pure linear design. Market: €30,000–45,000.`
+      );} },
+
+    { id:'patek_5227', kw:['5227','5227j','5227j-001','calatrava officer','calatrava 39mm','calatrava case officier','5227 white gold','calatrava modern'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Officer 5227'; return t(
+        `Calatrava réf. 5227/1J-001 (39mm or blanc, cadran argenté). Calibre 26-330 SC. Caîtier carré/officier vintage, 40mm reconnu, moderne. Bracelet intégré or blanc. 2019 reintroduction. Marché 35 000–55 000€.`,
+        `Calatrava ref. 5227/1J-001 (39mm white gold, silver dial). Calibre 26-330 SC. Officer's square/vintage case, recognized 40mm proportions, modern. Integrated white gold bracelet. 2019 reintroduction. Market: €35,000–55,000.`
+      );} },
+
+    { id:'patek_6119', kw:['6119','6119j','6119j-001','calatrava laque','calatrava lacquer','calatrava 39mm','patek 6119','calatrava asian art'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Lacquer 6119'; return t(
+        `Calatrava réf. 6119/1J-001 (39mm or blanc, cadran laque noire + motif asiatique guilloché). Calibre 215 (manuel, ultra-mince 1.95mm). Art asiatique — laque traditionnelle Main d'œuvre extrême. 2020 introduction. Marché 25 000–35 000€.`,
+        `Calatrava ref. 6119/1J-001 (39mm white gold, black lacquer dial + guilloché Asian motif). Calibre 215 (manual, ultra-thin 1.95mm). Asian art — traditional lacquer. Extreme craftsmanship. 2020 introduction. Market: €25,000–35,000.`
+      );} },
+
+    { id:'patek_5226', kw:['5226','5226j','5226j-001','calatrava clous de paris','calatrava 40mm','calatrava white gold','5226 diamond set','calatrava clous'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Clous de Paris 5226'; return t(
+        `Calatrava réf. 5226/1J-001 (40mm or blanc, cadran bleu Sunburst, lunette Clous de Paris). Calibre 26-330 SC. Symbole Patek : motifs Clous de Paris (pois en relief). Bracelet or blanc intégré. 2021 collection. Marché 40 000–60 000€.`,
+        `Calatrava ref. 5226/1J-001 (40mm white gold, Sunburst blue dial, Clous de Paris bezel). Calibre 26-330 SC. Patek symbol: Clous de Paris motifs (raised studs). Integrated white gold bracelet. 2021 collection. Market: €40,000–60,000.`
+      );} },
+
+    { id:'patek_6007', kw:['6007','6007a','6007a-001','calatrava steel','calatrava acier','calatrava limited','6007 limited edition','calatrava anniversary'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Steel 6007'; return t(
+        `Calatrava réf. 6007A-001 (40mm acier, cadran bleu). Calibre 26-330 SC. Edição limitada acier — ultra-rare (Patek préfère l'or). Caiatrava moderne de Patek, acier exclusif. 2021 introduction. Marché 50 000–75 000€.`,
+        `Calatrava ref. 6007A-001 (40mm steel, blue dial). Calibre 26-330 SC. Limited edition steel — ultra-rare (Patek prefers gold). Modern Patek Calatrava, exclusive steel. 2021 introduction. Market: €50,000–75,000.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // COMPLICATIONS COLLECTION (Annual Calendars, World Times, Advanced)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5205', kw:['5205','5205r','5205r-001','annual calendar patek','patek annual calendar','5205 rose gold','calendrier annuel patek','patek 5205'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Annual Calendar 5205'; return t(
+        `Calendrier Annuel réf. 5205/1R-001 (40mm or rose, cadran bleu). Calibre 324 S C FUS. Complication : calendrier ne demande ajustement qu'une fois par an (fin février). Marque de fabrique Patek. Marché 50 000–75 000€.`,
+        `Annual Calendar ref. 5205/1R-001 (40mm rose gold, blue dial). Calibre 324 S C FUS. Complication: calendar needs adjustment only once per year (late February). Patek hallmark. Market: €50,000–75,000.`
+      );} },
+
+    { id:'patek_5230', kw:['5230','5230r','5230r-001','world time patek','patek world time','5230 rose gold','heure universelle patek','carte monde patek'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='World Time 5230'; return t(
+        `World Time réf. 5230/1R-001 (38.5mm or rose, cadran guilloché). Calibre 324 S C. Affichage 24 fuseaux horaires — cadran tournant, index ville. Complication voyageur signature. Marché 50 000–75 000€.`,
+        `World Time ref. 5230/1R-001 (38.5mm rose gold, guilloché dial). Calibre 324 S C. 24-hour time zone display — rotating dial, city indices. Signature traveler complication. Market: €50,000–75,000.`
+      );} },
+
+    { id:'patek_5270', kw:['5270','5270p','5270p-001','perpetual calendar chronograph','patek 5270','perpetual chrono','platinum 5270','split seconds perpetual'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Perpetual Calendar Chronograph 5270'; return t(
+        `Perpetual Calendar Chronograph réf. 5270/1P-001 (41mm platine, cadran bleu). Calibre CH 29-535 (manufacture). Complication ultime : calendrier perpétuel + chronographe split-second. Pièce rare, ~700 000€+. Monumentale.`,
+        `Perpetual Calendar Chronograph ref. 5270/1P-001 (41mm platinum, blue dial). Calibre CH 29-535 (manufacture). Ultimate complication: perpetual calendar + split-second chronograph. Rare piece, ~€700,000+. Monumental.`
+      );} },
+
+    { id:'patek_5320', kw:['5320','5320g','5320g-001','perpetual calendar patek','patek 5320','calendrier perpétuel','white gold perpetual','patek qp','5320g white gold'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Perpetual Calendar 5320'; return t(
+        `Calendrier Perpétuel réf. 5320/1G-001 (40mm or blanc, cadran bleu). Calibre 240 Q. Ne demande aucun ajustement jusqu'en 2100. Complication mécaniste suprême. Parmi les plus beaux QP du monde. Marché 80 000–130 000€.`,
+        `Perpetual Calendar ref. 5320/1G-001 (40mm white gold, blue dial). Calibre 240 Q. Needs no adjustment until 2100. Supreme mechanical complication. Among the finest QPs in the world. Market: €80,000–130,000.`
+      );} },
+
+    { id:'patek_5370', kw:['5370','5370p','5370p-001','split seconds patek','patek 5370','rattrapante patek','chronograph split second','platinum split second','patek 5370 chronograph'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Split-Seconds Chronograph 5370'; return t(
+        `Split-Seconds Chronograph réf. 5370/1P-001 (41mm platine, cadran bleu). Calibre CH 29-535 (mono-poussoir rattrapante intégrale). Chronographe mécanique classique. Marché 180 000–280 000€. Ultra-sophistiqué.`,
+        `Split-Seconds Chronograph ref. 5370/1P-001 (41mm platinum, blue dial). Calibre CH 29-535 (mono-pusher integrated split-seconds). Classic mechanical chronograph. Market: €180,000–280,000. Ultra-sophisticated.`
+      );} },
+
+    { id:'patek_5172', kw:['5172','5172g','5172g-001','chronograph patek','patek chronograph','5172 white gold','patek mono pusher','mono poussoir patek'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Chronograph 5172'; return t(
+        `Chronographe réf. 5172/1G-001 (40mm or blanc, cadran bleu). Calibre CH 29-535 PS (mono-poussoir). Chronographe à rattrapante intégrale — ultramoderne manufacture. Marché 70 000–100 000€. Montre complexe.`,
+        `Chronograph ref. 5172/1G-001 (40mm white gold, blue dial). Calibre CH 29-535 PS (mono-pusher). Chronograph with integrated split-seconds — ultramodern manufacture. Market: €70,000–100,000. Complex watch.`
+      );} },
+
+    { id:'patek_5960', kw:['5960','5960p','5960p-001','annual calendar flyback','patek 5960','flyback chronograph','platinum annual calendar','5960 platinum'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Annual Calendar Flyback 5960'; return t(
+        `Annual Calendar Flyback Chronographe réf. 5960/1P-001 (41mm platine, cadran noir). Calibre CH 29-535 PS (mono-poussoir flyback intégral). Calendrier annuel + chronographe. Haute complication sport. Marché 300 000€+.`,
+        `Annual Calendar Flyback Chronograph ref. 5960/1P-001 (41mm platinum, black dial). Calibre CH 29-535 PS (mono-pusher integrated flyback). Annual calendar + chronograph. High-tech sports complication. Market: €300,000+.`
+      );} },
+
+    { id:'patek_5930', kw:['5930','5930p','5930p-001','world time flyback','patek 5930','world time chronograph','platinum world time','5930 world time'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='World Time Flyback Chronograph 5930'; return t(
+        `World Time Flyback Chronographe réf. 5930/1P-001 (41mm platine, cadran noir). Calibre CH 29-535 PS. Monde entier + chronographe flyback — montre voyageur-sport ultime. Très rare. Marché 280 000–380 000€.`,
+        `World Time Flyback Chronograph ref. 5930/1P-001 (41mm platinum, black dial). Calibre CH 29-535 PS. Full world + flyback chronograph — ultimate traveler-sport watch. Very rare. Market: €280,000–380,000.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // GRAND COMPLICATIONS (Minute Repeaters, Tourbillons, Ultra-Haute Horlogerie)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5531', kw:['5531','5531p','5531p-001','minute repeater world time','patek 5531','sonnerie world time','patek chiming world time','repeater world time'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Minute Repeater World Time 5531'; return t(
+        `Répétition Minutes World Time réf. 5531/1P-001 (42mm platine, cadran noir). Calibre 300 Soneria (sonnerie intégrale). Combine deux ultimes complications : répétition minutes + heure universelle. Pièce muséale. Marché 800 000€+.`,
+        `Minute Repeater World Time ref. 5531/1P-001 (42mm platinum, black dial). Calibre 300 Soneria (integrated chiming). Combines two ultimate complications: minute repeater + world time. Museum piece. Market: €800,000+.`
+      );} },
+
+    { id:'patek_6300', kw:['6300','grandmaster chime','patek 6300','6300p','patek most expensive','reference 6300','chiming watch','20 complications'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Grandmaster Chime 6300'; return t(
+        `Grandmaster Chime réf. 6300P-001 (42.2mm platine, cadran bleu). Calibre 300 GC (20 complications, 1328 composants). Montre la plus complexe ET la plus chère jamais produite par Patek : enchères 31M$ (2019). Objet purement artistique.`,
+        `Grandmaster Chime ref. 6300P-001 (42.2mm platinum, blue dial). Calibre 300 GC (20 complications, 1328 components). Most complex AND most expensive watch ever produced by Patek: auctioned $31M (2019). Pure art object.`
+      );} },
+
+    { id:'patek_5539', kw:['5539','5539p','5539p-001','tourbillon minute repeater','patek 5539','repeater tourbillon','patek sonnerie tourbillon','platinum repeater'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Tourbillon Minute Repeater 5539'; return t(
+        `Tourbillon Répétition Minutes réf. 5539/1P-001 (42mm platine, cadran bleu). Calibre 300 Sirius. Combine tourbillon visible + sonnerie minutes. Ultra-rare : ~100 pièces fabrication annuelle. Marché 400 000–600 000€.`,
+        `Tourbillon Minute Repeater ref. 5539/1P-001 (42mm platinum, blue dial). Calibre 300 Sirius. Combines visible tourbillon + minute chiming. Ultra-rare: ~100 pieces annual production. Market: €400,000–600,000.`
+      );} },
+
+    { id:'patek_5208', kw:['5208','5208p','5208p-001','minute repeater chronograph','patek 5208','repeater chronograph perpetual','tonneau case','split second repeater'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Minute Repeater Split-Seconds Perpetual Calendar 5208'; return t(
+        `Minute Repeater Chronographe Perpétuel réf. 5208/1P-001 (42mm platine, boîtier tonneau). Calibre 300 SQU (sonnerie monopoussoir + split-second + QP). Trois ultimes complications en une montre. Muséale. Marché 1M€+.`,
+        `Minute Repeater Split-Seconds Perpetual Calendar ref. 5208/1P-001 (42mm platinum, tonneau case). Calibre 300 SQU (mono-pusher chiming + split-second + QP). Three ultimate complications in one watch. Museum piece. Market: €1M+.`
+      );} },
+
+    { id:'patek_5303', kw:['5303','5303p','5303p-001','minute repeater tourbillon','open face','patek 5303','repeater tourbillon open','sonnerie visable'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Minute Repeater Tourbillon 5303'; return t(
+        `Minute Repeater Tourbillon Decimal réf. 5303/1P-001 (42mm platine, boîtier épargne ouvert). Calibre 300 Sirius. Tourbillon central visible dans le style « montre de poche savante ». Répétition sonnerie intégrale. Très rare. Marché 500 000–800 000€.`,
+        `Minute Repeater Tourbillon Decimal ref. 5303/1P-001 (42mm platinum, open face épargne case). Calibre 300 Sirius. Central visible tourbillon in « sophisticated pocket watch » style. Integrated chiming repeater. Very rare. Market: €500,000–800,000.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // LADIES COLLECTION (35–36mm Refined Elegance)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_7118', kw:['7118','7118/1200a','nautilus ladies','nautilus 35','patek ladies','nautilus femme','ladies nautilus 35','patek women watch'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus Ladies 7118'; return t(
+        `Nautilus Femme réf. 7118/1200A-001 (35.2mm acier, cadran bleu). Calibre 324 S C. Nautilus 38.5mm refondu aux proportions féminines. Bracelet trois mailles acier. Lancé 2021. Marché 40 000–55 000€.`,
+        `Nautilus Ladies ref. 7118/1200A-001 (35.2mm steel, blue dial). Calibre 324 S C. The 38.5mm Nautilus resized to feminine proportions. Three-link steel bracelet. Launched 2021. Market: €40,000–55,000.`
+      );} },
+
+    { id:'patek_4910', kw:['4910','4910/10a','twenty 4 quartz','twenty4 rectangle','twenty4 femme','patek ladies quartz','rectangle ladies','4910 diamants'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Twenty~4 Rectangle 4910'; return t(
+        `Twenty~4 Quartz réf. 4910/10A-011 (25×28mm, cadran bleu, diamants). Mouvement quartz (batterie 42 mois). Montre féminine emblématique Patek — rectangulaire Art Déco. Or blanc bracelet intégré. Marché 15 000–22 000€.`,
+        `Twenty~4 Quartz ref. 4910/10A-011 (25×28mm, blue dial, diamonds). Quartz movement (42-month battery). Patek's iconic ladies watch — rectangular Art Deco. White gold integrated bracelet. Market: €15,000–22,000.`
+      );} },
+
+    { id:'patek_7300', kw:['7300','7300/1200a','twenty 4 automatic','patek 7300','twenty4 round','ladies automatic','patek ladies round','7300 rose gold'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Twenty~4 Automatic 7300'; return t(
+        `Twenty~4 Automatique réf. 7300/1200A-001 (33mm or rose, cadran bleu). Calibre 324 S C (45h). Version moderne ronde : transition quartz → mécanique. Bracelet or rose intégré. Lancé 2021. Marché 28 000–42 000€.`,
+        `Twenty~4 Automatic ref. 7300/1200A-001 (33mm rose gold, blue dial). Calibre 324 S C (45h). Modern round version: quartz → mechanical transition. Integrated rose gold bracelet. Launched 2021. Market: €28,000–42,000.`
+      );} },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Additional Specialized Models
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    { id:'patek_5131', kw:['5131','5131r','5131r-001','world time jump','patek 5131','world time rose gold','24 hour indicator'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='World Time Jump Hour 5131'; return t(
+        `World Time Jump réf. 5131/1R-001 (38mm or rose, cadran noir). Calibre 324 S C. Variation world time avec saut horaire - index 24 villes. Marché 45 000–65 000€.`,
+        `World Time Jump ref. 5131/1R-001 (38mm rose gold, black dial). Calibre 324 S C. World time variant with hour jump - 24 city indices. Market: €45,000–65,000.`
+      );} },
+
+    { id:'patek_5172r', kw:['5172r','5172r-001','chronograph rose gold','patek chronograph rose','chronographe 5172 or rose'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Chronograph 5172 Rose Gold'; return t(
+        `Chronographe réf. 5172/1R-001 (40mm or rose, cadran bleu). Calibre CH 29-535 PS (mono-poussoir). Variante or rose du chronographe sport-chic Patek. Marché 65 000–90 000€.`,
+        `Chronograph ref. 5172/1R-001 (40mm rose gold, blue dial). Calibre CH 29-535 PS (mono-pusher). Rose gold variant of Patek's sport-chic chronograph. Market: €65,000–90,000.`
+      );} },
+
+    { id:'patek_5960r', kw:['5960r','5960r-001','annual calendar flyback rose gold','patek 5960 rose','flyback annual calendar rose'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Annual Calendar Flyback Rose Gold 5960'; return t(
+        `Annual Calendar Flyback réf. 5960/1R-001 (41mm or rose, cadran bleu). Calibre CH 29-535 PS. Variation or rose de l'annual calendar chronographe flyback. Marché 250 000–350 000€.`,
+        `Annual Calendar Flyback ref. 5960/1R-001 (41mm rose gold, blue dial). Calibre CH 29-535 PS. Rose gold variant of annual calendar flyback chronograph. Market: €250,000–350,000.`
+      );} },
+
+
+    
+    // ──────────────────────────────────────────────────────────────────────────
+    // NAUTILUS EXPANDED — Additional Sport Icons & Rare Models
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5990a', kw:['5990a','5990a-001','nautilus travel time chronograph','nautilus chrono gmt','nautilus ch 28-520','5990 steel','nautilus 40th anniversary','chronograph nautilus sports'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus Travel Time Chronograph 5990A'; return t(
+        `Nautilus réf. 5990/1A-001 (44mm acier, cadran bleu). Calibre CH 28-520 C FUS (chronographe rattrapante intégrée + Travel Time). Lancé 2021 pour le 40e anniversaire Nautilus. Ultra-rare dans la gamme sports. Marché 95 000–140 000€. Demande extrême.`,
+        `Nautilus ref. 5990/1A-001 (44mm steel, blue dial). Calibre CH 28-520 C FUS (integrated split-seconds chronograph + Travel Time). Launched 2021 for Nautilus 40th anniversary. Ultra-rare in sports range. Market: €95,000–140,000. Extreme demand.`
+      );} },
+
+    { id:'patek_5980r', kw:['5980r','5980r-001','nautilus chronograph rose gold','nautilus flyback rose','5980 chronograph','nautilus rattrapante or rose','chronograph rose gold nautilus','flyback rose nautilus'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus Chronograph 5980R'; return t(
+        `Nautilus réf. 5980/1R-001 (40mm or rose, cadran champagne tropicalisé). Calibre CH 28-520 C FUS (chronographe flyback rattrapante). Bracelet trois mailles intégré or rose. Complication majeure sur Nautilus. Extrêmement recherché. Marché 110 000–160 000€.`,
+        `Nautilus ref. 5980/1R-001 (40mm rose gold, champagne tropicalized dial). Calibre CH 28-520 C FUS (flyback split-seconds chronograph). Integrated three-link rose gold bracelet. Major Nautilus complication. Extremely sought. Market: €110,000–160,000.`
+      );} },
+
+    { id:'patek_5724g', kw:['5724g','5724g-001','nautilus annual calendar moonphase','nautilus perpetual gold','annual calendar nautilus white gold','5724 gold moonphase','nautilus lune','nautilus calendar moonphase'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus Annual Calendar Moonphase 5724G'; return t(
+        `Nautilus réf. 5724/1G-001 (40mm or blanc, cadran bleu). Calibre 240 Q (calendrier annuel + lune). Montre de complication majeure dans le style Nautilus. Extrêmement rare. Lancé 2012. Marché 150 000–220 000€. Collection des passionnés.`,
+        `Nautilus ref. 5724/1G-001 (40mm white gold, blue dial). Calibre 240 Q (annual calendar + moon phase). Major complication watch in Nautilus style. Extremely rare. Launched 2012. Market: €150,000–220,000. Enthusiast's collection.`
+      );} },
+
+    { id:'patek_5980_60', kw:['5980/60','5980/60-001','nautilus 40th anniversary','nautilus anniversary limited','nautilus 40 years','5980 limited edition','nautilus vintage reissue','anniversary chronograph'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus 40th Anniversary Chronograph 5980/60'; return t(
+        `Nautilus réf. 5980/60A-001 (40mm acier, cadran bleu Sunburst). Calibre CH 28-520 C FUS. Édition limitée 40e anniversaire (2016). Reissue style vintage des années 1976. Très recherchée des collectionneurs. Marché 85 000–130 000€.`,
+        `Nautilus ref. 5980/60A-001 (40mm steel, Sunburst blue dial). Calibre CH 28-520 C FUS. Limited edition 40th anniversary (2016). Vintage-style reissue from 1976. Highly sought by collectors. Market: €85,000–130,000.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // AQUANAUT EXPANDED — Ladies Models & Vintage Editions
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5267a', kw:['5267a','5267a-001','aquanaut luce ladies','aquanaut 35mm','aquanaut femme steel','5267 ladies','luce aquanaut steel','aquanaut women steel'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut Luce 5267A'; return t(
+        `Aquanaut Luce réf. 5267/1A-001 (35.6mm acier, cadran bleu). Calibre 324 S C. Montre sportive féminine acier. Bracelet composite intégré. Lancé 2020. Proportion parfaite pour poignet fin. Marché 45 000–65 000€. Portée professionnelle.`,
+        `Aquanaut Luce ref. 5267/1A-001 (35.6mm steel, blue dial). Calibre 324 S C. Ladies' steel sports watch. Integrated composite bracelet. Launched 2020. Perfect proportion for slim wrist. Market: €45,000–65,000. Professional wearability.`
+      );} },
+
+    { id:'patek_5065a', kw:['5065a','5065a vintage','aquanaut 38mm first generation','aquanaut original 1997','aquanaut vintage','aquanaut 5065','5065 acier original','aquanaut histoire'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut 5065A Vintage 1997'; return t(
+        `Aquanaut réf. 5065/1A (38mm acier, cadran noir). Première génération 1997 — Calibre 28-255 C/S. Design Thierry Stern révolutionnant la montre sport Patek. Très rare vintage. Bracelet composite original signature. Marché 40 000–60 000€ selon état.`,
+        `Aquanaut ref. 5065/1A (38mm steel, black dial). First generation 1997 — Calibre 28-255 C/S. Thierry Stern design revolutionizing Patek sports watch. Very rare vintage. Original signature composite bracelet. Market: €40,000–60,000 depending on condition.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // COMPLICATIONS EXPANDED — Annual Calendar & Travel Time Models
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5146g', kw:['5146g','5146g-001','annual calendar moonphase white gold','calatrava annual calendar','5146 gold','calendar moonphase calatrava','patek 5146','annual moonphase'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Annual Calendar Moonphase 5146G'; return t(
+        `Calatrava réf. 5146/1G-001 (40mm or blanc, cadran argenté). Calibre 240 Q (calendrier annuel + lune). Complication majeure en boîtier Calatrava classique. Marché 100 000–150 000€. Combinaison élégante sport-habillé.`,
+        `Calatrava ref. 5146/1G-001 (40mm white gold, silver dial). Calibre 240 Q (annual calendar + moon phase). Major complication in classic Calatrava case. Market: €100,000–150,000. Elegant dress-sport combination.`
+      );} },
+
+    { id:'patek_5396g', kw:['5396g','5396g-001','annual calendar sector dial','calatrava sector dial','5396 gold sector','annual calendar sector','patek 5396','sector dial calendar'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Annual Calendar Sector Dial 5396G'; return t(
+        `Calatrava réf. 5396/1G-001 (40mm or blanc, cadran secteur noir vintage). Calibre 240 Q (calendrier annuel). Design années 1930 réévalué. Très élégant, lisibilité rétro. Marché 95 000–140 000€. Collection des puristes.`,
+        `Calatrava ref. 5396/1G-001 (40mm white gold, vintage sector black dial). Calibre 240 Q (annual calendar). 1930s design reappraised. Very elegant, retro readability. Market: €95,000–140,000. Purist collection.`
+      );} },
+
+    { id:'patek_5524g', kw:['5524g','5524g-001','calatrava pilot travel time','pilot travel time rose gold','5524 travel time','patek 5524','calatrava pilot gmt','travel time rose gold'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Pilot Travel Time 5524G'; return t(
+        `Calatrava Pilot réf. 5524/1G-001 (42mm or rose, cadran bronze). Calibre 324 S C FUS (Travel Time GMT). Montre d'aviateur Calatrava combinant élégance or rose + utilité GMT. Marché 75 000–110 000€. Rare fusion collection.`,
+        `Calatrava Pilot ref. 5524/1G-001 (42mm rose gold, bronze dial). Calibre 324 S C FUS (Travel Time GMT). Aviator Calatrava combining rose gold elegance + GMT utility. Market: €75,000–110,000. Rare fusion collection.`
+      );} },
+
+    { id:'patek_5212a', kw:['5212a','5212a-001','calatrava weekly calendar steel','calatrava week display','5212 steel','weekly calendar calatrava','calatrava semaine','patek 5212'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Calatrava Weekly Calendar 5212A'; return t(
+        `Calatrava réf. 5212/1A-001 (40mm acier, cadran bleu). Calibre 324 S C (indication jour de semaine). Complication pratique dans style Calatrava intemporel. Très rare acier. Lancé 2021. Marché 60 000–85 000€.`,
+        `Calatrava ref. 5212/1A-001 (40mm steel, blue dial). Calibre 324 S C (day of week indication). Practical complication in timeless Calatrava style. Very rare steel. Launched 2021. Market: €60,000–85,000.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // GRAND COMPLICATIONS — Haute Horlogerie Summit
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_5204p', kw:['5204p','5204p-001','split-seconds chronograph perpetual platinum','grand complication platinum','5204 platinum perpetual','rattrapante perpetual','patek 5204','chronograph perpetual calendar'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Split-Seconds Chronograph Perpetual Calendar 5204P'; return t(
+        `Réf. 5204/1P-001 (42mm platine, cadran noir). Calibre CHR 27-525 PS (chronographe rattrapante intégrée + calendrier perpétuel + répétition minutes). Summum de l'horlogerie Patek. Seulement 5 pièces produites par an. Marché 500 000€+. Muséum pièce.`,
+        `Ref. 5204/1P-001 (42mm platinum, black dial). Calibre CHR 27-525 PS (integrated split-seconds chronograph + perpetual calendar + minute repeater). Summit of Patek watchmaking. Only 5 pieces produced per year. Market: €500,000+. Museum piece.`
+      );} },
+
+    { id:'patek_5316p', kw:['5316p','5316p-001','grand complications tourbillon perpetual platinum','tourbillon minute repeater perpetual','5316 platinum','patek 5316','grand complication perpetual','haute horlogerie summit'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Grand Complications Tourbillon Minute Repeater Perpetual 5316P'; return t(
+        `Réf. 5316/1P-001 (42mm platine, cadran noir). Calibre 300 TI M QA (tourbillon équilibrage + répétition minutes + calendrier perpétuel + lune). Montre ultime production limitée. Marché 450 000–600 000€. Très rares placements.`,
+        `Ref. 5316/1P-001 (42mm platinum, black dial). Calibre 300 TI M QA (tourbillon regulation + minute repeater + perpetual calendar + moon phase). Ultimate limited production watch. Market: €450,000–600,000. Very rare placements.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // RARE VINTAGE REFERENCES — Investment Grade Horological Classics
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'patek_2499', kw:['2499','2499 vintage','perpetual calendar chronograph vintage','2499 perpetual','patek 2499 chronograph','one of most valuable watches','2499 rare','chronograph perpetual ancien'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Perpetual Calendar Chronograph 2499'; return t(
+        `Réf. 2499 (37mm acier/or, production 1951-1986). Calibre 130 (mouvement manual). Une des montres les plus précieuses jamais créées — seulement 349 pièces acier. Chronographe calendrier perpétuel équilibré à la perfection. Marché 200 000–500 000€+ selon année/état. Trésor de collection.`,
+        `Ref. 2499 (37mm steel/gold, production 1951–1986). Calibre 130 (manual movement). One of the most valuable watches ever created — only 349 steel pieces. Perfectly balanced perpetual calendar chronograph. Market: €200,000–500,000+ depending on year/condition. Collection treasure.`
+      );} },
+
+    { id:'patek_1518', kw:['1518','1518 vintage','first serial perpetual calendar chronograph','1518 perpetual calendar','patek 1518','1941 chronograph','first perpetual chronograph','serial perpetual calendar'],
+      r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Perpetual Calendar Chronograph 1518 (1941)'; return t(
+        `Réf. 1518 (37mm acier/or, production 1941-1954). Le PREMIER chronographe de calendrier perpétuel de l'horlogerie — lancé 1941. Seulement 107 pièces acier produites. Calibre 130 S C (mouvement manuel révolutionnaire). Marché 500 000€–2 millions€+ selon état. Pièce historique absolue.`,
+        `Ref. 1518 (37mm steel/gold, production 1941–1954). THE FIRST perpetual calendar chronograph in watchmaking — launched 1941. Only 107 steel pieces produced. Calibre 130 S C (revolutionary manual movement). Market: €500,000–2,000,000+ depending on condition. Absolute historic piece.`
+      );} },
+
+    
+{ id:'patek_5711_1r', kw:['Nautilus rose gold','rare variant','40mm'],
+  r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus 5711/1R'; return t(
+    `FR: Le Nautilus 5711/1R rose gold 40mm est la variation rarement produite du chef-d'oeuvre 1976, combinant boitier integre iconic avec precious metal prestige. Cadran bleu ou argent. Le calibre 324 SC (remontage automatique, 45h reserve, chronometer) offre fiabilite legendaire. Lunette rotative tournante. Etanche 120m. Production excessivement limitee - moins de 5 pieces par annee. Prix pre-owned €350,000+. Rarite absolue. Appreciation secondaire constante a causa de materialite or rose et limite productivite.`,
+    `EN: The Patek Philippe Nautilus reference 5711/1R in 40mm rose gold is the rarely-produced variant of the legendary 1976 integrated sports watch, combining the iconic case geometry with precious metal prestige. Dial options: blue or silver. The caliber 324 SC (automatic, 45-hour power reserve, chronometer-certified) delivers legendary reliability. Rotating bezel, integral bracelet. Water-resistant 120m (394 feet). Excessively limited production—fewer than 5 pieces annually. Pre-owned retail: USD 320,000+. Absolute rarity. Consistent secondary appreciation driven by rose gold scarcity and production constraints.`
+  );} },
+
+{ id:'patek_5167r', kw:['Aquanaut rose gold','composite strap','40mm travel'],
+  r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Aquanaut 5167R'; return t(
+    `FR: L'Aquanaut 5167R rose gold 40mm with composite leather/rubber strap offre polyvalence luxe pour voyageurs affirmes, combinant boitier unique courbe de Patek avec precious metal. Le calibre 324 SC (remontage automatique, 45h reserve) assure chronometrie fiable. Cadran bleu marine, noir, ou blanc. Etanche 120m pour usage quotidien et snorkeling occasion nel. Lunette tournante unidirectionnelle. Bracelet composite Patek combine elasticite caoutchouc avec elegance cuir - ideale pour voyage global. Prix: €28,500. Moins demandee que Nautilus mais appriciee des voyageurs globaux.`,
+    `EN: The Patek Philippe Aquanaut reference 5167R in 40mm rose gold with composite leather/rubber strap delivers luxury versatility for discerning travelers, combining Patek's unique curved case with precious metal dignity. The caliber 324 SC (automatic, 45-hour power reserve, chronometer-certified) ensures reliable chronometry. Dial options: navy, black, or white. Water-resistant 120m (394 feet) for daily use and occasional snorkeling. Unidirectional rotating bezel. The composite Patek strap blends rubber elasticity with leather refinement—ideal for global travel. Retail: USD 26,000. Less iconic than Nautilus but cherished by international travelers.`
+  );} },
+
+{ id:'patek_5131j', kw:['World Time cloisonne','enamel dial','yellow gold'],
+  r:()=>{ ctx.brand='Patek Philippe'; ctx.model='World Time 5131J'; return t(
+    `FR: Le World Time 5131J or jaune 39.5mm with cloisonne enamel cadran peint a main est le chef-d'oeuvre ultime pour collecteurs d'art horloger, affichant 24 fuseaux horaires sur lunette tournante avec cadran enamel cloisonne custom. Chaque cadran unique est oeuvre d'art appliquee - peint a main par artisans enamel Patek specialises. Calibre 240 HU (remontage manuel, 48h reserve). Production unidirectionnelle: UNE SEULE piece par client commande, design custom. Prix: €180,000+. Delai livraison 3-5 ans. Appreciation historique exceptionnelle > 200% post-acquisition. Montre pour collecteurs ultra-passionnes.`,
+    `EN: The Patek Philippe World Time reference 5131J in yellow gold with 39.5mm case and hand-painted cloisonné enamel dial is the ultimate horological art-object, displaying 24 time zones on rotating bezel with custom cloisonné enamel dial. Each dial is a unique artwork—hand-painted by Patek's specialized enamel artisans using centuries-old techniques. The caliber 240 HU (manual winding, 48-hour power reserve) powers this masterpiece. Production model: ONE piece per client order with custom design specification. Retail: USD 165,000+. Delivery wait: 3-5 years. Historical appreciation exceeds 200% post-acquisition. Reserved for ultra-passionate collectors only.`
+  );} },
+
+{ id:'patek_5327g', kw:['Perpetual Calendar','white gold','lacquered blue'],
+  r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Perpetual Calendar 5327G'; return t(
+    `FR: Le Perpetual Calendar 5327G or blanc 39.5mm cadran bleu laque is le Perpetual Calendar entry-level supreme de Patek, offrant 6 complications (perpetuel, chronographe, reserve, date, jour, mois) sans chronographe flyback complexe de la ref 5327. Calibre 240 Q (remontage manuel, 48h) integre mecanisme perpetuel ingenieux ne necessitant correction que le 1er mars 2100. Cadran bleu laque lisse avec index appliques offre elegance intemporelle. Etanche 50m. Prix: €110,000. Production limitee a ~100 pieces par annee. Appreciation: 15-25% par annee a causa de specifications perpetuelles.`,
+    `EN: The Patek Philippe Perpetual Calendar reference 5327G in 39.5mm white gold with lacquered blue dial is Patek's supreme perpetual-calendar entry point, integrating six complications (perpetual calendar, moonphase, power reserve, date, day, month) without the complex flyback chronograph of higher references. The caliber 240 Q (manual winding, 48-hour power reserve) incorporates Patek's ingenious perpetual mechanism requiring correction only on March 1, 2100. The smooth lacquered blue dial with applied indices conveys timeless elegance. Water-resistant 50m (164 feet). Retail: USD 100,000. Limited production: ~100 pieces annually. Appreciation: 15-25% annually due to perpetual specifications.`
+  );} },
+
+{ id:'patek_5935a', kw:['World Time Chronograph','steel latest','flyback'],
+  r:()=>{ ctx.brand='Patek Philippe'; ctx.model='World Time Flyback 5935A'; return t(
+    `FR: Le World Time Flyback Chronograph 5935A acier 40.8mm est la montre de voyage plus ambitieuse de Patek, combinant chronographe flyback avec 24 fuseaux horaires sur lunette. Le calibre CH 28-520 HU (remontage automatique, 55h reserve) intègre mecanisme chronographe complexe base colonne avec fonction flyback. Deux compteurs chrono cadran offrent lectures temporelle sophistiquees. Boitier acier robust mais luxe. Etanche 100m pour usage maritime. Prix: €42,000. Montre moderne pour cadres internationaux cherchant timing precision globale.`,
+    `EN: The Patek Philippe World Time Flyback Chronograph reference 5935A in 40.8mm steel is Patek's most ambitious travel chronograph, combining flyback chronograph with 24-hour time-zone display on rotating bezel. The caliber CH 28-520 HU (automatic, 55-hour power reserve) integrates complex column-wheel chronograph with integrated flyback function. Twin subdial chronograph counters enable sophisticated temporal readings. Steel case balances robustness with refined aesthetic. Water-resistant 100m (330 feet) for maritime use. Retail: USD 38,000. Modern timepiece for international executives seeking global timing precision.`
+  );} },
+
+{ id:'patek_5180_1r', kw:['Nautilus Skeleton','rose gold','openworked'],
+  r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus Skeleton 5180/1R'; return t(
+    `FR: Le Nautilus Skeleton 5180/1R or rose 40mm expose le calibre 240 SQU (remontage manuel, 48h reserve) a travers le verre bombé, offrant theatre horloger supreme pour collecteurs mecanisme-passionnes. Le boitier integre iconic reste massif or rose. Cadran "open" avec balancier oscillant visible et ressorts spirales creent symphony visuelle. Etanche 120m. Production excessivement limitee - moins de 10 pieces par annee. Prix: €250,000+. Montre showpiece pour collecteurs ultra-haut-filet.`,
+    `EN: The Patek Philippe Nautilus Skeleton reference 5180/1R in 40mm rose gold exposes the caliber 240 SQU (manual winding, 48-hour power reserve) through domed sapphire crystal, offering supreme horological theatre for mechanism-passionate collectors. The iconic integrated case remains substantial rose gold. The open dial with visible oscillating balance wheel and spiral springs creates visual symphony. Water-resistant 120m (394 feet). Excessively limited production—fewer than 10 pieces annually. Retail: USD 230,000+. Showpiece timepiece for ultra-high-net-worth collectors.`
+  );} },
+{ id:'rm_general', kw:['richard mille','rm','richard mille paris','rm montre','rm occasion','rm pre-owned','achat richard mille','vente richard mille','rm suisse','rm prix','richard mille cher','rm combien','rm investment','rm cote','rm watch','rm watches','rm models','what rm','which rm','rm available','rm in stock','rm you have','avez vous des rm','got any rm','rm brand','rm dealer','buy rm','acheter rm','richard mille collection','richard mille available','richard mille models','richard mille price','richard mille worth','most expensive watch','watches over 100k','watches over 200k','six figure watch','six figure watches'],
       r:()=>{ ctx.brand='Richard Mille'; return t(
         `Richard Mille fondée en 2001. Montres ultra-légères, techniques, prix de 100 000€ à plusieurs millions. Nous avons ${STOCK.filter(w=>w.brand==='Richard Mille').length} RM en stock.`,
         `Richard Mille founded 2001. Ultra-light, technical watches, prices from €100,000 to several million. We have ${STOCK.filter(w=>w.brand==='Richard Mille').length} RM in stock.`
@@ -613,6 +1873,323 @@
 
 
     // ── CARTIER ─────────────────────────────────────────────────────────────────
+    { id:'rm_001', kw:['rm 001','rm001','richard mille 001','richard mille first','premier richard mille','rm tourbillon original','first rm','rm premiere','rm genesis','01 tourbillon','rm001 prix','rm001 price'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 001'; return t(
+      `RM 001 (2001) : le tourbillon fondateur. Boîtier tonneau titane, 50x38mm, mouvement squelette manuel, 45mm réserve de marche, étanchéité 30m. La montre qui a marqué la naissance de RM : ultra-légère, innovation mécanique pure. Marché 250 000–500 000€. Pièce historique de référence.`,
+      `RM 001 (2001): the founding tourbillon. Tonneau titanium case, 50x38mm, skeleton manual movement, 45h power reserve, 30m water resistance. The watch that marked RM's birth: ultra-light, pure mechanical innovation. Market €250,000–500,000. Historic reference piece.`
+    );} },
+
+    { id:'rm_003', kw:['rm 003','rm003','rm 3','rm3','rm 003 tourbillon','rm dual time','dual tourbillon','rm 003 prix','fuseaux horaires','dual time zone'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 003'; return t(
+      `RM 003 Dual Time Tourbillon : tourbillon avec affichage dual time. Boîtier tonneau titane/or rose, 50mm, mouvement squelette calibre RM sur demande. Réserve 48h. Innovation GMT pour l'époque. Marché 300 000–450 000€. Contactez-nous.`,
+      `RM 003 Dual Time Tourbillon: tourbillon with dual time display. Tonneau titanium/rose gold case, 50mm, skeleton movement custom calibre. 48h power reserve. GMT innovation for its era. Market €300,000–450,000. Contact us.`
+    );} },
+
+    { id:'rm_004', kw:['rm 004','rm004','rm 4','rm4','rm 004 chronographe','split seconds chronograph','rattrapante','chronographe flyback','rm 004 prix'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 004'; return t(
+      `RM 004 Chronographe à Rattrapante : split-seconds chronograph avec roue d'échappement à bascule. Boîtier tonneau titane, 50x40mm, mouvement squelette avec rattrapante mécanique compliquée. Marché 400 000–600 000€. Haute horlogerie RM signature.`,
+      `RM 004 Chronographe à Rattrapante: split-seconds chronograph with lever escapement wheel. Tonneau titanium case, 50x40mm, skeleton movement with complex mechanical split-seconds. Market €400,000–600,000. Signature RM haute horlogerie.`
+    );} },
+
+    { id:'rm_006', kw:['rm 006','rm006','rm 6','rm6','rm 006 felipe massa','felipe massa 006','rm 006 formula 1','f1 watch','montre formula 1','rm 006 titane','chronographe felipemassa'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 006'; return t(
+      `RM 006 Felipe Massa : tourbillon chronographe flyback pour le pilote de F1. Boîtier tonneau titane, 50x38mm, chronographe rattrapante integré, réserve 48h. Pièce sport historique RM. Marché 300 000–450 000€. Contactez-nous.`,
+      `RM 006 Felipe Massa: tourbillon flyback chronograph for F1 driver. Tonneau titanium case, 50x38mm, integrated split-seconds chronograph, 48h power reserve. Historic RM sports piece. Market €300,000–450,000. Contact us.`
+    );} },
+
+    { id:'rm_007', kw:['rm 007','rm007','rm 7','rm7','rm ladies','rm femme','rm automatique femme','ladies automatic','rm rose','rm rose gold femme','rm 007 prix','montre femme luxe'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 007'; return t(
+      `RM 007 Automatique Dame : première RM pour dame. Boîtier tonneau or rose/titane, 42x34mm, mouvement automatique calibre RM, réserve 48h. Design épuré féminin. Marché 120 000–200 000€. Contactez-nous.`,
+      `RM 007 Automatique Dame: first RM for ladies. Tonneau rose gold/titanium case, 42x34mm, automatic movement custom calibre, 48h power reserve. Refined feminine design. Market €120,000–200,000. Contact us.`
+    );} },
+
+    { id:'rm_008', kw:['rm 008','rm008','rm 8','rm8','rm 008 chronographe','tourbillon split seconds','rattrapante tourbillon','rm 008 titane','rm 008 prix'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 008'; return t(
+      `RM 008 Tourbillon Chronographe à Rattrapante : combinaison tourbillon + split-seconds sur mouvement squelette. Boîtier tonneau titane, 50x40mm, la montre la plus complexe des débuts. Marché 500 000–750 000€. Haute horlogerie pure.`,
+      `RM 008 Tourbillon Chronographe à Rattrapante: tourbillon + split-seconds on skeleton movement. Tonneau titanium case, 50x40mm, most complex watch from early years. Market €500,000–750,000. Pure haute horlogerie.`
+    );} },
+
+    { id:'rm_009', kw:['rm 009','rm009','rm 9','rm9','rm 009 felipe massa','titane felipe','rm masse','f1 titanium','rm 009 prix','sport edition'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 009'; return t(
+      `RM 009 Felipe Massa Titane : tourbillon en titane ultra-pur pour le champion F1. Boîtier tonneau titane grade 5, 50mm, mouvement squelette. Pièce d'athlète incontournable. Marché 200 000–350 000€. Contactez-nous.`,
+      `RM 009 Felipe Massa Titanium: ultra-pure titanium tourbillon for F1 champion. Tonneau grade 5 titanium case, 50mm, skeleton movement. Essential athlete piece. Market €200,000–350,000. Contact us.`
+    );} },
+
+    { id:'rm_012', kw:['rm 012','rm012','rm 12','rm12','rm 012 tourbillon','montre tourbillon','tonneau tourbillon','rm 012 titane','rm 012 prix'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 012'; return t(
+      `RM 012 Tourbillon : version classique du tourbillon RM. Boîtier tonneau titane/or rose, 50x38mm, mouvement squelette calibre RM, réserve 45h. Marché 180 000–300 000€. Montre référence RM.`,
+      `RM 012 Tourbillon: classic version of RM tourbillon. Tonneau titanium/rose gold case, 50x38mm, skeleton movement custom calibre, 45h power reserve. Market €180,000–300,000. Reference RM watch.`
+    );} },
+
+    { id:'rm_015', kw:['rm 015','rm015','rm 15','rm15','rm perini navi','perini navi','rm yacht','nautique','dual time yacht','rm 015 prix','navigation watch'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 015'; return t(
+      `RM 015 Perini Navi Dual Time Tourbillon : montre spécialement développée pour le chantier naval Perini Navi. Tourbillon avec fuseaux, étanchéité 100m. Boîtier tonneau titane/carbone NTPT, 50mm. Marché 350 000–500 000€. Unique partenariat.`,
+      `RM 015 Perini Navi Dual Time Tourbillon: watch specially developed for Perini Navi yacht builder. Tourbillon with time zones, 100m water resistance. Tonneau titanium/carbon NTPT case, 50mm. Market €350,000–500,000. Unique partnership.`
+    );} },
+
+    { id:'rm_017', kw:['rm 017','rm017','rm 17','rm17','rm 017 extra plat','extra flat tourbillon','tourbillon ultra fin','rm mince','thin tourbillon','rm 017 prix'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 017'; return t(
+      `RM 017 Extra Flat Tourbillon : tourbillon ultra-plat, épaisseur réduite. Boîtier tonneau titane, 48mm, mouvement squelette ultra-fin. Première exploration RM de la finesse en complication. Marché 250 000–400 000€. Innovation d'épaisseur.`,
+      `RM 017 Extra Flat Tourbillon: ultra-flat tourbillon, reduced thickness. Tonneau titanium case, 48mm, ultra-thin skeleton movement. First RM exploration of thinness in complications. Market €250,000–400,000. Thickness innovation.`
+    );} },
+
+    { id:'rm_019', kw:['rm 019','rm019','rm 19','rm19','rm 019 tourbillon','tourbillon evolution','rm 019 titane','rm 019 prix','generation 2 tourbillon'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 019'; return t(
+      `RM 019 Tourbillon : évolution de la ligne tourbillon classique avec affinements de décoration. Boîtier tonneau titane, 50mm, mouvement squelette raffiné. Réserve 48h. Marché 200 000–320 000€. Montre evolution RM.`,
+      `RM 019 Tourbillon: evolution of classic tourbillon line with decoration refinements. Tonneau titanium case, 50mm, refined skeleton movement. 48h power reserve. Market €200,000–320,000. Evolution RM watch.`
+    );} },
+
+    { id:'rm_021', kw:['rm 021','rm021','rm 21','rm21','rm aerodyne','aerodynamic','montre aérodynamique','rm 021 prix','aviation inspired','boîtier aviateur'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 021'; return t(
+      `RM 021 Tourbillon Aérodyname : forme de fuselage d'avion (case en lozenge). Boîtier titane spécialement formé, 48x42mm, tourbillon, inspiration aéronautique pure. Marché 250 000–400 000€. Design architecture unique.`,
+      `RM 021 Tourbillon Aérodyname: fuselage-shaped case (lozenge form). Specially shaped titanium case, 48x42mm, tourbillon, pure aviation inspiration. Market €250,000–400,000. Unique architectural design.`
+    );} },
+
+    { id:'rm_025', kw:['rm 025','rm025','rm 25','rm25','rm 025 diver','rm diver chronograph','rm chrono plongée','rm 025 300m','rm 025 carbone','richard mille diver','rm plongée'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 025'; return t(
+      `RM 025 Tourbillon Chronographe Plongeur : chronographe flyback + tourbillon pour la plongée. Boîtier tonneau carbone NTPT, 50mm, étanchéité 300m, sandwich dial. Marché 400 000–600 000€. Sport extrême RM.`,
+      `RM 025 Tourbillon Chronographe Plongeur: flyback chronograph + tourbillon for diving. Tonneau carbon NTPT case, 50mm, 300m water resistance, sandwich dial. Market €400,000–600,000. RM extreme sport.`
+    );} },
+
+    { id:'rm_026', kw:['rm 026','rm026','rm 26','rm26','rm ladies tourbillon','dame tourbillon','gemstone','pierres précieuses','rm 026 diamant','diamante','ladies luxury','montre dame luxe'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 026'; return t(
+      `RM 026 Tourbillon Dame Serti : tourbillon pour dame avec sertissage de diamants/rubis/saphirs. Boîtier tonneau or rose, 42x34mm, mouvement squelette or rose. Marché 300 000–500 000€. Joaillerie RM.`,
+      `RM 026 Tourbillon Dame Serti: ladies tourbillon with diamond/ruby/sapphire setting. Tonneau rose gold case, 42x34mm, rose gold skeleton movement. Market €300,000–500,000. RM jewellery piece.`
+    );} },
+
+    { id:'rm_028', kw:['rm 028','rm028','rm 28','rm28','rm 028 automatique','automatic diver','diver automatic','plongeur automatique','rm 028 300m','rm 028 titane','rm 028 carbone'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 028'; return t(
+      `RM 028 Automatique Plongeur : premier automatique RM pour la plongée. Boîtier tonneau titane/carbone, 50mm, étanchéité 300m, mouvement automatique calibre RM. Marché 180 000–280 000€. Plongée accessible RM.`,
+      `RM 028 Automatique Plongeur: first RM automatic for diving. Tonneau titanium/carbon case, 50mm, 300m water resistance, automatic movement custom calibre. Market €180,000–280,000. Accessible RM diving.`
+    );} },
+
+    { id:'rm_029', kw:['rm 029','rm029','rm 29','rm29','rm 029 automatique','oversize date','grande date','big date','rm 029 titane','rm 029 prix','automatique affichage'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 029'; return t(
+      `RM 029 Automatique Grande Date : automatique avec affichage de date surélevé (oversized). Boîtier tonneau titane, 50mm, mouvement squelette calibre RM. Marché 140 000–220 000€. Automatique lisible RM.`,
+      `RM 029 Automatique Grande Date: automatic with oversized date display. Tonneau titanium case, 50mm, skeleton movement custom calibre. Market €140,000–220,000. Readable RM automatic.`
+    );} },
+
+    { id:'rm_032', kw:['rm 032','rm032','rm 32','rm32','rm 032 chronographe','flyback chronograph diver','chronographe plongeur','rm 032 300m','rm 032 carbone','diver chronograph','plongeur chrono'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 032'; return t(
+      `RM 032 Chronographe Flyback Plongeur : chronographe flyback automatique pour plongée. Boîtier tonneau carbone NTPT, 50mm, étanchéité 300m, mouvement squelette automatique. Marché 250 000–380 000€. Sportivité plongée RM.`,
+      `RM 032 Chronographe Flyback Plongeur: automatic flyback chronograph for diving. Tonneau carbon NTPT case, 50mm, 300m water resistance, skeleton automatic movement. Market €250,000–380,000. RM diving sportiveness.`
+    );} },
+
+    { id:'rm_033', kw:['rm 033','rm033','rm 33','rm33','rm 033 automatique extra plat','extra flat automatic','ultra fin automatique','rm ultra mince','rm mince automatique','rm 033 prix'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 033'; return t(
+      `RM 033 Automatique Extra Flat : montre ultra-plate avec mouvement automatique. Boîtier tonneau titane, 48mm, épaisseur réduite, calibre automatique ultra-fin. Marché 120 000–200 000€. Innovation finesse automatique.`,
+      `RM 033 Automatique Extra Flat: ultra-thin watch with automatic movement. Tonneau titanium case, 48mm, reduced thickness, ultra-thin automatic calibre. Market €120,000–200,000. Automatic thinness innovation.`
+    );} },
+
+    { id:'rm_036', kw:['rm 036','rm036','rm 36','rm36','rm jean todt','todt','g-sensor','accelerometer','rm 036 prix','formula 1 todt','motorsport legend'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 036'; return t(
+      `RM 036 Jean Todt Tourbillon G-Sensor : montre avec accéléromètre mécanique pour legend F1 Jean Todt. Boîtier tonneau titane, 50mm, tourbillon + G-sensor calibré pour les forces du pilotage. Marché 300 000–450 000€. Technologie unique.`,
+      `RM 036 Jean Todt Tourbillon G-Sensor: watch with mechanical accelerometer for F1 legend Jean Todt. Tonneau titanium case, 50mm, tourbillon + G-sensor calibrated for driving forces. Market €300,000–450,000. Unique technology.`
+    );} },
+
+    { id:'rm_037', kw:['rm 037','rm037','rm 37','rm37','rm ladies automatique','dame automatique','rm femme automatique','ladies automatic','rm 037 prix','montre femme automatique'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 037'; return t(
+      `RM 037 Automatique Dame : automatique pour femme, design épuré. Boîtier tonneau or rose/titane, 42x34mm, mouvement automatique calibre RM, réserve 48h. Marché 100 000–180 000€. Automatique féminine RM.`,
+      `RM 037 Automatique Dame: ladies automatic, refined design. Tonneau rose gold/titanium case, 42x34mm, automatic movement custom calibre, 48h power reserve. Market €100,000–180,000. Feminine RM automatic.`
+    );} },
+
+    { id:'rm_038', kw:['rm 038','rm038','rm 38','rm38','rm bubba watson','bubba watson','golf','golfeur champion','rm 038 tourbillon','montre golf','rm sport golf'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 038'; return t(
+      `RM 038 Bubba Watson Tourbillon : tourbillon pour champion golfer Bubba Watson. Boîtier tonneau carbone NTPT/titane, 50mm, tourbillon, réserve 48h. Pièce sport emblématique. Marché 280 000–420 000€. Contactez-nous.`,
+      `RM 038 Bubba Watson Tourbillon: tourbillon for golfer champion Bubba Watson. Tonneau carbon NTPT/titanium case, 50mm, tourbillon, 48h power reserve. Emblematic sports piece. Market €280,000–420,000. Contact us.`
+    );} },
+
+    { id:'rm_039', kw:['rm 039','rm039','rm 39','rm39','rm e6-b','e6b calculator','aviation chronographe','pilot watch','montre pilote','rm 039 chronographe','navigation pilot'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 039'; return t(
+      `RM 039 Aviation E6-B Chronographe Flyback : chronographe flyback intégrant calculatrice aéronautique E6-B mécanique. Boîtier tonneau titane, 50mm, cadran spécialisé navigation. Marché 250 000–380 000€. Complexité aéronautique.`,
+      `RM 039 Aviation E6-B Chronographe Flyback: flyback chronograph integrating mechanical E6-B aviation calculator. Tonneau titanium case, 50mm, specialized navigation dial. Market €250,000–380,000. Aviation complexity.`
+    );} },
+
+    { id:'rm_040', kw:['rm 040','rm040','rm 40','rm40','rm mclaren','mclaren speedtail','rm 040 mclaren','hypercar','supercar','rm 040 prix','automotive partnership'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 040'; return t(
+      `RM 040 McLaren Speedtail : montre spécialement conçue pour l'hypercar McLaren Speedtail. Boîtier tonneau carbone NTPT/titane, 50mm, chronographe flyback automatique. Marché 300 000–450 000€. Partenariat automobiles RM.`,
+      `RM 040 McLaren Speedtail: watch specially designed for McLaren Speedtail hypercar. Tonneau carbon NTPT/titanium case, 50mm, automatic flyback chronograph. Market €300,000–450,000. RM automotive partnership.`
+    );} },
+
+    { id:'rm_052', kw:['rm 052','rm052','rm 52','rm52','rm 052 skull','skull tourbillon','tête de mort','crâne','rm 052 prix','playful','ludique'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 052'; return t(
+      `RM 052 Tourbillon Crâne : tourbillon avec cadran gravé crâne (design ludique). Boîtier tonneau titane/céramique/carbone, 50mm, tourbillon visible, réserve 50h. Pièce provoquatrice RM. Marché 250 000–400 000€. Playful complexity.`,
+      `RM 052 Tourbillon Skull: tourbillon with skull engraved dial (playful design). Tonneau titanium/ceramic/carbon case, 50mm, visible tourbillon, 50h power reserve. Provocative RM piece. Market €250,000–400,000. Playful complexity.`
+    );} },
+
+    { id:'rm_056', kw:['rm 056','rm056','rm 56','rm56','rm sapphire','sapphire transparent','saphir transparent','rm 056 saphir','see through','transparent case','boîtier saphir'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 056'; return t(
+      `RM 056 Tourbillon Saphir : boîtier entièrement en saphir transparent (ultra-rare, 2M€+). Tourbillon + chronographe à rattrapante visibles de tous côtés. Mouvement squelette ultra-fin en or rose. Marque d'exception absolue.`,
+      `RM 056 Tourbillon Sapphire: entirely sapphire transparent case (ultra-rare, €2M+). Tourbillon + split-seconds chronograph visible from all sides. Ultra-thin skeleton movement in rose gold. Absolute masterpiece.`
+    );} },
+
+    { id:'rm_059', kw:['rm 059','rm059','rm 59','rm59','rm yohan blake','yohan blake','sprinter','100m','jamaica','track athlete','sports watch','montre sport'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 059'; return t(
+      `RM 059 Yohan Blake Tourbillon : tourbillon pour le sprinteur jamaïcain. Boîtier tonneau carbone NTPT, 50mm, chronographe intégré, réserve 48h. Pièce athlète track-and-field RM. Marché 250 000–380 000€. Contactez-nous.`,
+      `RM 059 Yohan Blake Tourbillon: tourbillon for Jamaican sprinter. Tonneau carbon NTPT case, 50mm, integrated chronograph, 48h power reserve. RM track-and-field athlete piece. Market €250,000–380,000. Contact us.`
+    );} },
+
+    { id:'rm_061', kw:['rm 061','rm061','rm 61','rm61','rm yohan blake flyback','chronographe blake','flyback yohan','sprinter flyback','rm 061 prix','track chronograph'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 061'; return t(
+      `RM 061 Yohan Blake Chronographe Flyback : chronographe flyback pour le sprinter, réglé au centième de seconde. Boîtier tonneau carbone NTPT, 50mm, mouvement chronographe ultra-précis. Marché 280 000–420 000€. Précision athlète.`,
+      `RM 061 Yohan Blake Chronographe Flyback: flyback chronograph for sprinter, accurate to hundredths of second. Tonneau carbon NTPT case, 50mm, ultra-precise chronograph movement. Market €280,000–420,000. Athlete precision.`
+    );} },
+
+    { id:'rm_062', kw:['rm 062','rm062','rm 62','rm62','rm vibrant alarm','vibrating alarm','alarme vibrante','acj','rm 062 prix','alarm tourbillon','complication alarm'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 062'; return t(
+      `RM 062 Tourbillon Alarme Vibrante (ACJ) : tourbillon avec alarme mécanique vibrante. Boîtier tonneau titane, 50mm, mouvement squelette avec système d'alarme breveté, réserve 48h. Pièce mécanique innovante. Marché 350 000–500 000€. Complication rare.`,
+      `RM 062 Tourbillon Vibrating Alarm (ACJ): tourbillon with mechanical vibrating alarm. Tonneau titanium case, 50mm, skeleton movement with patented alarm system, 48h power reserve. Innovative mechanical piece. Market €350,000–500,000. Rare complication.`
+    );} },
+
+    { id:'rm_068', kw:['rm 068','rm068','rm 68','rm68','rm cyril kongo','cyril kongo','boxer','champion boxer','boxing watch','montre boxeur','rm 068 prix'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 068'; return t(
+      `RM 068 Cyril Kongo Tourbillon : tourbillon pour champion boxer Cyril Kongo. Boîtier tonneau carbone NTPT/céramique, 50mm, tourbillon surdiminutif visible, réserve 50h. Pièce athlète combat RM. Marché 260 000–400 000€. Contactez-nous.`,
+      `RM 068 Cyril Kongo Tourbillon: tourbillon for boxer champion Cyril Kongo. Tonneau carbon NTPT/ceramic case, 50mm, overdimensioned visible tourbillon, 50h power reserve. RM combat athlete piece. Market €260,000–400,000. Contact us.`
+    );} },
+
+    { id:'rm_070', kw:['rm 070','rm070','rm 70','rm70','rm alain prost','alain prost','f1 legend','formula 1','le professeur','rm 070 prix','motorsport icon'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 070'; return t(
+      `RM 070 Alain Prost Tourbillon : montre du legend F1 Alain Prost "Le Professeur". Boîtier tonneau titane/or rose, 50mm, tourbillon visible, réserve 48h. Pièce athlète motoriste RM. Marché 280 000–420 000€. Icon F1 partnership.`,
+      `RM 070 Alain Prost Tourbillon: watch for F1 legend Alain Prost "Le Professeur". Tonneau titanium/rose gold case, 50mm, visible tourbillon, 48h power reserve. RM motorsport athlete piece. Market €280,000–420,000. Icon F1 partnership.`
+    );} },
+
+    { id:'rm_071', kw:['rm 071','rm071','rm 71','rm71','rm dame automatique tourbillon','ladies auto tourbillon','automatique dame','femme automatique','rm 071 prix','lady automatic'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 071'; return t(
+      `RM 071 Automatique Tourbillon Dame : automatique avec tourbillon pour femme. Boîtier tonneau or rose, 42x34mm, mouvement automatique avec tourbillon intégré, réserve 48h. Marché 280 000–450 000€. Complication dame RM.`,
+      `RM 071 Automatique Tourbillon Dame: automatic with tourbillon for ladies. Tonneau rose gold case, 42x34mm, automatic movement with integrated tourbillon, 48h power reserve. Market €280,000–450,000. RM lady complication.`
+    );} },
+
+    { id:'rm_074', kw:['rm 074','rm074','rm 74','rm74','rm dame automatique','ladies tourbillon edition','lady auto','femme tourbillon','rm 074 prix','diamond setting','setting'],
+    r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 074'; return t(
+      `RM 074 Automatique Tourbillon Dame Serti : version sertie de la RM 071 avec diamants/saphirs. Boîtier tonneau or rose, 42x34mm, tourbillon automatique, setting gemme signature. Marché 350 000–550 000€. Joaillerie féminine RM.`,
+      `RM 074 Automatique Tourbillon Dame Serti: gemstone-set version of RM 071 with diamonds/sapphires. Tonneau rose gold case, 42x34mm, automatic tourbillon, signature gem setting. Market €350,000–550,000. RM feminine jewellery.`
+    );} },
+
+    
+    // ──────────────────────────────────────────────────────────────────────────
+    // RICHARD MILLE FULL COLLECTION — Ultimate Chronograph & Tourbillon Coverage
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'rm_002', kw:['rm002','rm 002','tourbillon early model','richard mille 002','rm002 tourbillon','early tourbillon model','richard mille historic'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 002'; return t(
+        `Richard Mille réf. RM 002 (tourbillon). Modèle précoce collection RM. Calibre tourbillon signature Mille. Designs futuristes premiers jours. Très recherché. Marché 500 000–800 000€ selon état/certificats.`,
+        `Richard Mille ref. RM 002 (tourbillon). Early collection RM model. Signature Mille tourbillon caliber. Futuristic early-era designs. Highly sought. Market: €500,000–800,000 depending on condition/certificates.`
+      );} },
+
+    { id:'rm_014', kw:['rm014','rm 014','perini navi flyback','richard mille perini','rm014 chronograph','flyback chronograph rm','chronograph perini navi'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 014 Perini Navi'; return t(
+        `Richard Mille réf. RM 014 Perini Navi (chronographe flyback). Édition limitée partenariat Perini Navi superyachts. Calibre CH 30-01 (chronographe). Marché 450 000–700 000€. Rarement disponible.`,
+        `Richard Mille ref. RM 014 Perini Navi (flyback chronograph). Limited edition Perini Navi superyacht partnership. Calibre CH 30-01 (chronograph). Market: €450,000–700,000. Rarely available.`
+      );} },
+
+    { id:'rm_018', kw:['rm018','rm 018','tourbillon boucheron hommage','boucheron hommage','richard mille boucheron','rm018 tourbillon','jewelry partnership'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 018 Boucheron Hommage'; return t(
+        `Richard Mille réf. RM 018 Boucheron Hommage (tourbillon). Collaboration Richard Mille × Boucheron joaillerie. Boîtier bijoux platine/diamants. Ultra rare. Marché 600 000€+. Fusion haute joaillerie-horlogerie.`,
+        `Richard Mille ref. RM 018 Boucheron Hommage (tourbillon). Richard Mille × Boucheron jewelry collaboration. Diamond-set platinum case. Ultra rare. Market: €600,000+. High jewelry-watchmaking fusion.`
+      );} },
+
+    { id:'rm_020', kw:['rm020','rm 020','tourbillon pocket watch','pocket watch tourbillon','richard mille pocket','rm020 chronograph','chronograph pocket'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 020 Tourbillon Pocket Watch'; return t(
+        `Richard Mille réf. RM 020 (montre de poche tourbillon). Édition spéciale poche chronographe. Calibre tourbillon personnalisé Mille. Très rare collecte. Marché 400 000–600 000€. Format gousset moderne.`,
+        `Richard Mille ref. RM 020 (tourbillon pocket watch). Special edition pocket chronograph. Custom Mille tourbillon caliber. Very rare collect. Market: €400,000–600,000. Modern pocket format.`
+      );} },
+
+    { id:'rm_023', kw:['rm023','rm 023','ladies automatic','richard mille ladies','rm023 automatic','women tourbillon','ladies richard mille'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 023 Ladies Automatic'; return t(
+        `Richard Mille réf. RM 023 (montre automatique dames, 35mm). Calibre automatique Richard Mille. Boîtier or rose/platine. Extrêmement rare. Marché 300 000–500 000€. Montre sportive féminine Richard Mille.`,
+        `Richard Mille ref. RM 023 (ladies automatic, 35mm). Richard Mille automatic caliber. Rose gold/platinum case. Extremely rare. Market: €300,000–500,000. Ladies' Richard Mille sports watch.`
+      );} },
+
+    { id:'rm_031', kw:['rm031','rm 031','high performance automatic','automatic chronograph','rm031 automatic','high performance tourbillon','chronograph automatic'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 031 High Performance Automatic'; return t(
+        `Richard Mille réf. RM 031 (chronographe automatique haute performance). Calibre automatique chronographe Mille. Performances extrêmes. Marché 450 000–700 000€. Montre sportive automatique Mille. Très rare.`,
+        `Richard Mille ref. RM 031 (high performance automatic chronograph). Mille automatic chronograph caliber. Extreme performance. Market: €450,000–700,000. Mille automatic sports watch. Very rare.`
+      );} },
+
+    { id:'rm_034', kw:['rm034','rm 034','automatic oversize date','oversized date complication','rm034 automatic','date complication','automatic with date'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 034 Automatic Oversize Date'; return t(
+        `Richard Mille réf. RM 034 (automatique grand date). Calibre automatique avec indication date surdimensionnée. Design moderne lisibilité. Marché 400 000–600 000€. Montre automatique complication Mille.`,
+        `Richard Mille ref. RM 034 (automatic oversize date). Automatic caliber with oversized date display. Modern readable design. Market: €400,000–600,000. Mille automatic complication watch.`
+      );} },
+
+    { id:'rm_041', kw:['rm041','rm 041','montre automatique','automatic richard mille','chronograph automatic','rm041 tourbillon','automatique chronographe'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 041 Montre Automatique'; return t(
+        `Richard Mille réf. RM 041 (montre automatique tourbillon). Calibre automatique tourbillon équilibrage. Très rare. Marché 500 000–800 000€. Collection automatique Mille prestigieuse.`,
+        `Richard Mille ref. RM 041 (automatic tourbillon watch). Automatic tourbillon regulation caliber. Very rare. Market: €500,000–800,000. Prestigious Mille automatic collection.`
+      );} },
+
+    { id:'rm_042', kw:['rm042','rm 042','tourbillon bubba watson','bubba watson edition','golf tourbillon','rm042 sports','professional athlete watch'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 042 Tourbillon Bubba Watson'; return t(
+        `Richard Mille réf. RM 042 Bubba Watson (tourbillon). Édition limitée golfeur professionnel Bubba Watson. Boîtier titane/or. Ultra-rare. Marché 500 000–750 000€. Montre ambassadeur sports Mille.`,
+        `Richard Mille ref. RM 042 Bubba Watson (tourbillon). Limited edition pro golfer Bubba Watson. Titanium/gold case. Ultra-rare. Market: €500,000–750,000. Mille sports ambassador watch.`
+      );} },
+
+    { id:'rm_043', kw:['rm043','rm 043','tourbillon breeze','breeze edition','ladies tourbillon','rm043 ladies','women sports watch'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 043 Tourbillon Breeze'; return t(
+        `Richard Mille réf. RM 043 Breeze (tourbillon dames). Calibre tourbillon miniaturisé dames. Boîtier or rose/platine 32mm. Extrêmement rare. Marché 400 000–600 000€. Montre féminine sport Richard Mille prestige.`,
+        `Richard Mille ref. RM 043 Breeze (ladies tourbillon). Miniaturized ladies tourbillon caliber. Rose gold/platinum 32mm case. Extremely rare. Market: €400,000–600,000. Prestigious Mille ladies sports watch.`
+      );} },
+
+    { id:'rm_047', kw:['rm047','rm 047','tourbillon ladies','ladies tourbillon sports','rm047 automatic','women chronograph','ladies sports richard mille'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 047 Ladies Tourbillon'; return t(
+        `Richard Mille réf. RM 047 (tourbillon dames automatique, 34mm). Calibre tourbillon dames sports haute performance. Marché 450 000–700 000€. Montre dames collection Mille ultime. Très rare.`,
+        `Richard Mille ref. RM 047 (ladies automatic tourbillon, 34mm). Ladies sports tourbillon high performance caliber. Market: €450,000–700,000. Ultimate Mille ladies collection watch. Very rare.`
+      );} },
+
+    { id:'rm_048', kw:['rm048','rm 048','tourbillon regulator','regulator dial','tourbillon with regulator','rm048 regulator','dial regulateur'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 048 Tourbillon Regulator'; return t(
+        `Richard Mille réf. RM 048 (tourbillon régulateur). Calibre tourbillon avec cadran régulateur heures/minutes séparées. Très rare. Marché 500 000–800 000€. Complication horlogère classique modernisée Mille.`,
+        `Richard Mille ref. RM 048 (tourbillon regulator). Tourbillon caliber with regulator dial separate hours/minutes. Very rare. Market: €500,000–800,000. Classic watchmaking complication modernized by Mille.`
+      );} },
+
+    { id:'rm_051', kw:['rm051','rm 051','tourbillon tiger','wildlife edition','animal sports watch','rm051 chronograph','nature inspiration'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 051 Tourbillon Tiger'; return t(
+        `Richard Mille réf. RM 051 Tiger (tourbillon). Édition limitée animaux sauvages tigre. Boîtier titane noir/or. Très rare. Marché 450 000–650 000€. Collection sportive nature Mille.`,
+        `Richard Mille ref. RM 051 Tiger (tourbillon). Limited wildlife edition tiger. Black titanium/gold case. Very rare. Market: €450,000–650,000. Mille nature sports collection.`
+      );} },
+
+    { id:'rm_053', kw:['rm053','rm 053','tourbillon pablo mac donough','polo player edition','polo tourbillon','sports personality watch','rm053 sports'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 053 Tourbillon Pablo Mac Donough'; return t(
+        `Richard Mille réf. RM 053 Pablo Mac Donough (tourbillon). Édition limitée champion polo argentin. Boîtier or/titane personnalisé. Ultra-rare. Marché 500 000–750 000€. Partenaire sports Richard Mille.`,
+        `Richard Mille ref. RM 053 Pablo Mac Donough (tourbillon). Limited edition Argentine polo champion. Custom gold/titanium case. Ultra-rare. Market: €500,000–750,000. Richard Mille sports partner.`
+      );} },
+
+    { id:'rm_057', kw:['rm057','rm 057','tourbillon dragon','mythology edition','asian design','rm057 chronograph','dragon watch'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 057 Tourbillon Dragon'; return t(
+        `Richard Mille réf. RM 057 Dragon (tourbillon). Édition limitée mythologie dragon asiatique. Boîtier or rose/platine gravure. Très rare. Marché 550 000–800 000€. Collection culturelle Mille.`,
+        `Richard Mille ref. RM 057 Dragon (tourbillon). Limited mythology Asian dragon edition. Engraved rose gold/platinum case. Very rare. Market: €550,000–800,000. Mille cultural collection.`
+      );} },
+
+    { id:'rm_058', kw:['rm058','rm 058','tourbillon world timer','world time complication','world timer','travel complication','rm058 gmt'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 058 Tourbillon World Timer'; return t(
+        `Richard Mille réf. RM 058 (tourbillon World Timer). Calibre tourbillon indication GMT 24 fuseaux. Complication voyage Mille. Très rare. Marché 500 000–800 000€. Montre aventure prestige.`,
+        `Richard Mille ref. RM 058 (tourbillon World Timer). Tourbillon caliber with GMT 24-hour world time indication. Mille travel complication. Very rare. Market: €500,000–800,000. Prestige adventure watch.`
+      );} },
+
+    { id:'rm_060', kw:['rm060','rm 060','flyback chronograph regatta','sailing chronograph','nautical sports watch','rm060 chronograph','yacht regatta'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 060 Flyback Chronograph Regatta'; return t(
+        `Richard Mille réf. RM 060 (chronographe flyback régate). Calibre chronographe rattrapante voile. Spécifique sports nautiques. Très rare. Marché 450 000–700 000€. Montre régate prestige.`,
+        `Richard Mille ref. RM 060 (flyback chronograph regatta). Sailing split-seconds chronograph caliber. Specific water sports. Very rare. Market: €450,000–700,000. Prestige regatta watch.`
+      );} },
+
+    { id:'rm_063', kw:['rm063','rm 063','automatic dizzy hands','playful automatic','whimsical watch','rm063 chronograph','artistic watch design'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 063 Automatic Dizzy Hands'; return t(
+        `Richard Mille réf. RM 063 (automatique mains amusantes « dizzy »). Calibre automatique aiguilles décalées ludiques. Design artiste Mille. Très rare. Marché 400 000–600 000€. Montre jeune collection Mille.`,
+        `Richard Mille ref. RM 063 (automatic dizzy hands). Automatic caliber with playful offset hands. Artist Mille design. Very rare. Market: €400,000–600,000. Young Mille collection watch.`
+      );} },
+
+    { id:'rm_066', kw:['rm066','rm 066','automatic extra flat','ultra thin automatic','flat tourbillon','slim sports watch','rm066 chronograph'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 066 Automatic Extra Flat'; return t(
+        `Richard Mille réf. RM 066 (automatique ultra-plate). Calibre automatique ultra-fin 4mm. Prouesse mécanique Mille. Très rare. Marché 500 000–750 000€. Montre extra-mince sport Mille.`,
+        `Richard Mille ref. RM 066 (automatic extra flat). Ultra-thin 4mm automatic caliber. Mille mechanical feat. Very rare. Market: €500,000–750,000. Mille ultra-slim sports watch.`
+      );} },
+
+    { id:'rm_073', kw:['rm073','rm 073','automatic tourbillon','tourbillon automatic hybrid','hybrid complication','rm073 chronograph','dual complication watch'],
+      r:()=>{ ctx.brand='Richard Mille'; ctx.model='RM 073 Automatic Tourbillon'; return t(
+        `Richard Mille réf. RM 073 (automatique avec tourbillon). Calibre hybride automatique + tourbillon. Complications duales. Très rare innovation. Marché 550 000–850 000€. Montre technologie Mille prestige.`,
+        `Richard Mille ref. RM 073 (automatic tourbillon). Hybrid automatic + tourbillon caliber. Dual complications. Very rare innovation. Market: €550,000–850,000. Prestigious Mille technology watch.`
+      );} },
+
     { id:'cartier_general', kw:['cartier','cartier montre','cartier paris','achat cartier','vente cartier','cartier occasion','cartier pre-owned','cartier histoire','cartier jewellery','cartier bijouterie','cartier joaillier','panthere cartier','cartier femme','cartier homme','cartier watch','cartier watches','cartier models','what cartier','which cartier','cartier available','cartier in stock','cartier you have','avez vous des cartier','got any cartier','cartier brand','cartier dealer','buy cartier','acheter cartier','cartier collection','cartier available','cartier models','cartier price','cartier worth','cartier luxury','cartier jewel','cartier iconic','cartier love','cartier panthère','cartier panthere'],
       r:()=>{ ctx.brand='Cartier'; return t(
         `Cartier fondée à Paris en 1847. Maison de joaillerie et horlogerie. Nous avons ${STOCK.filter(w=>w.brand==='Cartier').length} Cartier en stock (Juste un Clou…). Quel modèle vous intéresse ?`,
@@ -955,28 +2532,46 @@
       );} },
 
     // ── ROLEX MODÈLES SPÉCIFIQUES ────────────────────────────────────────────────
-    { id:'rolex_126610lv', kw:['126610lv','hulk','hulk rolex','submariner hulk','sub hulk','vert submariner','green submariner','submariner vert','126610 lv','kermit rolex','new hulk'],
-      r:()=>{ const w=STOCK.find(s=>s.ref==='126610LV'); return t(
-        `Submariner Hulk réf. **126610LV** : ${w?fmt(w.price):'~14 000€ marché'}. Lunette et index verts, boîtier Oyster 41mm, cal. 3235, réserve 70h. Étanche 300m.`,
-        `Submariner Hulk ref. **126610LV**: ${w?fmt(w.price):'~€14,000 market'}. Green bezel and indices, 41mm Oyster case, cal. 3235, 70h reserve. 300m water resistant.`
+    { id:'rolex_126610lv', kw:['126610lv','hulk','kermit','hulk rolex','submariner hulk','sub hulk','vert submariner','green submariner','submariner vert','126610 lv','kermit rolex','new hulk','rolex submariner hulk','rolex submariner vert','rolex submariner green','rolex green','rolex hulk','rolex kermit','submariner date hulk','submariner date vert','submariner date green','starbucks','starbucks submariner','ref 126610lv','green dial submariner','cadran vert submariner'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner'; const w=STOCK.find(s=>s.ref==='126610LV'); return t(
+        `**Rolex Submariner Date réf. 126610LV** — surnommée "Kermit" (ou "Starbucks")\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : Oyster 41mm, acier Oystersteel (904L), fond vissé\n• **Lunette** : Cerachrom céramique verte, insert graduations moulées, tournante unidirectionnelle 60 min\n• **Cadran** : Noir laqué, index Chromalight (luminescence bleue longue durée)\n• **Calibre** : 3235 manufacture Rolex, 28 800 alt/h (4Hz), Chronomètre Superlatif (-2/+2 sec/jour)\n• **Réserve de marche** : 70 heures (environ 3 jours)\n• **Étanchéité** : 300 mètres / 1 000 pieds\n• **Bracelet** : Oyster 3 maillons + fermoir Oysterlock + extension Glidelock (±5mm)\n\n**Histoire** : La lunette verte sur fond noir est un look introduit en 2003 sur la réf. 16610LV ("Kermit" originale, marquant les 50 ans du Submariner). La 126610LV (2020) est la version 41mm avec le nouveau calibre 3235. À ne pas confondre avec la 116610LV "Hulk" (cadran ET lunette verts, 2010-2020).\n\n**Marché** : Très demandée, valeur stable/croissante. Un incontournable de toute collection Rolex.`,
+        `**Rolex Submariner Date ref. 126610LV** — nicknamed "Kermit" (or "Starbucks")\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: Oyster 41mm, Oystersteel (904L), screw-down caseback\n• **Bezel**: Green Cerachrom ceramic, moulded graduations, 60-min unidirectional rotating\n• **Dial**: Black lacquer, Chromalight indices (long-lasting blue luminescence)\n• **Calibre**: 3235 Rolex manufacture, 28,800 vph (4Hz), Superlative Chronometer (-2/+2 sec/day)\n• **Power reserve**: 70 hours (approx. 3 days)\n• **Water resistance**: 300 metres / 1,000 feet\n• **Bracelet**: Oyster 3-link + Oysterlock clasp + Glidelock extension (±5mm)\n\n**History**: The green bezel on black dial was introduced in 2003 on ref. 16610LV (original "Kermit", marking 50 years of the Submariner). The 126610LV (2020) is the 41mm version with the new 3235 calibre. Not to be confused with the 116610LV "Hulk" (green dial AND bezel, 2010-2020).\n\n**Market**: Highly sought-after, stable/rising value. A must-have in any Rolex collection.`
       );} },
 
-    { id:'rolex_126500ln', kw:['126500ln','daytona panda','panda acier','daytona acier blanc','126500 ln','daytona blanc noir','new daytona','daytona 2021','daytona cadran blanc','ceramic daytona','daytona céramique'],
-      r:()=>{ const w=STOCK.find(s=>s.ref==='126500LN'); return t(
-        `Daytona Panda réf. **126500LN** : ${w?fmt(w.price):'~27 000–30 000€ marché'}. Cadran blanc, sous-compteurs noirs, lunette céramique noire, cal. 4131 (72h réserve). 40mm.`,
-        `Daytona Panda ref. **126500LN**: ${w?fmt(w.price):'~€27,000–30,000 market'}. White dial, black subdials, black ceramic bezel, cal. 4131 (72h reserve). 40mm.`
+    { id:'rolex_126500ln', kw:['126500ln','panda','daytona panda','panda daytona','panda acier','daytona acier blanc','126500 ln','daytona blanc noir','new daytona','daytona 2021','daytona cadran blanc','ceramic daytona','daytona céramique','rolex daytona panda','rolex panda','rolex daytona acier','rolex daytona steel','rolex daytona blanc','rolex daytona white','ref 126500ln','cosmograph daytona panda','panda rolex'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona'; const w=STOCK.find(s=>s.ref==='126500LN'); return t(
+        `**Rolex Cosmograph Daytona réf. 126500LN** — "Panda" (cadran blanc, sous-compteurs noirs)\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : Oyster 40mm, acier Oystersteel 904L\n• **Lunette** : Cerachrom céramique noire avec échelle tachymétrique gravée et laquée platine\n• **Cadran** : Blanc laqué "Panda", 3 sous-compteurs noirs (secondes, 30 min, 12h)\n• **Calibre** : 4131 manufacture Rolex (introduit 2023), 28 800 alt/h, Chronomètre Superlatif\n• **Réserve de marche** : 72 heures\n• **Étanchéité** : 100 mètres\n• **Bracelet** : Oyster + fermoir Oysterlock + système Easylink (5mm de confort)\n\n**Histoire** : Le Cosmograph Daytona est né en 1963, nommé d'après le circuit de Daytona en Floride. Le surnom "Panda" vient du contraste cadran blanc/sous-compteurs noirs. La réf. 126500LN (2023) remplace la 116500LN avec le nouveau cal. 4131. C'est le chronographe le plus demandé au monde — liste d'attente de plusieurs années en boutique officielle.\n\n**Marché** : La Daytona Panda acier est le Rolex sport le plus convoité. Forte appréciation.`,
+        `**Rolex Cosmograph Daytona ref. 126500LN** — "Panda" (white dial, black subdials)\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: Oyster 40mm, Oystersteel 904L\n• **Bezel**: Black Cerachrom ceramic with engraved tachymeter scale, platinum-filled\n• **Dial**: White lacquer "Panda", 3 black subdials (seconds, 30 min, 12h)\n• **Calibre**: 4131 Rolex manufacture (introduced 2023), 28,800 vph, Superlative Chronometer\n• **Power reserve**: 72 hours\n• **Water resistance**: 100 metres\n• **Bracelet**: Oyster + Oysterlock clasp + Easylink comfort extension (5mm)\n\n**History**: The Cosmograph Daytona was born in 1963, named after the Daytona circuit in Florida. The "Panda" nickname comes from the white dial/black subdials contrast. Ref. 126500LN (2023) replaces the 116500LN with the new cal. 4131. It is the world's most sought-after chronograph — years-long waitlists at official boutiques.\n\n**Market**: The steel Panda Daytona is the most coveted Rolex sport watch. Strong appreciation.`
       );} },
 
-    { id:'rolex_126710grnr', kw:['126710grnr','sprite','gmt sprite','vert rouge','red green gmt','126710 grnr','sprite rolex','sprite gmt','gmt rouge vert','jubilé gmt sprite'],
-      r:()=>{ const w=STOCK.find(s=>s.ref==='126710GRNR'); return t(
-        `GMT Sprite réf. **126710GRNR** : ${w?fmt(w.price):'~18 000–20 000€ marché'}. Lunette céramique vert/rouge (Sprite), bracelet Jubilé, cal. 3285. 40mm.`,
-        `GMT Sprite ref. **126710GRNR**: ${w?fmt(w.price):'~€18,000–20,000 market'}. Green/red (Sprite) ceramic bezel, Jubilee bracelet, cal. 3285. 40mm.`
+    { id:'rolex_126505', kw:['126505','daytona or rose','daytona rose gold','daytona everose','ref 126505','rolex daytona or rose','rolex daytona rose gold','cosmograph or rose','daytona gold','daytona chocolat','chocolate daytona','daytona marron','brown daytona'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona'; const w=STOCK.find(s=>s.ref==='126505'); return t(
+        `**Rolex Cosmograph Daytona réf. 126505** — Or rose Everose 18 carats\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : Oyster 40mm, or Everose 18ct (alliage exclusif Rolex résistant à la décoloration)\n• **Lunette** : Cerachrom céramique marron chocolat, échelle tachymétrique\n• **Cadran** : Chocolat/noir, sous-compteurs or rose\n• **Calibre** : 4131, Chronomètre Superlatif, 72h réserve\n• **Bracelet** : Oysterflex (caoutchouc haute performance avec âme titane-nickel)\n\n**Particularité** : L'or Everose est un alliage breveté par Rolex contenant du platine, garantissant que la couleur rose ne s'altère pas avec le temps. La lunette marron chocolat est exclusive aux versions or rose.\n\n**Marché** : ~45 000–55 000€ selon état et année.`,
+        `**Rolex Cosmograph Daytona ref. 126505** — 18ct Everose gold\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: Oyster 40mm, 18ct Everose gold (exclusive Rolex alloy resistant to fading)\n• **Bezel**: Chocolate brown Cerachrom ceramic, tachymeter scale\n• **Dial**: Chocolate/black, rose gold subdials\n• **Calibre**: 4131, Superlative Chronometer, 72h reserve\n• **Bracelet**: Oysterflex (high-performance rubber with titanium-nickel core)\n\n**Unique feature**: Everose gold is a Rolex-patented alloy containing platinum, ensuring the rose colour never fades. The chocolate brown bezel is exclusive to rose gold versions.\n\n**Market**: ~€45,000–55,000 depending on condition and year.`
       );} },
 
-    { id:'rolex_326935', kw:['326935','yacht master 42','ym 42','everose yacht','oysterflex yacht','yacht master everose','ym everose','326935 prix'],
-      r:()=>{ const w=STOCK.find(s=>s.ref==='326935'); return t(
-        `Yacht-Master 42 réf. **326935** : ${w?fmt(w.price):'~35 000–38 000€ marché'}. Boîtier Everose Gold 18ct, lunette plateau titane, bracelet Oysterflex. 42mm.`,
-        `Yacht-Master 42 ref. **326935**: ${w?fmt(w.price):'~€35,000–38,000 market'}. 18ct Everose Gold case, titanium matte bezel, Oysterflex bracelet. 42mm.`
+    { id:'rolex_126710grnr', kw:['126710grnr','sprite','gmt sprite','vert rouge','red green gmt','126710 grnr','sprite rolex','sprite gmt','gmt rouge vert','jubilé gmt sprite','rolex gmt sprite','rolex sprite','gmt master sprite','gmt master vert noir','green black gmt'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II'; const w=STOCK.find(s=>s.ref==='126710GRNR'); return t(
+        `**Rolex GMT-Master II réf. 126710GRNR** — "Sprite"\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : Oyster 40mm, acier Oystersteel 904L\n• **Lunette** : Cerachrom céramique bicolore vert/noir (deux couleurs en un seul bloc de céramique — prouesse technique Rolex)\n• **Cadran** : Noir, index Chromalight\n• **Calibre** : 3285, 28 800 alt/h, 70h réserve, Chronomètre Superlatif\n• **Bracelet** : Jubilee 5 maillons + fermoir Oysterclasp\n• **Fonctions** : Heures, minutes, secondes, date, 2e fuseau horaire (aiguille 24h)\n\n**Particularité** : Combinaison vert/noir unique dans la gamme. La lunette bicolore céramique nécessite un procédé de fabrication breveté (coloration partielle d'un bloc monolithique).\n\n**Marché** : ~17 000–20 000€. Forte demande, faible disponibilité en boutique officielle.`,
+        `**Rolex GMT-Master II ref. 126710GRNR** — "Sprite"\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: Oyster 40mm, Oystersteel 904L\n• **Bezel**: Green/black Cerachrom ceramic (two colours in one ceramic block — Rolex technical feat)\n• **Dial**: Black, Chromalight indices\n• **Calibre**: 3285, 28,800 vph, 70h reserve, Superlative Chronometer\n• **Bracelet**: Jubilee 5-link + Oysterclasp\n• **Functions**: Hours, minutes, seconds, date, 2nd time zone (24h hand)\n\n**Unique feature**: Green/black is unique in the range. The two-tone ceramic bezel requires a patented process (partial colouring of a monolithic block).\n\n**Market**: ~€17,000–20,000. High demand, low availability at official boutiques.`
+      );} },
+
+    { id:'rolex_116710ln', kw:['116710ln','116710','gmt black','gmt noir','gmt master noir','all black gmt','rolex gmt black','rolex gmt noir','gmt master ii black ceramic','gmt master ii noir'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II'; const w=STOCK.find(s=>s.ref==='116710LN'); return t(
+        `**Rolex GMT-Master II réf. 116710LN** — Lunette céramique noire\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : Oyster 40mm, acier Oystersteel\n• **Lunette** : Cerachrom céramique noire, échelle 24h\n• **Cadran** : Noir, index Chromalight\n• **Calibre** : 3186, 48h réserve\n• **Bracelet** : Oyster 3 maillons\n\n**Particularité** : Première GMT-Master II avec lunette céramique (2007). Version discrète et polyvalente — pas de bicolore sur la lunette, look tout noir élégant. Génération pré-2018 (remplacée par la 126710).\n\n**Marché** : ~11 000–13 000€. Bonne valeur pour une GMT céramique.`,
+        `**Rolex GMT-Master II ref. 116710LN** — Black ceramic bezel\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: Oyster 40mm, Oystersteel\n• **Bezel**: Black Cerachrom ceramic, 24h scale\n• **Dial**: Black, Chromalight indices\n• **Calibre**: 3186, 48h reserve\n• **Bracelet**: Oyster 3-link\n\n**Unique feature**: First GMT-Master II with ceramic bezel (2007). Discreet and versatile — no two-tone bezel, elegant all-black look. Pre-2018 generation (replaced by 126710).\n\n**Market**: ~€11,000–13,000. Good value for a ceramic GMT.`
+      );} },
+
+    { id:'rolex_16710', kw:['16710','gmt vintage','old gmt','gmt master vintage','coke','coke gmt','pepsi vintage','rolex gmt vintage','gmt aluminium','gmt alu'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master II'; const w=STOCK.find(s=>s.ref==='16710'); return t(
+        `**Rolex GMT-Master II réf. 16710** — Vintage (1989–2007)\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : Oyster 40mm, acier 904L\n• **Lunette** : Aluminium (pas céramique) — disponible en Pepsi (bleu/rouge), Coke (noir/rouge) ou noir\n• **Cadran** : Noir, index lumineux (tritium ou Luminova selon année)\n• **Calibre** : 3185/3186 (selon année), 48h réserve\n• **Bracelet** : Oyster ou Jubilee\n\n**Particularité** : Dernière GMT avec lunette aluminium. Les inserts aluminium se patinent avec le temps, ajoutant du charme vintage. Les versions "Pepsi" et "Coke" sont très recherchées des collectionneurs.\n\n**Marché** : ~8 500–12 000€ selon insert et état. Excellente pièce collector.`,
+        `**Rolex GMT-Master II ref. 16710** — Vintage (1989–2007)\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: Oyster 40mm, 904L steel\n• **Bezel**: Aluminium (not ceramic) — available in Pepsi (blue/red), Coke (black/red) or black\n• **Dial**: Black, luminous indices (tritium or Luminova depending on year)\n• **Calibre**: 3185/3186 (depending on year), 48h reserve\n• **Bracelet**: Oyster or Jubilee\n\n**Unique feature**: Last GMT with aluminium bezel. Aluminium inserts develop patina over time, adding vintage charm. "Pepsi" and "Coke" versions are highly sought by collectors.\n\n**Market**: ~€8,500–12,000 depending on insert and condition. Excellent collector piece.`
+      );} },
+
+    { id:'rolex_326935', kw:['326935','yacht master 42','ym 42','everose yacht','oysterflex yacht','yacht master everose','ym everose','326935 prix','rolex yacht master 42','rolex yacht master or rose','rolex ym'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='Yacht-Master'; const w=STOCK.find(s=>s.ref==='326935'); return t(
+        `**Rolex Yacht-Master 42 réf. 326935** — Or Everose 18ct\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : 42mm, or Everose 18ct (alliage breveté Rolex anti-décoloration)\n• **Lunette** : Bidirectionnelle, or Everose mat sablé avec finition noire Cerachrom\n• **Cadran** : Noir intense, aiguilles et index or rose\n• **Calibre** : 3235, 70h réserve, Chronomètre Superlatif\n• **Bracelet** : Oysterflex (caoutchouc haute performance avec âme métal + amortisseurs longitudinaux)\n• **Étanchéité** : 100 mètres\n\n**Particularité** : Le Yacht-Master 42 est le plus grand et le plus exclusif de la gamme YM. Le bracelet Oysterflex, introduit en 2015, combine le confort du caoutchouc avec la robustesse d'une âme en alliage de titane et nickel.\n\n**Marché** : ~32 000–38 000€. Le Rolex sport le plus "bling" — or massif + bracelet sport.`,
+        `**Rolex Yacht-Master 42 ref. 326935** — 18ct Everose gold\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: 42mm, 18ct Everose gold (Rolex patented anti-fading alloy)\n• **Bezel**: Bidirectional, sandblasted matte Everose gold with black Cerachrom finish\n• **Dial**: Deep black, rose gold hands and indices\n• **Calibre**: 3235, 70h reserve, Superlative Chronometer\n• **Bracelet**: Oysterflex (high-performance rubber with metal core + longitudinal cushions)\n• **Water resistance**: 100 metres\n\n**Unique feature**: The Yacht-Master 42 is the largest and most exclusive in the YM range. The Oysterflex bracelet, introduced 2015, combines rubber comfort with a titanium-nickel alloy core.\n\n**Market**: ~€32,000–38,000. The flashiest Rolex sport — solid gold + sport strap.`
       );} },
 
     { id:'patek_5980', kw:['5980','5980-1a','nautilus chronographe','nautilus chrono','5980 acier','nautilus flyback','patek chrono','ref 5980'],
@@ -1664,10 +3259,10 @@
       ) },
 
     // ── FINALES ───────────────────────────────────────────────────────────────────
-    { id:'rolex_116613lb', kw:['116613lb','submariner bicolore','submariner acier or','rolesor submariner','sub gold steel','deux tons submariner','two tone submariner','116613 lb','116613 acier or'],
-      r:()=>{ const w=STOCK.find(s=>s.ref==='116613LB'); return t(
-        `Submariner Rolesor réf. **116613LB** : ${w?fmt(w.price):'~11 000–12 500€ marché'}. Boîtier et bracelet acier/or jaune 18ct, cadran bleu, lunette céramique bleue, cal. 3135, 40mm.`,
-        `Submariner Rolesor ref. **116613LB**: ${w?fmt(w.price):'~€11,000–12,500 market'}. Steel/18ct yellow gold case and bracelet, blue dial, blue ceramic bezel, cal. 3135, 40mm.`
+    { id:'rolex_116613lb', kw:['116613lb','submariner bicolore','submariner acier or','rolesor submariner','sub gold steel','deux tons submariner','two tone submariner','116613 lb','116613 acier or','rolex submariner bicolore','rolex submariner acier or','rolex submariner two tone','submariner blue gold','submariner bleu or','submariner rolesor'],
+      r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner'; const w=STOCK.find(s=>s.ref==='116613LB'); return t(
+        `**Rolex Submariner Date réf. 116613LB** — Acier/Or jaune "Rolesor" bleu\n\n${w?`📍 **En stock : ${fmt(w.price)}**\n\n`:''}• **Boîtier** : Oyster 40mm, acier Oystersteel + or jaune 18ct (Rolesor)\n• **Lunette** : Cerachrom céramique bleue, insert or jaune\n• **Cadran** : Bleu soleil (sunburst), index or appliqués\n• **Calibre** : 3135, 48h réserve de marche\n• **Étanchéité** : 300 mètres\n• **Bracelet** : Oyster bicolore acier/or + Glidelock\n\n**Particularité** : La combinaison bleu/or est un classique Rolex. La 116613LB est la version 40mm (génération pré-2020). Le bleu du cadran et de la lunette change de nuance selon la lumière — signature de la finition Rolex.\n\n**Marché** : ~11 000–14 000€. Excellente valeur dans la gamme bicolore Rolex.`,
+        `**Rolex Submariner Date ref. 116613LB** — Steel/Yellow gold "Rolesor" blue\n\n${w?`📍 **In stock: ${fmt(w.price)}**\n\n`:''}• **Case**: Oyster 40mm, Oystersteel + 18ct yellow gold (Rolesor)\n• **Bezel**: Blue Cerachrom ceramic, yellow gold insert\n• **Dial**: Blue sunburst, applied gold indices\n• **Calibre**: 3135, 48h power reserve\n• **Water resistance**: 300 metres\n• **Bracelet**: Two-tone Oyster steel/gold + Glidelock\n\n**Unique feature**: The blue/gold combination is a Rolex classic. The 116613LB is the 40mm version (pre-2020 generation). The blue of the dial and bezel shifts in nuance with light — a signature Rolex finish.\n\n**Market**: ~€11,000–14,000. Excellent value in the Rolex two-tone range.`
       );} },
 
     { id:'datejust_wimbledon', kw:['wimbledon','126300 wimbledon','datejust wimbledon','cadran wimbledon','vert datejust','wimbledon dial','slate green','fluted bezel green','126300'],
@@ -1698,6 +3293,290 @@
       r:()=>{ ctx.brand='Cartier'; return t(
         `Cartier Love Bracelet : bijou iconique depuis 1969. Or jaune 18ct ~6 500€, or rose ~6 500€, or blanc ~6 500€. Acier ~2 000–3 000€ marché seconde main. Contactez-nous pour disponibilité.`,
         `Cartier Love Bracelet: iconic jewel since 1969. Yellow gold 18ct ~€6,500, rose gold ~€6,500, white gold ~€6,500. Steel ~€2,000–3,000 on secondary market. Contact us for availability.`
+      );} },
+
+    // SANTOS COLLECTION
+    { id:'cartier_santos_medium', kw:['santos medium','santos 35','santos 35.1mm','santos acier medium','cartier santos 35'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Santos Medium'; return t(
+        `Cartier Santos Moyen (35.1mm, acier, cal. 1847 MC) : le classique sport revisité. Boîtier acier inoxydable, bracelet QuickSwitch intégré. Mouvement automatique 42h réserve, 100m étanchéité. ~9 500–11 000€ neuf. Design 1904, modernisé avec l'acier brossé et le verre saphir bombé. Couronne octogonale brevetée. Référence W2SA0018, collection contemporaine incontournable.`,
+        `Cartier Santos Medium (35.1mm, steel, cal. 1904 MC): the iconic sports watch redesigned. Stainless steel case, integrated QuickSwitch bracelet. Automatic movement 42-hour reserve, 100m water resistance. ~€9,500–11,000 new. 1904 design, modernized with brushed steel and domed sapphire crystal. Patented octagonal crown. Reference W2SA0018, essential contemporary collection.`
+      );} },
+
+    { id:'cartier_santos_large', kw:['santos large','santos 39','santos 39.8mm','santos acier grand','cartier santos 39','santos wssa0018'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Santos Large'; return t(
+        `Cartier Santos Grand (39.8mm, acier, cal. 1847 MC) : la version masculine du classique sport. Boîtier acier inoxydable, bracelet QuickSwitch, lunette sculptée. Mouvement automatique 42h réserve, 100m étanchéité. ~10 500–12 500€ neuf. Références WSSA0018. Cadran bleu ou blanc, index appliqués, aiguilles épées. Léger et confortable malgré les 39.8mm. Choix premium pour le poignet masculin.`,
+        `Cartier Santos Large (39.8mm, steel, cal. 1904 MC): the masculine version of the iconic sports watch. Stainless steel case, QuickSwitch bracelet, sculpted bezel. Automatic movement 42-hour reserve, 100m water resistance. ~€10,500–12,500 new. Reference WSSA0018. Blue or white dial, applied indices, sword hands. Light and comfortable despite 39.8mm case. Premium choice for men's wrists.`
+      );} },
+
+    { id:'cartier_santos_skeleton', kw:['santos skeleton','santos squelette','santos adlc','santos pvm','cartier skeleton santos'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Santos Skeleton'; return t(
+        `Cartier Santos Skeleton (39.8mm, ADLC carbone, cal. 9611 MC) : haute horlogerie affichée. Boîtier revêtu PVD noir (carbone), dos transparent, mécanisme visible. Squelettisation complète du mouvement automatique. ~28 000–32 000€ neuf. Lunette or rose ou acier contraste, index diamants optionnels. Edition limitée, prestiges collections. Réference WHSA0012 (acier), WJSA0015 (or rose).`,
+        `Cartier Santos Skeleton (39.8mm, ADLC carbon, cal. 9611 MC): haute horlogerie on display. DLC coated case (black carbon), transparent caseback, visible mechanism. Full skeletonized automatic movement. ~€28,000–32,000 new. Rose gold or contrasted steel bezel, optional diamond indices. Limited edition, prestige collections. Reference WHSA0012 (steel), WJSA0015 (rose gold).`
+      );} },
+
+    { id:'cartier_santos_chrono', kw:['santos chronographe','santos chrono','santos chronograph','santos timing','cartier santos chronograph'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Santos Chronographe'; return t(
+        `Cartier Santos Chronographe (39.8mm, acier/or, cal. 1904 CHR MC) : l'outil sportif complet. Boîtier acier ou or jaune, fond transparent, chronographe intégré 30mn. Mouvement automatique chronographique 40h réserve, 100m étanchéité. ~15 000–18 000€ (acier), ~45 000–55 000€ (or). Cadran noir avec compteurs contrastants. Bracelet QuickSwitch. Rarement proposé, collection boutique exclusive.`,
+        `Cartier Santos Chronograph (39.8mm, steel/gold, cal. 1904 CHR MC): the complete sports tool. Steel or yellow gold case, transparent caseback, integrated 30-minute chronograph. Automatic chronograph movement 40-hour reserve, 100m water resistance. ~€15,000–18,000 (steel), ~€45,000–55,000 (gold). Black dial with contrasting counters. QuickSwitch bracelet. Rarely offered, exclusive boutique collection.`
+      );} },
+
+    // TANK COLLECTION
+    { id:'cartier_tank_louis', kw:['tank louis','tank 1917','original tank','premiere tank','cartier tank history'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank Louis'; return t(
+        `Cartier Tank Louis Cartier (33.7mm, acier/or, cal. 1904 MC) : la montre carrée d'exception depuis 1917. Création iconique de Louis Cartier, boîtier acier ou or jaune/rose 18ct, lunette lisse. Mouvement automatique 40h réserve, 30m étanchéité. ~7 500–9 500€ (acier), ~35 000–45 000€ (or). Cadran email blanc avec chiffres romains. Bracelet cuir alligator ou acier. References WTA0011, WGTA0002. Pièce de collection, patrimoine horloger.`,
+        `Cartier Tank Louis Cartier (33.7mm, steel/gold, cal. 1904 MC): the exceptional square watch since 1917. Iconic creation by Louis Cartier, stainless steel or 18ct yellow/rose gold case, smooth bezel. Automatic movement 40-hour reserve, 30m water resistance. ~€7,500–9,500 (steel), ~€35,000–45,000 (gold). White enamel dial with Roman numerals. Alligator leather or steel bracelet. References WTA0011, WGTA0002. Collector's piece, watchmaking heritage.`
+      );} },
+
+    { id:'cartier_tank_must', kw:['tank must','tank solarbeat','tank must solaire','cartier tank accessible','tank quartz must'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank Must'; return t(
+        `Cartier Tank Must SolarBeat (33.7mm, acier/PVD, cal. 690 quartz solaire) : démocratisation du Tank. Boîtier acier inoxydable option PVD noir, bracelet acier. Mouvement quartz SolarBeat (recharge solaire) 16 mois autonomie. ~1 700–2 200€. Cadran noir ou bleu, chiffres romains. Très accessible, collection jeune. Couronne tank sculptée. References CRWSTA0018 (acier), CRWSTA0009 (PVD). Popularité montante auprès millennials.`,
+        `Cartier Tank Must SolarBeat (33.7mm, steel/PVD, cal. 690 solar quartz): democratizing the Tank. Stainless steel case with optional black PVD, steel bracelet. SolarBeat quartz movement (solar rechargeable) 16-month power reserve. ~€1,700–2,200. Black or blue dial, Roman numerals. Highly accessible, young collection. Sculpted tank crown. References CRWSTA0018 (steel), CRWSTA0009 (PVD). Rising popularity with millennials.`
+      );} },
+
+    { id:'cartier_tank_mc', kw:['tank mc','tank moyen','tank manufacture','tank 29','cartier tank mc medium'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank MC'; return t(
+        `Cartier Tank MC (29mm, acier/or, cal. 1904 MC) : le Tank femme par excellence. Boîtier acier inoxydable ou or jaune/rose 18ct, lunette lisse satinée. Mouvement automatique Cartier 1904 MC 40h, 30m étanchéité. ~6 500–8 500€ (acier), ~32 000–42 000€ (or). Cadran blanc, index romains appétents. Bracelet cuir alligator ou QuickSwitch acier. References WTA0013, WGTA0008. Proposition unisexe moderne sur 29mm.`,
+        `Cartier Tank MC (29mm, steel/gold, cal. 1904 MC): the quintessential women's Tank. Stainless steel or 18ct yellow/rose gold case, smooth satin bezel. Automatic Cartier 1904 MC movement 40-hour reserve, 30m water resistance. ~€6,500–8,500 (steel), ~€32,000–42,000 (gold). White dial, Roman indices. Alligator leather or QuickSwitch steel bracelet. References WTA0013, WGTA0008. Modern unisex proposition on 29mm.`
+      );} },
+
+    { id:'cartier_tank_cintree', kw:['tank cintrée','tank cintree','tank elongated','tank vintage','tank curvé','cartier tank curved'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank Cintrée'; return t(
+        `Cartier Tank Cintrée (50.2 x 31mm, or jaune, cal. 1904 MC) : l'élégance bombée originale. Boîtier or jaune 18ct épuré, lunette bombée signature. Mouvement automatique 40h réserve, 30m étanchéité. ~35 000–45 000€ marché. Cadran bleu nuit ou argent. Référence WGTA0050. Pièce vintage-inspirée, ligne courbée intemporelle. Produit actuellement en édition limitée. Rarissime depuis 1980s.`,
+        `Cartier Tank Cintrée (50.2 x 31mm, yellow gold, cal. 1904 MC): the original domed elegance. Pure 18ct yellow gold case, signature domed bezel. Automatic movement 40-hour reserve, 30m water resistance. ~€35,000–45,000 market. Midnight blue or silver dial. Reference WGTA0050. Vintage-inspired piece, timeless curved line. Currently produced in limited edition. Rarified since 1980s.`
+      );} },
+
+    { id:'cartier_tank_normale', kw:['tank normale','tank 2024','tank reinvention','tank edition','tank relaunch'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank Normale'; return t(
+        `Cartier Tank Normale (27.4 x 23.4mm, acier/or, cal. 690 quartz) : la ré-édition 2024 de 1928. Boîtier acier inoxydable ou or jaune, proportions carrées pures. Mouvement quartz 690 Cartier, 3 ans autonomie. ~4 200€ (acier), ~18 000€ (or jaune). Cadran blanc email ou noir, chiffres romains gravés. Bracelet cuir alligator cartier. Références WSTA0009 (acier), WGTA0045 (or). Relance boutique 2024, collection historiquement fondatrice.`,
+        `Cartier Tank Normale (27.4 x 23.4mm, steel/gold, cal. 690 quartz): the 2024 re-edition of 1928. Stainless steel or yellow gold case, pure square proportions. Cartier 690 quartz movement, 3-year power reserve. ~€4,200 (steel), ~€18,000 (yellow gold). White enamel or black dial, engraved Roman numerals. Cartier alligator leather bracelet. References WSTA0009 (steel), WGTA0045 (gold). Boutique relaunch 2024, historically foundational collection.`
+      );} },
+
+    // BALLON BLEU COLLECTION
+    { id:'cartier_bb_33', kw:['ballon bleu 33','bb 33','ballon bleu quartz','bb femme','ballon bleu dame','cartier bb dames'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Ballon Bleu 33'; return t(
+        `Cartier Ballon Bleu 33mm (acier/or, quartz) : l'iconique pour dames. Boîtier 33mm acier inoxydable ou or jaune 18ct, lunette portée cabochon saphir bleu. Mouvement quartz Cartier, 2 ans autonomie. ~4 500–6 500€ (acier), ~28 000–36 000€ (or). Cadran bleu grad ou argenté, chiffres romains. Bracelet QuickSwitch cuir ou acier. Références W2BA0004 (acier), WGBB0004 (or). Inévitable feminin, porté iconic léger.`,
+        `Cartier Ballon Bleu 33mm (steel/gold, quartz): the iconic women's version. 33mm stainless steel or 18ct yellow gold case, signature worn sapphire cabochon bezel. Cartier quartz movement, 2-year power reserve. ~€4,500–6,500 (steel), ~€28,000–36,000 (gold). Blue gradient or silver dial, Roman numerals. QuickSwitch leather or steel bracelet. References W2BA0004 (steel), WGBB0004 (gold). Iconic feminine, lightweight worn design.`
+      );} },
+
+    { id:'cartier_bb_36', kw:['ballon bleu 36','bb 36','ballon bleu auto','bb unisexe','cartier bb moyen','ballon bleu proportions'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Ballon Bleu 36'; return t(
+        `Cartier Ballon Bleu 36mm (acier/or, cal. 1847 MC) : l'unisexe référence. Boîtier 36mm acier ou or jaune, lunette cabochon bleu saphir signature. Mouvement automatique Cartier 1904 MC 40h réserve. 100m étanchéité. ~6 500–8 500€ (acier), ~35 000–45 000€ (or). Cadran blanc ou bleu soleillé, aiguilles épées. Bracelet QuickSwitch acier ou cuir. References W2BB0004, WGBB0033. Porté léger, masculine/feminine equivalent proportion.`,
+        `Cartier Ballon Bleu 36mm (steel/gold, cal. 1904 MC): the unisex reference. 36mm stainless steel or yellow gold case, signature blue sapphire cabochon bezel. Automatic Cartier 1904 MC movement 40-hour reserve. 100m water resistance. ~€6,500–8,500 (steel), ~€35,000–45,000 (gold). White or sunburst blue dial, sword hands. QuickSwitch steel or leather bracelet. References W2BB0004, WGBB0033. Light worn design, masculine/feminine equivalent proportions.`
+      );} },
+
+    { id:'cartier_bb_42', kw:['ballon bleu 42','bb 42','ballon bleu hommes','bb masculin','ballon bleu grand','cartier bb grand'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Ballon Bleu 42'; return t(
+        `Cartier Ballon Bleu 42mm (acier/or, cal. 9611 MC) : le Ballon masculin fort. Boîtier 42mm acier inoxydable ou or jaune 18ct, lunette cabochon bleu saphir prédominant. Mouvement automatique 9611 MC, chronographe optionnel (version Chronographe). 100m étanchéité. ~7 500–9 500€ (acier), ~40 000–50 000€ (or). Cadran gris, blanc ou gradient bleu. Bracelet QuickSwitch acier. Références W2BB0010 (acier), WGBB0010 (or). Présence masculine, port épais et léger.`,
+        `Cartier Ballon Bleu 42mm (steel/gold, cal. 1904 MC): the strong masculine Ballon. 42mm stainless steel or 18ct yellow gold case, dominant blue sapphire cabochon bezel. Automatic 1904 MC movement, optional chronograph (Chronograph version). 100m water resistance. ~€7,500–9,500 (steel), ~€40,000–50,000 (gold). Gray, white or blue gradient dial. QuickSwitch steel bracelet. References W2BB0010 (steel), WGBB0010 (gold). Masculine presence, thick yet light wear.`
+      );} },
+
+    // PASHA COLLECTION
+    { id:'cartier_pasha_41', kw:['pasha 41','pasha current','pasha automatique','pasha 41mm','cartier pasha moderne'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Pasha de Cartier 41'; return t(
+        `Cartier Pasha de Cartier 41mm (acier/or, cal. 1904 MC) : l'icône carrée sport 2020. Boîtier 41mm acier inoxydable ou or jaune, lunette carrée Pasha, couronne protégée. Mouvement automatique 40h réserve, 100m étanchéité. ~8 500–10 500€ (acier), ~40 000–50 000€ (or). Cadran noir, bleu ou gris, aiguilles Mercedes. Bracelet QuickSwitch acier ou cuir. Références W2PA0010 (acier), WGPA0010 (or). Design revitalisé 2021, très demandé.`,
+        `Cartier Pasha de Cartier 41mm (steel/gold, cal. 1904 MC): the iconic square sports watch 2020. 41mm stainless steel or yellow gold case, Pasha square bezel, protected crown. Automatic movement 40-hour reserve, 100m water resistance. ~€8,500–10,500 (steel), ~€40,000–50,000 (gold). Black, blue or gray dial, Mercedes hands. QuickSwitch steel or leather bracelet. References W2PA0010 (steel), WGPA0010 (gold). Revitalized 2021 design, highly sought.`
+      );} },
+
+    { id:'cartier_pasha_chrono', kw:['pasha chronographe','pasha chrono','pasha timing','pasha chronograph','cartier pasha sport'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Pasha Chronographe'; return t(
+        `Cartier Pasha Chronographe (42mm, acier/or, cal. 1904-CHR MC) : l'outil sport complet. Boîtier 42mm acier ou or, lunette Pasha distincte, fond transparent. Chronographe intégré 12h/30mn/60s. Mouvement automatique chronographique. ~12 000–14 000€ (acier), ~50 000–65 000€ (or). Cadran noir avec compteurs colorés. Rarement proposé, collection spécialisée. Référence W2PA0015 (acier version).`,
+        `Cartier Pasha Chronograph (42mm, steel/gold, cal. 1904-CHR MC): the complete sports tool. 42mm steel or gold case, distinct Pasha bezel, transparent caseback. Integrated 12-hour/30-minute/60-second chronograph. Automatic chronograph movement. ~€12,000–14,000 (steel), ~€50,000–65,000 (gold). Black dial with colored counters. Rarely offered, specialized collection. Reference W2PA0015 (steel version).`
+      );} },
+
+    { id:'cartier_pasha_skeleton', kw:['pasha skeleton','pasha squelette','pasha transparent','pasha adlc','cartier pasha ajouré'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Pasha Skeleton'; return t(
+        `Cartier Pasha Skeleton (42mm, ADLC/or, cal. 9611 MC squelettisé) : haute horlogerie carrée. Boîtier revêtu carbone ou or, mouvement squelettisé visible. Mouvement automatique 9611 MC 40h réserve. ~28 000–35 000€ (ADLC), ~65 000–80 000€ (or). Fond transparent, lunette Pasha carrée. Édition limitée, collection prestige. Très rare au second marché.`,
+        `Cartier Pasha Skeleton (42mm, ADLC/gold, cal. 9611 MC skeletonized): square haute horlogerie. Carbon-coated or gold case, skeletonized visible movement. Automatic 9611 MC movement 40-hour reserve. ~€28,000–35,000 (ADLC), ~€65,000–80,000 (gold). Transparent caseback, square Pasha bezel. Limited edition, prestige collection. Very rare on secondary market.`
+      );} },
+
+    // PANTHÈRE COLLECTION
+    { id:'cartier_panthere_medium', kw:['panthère moyen','panthere 27','panthère 27mm','panthère quartz iconic','cartier panthere femme'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Panthère 27'; return t(
+        `Cartier Panthère 27mm (acier/or, quartz) : l'icône féminine depuis 1983. Boîtier 27mm acier ou or jaune, lunette polygonale signature panth. Mouvement quartz Cartier, 2 ans autonomie. ~3 500–5 000€ (acier), ~20 000–28 000€ (or). Cadran bleu soleillé ou argenté, index romains. Bracelet QuickSwitch cuir alligator ou acier. Références W25028B6, WGPN0006. Portée légendaire, feminin par essence.`,
+        `Cartier Panthère 27mm (steel/gold, quartz): the feminine icon since 1983. 27mm stainless steel or yellow gold case, signature polygonal panther bezel. Cartier quartz movement, 2-year power reserve. ~€3,500–5,000 (steel), ~€20,000–28,000 (gold). Sunburst blue or silver dial, Roman indices. QuickSwitch alligator leather or steel bracelet. References W25028B6, WGPN0006. Legendary wear, feminine by essence.`
+      );} },
+
+    { id:'cartier_panthere_small', kw:['panthère petit','panthere 22','panthère 22mm','panthère petite','cartier panthere small'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Panthère 22'; return t(
+        `Cartier Panthère 22mm (acier/or, quartz) : la délicate intemporelle. Boîtier 22mm acier ou or jaune, lunette polygonale fine. Mouvement quartz 2 ans autonomie. ~2 800–4 200€ (acier), ~15 000–22 000€ (or). Cadran blanc ou argent léger. Très féminin, poignets délicats. Bracelet cuir ou acier fin QuickSwitch. References W25014B6, WGPN0008. Porté discret, élégance minimaliste.`,
+        `Cartier Panthère 22mm (steel/gold, quartz): the delicate timeless piece. 22mm stainless steel or yellow gold case, fine polygonal bezel. Quartz movement 2-year reserve. ~€2,800–4,200 (steel), ~€15,000–22,000 (gold). Light white or silver dial. Very feminine, delicate wrists. Fine leather or steel QuickSwitch bracelet. References W25014B6, WGPN0008. Discreet wear, minimalist elegance.`
+      );} },
+
+    // DRIVE COLLECTION
+    { id:'cartier_drive_auto', kw:['drive automatique','drive acier','drive coussin','drive auto','cartier drive mouvement'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Drive de Cartier'; return t(
+        `Cartier Drive de Cartier (41mm, acier, cal. 1904 MC) : l'outil coussin élégant. Boîtier 41mm acier inoxydable, forme coussin bombée caractéristique. Mouvement automatique 40h réserve, 100m étanchéité. ~7 500–9 000€ neuf. Cadran bleu, gris ou blanc, aiguilles épées. Bracelet cuir alligator ou acier QuickSwitch. Références W2DV0010 (acier). Design intemporel depuis 2010, très demandé second marché.`,
+        `Cartier Drive de Cartier (41mm, steel, cal. 1904 MC): the elegant cushion tool. 41mm stainless steel case, characteristic domed cushion shape. Automatic movement 40-hour reserve, 100m water resistance. ~€7,500–9,000 new. Blue, gray or white dial, sword hands. Alligator leather or QuickSwitch steel bracelet. References W2DV0010 (steel). Timeless design since 2010, highly sought secondary market.`
+      );} },
+
+    { id:'cartier_drive_moon', kw:['drive phases lune','drive moon phases','drive lune','drive astronomique','cartier drive calendar'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Drive de Cartier Moon Phases'; return t(
+        `Cartier Drive de Cartier Phases Lune (41mm, acier/or, cal. 1904 MC phases) : complexité élégante. Boîtier acier ou or jaune, forme coussin. Mouvement automatique phases lune intégrées. ~12 000–15 000€ (acier), ~55 000–70 000€ (or). Cadran argenté ou bleu, affichage lune en haut. Rare, collection spécialisée Cartier. Bracelet cuir premium alligator. Disponibilité boutique limitée.`,
+        `Cartier Drive de Cartier Moon Phases (41mm, steel/gold, cal. 1904 MC phases): elegant complexity. Steel or yellow gold case, cushion shape. Automatic movement with integrated moon phases. ~€12,000–15,000 (steel), ~€55,000–70,000 (gold). Silver or blue dial, moon display at top. Rare, Cartier specialized collection. Premium alligator leather bracelet. Limited boutique availability.`
+      );} },
+
+    // ROTONDE COLLECTION
+    { id:'cartier_rotonde_skeleton', kw:['rotonde skeleton','rotonde squelette','rotonde ajourée','rotonde transparent','cartier rotonde ajouré'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Rotonde de Cartier Skeleton'; return t(
+        `Cartier Rotonde de Cartier Squelette (42mm, acier/or, cal. 9611 MC) : ronde haute horlogerie. Boîtier 42mm acier inoxydable ou or rose 18ct, mouvement squelettisé visible 360°. Mouvement automatique 40h réserve, 100m étanchéité. ~20 000–25 000€ (acier), ~65 000–85 000€ (or rose). Cadran squelettisé exposant roues et balancier. Bracelet cuir alligator cartier premium. Référence W1556209. Collection horologère, pièce de conversation.`,
+        `Cartier Rotonde de Cartier Skeleton (42mm, steel/gold, cal. 9611 MC): round haute horlogerie. 42mm stainless steel or 18ct rose gold case, 360° visible skeletonized movement. Automatic movement 40-hour reserve, 100m water resistance. ~€20,000–25,000 (steel), ~€65,000–85,000 (rose gold). Skeletonized dial exposing wheels and balance. Premium Cartier alligator leather bracelet. Reference W1556209. Horological collection, conversation piece.`
+      );} },
+
+    { id:'cartier_rotonde_repeater', kw:['rotonde minute repeater','rotonde sonnerie','rotonde repeater','rotonde carillon','cartier rotonde minute'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Rotonde Minute Repeater'; return t(
+        `Cartier Rotonde de Cartier Sonnerie Minute (45mm, or rose, cal. 9410 MC) : la complication ultime. Boîtier 45mm or rose 18ct, mouvement sonnerie minute mécanique. Mouvement automatique haute horlogerie 50h réserve. 100m étanchéité. ~120 000–150 000€ neuf. Cadran bleu nuit, aiguilles or rose. Très rarement proposé, collection hautement spécialisée Cartier. Pièce de manufacture, production limitée annuelle.`,
+        `Cartier Rotonde de Cartier Minute Repeater (45mm, rose gold, cal. 9410 MC): the ultimate complication. 45mm 18ct rose gold case, mechanical minute repeater chiming. High horological automatic movement 50-hour reserve. 100m water resistance. ~€120,000–150,000 new. Midnight blue dial, rose gold hands. Rarely offered, highly specialized Cartier collection. Manufacture piece, limited annual production.`
+      );} },
+
+    { id:'cartier_rotonde_tourbillon', kw:['rotonde tourbillon','rotonde astrotourbillon','rotonde chrono tourbillon','cartier rotonde tourbillon'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Rotonde Astrotourbillon'; return t(
+        `Cartier Rotonde de Cartier Astrotourbillon (45mm, platine, cal. 9450 MC) : la rotation perpétuelle. Boîtier 45mm platine Cartier, tourbillon équilibrant visible à 6h. Mouvement automatique 9450 MC 50h réserve. 100m étanchéité. ~85 000–110 000€ neuf. Cadran bleu ou noir, échappement visible. Bracelet cuir alligator noir couture cartier. Référence W1580050. Pièce haute manufacture, port exclusif.`,
+        `Cartier Rotonde de Cartier Astrotourbillon (45mm, platinum, cal. 9450 MC): perpetual rotation. 45mm Cartier platinum case, balancing tourbillon visible at 6 o'clock. Automatic 9450 MC movement 50-hour reserve. 100m water resistance. ~€85,000–110,000 new. Blue or black dial, visible escapement. Black Cartier-stitched alligator leather bracelet. Reference W1580050. High manufacture piece, exclusive wear.`
+      );} },
+
+    { id:'cartier_rotonde_perpetual', kw:['rotonde calendrier perpétuel','rotonde perpetual calendar','rotonde perpetuelle','cartier rotonde complex'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Rotonde Perpetual Calendar'; return t(
+        `Cartier Rotonde de Cartier Calendrier Perpétuel (45mm, platine, cal. 9420 MC) : les 128 ans programmées. Boîtier 45mm platine, calendrier mécanique perpétuel sans correction humaine jusqu'à 2100. Mouvement automatique 50h réserve, 100m étanchéité. ~95 000–125 000€ neuf. Cadran bleu roi, affichage date/mois/lune. Bracelet cuir alligator premium. Référence W1580052. Horlogerie suprême, pièce patrimoine.`,
+        `Cartier Rotonde de Cartier Perpetual Calendar (45mm, platinum, cal. 9420 MC): 128 years programmed. 45mm platinum case, mechanical perpetual calendar requiring no human correction until 2100. Automatic movement 50-hour reserve, 100m water resistance. ~€95,000–125,000 new. Royal blue dial, date/month/moon display. Premium alligator leather bracelet. Reference W1580052. Supreme horology, heritage piece.`
+      );} },
+
+    // OTHER COLLECTIONS
+    { id:'cartier_cle_40', kw:['clé 40','cle 40','cartier cle','cle couronne clé','cartier clé automatique','cle key crown'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Clé de Cartier 40'; return t(
+        `Cartier Clé de Cartier 40mm (acier/or, cal. 1904 MC) : la couronne-clé révolutionnaire. Boîtier 40mm acier ou or jaune, couronne en forme de clé octogonale brevetée. Mouvement automatique 40h réserve, 100m étanchéité. ~8 000–10 000€ (acier), ~42 000–55 000€ (or). Cadran bleu/noir/argent, affichage classique. Bracelet QuickSwitch acier ou cuir. Références W2CL0002 (acier), WGCL0002 (or). Innovation design 2021, très recherchée collectors.`,
+        `Cartier Clé de Cartier 40mm (steel/gold, cal. 1904 MC): the revolutionary key-shaped crown. 40mm stainless steel or yellow gold case, patented octagonal key-shaped crown. Automatic movement 40-hour reserve, 100m water resistance. ~€8,000–10,000 (steel), ~€42,000–55,000 (gold). Blue/black/silver dial, classic display. QuickSwitch steel or leather bracelet. References W2CL0002 (steel), WGCL0002 (gold). 2021 design innovation, highly sought by collectors.`
+      );} },
+
+    { id:'cartier_ronde_solo', kw:['ronde solo','ronde simple','ronde classique','ronde cartier','cartier ronde montre'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Ronde Solo'; return t(
+        `Cartier Ronde Solo de Cartier (36mm, acier/or, cal. 1904 MC) : la rond pure. Boîtier 36mm acier inoxydable ou or jaune, forme ronde classique. Mouvement automatique 40h réserve, 100m étanchéité. ~6 500–8 000€ (acier), ~35 000–45 000€ (or). Cadran blanc, index romains appliqués. Bracelet cuir alligator noir ou acier QuickSwitch. Références W2RN0002 (acier), WGRN0002 (or). Classicisme intemporel, collection discrète.`,
+        `Cartier Ronde Solo de Cartier (36mm, steel/gold, cal. 1904 MC): the pure round. 36mm stainless steel or yellow gold case, classical round shape. Automatic movement 40-hour reserve, 100m water resistance. ~€6,500–8,000 (steel), ~€35,000–45,000 (gold). White dial, applied Roman indices. Black alligator leather or QuickSwitch steel bracelet. References W2RN0002 (steel), WGRN0002 (gold). Timeless classicism, discreet collection.`
+      );} },
+
+    { id:'cartier_masse_mysterieuse', kw:['masse mystérieuse','mystery movement','mouvement mystère','cartier mystère 2022','rotating mystery'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Masse Mystérieuse'; return t(
+        `Cartier Masse Mystérieuse de Cartier (45mm, or rose, cal. 9919 MC) : l'innovation révolutionnaire 2022. Boîtier 45mm or rose 18ct, aiguilles tournant en lévitation optique (vrai mécanisme horloger). Mouvement 9919 MC 40h réserve. 100m étanchéité. ~55 000–75 000€ neuf. Cadran intégralement transparent, mécanisme apparent. Innovation horlogère mondiale unique à Cartier. Bracelet cuir alligator premium. Très recherchée collectionneurs modernes.`,
+        `Cartier Masse Mystérieuse de Cartier (45mm, rose gold, cal. 9919 MC): the revolutionary 2022 innovation. 45mm 18ct rose gold case, hands rotating in optical levitation (true watchmaking mechanism). 9919 MC movement 40-hour reserve. 100m water resistance. ~€55,000–75,000 new. Fully transparent dial, visible mechanism. Unique worldwide watchmaking innovation only at Cartier. Premium alligator leather bracelet. Highly sought by modern collectors.`
+      );} },
+
+    { id:'cartier_privee', kw:['privée collection','cartier privee','privee reissue','privee revisited','cartier heritage revisited'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Cartier Privée'; return t(
+        `Cartier Collection Privée : archives revisitées (années 2010-2024). Éditions limitées réinterprétant les archives Cartier 1920-1980. Boîtiers acier ou or jaune 18ct, mouvements Cartier 1904-9611 MC. ~8 000–25 000€ selon modèle/année. Chaque pièce numérotée, étui presentation heritage Cartier. Exemples récents : Ronde Revisitée 1940, Santos Dumont 1927. Très recherchée collectors patrimoine. Disponibilité boutique exclusive, avant-vente abonnés.`,
+        `Cartier Privée Collection: revisited archives (2010-2024). Limited editions reinterpreting Cartier archives 1920-1980. Stainless steel or 18ct yellow gold cases, Cartier 1904-9611 MC movements. ~€8,000–25,000 depending on model/year. Each numbered piece, heritage presentation case. Recent examples: 1940 Ronde Revisited, 1927 Santos Dumont. Highly sought by heritage collectors. Exclusive boutique availability, subscriber pre-sales.`
+      );} },
+
+    { id:'cartier_baignoire', kw:['baignoire','baignoire ovale','baignoire 1912','cartier baignoire ovale','baignoire or'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Baignoire'; return t(
+        `Cartier Baignoire (40.55 x 28.6mm, acier/or, cal. 1904 MC) : l'ovale fondateur 1912. Boîtier acier inoxydable ou or jaune, forme ovale signature depuis création. Mouvement automatique 40h réserve, 30m étanchéité. ~7 500–9 500€ (acier), ~38 000–48 000€ (or). Cadran blanc email ou bleu, chiffres romains. Bracelet cuir alligator cartier noir. Référence W2BA0005 (acier contemporain). Pièce patrimoine, unisexe elegant.`,
+        `Cartier Baignoire (40.55 x 28.6mm, steel/gold, cal. 1904 MC): the foundational oval 1912. Stainless steel or yellow gold case, signature oval shape since creation. Automatic movement 40-hour reserve, 30m water resistance. ~€7,500–9,500 (steel), ~€38,000–48,000 (gold). White enamel or blue dial, Roman numerals. Black Cartier alligator leather bracelet. Reference W2BA0005 (contemporary steel). Heritage piece, elegant unisex.`
+      );} },
+
+    { id:'cartier_tonneau', kw:['tonneau','tonneau barrel','tonneau historique','cartier tonneau forme','tonneau vintage cartier'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tonneau'; return t(
+        `Cartier Tonneau de Cartier (38 x 30mm, or rose, cal. 1904 MC) : la forme tonneau rare historique. Boîtier or rose 18ct, boîtier barillet caractéristique. Mouvement automatique 40h réserve, 30m étanchéité. ~45 000–58 000€ neuf (or rose). Cadran argenté ou bleu, aiguilles épées or rose. Bracelet cuir alligator marron cartier. Édition contemporaine 2023 très limitée. Collection heritage, relaunch patrimoine après 30 ans absence.`,
+        `Cartier Tonneau de Cartier (38 x 30mm, rose gold, cal. 1904 MC): the rare historical barrel shape. 18ct rose gold case, characteristic barrel shape. Automatic movement 40-hour reserve, 30m water resistance. ~€45,000–58,000 new (rose gold). Silver or blue dial, rose gold sword hands. Brown Cartier alligator leather bracelet. 2023 contemporary limited edition. Heritage collection, heritage relaunch after 30 years absence.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // SANTOS EXPANDED — Modern & Vintage Heritage Icons
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'cartier_santos_100', kw:['santos 100','santos 100 xl','santos large discontinued','vintage santos large','cartier santos large','santos 100 automatic','santos 100 dress'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Santos 100 XL'; return t(
+        `Santos réf. WGSA0006 (37mm acier/or, cadran blanc). Mouvement automatique Cartier calibre 049. Édition plus grande Santos discontinuée. Marché 5 000–8 000€. Modèle transition prestige.`,
+        `Santos ref. WGSA0006 (37mm steel/gold, white dial). Cartier automatic caliber 049. Larger discontinued Santos edition. Market: €5,000–8,000. Prestige transition model.`
+      );} },
+
+    { id:'cartier_santos_galbee', kw:['santos galbee','galbee 1978','vintage santos galbee','cartier galbee classic','classic santos galbee','galbee original','santos 1970s'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Santos Galbée Classic 1978'; return t(
+        `Santos Galbée réf. 1560 (37mm acier, cadran blanc). Mouvement quartz Cartier original 1978. Lignes épurées Galbée signature. Très recherché vintage. Marché 4 000–7 000€ selon état. Icône Cartier habillée.`,
+        `Santos Galbée ref. 1560 (37mm steel, white dial). Original 1978 Cartier quartz movement. Signature Galbée clean lines. Highly sought vintage. Market: €4,000–7,000 depending on condition. Dressed Cartier icon.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // TANK EXPANDED — Manual & Automatic Variants
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'cartier_tank_solo_large', kw:['tank solo xl','tank solo large','tank solo automatic large','tank solo oversize','tank xl automatic','tank large automatic'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank Solo XL Automatic'; return t(
+        `Tank Solo réf. W5200027 (33mm acier, cadran blanc). Mouvement automatique Cartier manufacture. Version XL automatique prestige. Marché 4 500–7 000€. Montre élégante quotidienne.`,
+        `Tank Solo ref. W5200027 (33mm steel, white dial). Cartier manufacture automatic movement. Prestige XL automatic version. Market: €4,500–7,000. Elegant daily watch.`
+      );} },
+
+    { id:'cartier_tank_basculante', kw:['tank basculante','reversible tank','flipping case cartier','tank reversible','cartier reversible tank','basculante automatic','flip case tank'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank Basculante Reversible'; return t(
+        `Tank Basculante réf. W1018655 (36mm acier, cadran blanc). Mouvement automatique Cartier. Boîtier basculant réversible Cartier signature. Très rare vintage. Marché 6 000–10 000€. Montre réversible unique.`,
+        `Tank Basculante ref. W1018655 (36mm steel, white dial). Cartier automatic movement. Signature reversible flip case. Very rare vintage. Market: €6,000–10,000. Unique reversible watch.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // BALLON BLANC — Ladies Elegant Collection
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'cartier_ballon_blanc', kw:['ballon blanc','ballon blanc 30mm','cartier ballon ladies','ballon diamants','ballon diamond ladies','white balloon','diamond set ballon'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Ballon Blanc 30mm Diamond'; return t(
+        `Ballon Blanc réf. WE902067 (30mm acier/diamants, cadran blanc). Mouvement quartz Cartier. Boîtier rond gracieux diamants/brillants. Montre féminine luxe Cartier. Marché 5 000–9 000€. Prestige dames.`,
+        `Ballon Blanc ref. WE902067 (30mm steel/diamonds, white dial). Cartier quartz movement. Graceful round case diamonds/brilliants. Luxury Cartier ladies watch. Market: €5,000–9,000. Ladies prestige.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // PASHA VARIANTS — Sport Diver Models
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'cartier_pasha_seatimer', kw:['pasha seatimer','pasha diver','pasha diving watch','seatimer diver','cartier diving pasha','underwater pasha','pasha water sports'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Pasha SeaTimer Diver'; return t(
+        `Pasha SeaTimer réf. W31077M7 (42mm acier, cadran bleu). Mouvement automatique Cartier. Montre plongée sports Cartier 300m. Très rare modèle plongeur. Marché 4 000–7 000€. Collection sports aquatiques.`,
+        `Pasha SeaTimer ref. W31077M7 (42mm steel, blue dial). Cartier automatic movement. Cartier diving sports watch 300m. Very rare diver model. Market: €4,000–7,000. Water sports collection.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // HAUTE HORLOGERIE SKELETONS — Mechanical Masterworks
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'cartier_crash_skeleton', kw:['crash skeleton','cartier crash skeleton','crash skeletonized','mechanical crash','crash transparent','skeleton crash watch','crash transparent case'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Crash Skeleton Limited'; return t(
+        `Crash Skeleton réf. W10109X6 (44mm platine, transparent squelette). Mouvement mécanique Cartier squelette visible. Édition limitée Crash legendaire. Marché 15 000–25 000€. Collection haute horlogerie Cartier.`,
+        `Crash Skeleton ref. W10109X6 (44mm platinum, transparent skeleton). Cartier mechanical skeleton movement visible. Limited legendary Crash edition. Market: €15,000–25,000. Cartier haute horlogerie collection.`
+      );} },
+
+    { id:'cartier_tank_cintree_skeleton', kw:['tank cintree skeleton','cintree skeleton','tank cintree skeletonized','curved tank skeleton','skeleton tank cintree','transparent curved case'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Tank Cintrée Skeleton'; return t(
+        `Tank Cintrée Skeleton réf. W1535851 (45.5×27.4mm platine, squelette transparent). Mouvement mécanique squelette Cartier. Lignes courbes signature Tank Cintrée. Très rare. Marché 12 000–20 000€. Complication mécanique dress.`,
+        `Tank Cintrée Skeleton ref. W1535851 (45.5×27.4mm platinum, transparent skeleton). Cartier mechanical skeleton movement. Signature Tank Cintrée curved lines. Very rare. Market: €12,000–20,000. Dress mechanical complication.`
+      );} },
+
+    { id:'cartier_santos_dumont_skeleton', kw:['santos dumont skeleton','dumont skeleton','santos skeleton','skeleton micro-rotor','transparent dumont','santos-dumont skeletonized'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Santos-Dumont Skeleton Micro-Rotor'; return t(
+        `Santos-Dumont Skeleton réf. W2SA0007 (43.5mm platine, squelette micro-rotor). Mouvement mécanique manifestation horlogerie Santos-Dumont. Rotor micro-squelette visible. Très rare prestige. Marché 14 000–22 000€. Montre pilote prestige.`,
+        `Santos-Dumont Skeleton ref. W2SA0007 (43.5mm platinum, skeleton micro-rotor). Santos-Dumont mechanical movement showcase. Micro-skeleton visible rotor. Very rare prestige. Market: €14,000–22,000. Prestige pilot watch.`
+      );} },
+
+    { id:'cartier_revelation', kw:['revelation','cartier revelation','revelation perles','revelation gold beads','revelation perles or','revelation haute joaillerie','beaded revelation'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Révélation Gold Beads'; return t(
+        `Révélation réf. HPI00704 (42mm or rose, perles or). Mouvement mécanique Cartier perles dorées cachées sous sapphire. Concept révélation Cartier joaillerie. Ultra-rare. Marché 18 000–28 000€. Art haute joaillerie-horlogerie.`,
+        `Révélation ref. HPI00704 (42mm rose gold, gold beads). Cartier mechanical movement with hidden gold beads under sapphire. Cartier revelation jewelry concept. Ultra-rare. Market: €18,000–28,000. High jewelry-watchmaking art.`
+      );} },
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // CLASSICS — Collector Heritage Icons
+    // ──────────────────────────────────────────────────────────────────────────
+
+    { id:'cartier_must_21', kw:['must 21','must 21 cartier','cartier must vintage','must 21 1990s','vintage must 21','quartz must 21','must classic'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Must 21 1990s Classic'; return t(
+        `Must 21 réf. W10009T7 (37mm acier plaqué, cadran bleu). Mouvement quartz Cartier 1990s. Montre iconique accessible Cartier années 1990. Très recherchée vintage. Marché 2 500–5 000€. Classique Cartier quotidien.`,
+        `Must 21 ref. W10009T7 (37mm plated steel, blue dial). 1990s Cartier quartz movement. Iconic accessible Cartier 1990s watch. Highly sought vintage. Market: €2,500–5,000. Daily Cartier classic.`
+      );} },
+
+    { id:'cartier_cougar', kw:['cougar','cartier cougar','cougar 1980s','cougar vintage','sporty cougar','quartz cougar','1980s cartier sports'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Cougar 1980s Sports'; return t(
+        `Cougar réf. 887 (31.5mm acier, cadran noir). Mouvement quartz Cartier années 1980. Montre sportive Cartier rétro-vintage. Design carré-rond années 1980 signature. Marché 2 000–4 500€. Pièce rétro prestige.`,
+        `Cougar ref. 887 (31.5mm steel, black dial). 1980s Cartier quartz movement. Retro-vintage Cartier sports watch. Signature 1980s square-round design. Market: €2,000–4,500. Prestige retro piece.`
+      );} },
+
+    { id:'cartier_roadster', kw:['roadster','cartier roadster','roadster discontinued','vintage roadster','roadster collector','classic roadster','discontinued roadster favorite'],
+      r:()=>{ ctx.brand='Cartier'; ctx.model='Roadster Discontinued Favorite'; return t(
+        `Roadster réf. W62015V7 (43.5mm acier, cadran noir rectangulaire). Mouvement automatique Cartier. Montre sportive Roadster légendaire discontinuée. Ultra-recherchée collecteurs. Marché 4 500–8 000€. Icône automobile Cartier.`,
+        `Roadster ref. W62015V7 (43.5mm steel, rectangular black dial). Cartier automatic movement. Legendary discontinued Roadster sports watch. Ultra-sought by collectors. Market: €4,500–8,000. Cartier automotive icon.`
       );} },
 
     { id:'ap_offshore_lady', kw:['offshore lady','ap femme offshore','26048sk','offshore diamants','royal oak offshore femme','lady offshore','offshore 37','offshore 38 femme'],
@@ -1790,7 +3669,97 @@
         `Follow us on Instagram to discover our new arrivals exclusively. Contact us for the link.`
       ) },
 
-    { id:'fallback', kw:[], r:()=>t(
+    
+{ id:'guide_first_rolex', kw:['first Rolex','which model','beginner guide'],
+  r:()=>{ ctx.brand='Rolex'; ctx.type='Educational'; return t(
+    `FR: Choisir sa premiere Rolex est une decision majeure qui determine la trajectoire collectrice. Les trois candidats principaux: Submariner (tool watch legendaire, 100+ annees heritage, icone James Bond), Datejust (elegance classique pour tous contextes, premiere vraie montre de luxe), Oyster Perpetual (entree budget, acier seul, excellent starter). Submariner convient aux collecteurs sport-tech recherchant polyvalence eau/montagne. Datejust cible cadres professionnels elegant, differentes tailles 36/41/42mm, configurable acier/or selon budget. Oyster Perpetual offre qualité Rolex absolute au prix minimum - excellente introduction sans compromis horloger. Listes d'attente: Submariner 3-5 ans, Datejust 1-3 ans, Oyster Perpetual moins d'1 an généralement. Budget acier: €4,500-€8,000. Budget or: €15,000-€35,000+. Secret: les couleurs cadran (bleu, noir, argent) affectent desirabilitee et listes d'attente significativement. Submariner noir plus demande que bleu. Datejust gris très recherche actuellement. Conseil: debuter avec montre vous voulant vraiment porter quotidiennement, pas investissement pur - appreciation vient naturellement avec temps.`,
+    `EN: Selecting your first Rolex represents a pivotal decision shaping your entire collecting trajectory. Three primary candidates: Submariner (legendary tool-watch, 100+ year heritage, James Bond icon), Datejust (classical elegance across all contexts, first true luxury watch), Oyster Perpetual (budget entry point, steel-only, exceptional starter). Submariner suits sport-tech collectors seeking water/mountain versatility. Datejust targets elegant professionals; multiple sizes (36/41/42mm) and material options (steel/gold) match budgets. Oyster Perpetual delivers absolute Rolex quality at minimum price point—excellent introduction without horological compromise. Waiting lists: Submariner 3-5 years, Datejust 1-3 years, Oyster Perpetual typically under 1 year. Budget steel: USD 4,000-USD 7,500. Budget gold: USD 14,000-USD 32,000+. Secret: dial colors (blue, black, silver) significantly affect desirability and waiting times. Submariner black more pursued than blue. Datejust grey highly sought currently. Advice: begin with a watch you genuinely want wearing daily, not pure investment—appreciation follows naturally over time.`
+  );} },
+
+{ id:'guide_first_ap', kw:['first Audemars Piguet','Royal Oak','which reference'],
+  r:()=>{ ctx.brand='Audemars Piguet'; ctx.type='Educational'; return t(
+    `FR: La premiere Audemars Piguet devrait etre Royal Oak 15500ST acier (champion absolut depuis 2012), pas Offshore (trop sport), pas Code 11.59 (divisif design). Royal Oak 15500ST 41mm offre octagon legendaire depuis 1972, calibre 4302 ultra-fiable (70h reserve, chronometer), bracelet integré iconic reconnaissable instantanement globalement. Size 41mm domine actuellement - 36mm moins demande. Cadrans: bleu gradient TRES recherche actuellement, noir solide, gris gradient moderne. Liste d'attente terrible: 3-5 ans generalement meme chez revendeurs riches. Secret: gris et bleu moins demandes que noir - tenter ces couleurs pour liste d'attente courte. Offshore attire collecteurs "statement sportif" cherchant esthetique moderne extreme - moins heritage, plus techno-materiel. Code 11.59 propose design futuriste controversé - certains adorent, certains detestent (eviter si vous ne etes pas tres convaincu). Budget Royal Oak 15500ST acier: €26,500. Conseil: Royal Oak est montre "lifetime acquisition" - achetez le model et la couleur que vous aimerez porter TOUJOURS, pas speculation.`,
+    `EN: Your first Audemars Piguet should be Royal Oak 15500ST steel (absolute champion since 2012 redesign), not Offshore (too aggressively sporty), not Code 11.59 (divisive design). Royal Oak 15500ST 41mm showcases the legendary octagon since 1972, relies on ultra-reliable caliber 4302 (70-hour PR, chronometer), and features the iconic integrated bracelet recognized globally instantly. The 41mm size dominates currently—36mm less pursued. Dials: blue gradient highly sought currently, black solid classic, grey gradient contemporary-modern. Waiting lists brutal: 3-5 years typically even among wealthy dealers. Secret: grey and blue dials shorter waiting lists than black—try these for quicker acquisition. Offshore appeals to "statement sport" collectors seeking extreme modern aesthetics—less heritage, more techno-material innovation. Code 11.59 offers controversial futuristic design—some love, many despise (avoid unless thoroughly convinced). Budget Royal Oak 15500ST steel: USD 24,000. Advice: Royal Oak is lifetime-ownership watch—buy the size/color you'll wear forever, not speculation.`
+  );} },
+
+{ id:'guide_first_patek', kw:['first Patek Philippe','Nautilus wait','Aquanaut entry'],
+  r:()=>{ ctx.brand='Patek Philippe'; ctx.type='Educational'; return t(
+    `FR: Premiere Patek Philippe pose dilemma budget: Nautilus 5711A acier (montre reine iconique mais 5-8 ans liste d'attente, €38,500+) vs Aquanaut 5167A acier (plus accessible, 2-3 ans attente, €18,500) vs Calatrava 5226G (elegance formelle, moins demande, €16,500). Nautilus: symbol prestige absolut, integre depuis 1976, reste tres demande. Aquanaut: polyvalence excellente, bracelet composite unique, moins heritage que Nautilus mais plus "cool" design moderne. Calatrava: montre formelle classique, appreciation historique solide, zero liste d'attente generalement - achetez immediatement si possible. Budget: Aquanaut €18,500 (moins attente), Nautilus €38,500+ (TRES attente), Calatrava €16,500 (pas d'attente). Secret intelligence: Calatrava offre meilleur rapport qualite/attente - montre magnifique sans frustration listem d'attente eternelle. Certains collecteurs commencent Calatrava, puis Aquanaut, puis Nautilus 10 ans apres. Conseil: eviter achat gris-market (pas de garantie, risque authentication, dealers legitimates refusent service sans papers authentiques).`,
+    `EN: Your first Patek Philippe poses a budget dilemma: Nautilus 5711A steel (iconic queen watch but 5-8 year waiting list, USD 35,000+) vs Aquanaut 5167A steel (more accessible, 2-3 year wait, USD 17,000) vs Calatrava 5226G (formal elegance, minimal demand, USD 15,000). Nautilus: absolute prestige symbol, integrated since 1976, perpetually in demand. Aquanaut: excellent versatility, unique composite bracelet, less heritage than Nautilus but more "cool" modern design. Calatrava: classical formal watch, solid appreciation history, zero waiting list typically—purchase immediately if possible. Budget: Aquanaut USD 17,000 (moderate wait), Nautilus USD 35,000+ (EXTREME wait), Calatrava USD 15,000 (no wait). Secret intelligence: Calatrava offers best quality/wait ratio—magnificent watch without eternal waiting frustration. Some collectors begin Calatrava, then Aquanaut, then Nautilus 10 years later. Advice: avoid grey-market purchase (no warranty, authentication risk, legitimate dealers refuse service without authentic papers).`
+  );} },
+
+{ id:'guide_investment', kw:['watches investment','value retention','secondary market'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Les montres de luxe comme investissement: realite objective. Montres acier sports Rolex (Submariner, GMT-Master II, Datejust) apprecient 10-15% annuellement quand neuves, se stabilisent puis apprecient 5-8% long-terme. Raison: demande outrageous superieure a production limitee Rolex deliberee. Autres marques (Omega, Tudor) ne retiennent pas valeur steel - Rolex seul. Patek Philippe: appreciation exceptionnelle 15-30% annuellement pour Nautilus/Aquanaut, plus haute pour Perpetual Calendar/complications rares. Raison: manufacturing ultra-limitee et heritage perpetuel. Audemars Piguet: appreciation 8-15% annuellement pour Royal Oak, moins predictable que Patek mais plus que Rolex acier. Richard Mille: appreciation speculative 20%+ mais extremement volatile, requier expertise. RISQUES MAJEURS: 1) Marche correction cyclique possible; 2) Nouvelles productions peuvent surtout inonder grey-market, deprimer valeurs; 3) Services coûteux (€3,000-€8,000 Rolex) impactent ownership total-cost; 4) Authentification faux montres en explosion. CONSEIL: Acheter montre que vous porterez quotidiennement PLUS appreciation naturelle - jamais speculer pur. Montres conservees dans boite sans port == destruction lente valeur (oxydation, batterie, mecanisme rouille).`,
+    `EN: Luxury watches as investment: objective reality. Rolex steel sports watches (Submariner, GMT-Master II, Datejust) appreciate 10-15% annually when new, stabilize, then appreciate 5-8% long-term. Reason: outrageous demand exceeds Rolex's deliberately limited production. Other brands (Omega, Tudor) don't retain steel value—Rolex alone dominates. Patek Philippe: exceptional appreciation 15-30% annually for Nautilus/Aquanaut, higher for Perpetual Calendar/rare complications. Reason: ultra-limited manufacturing and perpetual heritage prestige. Audemars Piguet: 8-15% annual appreciation for Royal Oak, less predictable than Patek but higher than Rolex steel. Richard Mille: speculative appreciation 20%+ but extremely volatile, requires expertise. MAJOR RISKS: 1) Market correction possible cyclically; 2) New productions flooding grey-market may depress values; 3) Service costs (USD 2,700-USD 7,300 Rolex) impact total ownership cost; 4) Counterfeit authentication explosively increasing. ADVICE: Buy watches you'll wear daily PLUS natural appreciation—never pure speculation. Watches preserved in boxes unworn = slow value destruction (oxidation, battery, mechanism rust).`
+  );} },
+
+{ id:'guide_steel_vs_gold', kw:['steel vs gold watches','value retention','daily wear'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Acier vs or: le dilemme fondamental du collecteur. ACIER: resistance rayures inferieure (visible avec le temps), maintenance aisee, port quotidien sans culpabilite, appreciation value bonne (Rolex steel Submariner +10-15% annuellement), prix 50% moins couteux. Or jaune/rose: resistance rayures superieure (or plus mou = patine naturelle plutot que rayures nettes), maintenance intensive (polissage tous les 5 ans ~€800), port quotidien difficile (peur d'endommager prestige metal), appreciation value speculative (depend materialite or spot + demande). Or blanc: version "compromis" - resistance intermediate, maintenance moderate. VERDICT PRATIQUE: Acier ideal pour collector novice et sport-usage. Or convient collecteur expert pret entretien obsessif et port occasional formel. Rolex acier Submariner: €6,800 neuf, €8,500-€11,000 preowned 5-6 ans. Rolex or jaune Submariner: €32,000 neuf, €35,000-€45,000 preowned (appreciation limitee car or spot). SECRET: or blanc Rolex sous-evalue - moins demande que or jaune mais quality identique. Bonne opportunite acquisition.`,
+    `EN: Steel vs gold: the fundamental collector dilemma. STEEL: lower scratch resistance (visible over time), easy maintenance, daily wear without guilt, good value appreciation (Rolex steel Submariner +10-15% annually), 50% cheaper. Yellow/rose gold: superior scratch resistance (gold softer = natural patina rather than visible scratches), intensive maintenance (polishing every 5 years ~USD 700), difficult daily wear (fear of damaging precious-metal prestige), speculative appreciation (depends on gold spot price + demand). White gold: "compromise" version—intermediate resistance, moderate maintenance. PRACTICAL VERDICT: Steel ideal for novice collectors and sport usage. Gold suits expert collectors ready for obsessive maintenance and formal-occasional wear. Rolex steel Submariner: USD 6,200 new, USD 7,700-USD 10,000 pre-owned 5-6 years. Rolex yellow-gold Submariner: USD 29,000 new, USD 32,000-USD 41,000 pre-owned (limited appreciation as gold spot-dependent). SECRET: Rolex white gold undervalued—less pursued than yellow gold but identical quality. Good acquisition opportunity.`
+  );} },
+
+{ id:'guide_automatic_vs_quartz', kw:['automatic movement','quartz watch','mechanical vs battery'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Mouvements automatiques vs quartz: la philosophie horlogere diverge radicalement. AUTOMATIQUE (remontage automatique): ressort moteur alimente oscillation balancier (frequence 28,800 vibrations/heure typiquement), precision typique 5-15 secondes/mois, reserve marche 40-72h selon calibre, necessite remontage manuel occasionnel si port discontinu, maintenance service tous 5-10 ans (~€2,000-€5,000), appreciation prestige collecteur (mecanisme visible = art horloger), vibration tactile poignee confere sensation authentique "mecanisme vivant". Rolex utilise automatique exclusivement. QUARTZ (batterie): oscillateur quartz frequence 32,768 Hz produit precision exceptionnelle 5-10 secondes/ANNEE, batterie remplacement ~€20-€50 tous 2-3 ans, zero maintenance horlogere, legere, economique, precise MAIS perception prestige inferieure (quartz = industriel, pas art). Seiko/Omega Seamaster proposent quartz. VERDICT: automatique pour collecteurs appriant mecanisme et heritage; quartz pour pragmatiques precision-prioritaires. Rolex refuse quartz volontairement - decision marketing prestige.`,
+    `EN: Automatic vs quartz movements: radically divergent horological philosophies. AUTOMATIC (self-winding): mainspring powers oscillating balance wheel (typically 28,800 vibrations per hour), typical accuracy 5-15 seconds per month, power reserve 40-72 hours depending on caliber, requires occasional manual winding if worn discontinuously, service maintenance every 5-10 years (~USD 1,800-USD 4,500), collector prestige appreciation (visible mechanism = horological art), tactile vibration on wrist conveys genuine "living mechanism" sensation. Rolex uses automatic exclusively. QUARTZ (battery-powered): quartz oscillator at 32,768 Hz frequency produces exceptional accuracy 5-10 seconds per YEAR, battery replacement ~USD 15-USD 40 every 2-3 years, zero horological maintenance, light, economical, supremely precise BUT lower prestige perception (quartz = industrial, not art). Seiko/Omega Seamaster offer quartz alternatives. VERDICT: automatic for collectors valuing mechanism and heritage; quartz for pragmatists prioritizing accuracy. Rolex deliberately refuses quartz—intentional prestige marketing decision.`
+  );} },
+
+{ id:'guide_chronometer', kw:['COSC chronometer','Patek seal','certification standards'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Certification chronographe COSC vs Patek Seal: deux standards d'excellence divergents. COSC (Controle Officiel Suisse des Chronomètres): certification suisse independante testant precision mouvement sur 15 jours en differentes positions/temperatures. Precision cible COSC: -4/+6 secondes/jour (exceptionnellement strict comparé normal horlogerie). Rolex, Patek Philippe, Audemars Piguet obtiennent certification COSC de serie - c'est passage obligatoire. Prestige moderé: COSC standard luxe, pas exceptional. PATEK SEAL: certification Patek propriétaire infiniment plus exigeante que COSC - teste mouvement 1000+ heures avec precision cible -3/+2 secondes/jour (quasi-impossible). Seules montres Patek Philippe remplissent Patek Seal - marketing prestige maison. Precision atteinte: exceptionnelle, vieillissement mouvement minimal. Grand horloger comme Lange aussi utilise certification propriétaire (Lange Certificate). VERDICT: COSC certifie = qualité excellent (standard minimum Rolex/Patek); Patek Seal = qualité exceptionnelle (prestige supremum). Lors achat, verifier certification est standard de controle qualite - montre sans certification = red-flag possible faux.`,
+    `EN: COSC Chronometer certification vs Patek Seal: two divergent excellence standards. COSC (Controle Officiel Suisse des Chronomètres): independent Swiss certification testing movement accuracy over 15 days across different positions/temperatures. COSC accuracy target: -4/+6 seconds per day (exceptionally strict versus typical horology). Rolex, Patek Philippe, Audemars Piguet achieve COSC certification standard—mandatory passage. Prestige moderate: COSC standard luxury, not exceptional. PATEK SEAL: Patek proprietary certification infinitely more demanding than COSC—tests movement 1000+ hours targeting -3/+2 seconds per day (nearly impossible). Only Patek Philippe watches achieve Patek Seal—in-house prestige marketing. Achieved precision: exceptional, movement aging minimal. Grand horlogers like A. Lange & Söhne also use proprietary certification (Lange Certificate). VERDICT: COSC certified = excellent quality (Rolex/Patek minimum standard); Patek Seal = exceptional quality (prestige maximum). When purchasing, verify certification as quality-control standard—watches without certification = possible counterfeit red-flag.`
+  );} },
+
+{ id:'guide_water_resistance', kw:['water resistance rating','diving depth','practical meaning'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Etanche 30m/50m/100m/300m: interpretations pratiques souvent mal comprises. 30M (3 bars): FORMAL DRESS ONLY - pas d'eau du tout (respiration condensation peut penetrer). Exemples: Patek Calatrava 5226 dress watches. 50M (5 bars): RESISTANT SPLASHURE - resistance aux eclaboussures lavage mains occasionnel, JAMAIS immersion deliberee. Exemples: Patek Aquanaut 5167, Rolex Cellini dress watches. 100M (10 bars): DAILY WEAR WATER - resistance nage, douche, snorkeling superficiel (max 30 secondes immersion). Rolex Datejust, Submarine, GMT-Master II. Interpretation: 100m designé pour nage recreational et douche, PAS FOR DIVING sans formation. 300M (30 bars): RECREATIONAL DIVING - resistance dive jusqu'à ~60 metres pour divers certifies, snorkeling profond illimite. Exemples: Rolex Submariner 300m, Omega Seamaster 300m, Rolex Sea-Dweller 1000m. 1000M+ (100+ bars): PROFESSIONAL DEEP DIVING - resistance dive extreme jusqu'à 3,000+ metres. Exemples: Rolex Sea-Dweller Deepsea 3900m. CONSEIL: acheteur novice 100m suffit amplement. Certification etanche: verifier "Swiss Made" + bracelet integre implique meilleure resistance (flexion reduit etancheite).`,
+    `EN: Water resistance 30m/50m/100m/300m: practical interpretations often misunderstood. 30M (3 bars): FORMAL DRESS ONLY—no water exposure intended (even breathing condensation can penetrate). Examples: Patek Calatrava dress watches. 50M (5 bars): SPLASH-RESISTANT—resists splashing during hand-washing occasional exposure, NEVER deliberate immersion. Examples: Patek Aquanaut, Rolex Cellini dress watches. 100M (10 bars): DAILY WEAR WATER—resistance to swimming, showering, shallow snorkeling (maximum 30 seconds immersion). Rolex Datejust, Submariner, GMT-Master II. Interpretation: 100m designed for recreational swimming and showers, NOT DIVING without certification. 300M (30 bars): RECREATIONAL DIVING—resistance to diving ~200 feet for certified divers, unlimited deep snorkeling. Examples: Rolex Submariner 300m, Omega Seamaster 300m. 1000M+ (100+ bars): PROFESSIONAL DEEP DIVING—extreme depth resistance to 9,800+ feet. Examples: Rolex Sea-Dweller Deepsea 3,900m. ADVICE: novice buyers—100m adequately sufficient. Waterproof certification: verify "Swiss Made" + integrated bracelet implies better resistance (bracelet flexing compromises seal).`
+  );} },
+
+{ id:'guide_bracelet_guide', kw:['watch bracelet types','Oyster Jubilee','President','integrated'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Types bracelet montre: vocabulaire critique pour collecteur. OYSTER: bracelet trois-rangs acier simplifie (chainette triple) Rolex legendaire depuis 1933. Design robuste, polyvalent, moins elegant que Jubilee. Montees sur: Submariner, GMT-Master II, Sea-Dweller, Explorer, Yacht-Master. JUBILEE: bracelet neuf-rangs ornate (chainette triple croisee) Rolex depuis 1945 Datejust original. Design plus elegant, plus feminin perception, excessivement demande actuellement. Montees sur: Datejust, Day-Date, Sky-Dweller. PRESIDENT: bracelet semi-circulaire polies avec maillons profonds trois-rangees, ultra-luxe Rolex Day-Date (President watch). Finition tres raffinee. INTEGRE (Audemars Piguet): bracelet forge integralement boitier (Royal Oak depuis 1972). Design contemporain icon, zero jeu mailles, aesthetic superieur. Audemars Piguet monopole quasi-total. OYSTERFLEX: bracelet caoutchouc/metal hybrid Rolex (Yacht-Master, Sky-Dweller, Submariner Oysterflex options). Confort port, resistance chlore piscine, maintenance facile. CUIR/COMPOSITE: montages cuir ou caoutchouc (Patek Aquanaut composite, Patek Calatrava). Maintenance fastidieuse, replacement tous 5 ans (~€400-€600). CONSEIL: Jubilee plus demande = plus cher bracelets remplacement; Oyster plus compatible polyvalent.`,
+    `EN: Watch bracelet types: critical vocabulary for collectors. OYSTER: three-row simplified steel bracelet (triple chainette) Rolex legendary since 1933. Robust design, versatile, less elegant than Jubilee. Mounted on: Submariner, GMT-Master II, Sea-Dweller, Explorer, Yacht-Master. JUBILEE: nine-row ornate bracelet (crossed triple chainette) Rolex since 1945 original Datejust. More elegant design, feminine perception, excessively sought currently. Mounted on: Datejust, Day-Date, Sky-Dweller. PRESIDENT: semi-circular polished bracelet with deep three-row links, ultra-luxury Rolex Day-Date (President watch). Exceptionally refined finishing. INTEGRATED (Audemars Piguet): bracelet forged integrally with case (Royal Oak since 1972). Contemporary iconic design, zero link play, superior aesthetics. Audemars Piguet near-total monopoly. OYSTERFLEX: hybrid rubber/metal bracelet Rolex (Yacht-Master, Sky-Dweller, Submariner options). Comfortable wear, chlorine resistance, easy maintenance. LEATHER/COMPOSITE: leather or rubber mounting (Patek Aquanaut composite, Patek Calatrava). Fastidious maintenance, replacement every 5 years (~USD 350-USD 550). ADVICE: Jubilee most sought = expensive replacements; Oyster more versatile-compatible.`
+  );} },
+
+{ id:'guide_watch_movements', kw:['watch movement types','manual automatic','calibre explained'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Mouvements horlogers: guide complet pour comprehension mechanism. MOUVEMENT MANUEL (remontage manuel): ressort moteur alimente par remontage quotidien avec couronne. Frequence oscillateur balancier 28,800 vibrations/heure (Rolex standard). Reserve marche typique 48-72h. Precision 5-15 secondes/mois. Exemples: Patek Calatrava 5226 (calibre 240), Richard Mille (calibres extremement complexes 45-jour reserve). Avantages: mecanisme visible transparence, plus "authentique" sensation. Inconvenients: remontage quotidien fastidieux. MOUVEMENT AUTOMATIQUE (self-winding): oscillateur rotor metallique alimente par mouvement poignet. Reserve marche 40-80h selon calibre. Precision identique manuel. Rolex monopole quasi-total automatique (tous mouvements 3135/3285/etc). Avantages: remontage automatique commodite, reserve 70h suffit 2-3 jours sans port. Inconvenients: plus complexe = plus couteux service. CHRONOGRAPHE: complication supplementaire avec seconds chrono + compteurs subdivisions temps. Calibres: Rolex 4130 (manuel), Zenith El Primero 400 (auto), Patek 240 HU (manuel). SPRING DRIVE (Seiko): technologie hybride - mainspring mais regule electroniquement quartz frequency. Precision quartz-level mais sensation automatique. TOURBILLON: complication ultra-rare cardan tournant continu pour eliminer effecte gravite precision. Rolex refuse tourbillon (heritage puriste). Seules Patek, Lange, pratiquent tourbillon.`,
+    `EN: Watch movements: complete guide for mechanism understanding. MANUAL MOVEMENT (hand-winding): mainspring powered by daily crown winding. Oscillator frequency 28,800 vibrations per hour (Rolex standard). Power reserve typically 48-72 hours. Accuracy 5-15 seconds per month. Examples: Patek Calatrava 5226 (caliber 240), Richard Mille (extremely complex calibers 45-day reserve). Advantages: visible transparency mechanism, more "authentic" sensation. Disadvantages: daily winding tedious. AUTOMATIC MOVEMENT (self-winding): metal rotor oscillator powered by wrist motion. Power reserve 40-80 hours depending on caliber. Identical accuracy to manual. Rolex near-total monopoly automatic (all 3135/3285/etc movements). Advantages: automatic winding convenience, 70-hour reserve sufficient 2-3 days unworn. Disadvantages: more complex = expensive service. CHRONOGRAPH: supplementary complication with chrono seconds + time subdivision counters. Calibers: Rolex 4130 (manual), Zenith El Primero 400 (auto), Patek 240 HU (manual). SPRING DRIVE (Seiko): hybrid technology—mainspring electronically regulated by quartz frequency. Quartz-level accuracy but automatic sensation. TOURBILLON: ultra-rare complication—continuously rotating carriage eliminating gravity's precision effects. Rolex deliberately refuses tourbillon (purist heritage). Only Patek, A. Lange & Söhne practice tourbillon.`
+  );} },
+
+{ id:'guide_buying_preowned', kw:['buying preowned watches','authentication','grey market'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Achat preowned montre luxe: piegges majeurs et protocole securite. DEALERS AUTHORISES vs GREY MARKET: achat revendeur autorise Rolex/Patek = garantie manufacturier 5 ans, service futur couvert, authentification certifiee. Achat grey-market (Chrono24, ebay, dealers non-autorises) = AUCUNE GARANTIE, risque contrefacon 5-15%, service refuse par manufacturiers sans papers originaux. SECRET: certains grey-market proposent "garanties tier" (2-3 ans couvrant defauts mecaniques) mais non-officiel. AUTHENTIFICATION CRITERES: 1) Gravure numero serie sur boitier (gravure fine, pas laser industriel); 2) Mouvement gravure calibre correct (Rolex 3285 vs faux 2836); 3) Box original + papers certains (importants 30% valeur); 4) Luminosité aiguilles homogene (faux souvent luminosite inégale); 5) Couleur cadran parfaite saturation (faux: cadran terne peinture mauvaise); 6) Poids global (acier imitation souvent allege). SERVICE PREOWNED: verifier historique service - montre serviceee tous 5 ans = meilleur presage fiabilite. Montre 10 ans sans service = risque rouille mecanisme interne. PRIX PREOWNED: Rolex Submariner 5-6 ans = -20% de neuf typiquement; Patek Nautilus 5-6 ans = +20-50% de neuf (appreciation!). CONSEIL: JAMAIS acheter montre sans documentation originale - perte massive valeur future + risque service refuse.`,
+    `EN: Buying pre-owned luxury watches: major pitfalls and security protocol. AUTHORIZED DEALERS vs GREY MARKET: purchase from authorized Rolex/Patek dealer = 5-year manufacturer warranty, future service covered, certified authentication. Grey-market purchase (Chrono24, eBay, non-authorized dealers) = NO WARRANTY, 5-15% counterfeit risk, manufacturers refuse service without original papers. SECRET: some grey-market dealers offer "tiered guarantees" (2-3 years covering mechanical defects) but non-official. AUTHENTICATION CRITERIA: 1) Serial number engraving on case (fine engraving, not industrial laser); 2) Movement caliber engraving correct (Rolex 3285 vs fake 2836); 3) Original box + papers critical (important 30% of value); 4) Hand luminosity homogeneous (fakes often uneven lume); 5) Dial color perfect saturation (fakes: dull dial poor paint); 6) Overall weight (counterfeit steel often lighter). PRE-OWNED SERVICE: verify service history—watch serviced every 5 years = better reliability predictor. Watch 10 years without service = internal mechanism rust risk. PRE-OWNED PRICING: Rolex Submariner 5-6 years = typically -20% from new; Patek Nautilus 5-6 years = +20-50% from new (appreciation!). ADVICE: NEVER buy watches without original documentation—massive future value loss + manufacturer service refusal risk.`
+  );} },
+
+{ id:'guide_watch_servicing', kw:['watch service','maintenance cost','service intervals'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Service montre: maintenance critique, couts substantiels, planification essentielle. INTERVALLE SERVICE: tous 5-10 ans recommande pour mouvements automatiques (oil degradation, mecanisme usure). Mouvements manuels Patek: tous 5-10 ans egalement. SERVICE PRIX TYPIQUE: Rolex €2,000-€3,500 service complet (nettoyage, huilage, ajustement); Patek €3,500-€6,000 service complet (plus complexe); Audemars Piguet €2,500-€4,000 service complet. SERVICE CHRONOGRAPHE: supplement €500-€1,500 (mecanisme chronographe complexe neccessite expertise supplementaire). QUE FAIT SERVICE: 1) Desassemblage complet; 2) Nettoyage pieces ultrasons; 3) Inspection usure; 4) Remplacement joints/pignons uses; 5) Huilage precision (marques speciales Rolex/Patek); 6) Reassemblage et chronometrage precision; 7) Test etancheite (water-pressure test 100+ bars); 8) Remplacement crystale si rayures. DELAI SERVICE: 6-12 mois attente typiquement (Rolex ADs surcharge demandes). CONSEIL: budget service dans calcul total-cost ownership long-terme. Montre non-servisee = degradation progressive rouille = perte valeur + risque mecanisme cassure catastrophique.`,
+    `EN: Watch servicing: critical maintenance, substantial costs, essential planning. SERVICE INTERVAL: every 5-10 years recommended for automatic movements (oil degradation, mechanism wear). Patek manual movements: every 5-10 years similarly. TYPICAL SERVICE COST: Rolex USD 1,800-USD 3,200 complete service (cleaning, oiling, adjustment); Patek USD 3,200-USD 5,500 complete service (more complex); Audemars Piguet USD 2,300-USD 3,700 complete service. CHRONOGRAPH SERVICE: supplement USD 450-USD 1,350 (chronograph mechanism complexity requires supplementary expertise). WHAT SERVICE INCLUDES: 1) Complete disassembly; 2) Ultrasonic parts cleaning; 3) Wear inspection; 4) Worn seal/pinion replacement; 5) Precision oiling (special Rolex/Patek brands); 6) Reassembly and chronometry timing; 7) Water-resistance testing (100+ bar pressure); 8) Crystal replacement if scratches. SERVICE WAIT: 6-12 months typical (Rolex ADs backlogged with demand). ADVICE: budget servicing into long-term total-cost-of-ownership calculations. Unserviced watch = progressive rust degradation = value loss + catastrophic mechanism-breaking risk.`
+  );} },
+
+{ id:'guide_rolex_waitlist', kw:['Rolex AD waitlist','how waitlist works','buying strategy'],
+  r:()=>{ ctx.brand='Rolex'; ctx.type='Educational'; return t(
+    `FR: Liste d'attente Rolex AD: systeme frustrant mais necessaire pour acheteurs legaux. FONCTIONNEMENT OFFICIEL: 1) Inscription AD en personne (pas telephone/email generalement); 2) Specification montre exacte (modele, materiau, couleur cadran, taille); 3) Attente 1-5+ annees selon popularite reference; 4) AD contacte quand allocation arrivee; 5) Droit refusal OU obligation achat (selon AD rules). REGLES NON-ECRITES: 1) AD preferent clients fideles (acheteurs passees montres - Datejust reconversion en Submariner aide attente); 2) Achats autres produits Rolex helps (tennis, bracelets, etc); 3) Relationnel personnel direct manager AD crucial; 4) Femmes statistiquement attente plus courte (genre bias dans industrie); 5) Multi-inscription differents ADs reduit attente mais perception negative certains. MODELES ATTENTES LONGUES: Submariner noir 2-5 ans, GMT-Master II Pepsi 3-7 ans, Daytona acier 5-10 ans (extremement demande), Datejust bleu ~1-2 ans. MODELES ATTENTES COURTES: Oyster Perpetual acier ~0-6 mois, Air-King ~0-2 mois, Explorer ~3-6 mois. GREY MARKET ALTERNATIVE: achat preowned Chrono24 elimine liste d'attente mais couts premium 20-50% + pas garantie manufacturier. CONSEIL STRATEGIE: acheter reference moins demandee d'abord (Air-King, Oyster Perpetual), puis revendeur reconversion demande populaire apres 2-3 ans de relationnel.`,
+    `EN: Rolex AD waiting list: frustrating but necessary system for legal buyers. OFFICIAL MECHANISM: 1) Personal AD registration (not typically phone/email); 2) Exact watch specification (model, material, dial color, size); 3) Wait 1-5+ years depending on reference popularity; 4) AD contacts when allocation arrives; 5) Right of refusal OR purchase obligation (per AD rules). UNWRITTEN RULES: 1) ADs prefer loyal customers (past watch buyers—Datejust-to-Submariner conversion helps wait); 2) Other Rolex purchases help (jewelry, straps, etc); 3) Direct personal relationship with AD manager crucial; 4) Women statistically shorter waits (gender bias industry-wide); 5) Multi-registration at different ADs reduces wait but perceived negatively by some. LONG WAIT MODELS: Submariner black 2-5 years, GMT-Master II Pepsi 3-7 years, Daytona steel 5-10 years (extremely sought), Datejust blue ~1-2 years. SHORT WAIT MODELS: Oyster Perpetual steel ~0-6 months, Air-King ~0-2 months, Explorer ~3-6 months. GREY MARKET ALTERNATIVE: pre-owned Chrono24 purchase eliminates waiting but 20-50% premium costs + no manufacturer warranty. STRATEGY ADVICE: buy less-sought reference first (Air-King, Oyster Perpetual), then dealer-convert-to-popular-demand after 2-3 years relationship-building.`
+  );} },
+
+{ id:'guide_watch_terminology', kw:['watch terms glossary','bezel complication','escapement'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Vocabulaire montre: definitions essentielles. LUNETTE: ring tournant ou fixe autour cadran (Submariner unidirectionnelle rotatif, Datejust cannele fixe). COMPLICATION: mecanisme supplementaire au-dela temps simple (chronographe, date, moonphase, GMT, perpetuel, etc). CALIBRE: designation interne manufacturier movement (Rolex 3285, Patek 240, etc - identifie precision/reserve/architecture). ECHAPPEMENT: mecanisme oscilleur balance wheel libere energie ressort principal rythme. Types: ancre traditionnelle (Rolex), co-axial (Omega), escapement equalization (Patek Spiromax). RESSORT PRINCIPAL: ressort helicoidale storee energie mechanique motrice. Reserve marche depend ressort dimensions + nombre spires. BALANCIER: oscillateur regulateur battement frequence (28,800 vibrations/heure Rolex = 20,000 vibrations/heure anciennes). SPIRAL: ressort ultra-fin attache balancier, regulation frequence fine oscillation. PIGNONS: petites roues transmission mouvement (nombre dents affecte vitesse / reserves). CHRONOGRAPHE: complication timing avec compteurs subdivisions heures/minutes/secondes. Types: mono-compteur (simples), bi-compteur (chronographe + 30m), tri-compteur (chrono + 30m + 12h). GMT: fonction deuxieme fuseau horaire aiguille 24h additionnelle. MOONPHASE: complication affichant phase lunaire (decorative, rare Rolex). TOURBILLON: cardan tournant continuellement elimine gravitee effects (ultra-rare, tres cher). REMONTOIR: mecanisme remontage - manuel couronne vs automatique rotor.`,
+    `EN: Watch terminology: essential definitions. BEZEL: rotating or fixed ring around dial (Submariner unidirectional rotating, Datejust fluted fixed). COMPLICATION: mechanism beyond simple timekeeping (chronograph, date, moonphase, GMT, perpetual, etc). CALIBER: manufacturer's internal movement designation (Rolex 3285, Patek 240, etc—identifies accuracy/reserve/architecture). ESCAPEMENT: oscillating mechanism releasing mainspring energy rhythmically to balance wheel. Types: traditional lever (Rolex), co-axial (Omega), Patek Spiromax escapement. MAINSPRING: helical spring storing mechanical energy drive. Power reserve depends on spring dimensions + number of coils. BALANCE WHEEL: frequency-regulating oscillator (28,800 vibrations per hour Rolex = 20,000 older movements). HAIRSPRING: ultra-thin spring attached to balance wheel, regulating oscillation frequency. PINIONS: small transmission wheels (tooth count affects speed/reserve). CHRONOGRAPH: timing complication with subdivision counters hours/minutes/seconds. Types: single counter (simple), dual counter (chrono + 30m), triple counter (chrono + 30m + 12h). GMT: second time-zone function with additional 24-hour hand. MOONPHASE: complication displaying lunar phase (decorative, rare on Rolex). TOURBILLON: continuously rotating carriage eliminating gravity's precision effects (ultra-rare, very expensive). WINDER: winding mechanism—manual crown vs automatic rotor.`
+  );} },
+
+{ id:'guide_collecting', kw:['watch collection strategy','one watch','three watch collection'],
+  r:()=>{ ctx.brand='General'; ctx.type='Educational'; return t(
+    `FR: Strategies collecteurs montres: models accumulatifs. ONE-WATCH COLLECTOR: achete UNIQUE montre representative sa vision horlogere (exemple: Rolex Submariner, Patek Nautilus, AP Royal Oak). Montre porte 365 jours/an. Avantage: connaissance intimite profonde un seul mecanisme, emotional attachment fort, zero dilemme choix quotidien. Inconvenient: zero diversification horlogere, ennui possible long-terme. Conseille: novices, budgets limites. THREE-WATCH COLLECTION: modele classique Paul Newman recommandait - 1) Montre sport (Rolex Submariner/GMT), 2) Montre formelle (Patek Calatrava), 3) Montre voyage (Patek Aquanaut). Avantage: diversification complete contexts (sport/bureau/voyage), apprentissage trois manufactures cultures differentes, engagement intellectuel eleve. Inconvenient: cout substantiel €100,000+. FIVE-WATCH COLLECTION: expansion three-watch avec mouvements chronographe + complication supplementaire (perpetuelle). Avantage: collection "mature" affichant expertise, appreciation historique diverse manufacturiers, collection vitrine prestige. Inconvenient: maintenace service complexe, assurance couteuse. GRAIL-WATCH STRATEGY: collecteur assemble ensemble montres JUSQU'A acquisition montre "grail" (Patek Perpetual Calendar, Daytona or jaune, etc). Approche: accumule references "stepping stone" jusqu'a objectif ultime. Exemple: Air-King → Datejust → Submariner → Daytona 10-15 ans progression. CONSEIL GENERAL: acheter montres VOUS PORTEREZ REELLEMENT - collection vitrine jamais portee = stagnation appreciation + regret esthetique.`,
+    `EN: Watch collection strategies: accumulative models. ONE-WATCH COLLECTOR: purchases SINGLE watch representing horological vision (example: Rolex Submariner, Patek Nautilus, AP Royal Oak). Watch worn 365 days/year. Advantage: intimate deep understanding one mechanism, strong emotional attachment, zero daily choice dilemma. Disadvantage: zero horological diversification, possible long-term boredom. Recommended: novices, limited budgets. THREE-WATCH COLLECTION: classic model Paul Newman recommended—1) Sport watch (Rolex Submariner/GMT), 2) Formal watch (Patek Calatrava), 3) Travel watch (Patek Aquanaut). Advantage: complete context diversification (sport/office/travel), learning three manufacturers' cultures, high intellectual engagement. Disadvantage: substantial cost USD 90,000+. FIVE-WATCH COLLECTION: three-watch expansion with chronograph movements + supplementary complication (perpetual). Advantage: "mature" collection displaying expertise, diverse historical appreciation across manufacturers, prestige showcase collection. Disadvantage: complex service maintenance, expensive insurance. GRAIL-WATCH STRATEGY: collector assembles watches UNTIL acquiring "grail" watch (Patek Perpetual Calendar, yellow-gold Daytona, etc). Approach: accumulates "stepping stone" references toward ultimate objective. Example: Air-King → Datejust → Submariner → Daytona over 10-15 years progression. GENERAL ADVICE: purchase watches YOU'LL GENUINELY WEAR—unworn showcase collections = appreciation stagnation + aesthetic regret.`
+  );} },
+{ id:'fallback', kw:[], r:()=>t(
         `Je peux vous renseigner sur nos montres en stock, les prix, l'achat, la vente, les révisions, ou l'horlogerie de luxe en général. Reformulez votre question ou appelez-nous au ${BIZ.phone1}.`,
         `I can help with our watches in stock, prices, buying, selling, servicing, or luxury horology in general. Try rephrasing your question, or call us on ${BIZ.phone1}.`
       ) },

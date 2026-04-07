@@ -313,8 +313,27 @@ const NM = {
     this.lang = lang;
     if (save) localStorage.setItem('nm_lang', lang);
     document.documentElement.lang = lang;
-    document.querySelectorAll('.fr').forEach(el => el.style.display = (lang === 'fr') ? '' : 'none');
-    document.querySelectorAll('.en').forEach(el => el.style.display = (lang === 'en') ? '' : 'none');
+    document.documentElement.setAttribute('data-lang', lang);
+
+    // Block-level elements that need display:block when visible
+    const blockTags = new Set(['P','DIV','LI','H1','H2','H3','H4','LABEL',
+                               'SECTION','ARTICLE','BUTTON','A','TD','TH',
+                               'HEADER','FOOTER','NAV','ASIDE','MAIN','FORM']);
+
+    document.querySelectorAll('.fr').forEach(el => {
+      if (lang === 'fr') {
+        el.style.display = blockTags.has(el.tagName) ? 'block' : 'inline';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+    document.querySelectorAll('.en').forEach(el => {
+      if (lang === 'en') {
+        el.style.display = blockTags.has(el.tagName) ? 'block' : 'inline';
+      } else {
+        el.style.display = 'none';
+      }
+    });
     document.querySelectorAll('[data-lang]').forEach(btn => {
       btn.classList.toggle('active-lang', btn.dataset.lang === lang);
     });

@@ -41,7 +41,9 @@ button { cursor: pointer; background: none; border: none; font-family: inherit; 
 .fr { display: inline; }
 span.fr, span.en { display: inline; }
 p.en, p.fr, div.en, div.fr, li.en, li.fr, h1.en, h1.fr,
-h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr { display: block; }
+h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr, label.en, label.fr,
+button.en, button.fr, a.en, a.fr, td.en, td.fr, th.en, th.fr,
+section.en, section.fr, article.en, article.fr { display: block; }
 
 /* ── Utility ── */
 .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
