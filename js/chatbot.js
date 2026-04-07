@@ -107,23 +107,23 @@
   const KB = [
 
     // ── CONVERSATIONAL ──────────────────────────────────────────────────────────
-    { id:'greeting', kw:['bonjour','bonsoir','salut','allo','hello','hey','coucou','hi','good morning','good evening','good afternoon','yo','hola'],
+    { id:'greeting', kw:['bonjour','bonsoir','salut','allo','hello','hey','coucou','hi','good morning','good evening','good afternoon','yo','hola','good day','howdy','greetings','wassup','whats up','what up','sup','bonne journée','bonne soirée','bonne nuit','good night','bjr','bsr','cc','slt'],
       r:()=>t(`Bonjour ! Je suis l'assistant de **Nos Montres**, spécialiste parisien de l'achat-vente de montres de luxe d'occasion. Posez-moi votre question.`,
               `Hello! I'm the **Nos Montres** assistant, a Parisian specialist in pre-owned luxury watches. Ask me anything.`) },
 
-    { id:'thanks', kw:['merci','thank you','thanks','parfait','excellent','super','nickel','very helpful','utile','cheers','perfect','génial','bravo'],
+    { id:'thanks', kw:['merci','thank you','thanks','parfait','excellent','super','nickel','very helpful','utile','cheers','perfect','génial','bravo','awesome','great','fantastic','wonderful','amazing','terrific','magnifique','formidable','impeccable','top','chapeau','bien joué','well done','appreciated','noted','understood','compris','reçu','ok merci','thanks a lot','merci beaucoup','thank you so much','merci infiniment','many thanks','much appreciated','very kind','très aimable'],
       r:()=>t(`Avec plaisir.`,`My pleasure.`) },
 
-    { id:'help', kw:['aide','help','que faites vous','what do you do','vos services','what can you do','que proposez vous','comment ça marche','how does it work'],
-      r:()=>t(`Nos Montres achète et vend des montres de luxe d'occasion à Paris. Nous faisons aussi la révision Rolex & AP, et le changement de pile. Posez-moi une question spécifique.`,
-              `Nos Montres buys and sells pre-owned luxury watches in Paris. We also service Rolex & AP, and replace batteries. Ask me a specific question.`) },
+    { id:'help', kw:['aide','help','que faites vous','what do you do','vos services','what can you do','que proposez vous','comment ça marche','how does it work','what do you sell','what do you offer','what can i ask','what topics','tell me about you','qui êtes vous','about you','how can you help','comment pouvez vous aider','what are you','qui es tu','how do i use this','what questions','quelles questions','what can i ask you','quest ce que vous faites','quest ce que vous vendez','what services do you provide','can you help me','can you assist','pouvez vous m aider','assistance','information','renseignements'],
+      r:()=>t(`Nos Montres achète et vend des montres de luxe d'occasion à Paris. Posez-moi n'importe quelle question sur : nos montres en stock, les prix, la vente de votre montre, les révisions, les marques (Rolex, AP, Patek, RM, Cartier…), ou l'horlogerie en général.`,
+              `Nos Montres buys and sells pre-owned luxury watches in Paris. Ask me anything about: our watches in stock, prices, selling your watch, servicing, brands (Rolex, AP, Patek, RM, Cartier…), or horology in general.`) },
 
     // ── BOUTIQUE ────────────────────────────────────────────────────────────────
     { id:'contact', kw:['contact','téléphone','telephone','phone','email','mail','adresse','address','numéro','number','joindre','reach','coordonnées','whatsapp','instagram','réseaux'],
       r:()=>t(`📍 ${BIZ.addr}\n📞 ${BIZ.phone1} / ${BIZ.phone2}\n✉️ ${BIZ.email}`,
               `📍 ${BIZ.addr}\n📞 ${BIZ.phone1} / ${BIZ.phone2}\n✉️ ${BIZ.email}`) },
 
-    { id:'hours', kw:['horaires','horaire','heures ouverture','open','opening hours','fermé','closed','disponible','availability','quand êtes vous','when are you','êtes vous ouverts','are you open','samedi','dimanche','weekend','saturday','sunday','7 jours','7 days'],
+    { id:'hours', kw:['horaires','horaire','heures ouverture','open','opening hours','fermé','closed','disponible','availability','quand êtes vous','when are you','êtes vous ouverts','are you open','samedi','dimanche','weekend','saturday','sunday','7 jours','7 days','are you open today','êtes vous ouverts aujourd hui','opening time','closing time','heure ouverture','heure fermeture','when do you open','when do you close','quand ouvrez vous','quand fermez vous','lundi','mardi','mercredi','jeudi','vendredi','monday','tuesday','wednesday','thursday','friday','du lundi','du mardi','toute la semaine','all week','everyday','tous les jours','open late','open early','what time','à quelle heure','business hours','heures de bureau','shop hours','boutique ouverte','can i visit today','puis je venir aujourd hui','can i come now','puis je venir maintenant'],
       r:()=>t(`Disponibles **7j/7 sur rendez-vous uniquement**.`,`Available **7 days a week, by appointment only**.`) },
 
     { id:'rdv', kw:['rendez-vous','rendez vous','rdv','appointment','prendre rdv','book appointment','réserver','reserve','prise de rdv','take appointment','fixer rendez vous','schedule meeting','quand puis je venir','when can i come'],
@@ -134,11 +134,11 @@
       r:()=>t(`46 rue de Miromesnil, 75008 Paris. Métro **Miromesnil** (lignes 9 & 13), à 2 min à pied.`,
               `46 rue de Miromesnil, 75008 Paris. Metro **Miromesnil** (lines 9 & 13), 2 min walk.`) },
 
-    { id:'about', kw:['qui êtes vous','who are you','à propos','about','votre histoire','your story','depuis quand','experience','expertise','fondé','founded','créé','nos montres','nosmontres','indépendant','independent','15 ans','passion'],
+    { id:'about', kw:['qui êtes vous','who are you','à propos','about','votre histoire','your story','depuis quand','experience','expertise','fondé','founded','créé','nos montres','nosmontres','indépendant','independent','15 ans','passion','tell me about','dites moi','about nos montres','about your shop','about your store','about your boutique','what are you','cest quoi nos montres','what is nos montres','your company','votre entreprise','your business','votre commerce','your background','votre parcours','horloger parisien','parisian watchmaker','luxury watch dealer','revendeur montre luxe','watch dealer','watchmaker','horloger','professional','professionnel','certified','certifié','trusted','de confiance','reliable dealer','revendeur fiable','boutique horlogère'],
       r:()=>t(`Boutique horlogère indépendante parisienne, fondée par un passionné avec **plus de 15 ans d'expertise** en montres de luxe de seconde main.`,
               `Independent Parisian watch boutique, founded by an expert with **over 15 years of expertise** in pre-owned luxury watches.`) },
 
-    { id:'authentication', kw:['authentique','authentification','fake','faux','contrefaçon','counterfeit','certifié','garantie','guarantee','confiance','trust','vérification','verification','expertisé','original','provenance','comment savez vous','how do you know','comment vérifiez'],
+    { id:'authentication', kw:['authentique','authentification','fake','faux','contrefaçon','counterfeit','certifié','garantie','guarantee','confiance','trust','vérification','verification','expertisé','original','provenance','comment savez vous','how do you know','comment vérifiez','is it real','est elle vraie','is it genuine','genuine','authentic','legit','legitimate','checked','verified','expert check','expert opinion','how do you verify','how do you authenticate','comment authentifier','how can i be sure','puis je avoir confiance','can i trust','safe to buy','sûr d acheter','not fake','not counterfeit','pas une copie','not a copy','not a replica','real rolex','real ap','real patek','real watch','vraie montre','montre certifiée'],
       r:()=>t(`Chaque montre est expertisée avant vente : mouvement, finitions, numéro de série, couronne, verre. Si un doute subsiste, nous n'achetons pas.`,
               `Every watch is authenticated before sale: movement, finishes, serial number, crown, crystal. If there's any doubt, we don't buy.`) },
 
@@ -151,11 +151,57 @@
               `Bank transfer, cash (within the legal limit) and bank card.`) },
 
     // ── BUYING & SELLING ────────────────────────────────────────────────────────
-    { id:'buy', kw:['acheter','acheter une montre','buy','buy a watch','purchase','acquérir','je veux acheter','i want to buy','looking to buy','trouver une montre','find a watch','en stock','in stock','votre collection','collection','je cherche','looking for','avez vous','do you have','disponible','available','comment acheter','how to buy'],
+    { id:'buy', kw:['acheter','acheter une montre','buy','buy a watch','purchase','acquérir','je veux acheter','i want to buy','looking to buy','trouver une montre','find a watch','en stock','in stock','votre collection','i want a watch','comment acheter','how to buy','i am looking','i need a watch','il me faut','j aimerais','i would like','interested in buying','want to purchase','want to buy','wanna buy','je souhaite acheter','je veux une montre','searching for','find me a watch','do you carry','do you stock','show me','montrez moi','what watches','what models','quels modèles'],
       r:()=>t(`Consultez notre [collection](/index.html) ou dites-moi exactement ce que vous cherchez — nous avons souvent des pièces hors vitrine.`,
               `Browse our [collection](/index.html) or tell me exactly what you're looking for — we often have off-display pieces.`) },
 
-    { id:'sell', kw:['vendre','vente','sell','selling','racheter','rachat','buyback','buy back','je veux vendre','i want to sell','vendre ma montre','sell my watch','comment vendre','how to sell','estimation','estimate','évaluation','évaluer','combien pour ma montre','how much for my watch','valeur de ma montre','value of my watch','reprise','je cherche à vendre','vendre rapidement','sell quickly','prix de rachat'],
+    // ── RECOMMENDATION / BEST WATCH ──────────────────────────────────────────────
+    { id:'recommendation', kw:['best watch','top watch','best model','top model','recommend','recommendation','recommended','suggest','suggestion','popular','most popular','most wanted','favorite','favourite','what watch','which watch','what should i get','what should i buy','help me choose','aide au choix','guide achat','buying guide','meilleure montre','la meilleure','what would you suggest','what do you suggest','your opinion','votre avis','what is good','what is great','quelle est la meilleure','quelle montre choisir','which is better','which is best','what is worth','worth buying','worth it','vaut le coup','what to buy','quoi acheter','conseils','advice','advise','guide moi','guide me','help me decide','aide moi à choisir','what is your best','your best','show me your best','best value','best bang for buck','best investment','meilleur rapport qualité','best quality','top quality'],
+      r:()=>{ const topStock = STOCK.slice(0,4); return t(
+        `Nos pièces les plus recherchées en ce moment :\n${topStock.map(w=>`• ${w.brand} ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nDites-moi votre budget pour des recommandations personnalisées.`,
+        `Our most sought-after pieces right now:\n${topStock.map(w=>`• ${w.brand} ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nTell me your budget for personalised recommendations.`
+      );} },
+
+    // ── CLARIFICATION / CONFUSION ─────────────────────────────────────────────
+    { id:'clarify', kw:['what do you mean','je ne comprends pas','i dont understand','dont understand','not sure what','clarify','please clarify','pouvez vous préciser','what are you saying','que voulez vous dire','confused','confusing','i am confused','je suis perdu','perdu','lost','unclear','not clear','i dont follow','i dont get it','can you explain','peut on expliquer','expliquer','explain','repeat','répétez','say again','can you repeat','pouvez vous répéter','i missed that','huh','quoi','pardon','sorry what','comment','what now','ok and','et alors','so what','so what now','what next','what does that mean','ça veut dire quoi','what is that','cest quoi','c est quoi'],
+      r:()=>t(
+        `Je suis spécialisé en montres de luxe. Je peux vous aider sur : **stock & prix**, **achat & vente**, **révision & réparation**, **authentification**, et **conseils horlogers**. Que voulez-vous savoir ?`,
+        `I specialise in luxury watches. I can help with: **stock & prices**, **buying & selling**, **servicing & repair**, **authentication**, and **watch advice**. What would you like to know?`
+      ) },
+
+    // ── STOCK OVERVIEW ────────────────────────────────────────────────────────
+    { id:'stock_overview', kw:['all watches','all stock','everything','tout','tout le stock','all available','all models','every model','full collection','liste complète','complete list','what do you have in stock','what have you got','what is in stock','whats in stock','quelles montres avez vous','toutes vos montres','montrer tout','show everything','show all','liste des montres','watch list','inventory','inventaire','catalogue','catalog'],
+      r:()=>{ const brands = [...new Set(STOCK.map(w=>w.brand))]; return t(
+        `Nous avons **${STOCK.length} montres en stock** :\n${brands.map(b=>`• **${b}** — ${STOCK.filter(w=>w.brand===b).length} pièce(s)`).join('\n')}\nDites-moi une marque ou un modèle pour le détail.`,
+        `We have **${STOCK.length} watches in stock**:\n${brands.map(b=>`• **${b}** — ${STOCK.filter(w=>w.brand===b).length} piece(s)`).join('\n')}\nTell me a brand or model for details.`
+      );} },
+
+    // ── BUDGET TIERS ─────────────────────────────────────────────────────────
+    { id:'budget_under10k', kw:['budget 5000','budget 6000','budget 7000','budget 8000','budget 9000','budget 10000','moins de 10000','under 10000','under 10k','moins de 10k','5k','6k','7k','8k','9k','10k budget','autour de 8000','autour de 10000','around 8000','around 10000','between 5000 and 10000','entre 5000 et 10000','first rolex','first watch budget','pas plus de 10000','no more than 10000','10 000','8 000','6 000'],
+      r:()=>{ const opts=STOCK.filter(w=>w.price<=10000).slice(0,4); return t(
+        `Avec un budget jusqu'à 10 000€, voici nos meilleures options :\n${opts.map(w=>`• ${w.brand} ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`,
+        `With a budget up to €10,000, here are our best options:\n${opts.map(w=>`• ${w.brand} ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`
+      );} },
+
+    { id:'budget_10k_20k', kw:['budget 11000','budget 12000','budget 13000','budget 14000','budget 15000','budget 16000','budget 17000','budget 18000','budget 19000','budget 20000','entre 10000 et 20000','between 10000 and 20000','10k to 20k','10k 20k','15k','15 000','20 000','autour de 15000','around 15000','under 20000','moins de 20000','moins de 20k','pas plus de 20000','no more than 20000'],
+      r:()=>{ const opts=STOCK.filter(w=>w.price>=10000&&w.price<=20000).slice(0,4); return t(
+        `Entre 10 000 et 20 000€, voici nos options disponibles :\n${opts.map(w=>`• ${w.brand} ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`,
+        `Between €10,000 and €20,000, here are our available options:\n${opts.map(w=>`• ${w.brand} ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`
+      );} },
+
+    { id:'budget_20k_50k', kw:['budget 25000','budget 30000','budget 35000','budget 40000','budget 45000','budget 50000','entre 20000 et 50000','between 20000 and 50000','20k to 50k','25k','30k','35k','40k','50k','25 000','30 000','35 000','50 000','autour de 30000','around 30000','under 50000','moins de 50000','no more than 50000'],
+      r:()=>{ const opts=STOCK.filter(w=>w.price>=20000&&w.price<=50000).slice(0,4); return t(
+        `Entre 20 000 et 50 000€, nos options :\n${opts.map(w=>`• ${w.brand} ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`,
+        `Between €20,000 and €50,000, our options:\n${opts.map(w=>`• ${w.brand} ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}`
+      );} },
+
+    { id:'budget_over50k', kw:['budget 60000','budget 70000','budget 80000','budget 100000','budget 150000','budget 200000','plus de 50000','over 50000','more than 50000','50k plus','100k','100 000','150 000','200 000','high end','haut de gamme','top of the range','premium','luxury budget','no budget','budget illimité','unlimited budget','money no object','price is no object'],
+      r:()=>{ const opts=STOCK.filter(w=>w.price>=50000).slice(0,4); return t(
+        `Nos pièces premium (50 000€+) :\n${opts.map(w=>`• ${w.brand} ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nPour des pièces hors stock, contactez-nous.`,
+        `Our premium pieces (€50,000+):\n${opts.map(w=>`• ${w.brand} ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nFor off-stock pieces, contact us.`
+      );} },
+
+    { id:'sell', kw:['vendre','vente','sell','selling','racheter','rachat','buyback','buy back','je veux vendre','i want to sell','vendre ma montre','sell my watch','comment vendre','how to sell','estimation','estimate','évaluation','évaluer','combien pour ma montre','how much for my watch','valeur de ma montre','value of my watch','reprise','je cherche à vendre','vendre rapidement','sell quickly','prix de rachat','i have a watch to sell','j ai une montre à vendre','looking to sell','selling my watch','want to sell','wanna sell','sell watch','cash for watch','how to get cash for','get money for my watch','i want cash','how do i sell','how do you buy','do you buy watches','do you purchase','vous achetez','achetez vous','you buy','buying watches','reprise montre','trade in watch','offre de rachat','rachat immédiat','instant buy','sell today','vendre aujourd hui','interested in selling','selling a rolex','selling my rolex','sell a rolex','sell rolex','sell ap','sell patek','sell cartier','sell richard mille'],
       r:()=>t(`Envoyez-nous des photos (cadran, boîtier, bracelet, fond, couronne) — estimation sous **48h**, paiement immédiat si accord.`,
               `Send us photos (dial, case, bracelet, caseback, crown) — estimate within **48h**, immediate payment if agreed.`) },
 
@@ -163,7 +209,7 @@
       r:()=>t(`Papiers et boîte non obligatoires, mais augmentent la valeur de **15 à 30%** selon le modèle. Pièce d'identité requise légalement.`,
               `Papers and box not required, but increase value by **15 to 30%** depending on the model. ID required by law.`) },
 
-    { id:'investment', kw:['investissement','investment','invest','valeur','cote','côte','appreciation','revente','resale','meilleure montre investissement','best watch investment','quelle montre investissement','which watch investment','prend de la valeur','gains value','patrimoine','heritage','store of value','valeur refuge','cote augmente'],
+    { id:'investment', kw:['investissement','investment','invest','valeur','cote','côte','appreciation','revente','resale','meilleure montre investissement','best watch investment','quelle montre investissement','which watch investment','prend de la valeur','gains value','patrimoine','heritage','store of value','valeur refuge','cote augmente','montre qui prend de la valeur','watch that appreciates','which watch holds value','watch that holds value','watch value over time','valeur dans le temps','will it keep its value','garde sa valeur','bonne affaire','good deal','good investment','smart buy','wise purchase','worth investing','vaut l investissement','should i invest','is it a good investment','do watches appreciate','les montres prennent elles de la valeur','better than stocks','mieux que la bourse','safe investment','investissement sûr','alternative investment','placement','patrimoine horloger'],
       r:()=>t(`Les meilleures valeurs actuelles : Rolex Daytona acier, AP Royal Oak 15500ST & Jumbo 15202ST, Patek Nautilus 5711 (discontinuée 2021), Patek Grand Complications.`,
               `The best current values: Rolex Daytona steel, AP Royal Oak 15500ST & Jumbo 15202ST, Patek Nautilus 5711 (discontinued 2021), Patek Grand Complications.`) },
 
@@ -171,11 +217,11 @@
       r:()=>t(`Donnez-moi votre budget précis, je vous oriente vers les meilleures options disponibles.`,
               `Give me your exact budget and I'll point you to the best available options.`) },
 
-    { id:'woman_watch', kw:['femme','woman','women','lady','ladies','montre femme','watch for women','cadeau femme','gift for women','pour ma femme','for my wife','for my girlfriend','pour ma copine','pour ma mère','for my mother','petite taille','small size','36mm','32mm','28mm','lady datejust','féminin'],
+    { id:'woman_watch', kw:['femme','woman','women','lady','ladies','montre femme','watch for women','cadeau femme','gift for women','pour ma femme','for my wife','for my girlfriend','pour ma copine','pour ma mère','for my mother','petite taille','small size','36mm','32mm','28mm','féminin'],
       r:()=>t(`Lady-Datejust (28mm), Datejust 36, Cartier Tank, Cartier Panthère, Patek Twenty-4, AP Royal Oak Lady (33mm). Dites-moi votre budget.`,
               `Lady-Datejust (28mm), Datejust 36, Cartier Tank, Cartier Panthère, Patek Twenty-4, AP Royal Oak Lady (33mm). Tell me your budget.`) },
 
-    { id:'gift', kw:['cadeau','gift','offrir','offer','surprise','anniversaire','birthday','noël','christmas','fête','celebration','pour offrir','to gift','idée cadeau','gift idea','pour quelqu un','for someone'],
+    { id:'gift', kw:['cadeau','gift','offrir','offer','surprise','anniversaire','birthday','noël','christmas','fête','celebration','pour offrir','to gift','idée cadeau','gift idea','pour quelqu un','for someone','present','cadeaux','gift for him','gift for her','cadeau pour lui','cadeau pour elle','cadeau pour mon mari','cadeau pour ma femme','cadeau pour mon copain','cadeau pour ma copine','gift for husband','gift for wife','gift for boyfriend','gift for girlfriend','gift for dad','gift for mom','cadeau pour papa','cadeau pour maman','gift for friend','cadeau pour ami','special occasion','occasion spéciale','graduation','diplôme','mariage','wedding','naissance','birth','promotion','anniversaire de mariage','wedding anniversary','fête des pères','fathers day','fête des mères','mothers day','saint valentin','valentines day','cadeau original','unique gift','luxury gift','cadeau luxe','expensive gift','cadeau cher','meaningful gift','cadeau qui a du sens','memorable gift','montre cadeau'],
       r:()=>t(`Quelle est la relation (homme/femme, son style) et votre budget ? Je vous propose les meilleures options.`,
               `What's the relationship (man/woman, their style) and your budget? I'll suggest the best options.`) },
 
@@ -185,32 +231,57 @@
 
 
     // ── ROLEX — GÉNÉRAL ─────────────────────────────────────────────────────────
-    { id:'rolex_general', kw:['rolex','rolex paris','couronne d or','crown logo','achat rolex','vente rolex','montre rolex','rolex occasion','rolex secondhand','rolex pre-owned','rolex luxe','marque rolex','histoire rolex','rolex histoire','rolex fondé','rolex 1905','hans wilsdorf','rolex suisse','rolex certifié'],
+    // ── QUICK INVENTORY QUESTIONS ─────────────────────────────────────────────────
+    { id:'most_expensive', kw:['most expensive','plus cher','plus onéreux','highest price','prix le plus élevé','most costly','expensive watch','montre la plus chère','top price','le plus cher','what is your most expensive','quelle est votre plus chère','luxury top','ultimate piece','flagship piece','pièce phare','crown jewel','pièce maîtresse'],
+      r:()=>{ const top=STOCK.slice().sort((a,b)=>b.price-a.price)[0]; return t(
+        `Notre pièce la plus chère en stock : **${top.brand} ${top.model}** réf. ${top.ref} à ${fmt(top.price)}.`,
+        `Our most expensive piece in stock: **${top.brand} ${top.model}** ref. ${top.ref} at ${fmt(top.price)}.`
+      );} },
+
+    { id:'cheapest', kw:['cheapest','least expensive','pas cher','moins cher','most affordable','prix le plus bas','lowest price','entry price','prix d entrée','starting price','prix de départ','minimum price','minimum budget','smallest budget','smallest price','what is cheapest','le moins cher','budget minimum','what can i get for','que puis je avoir pour','starter piece'],
+      r:()=>{ const bot=STOCK.slice().sort((a,b)=>a.price-b.price)[0]; return t(
+        `Notre pièce la plus accessible en stock : **${bot.brand} ${bot.model}** réf. ${bot.ref} à ${fmt(bot.price)}.`,
+        `Our most accessible piece in stock: **${bot.brand} ${bot.model}** ref. ${bot.ref} at ${fmt(bot.price)}.`
+      );} },
+
+    { id:'most_popular', kw:['most popular','plus populaire','best seller','bestseller','best selling','most sold','le plus vendu','most bought','most requested','most wanted','le plus demandé','trending','en vogue','popular now','populaire maintenant','what sells most','qu est ce qui se vend le mieux','hot model','hot watch','hot piece','en ce moment','right now'],
+      r:()=>t(
+        `Nos modèles les plus demandés en ce moment : Rolex Submariner Hulk 126610LV, GMT-Master II Sprite 126710GRNR, AP Royal Oak Chronographe 26240ST, Patek Nautilus 5980-1A. Vous en voulez un ?`,
+        `Our most requested models right now: Rolex Submariner Hulk 126610LV, GMT-Master II Sprite 126710GRNR, AP Royal Oak Chronographe 26240ST, Patek Nautilus 5980-1A. Interested in one?`
+      ) },
+
+    { id:'new_arrivals', kw:['new arrivals','nouveautés','nouvelles arrivées','new stock','nouveau stock','just arrived','vient d arriver','recently added','ajouté récemment','new in','new watches','nouvelles montres','latest pieces','dernières pièces','fresh stock','what is new','quoi de neuf','anything new','du nouveau','recent additions','ajouts récents'],
+      r:()=>t(
+        `Notre stock est mis à jour régulièrement. Pour voir les dernières arrivées en primeur, suivez-nous sur Instagram ou consultez notre [collection](/index.html). Vous pouvez aussi nous appeler au ${BIZ.phone1}.`,
+        `Our stock is updated regularly. To see the latest arrivals first, follow us on Instagram or check our [collection](/index.html). You can also call us on ${BIZ.phone1}.`
+      ) },
+
+    { id:'rolex_general', kw:['rolex','rolex paris','couronne d or','crown logo','achat rolex','vente rolex','montre rolex','rolex occasion','rolex secondhand','rolex pre-owned','rolex luxe','marque rolex','histoire rolex','rolex histoire','rolex fondé','rolex 1905','hans wilsdorf','rolex suisse','rolex certifié','rolex watch','rolex watches','rolex models','rolex collection','what rolex','which rolex','rolex available','rolex in stock','rolex you have','rolex do you have','got any rolex','avez vous des rolex','rolex pas cher','cheap rolex','affordable rolex','rolex brand','the rolex','a rolex','rolex dealer','revendeur rolex','buy rolex','acheter rolex','rolex paris 8','rolex 75008'],
       r:()=>{ ctx.brand='Rolex'; return t(
         `Rolex fondée en 1905 à Londres par Hans Wilsdorf. Nous avons ${STOCK.filter(w=>w.brand==='Rolex').length} Rolex en stock actuellement (Submariner, Daytona, GMT, Datejust…). Quel modèle vous intéresse ?`,
         `Rolex founded 1905 in London by Hans Wilsdorf. We currently have ${STOCK.filter(w=>w.brand==='Rolex').length} Rolex in stock (Submariner, Daytona, GMT, Datejust…). Which model interests you?`
       );} },
 
-    { id:'rolex_submariner', kw:['submariner','sub','hulk','kermit','126610','116613','16800','submariner date','submariner no date','plongée','diving watch','diver','sousmarin','sous marin','116610','sub date','subno','ref 126610','ref 116613','116610lv','126610lv','116613lb','acier or submariner'],
+    { id:'rolex_submariner', kw:['submariner','sub','hulk','kermit','126610','116613','16800','submariner date','submariner no date','plongée','diving watch','diver','sousmarin','sous marin','116610','sub date','subno','ref 126610','ref 116613','116610lv','126610lv','116613lb','acier or submariner','rolex submariner','rolex sub','the submariner','a submariner','submariner rolex','submariner watch','submariner model','submariner price','submariner cost','submariner available'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Submariner'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('submariner')); return t(
         `Nos Submariner :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nÉtanche 300m, verre saphir, lunette céramique (modèles récents). Icône plongée depuis 1953.`,
         `Our Submariners:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n300m water resistance, sapphire crystal, ceramic bezel (modern). Diving icon since 1953.`
       );} },
 
-    { id:'rolex_daytona', kw:['daytona','cosmograph','paul newman','panda','chronographe rolex','126500','126505','or rose daytona','steel daytona','daytona acier','daytona gold','daytona panda','daytona blanc','daytona noir','daytona cadran','ref 126500','ref 126505','116500','116520','116503'],
+    { id:'rolex_daytona', kw:['daytona','rolex daytona','cosmograph','paul newman','panda','chronographe rolex','126500','126505','or rose daytona','steel daytona','daytona acier','daytona gold','daytona panda','daytona blanc','daytona noir','daytona cadran','ref 126500','ref 126505','116500','116520','116503'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Daytona'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('daytona')); return t(
         `Nos Daytona :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nChronographe légendaire, cal. 4131, tachymètre lunette. Valeur refuge n°1 chez Rolex.`,
         `Our Daytonas:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nLegendary chronograph, cal. 4131, tachymeter bezel. The #1 investment piece in Rolex.`
       );} },
 
-    { id:'rolex_gmt', kw:['gmt','gmt master','gmt-master','gmt ii','116710','126710','pepsi','batman','sprite','jubilée gmt','gmt bicolore','gmt rouge bleu','gmt 2 fuseaux','deux fuseaux','second timezone','gmt master ii black','gmt master ii sprite','gmt vintage','16710','gmt acier'],
+    { id:'rolex_gmt', kw:['gmt','gmt master','gmt-master','gmt ii','rolex gmt','116710','126710','pepsi','batman','sprite','jubilée gmt','gmt bicolore','gmt rouge bleu','gmt 2 fuseaux','deux fuseaux','second timezone','gmt master ii black','gmt master ii sprite','gmt vintage','16710','gmt acier'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='GMT-Master'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('gmt')); return t(
         `Nos GMT-Master II :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n2 fuseaux horaires simultanés, lunette bicolore céramique. Créé pour les pilotes d'Air France en 1955.`,
         `Our GMT-Master II:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nDual time zones, bicolour ceramic bezel. Originally created for Air France pilots in 1955.`
       );} },
 
 
-    { id:'rolex_datejust', kw:['datejust','date just','126334','126300','16234','datejust 41','datejust 36','wimbledon','mint','jubilé','jubilee','oyster bracelet','rolesor','datejust acier','datejust or','datejust cadran','fluted bezel','cannelée','datejust vintage','ref 126334','ref 126300','datejust homme','men datejust'],
+    { id:'rolex_datejust', kw:['datejust','rolex datejust','date just','126334','126300','16234','datejust 41','datejust 36','wimbledon','mint','jubilé','jubilee','oyster bracelet','rolesor','datejust acier','datejust or','datejust cadran','fluted bezel','cannelée','datejust vintage','ref 126334','ref 126300','datejust homme','men datejust'],
       r:()=>{ ctx.brand='Rolex'; ctx.model='Datejust'; const s=STOCK.filter(w=>w.model.toLowerCase().includes('datejust')&&!w.model.toLowerCase().includes('lady')); return t(
         `Nos Datejust :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nLa montre la plus vendue au monde. Cal. 3235/3235, date instantanée à 3h.`,
         `Our Datejusts:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nThe world's best-selling watch. Cal. 3235, instantaneous date at 3 o'clock.`
@@ -271,8 +342,28 @@
         `Sky-Dweller: annual calendar + 2nd time zone. Ref. 326934 (steel/gold, ~€30,000). Not in stock currently. Contact us to source one.`
       );} },
 
+    { id:'rolex_air_king', kw:['air-king','air king','airking','126900','116900','rolex air king','rolex air-king','air king 40','air king green','air king cadran','air king dial','air king black','air king rolex','réf 126900','ref 126900','new air king','air king 2022','air king couronne','air king crown guard'],
+      r:()=>{ ctx.brand='Rolex'; return t(
+        `L'Air-King (réf. 126900, 40mm) est la Rolex d'aviation. Cadran noir distinctif, chiffres 3-6-9 colorés, couronne protégée. Calibre 3230, 70h de réserve. Marché ~8 000–10 000€. Contactez-nous pour sourcing.`,
+        `The Air-King (ref. 126900, 40mm) is Rolex's aviation watch. Distinctive black dial, coloured 3-6-9 numerals, crown guard. Cal. 3230, 70h reserve. Market ~€8,000–10,000. Contact us to source.`
+      );} },
+
+    { id:'rolex_cellini', kw:['cellini','rolex cellini','50505','50509','50515','50519','50525','50535','cellini moonphase','cellini date','cellini time','cellini dual time','rolex dress','rolex habillée','rolex classique','rolex formal','cellini or','cellini gold','cellini prince','cellini danaos','cellini cestello'],
+      r:()=>{ ctx.brand='Rolex'; return t(
+        `La Cellini est la ligne habillée de Rolex. Boîtier or 39mm, cadran classique. Moonphase (réf. 50535), Date (réf. 50519), Time (réf. 50509). Marché 15 000–25 000€. Nous pouvons sourcer.`,
+        `Cellini is Rolex's dress line. 39mm gold case, classic dial. Moonphase (ref. 50535), Date (ref. 50519), Time (ref. 50509). Market €15,000–25,000. We can source.`
+      );} },
+
+    { id:'rolex_pearlmaster', kw:['pearlmaster','pearl master','rolex pearlmaster','86349','81319','86348','81349','86285','pearlmaster 39','pearlmaster 34','pearlmaster diamants','pearlmaster diamonds','pearlmaster or','pearlmaster gold','rolex bijou','jewel rolex','gem set rolex','rolex sertie','haute joaillerie rolex'],
+      r:()=>{ ctx.brand='Rolex'; return t(
+        `Le Pearlmaster est la montre joaillerie de Rolex. Boîtier 39mm ou 34mm, lunette sertie diamants/pierres, or massif. Marché 30 000–80 000€+ selon sertissage. Pièce rare — contactez-nous.`,
+        `The Pearlmaster is Rolex's jewellery watch. 39mm or 34mm case, gem-set bezel, solid gold. Market €30,000–80,000+ depending on setting. Rare piece — contact us.`
+      );} },
+
+
+
     // ── AUDEMARS PIGUET ──────────────────────────────────────────────────────────
-    { id:'ap_general', kw:['audemars piguet','ap','audemars','piguet','ap watch','montre ap','ap paris','achat ap','vente ap','ap occasion','ap secondhand','ap pre-owned','ap luxe','ap histoire','founded ap','1875 ap','le brassus','vallée de joux','manufacture ap'],
+    { id:'ap_general', kw:['audemars piguet','ap','audemars','piguet','ap watch','montre ap','ap paris','achat ap','vente ap','ap occasion','ap secondhand','ap pre-owned','ap luxe','ap histoire','founded ap','1875 ap','le brassus','vallée de joux','manufacture ap','ap watches','ap models','what ap','which ap','ap available','ap in stock','ap you have','avez vous des ap','got any ap','ap brand','the ap','a ap','ap dealer','revendeur ap','buy ap','acheter ap','ap collection','audemars watches','audemars collection','audemars models','audemars available','piguet watch','AP watch','AP brand'],
       r:()=>{ ctx.brand='Audemars Piguet'; return t(
         `AP fondée en 1875 au Brassus, Suisse. Nous avons ${STOCK.filter(w=>w.brand==='Audemars Piguet').length} AP en stock (Royal Oak, Offshore). Quel modèle vous intéresse ?`,
         `AP founded 1875 in Le Brassus, Switzerland. We have ${STOCK.filter(w=>w.brand==='Audemars Piguet').length} AP in stock (Royal Oak, Offshore). Which model interests you?`
@@ -302,15 +393,59 @@
         `Code 11.59 (launched 2019, 40mm) is AP's new sport/dress line. Steel market ~€25,000–35,000. We can source one depending on your configuration.`
       );} },
 
+    { id:'ap_millenary', kw:['millenary','millénaire','ap millenary','millenary ap','77247','77302','15350','millenary ovale','millenary oval','millenary openworked','millenary squelette','millenary femme','millenary women','millenary off-center','millenary dead beat','deadbeat seconds','ap ovale','oval ap'],
+      r:()=>{ ctx.brand='Audemars Piguet'; return t(
+        `La Millenary est la ligne ovale d'AP, cadran décentré, mécanique visible. Femmes (réf. 77247, 77302) et hommes (réf. 15350). Marché 15 000–35 000€. Contactez-nous pour sourcing.`,
+        `The Millenary is AP's oval collection, off-center dial, visible mechanics. Ladies (ref. 77247, 77302) and men's (ref. 15350). Market €15,000–35,000. Contact us to source.`
+      );} },
+
+    { id:'ap_jules_audemars', kw:['jules audemars','jules ap','ap jules','ap classique','ap dress','ap habillée','15180','15170','26153','26320','minute repeater ap','ap minute repeater','ap tourbillon','ap grande complication','ap sonnerie','ap chiming','ap cathedral','Jules Audemars'],
+      r:()=>{ ctx.brand='Audemars Piguet'; return t(
+        `Jules Audemars : la ligne classique/haute horlogerie d'AP. Tourbillons, répétitions minutes, calendriers perpétuels. Boîtier rond, or. Marché 20 000€ à 500 000€+. Contactez-nous.`,
+        `Jules Audemars: AP's classic/haute horlogerie line. Tourbillons, minute repeaters, perpetual calendars. Round gold case. Market €20,000 to €500,000+. Contact us.`
+      );} },
+
+    { id:'ap_royal_oak_perpetual', kw:['royal oak perpetual calendar','royal oak perpétuel','26574','26574st','26574or','royal oak calendrier','ap perpetual calendar','ap calendrier perpétuel','26586','royal oak 41 calendar','ro perpetual','ro calendar'],
+      r:()=>{ ctx.brand='Audemars Piguet'; return t(
+        `Royal Oak Calendrier Perpétuel (réf. 26574, 41mm). Jour, date, mois, phase de lune, cycle bissextile. Marché acier ~90 000–120 000€. Pièce d'exception — contactez-nous.`,
+        `Royal Oak Perpetual Calendar (ref. 26574, 41mm). Day, date, month, moon phase, leap year. Steel market ~€90,000–120,000. Exceptional piece — contact us.`
+      );} },
+
+    { id:'ap_royal_oak_tourbillon', kw:['royal oak tourbillon','ap tourbillon royal oak','26530','26522','26510','26516','tourbillon ap acier','tourbillon ap or','royal oak flying tourbillon','royal oak skeleton tourbillon','ap squelette tourbillon','ap skeleton tourbillon'],
+      r:()=>{ ctx.brand='Audemars Piguet'; return t(
+        `Royal Oak Tourbillon (réf. 26530, 26522). Tourbillon volant, 41mm. Acier ~120 000€+, or ~180 000€+. Savoir-faire haute horlogerie AP au design sportif. Contactez-nous.`,
+        `Royal Oak Tourbillon (ref. 26530, 26522). Flying tourbillon, 41mm. Steel ~€120,000+, gold ~€180,000+. AP haute horlogerie in a sporty design. Contact us.`
+      );} },
+
+    { id:'ap_royal_oak_concept', kw:['royal oak concept','ap concept','26265','26589','concept ap','concept gmt','concept tourbillon','concept flying tourbillon','concept lab','concept carbone','concept carbon','concept forged carbon','ap futuriste','ap futuristic','ap high tech'],
+      r:()=>{ ctx.brand='Audemars Piguet'; return t(
+        `Royal Oak Concept : la ligne avant-gardiste d'AP. Matériaux innovants (carbone forgé, céramique, titane), tourbillons volants, designs futuristes. Marché 100 000€ à 500 000€+. Contactez-nous.`,
+        `Royal Oak Concept: AP's avant-garde line. Innovative materials (forged carbon, ceramic, titanium), flying tourbillons, futuristic designs. Market €100,000 to €500,000+. Contact us.`
+      );} },
+
+    { id:'ap_royal_oak_selfwinding', kw:['royal oak selfwinding','royal oak automatique','26331','26315','15450','royal oak 37mm','royal oak bleu 41','royal oak noir 41','royal oak argent','26331st','26315st','15450st','royal oak bracelet','royal oak date','royal oak 3 aiguilles','royal oak three hand'],
+      r:()=>{ ctx.brand='Audemars Piguet'; return t(
+        `Royal Oak Selfwinding : Chronographe (réf. 26331, 41mm) ou 3 aiguilles (réf. 15450, 37mm). Cadrans bleu, noir, argent. Marché chrono acier ~30 000–45 000€, 3h acier ~25 000–35 000€. Contactez-nous.`,
+        `Royal Oak Selfwinding: Chronograph (ref. 26331, 41mm) or 3-hand (ref. 15450, 37mm). Blue, black, silver dials. Chrono steel market ~€30,000–45,000, 3h steel ~€25,000–35,000. Contact us.`
+      );} },
+
+    { id:'ap_royal_oak_double_balance', kw:['double balance','double balancier','ap double balance','15416','15407','openworked','openwork ap','squelette royal oak','skeleton royal oak','royal oak openworked','royal oak squelette','ap ajouré','ap openwork'],
+      r:()=>{ ctx.brand='Audemars Piguet'; return t(
+        `Royal Oak Double Balancier Openworked (réf. 15416, 15407). Mouvement squelette visible, double balancier. Marché or ~60 000–90 000€. Haute horlogerie sport-chic. Contactez-nous.`,
+        `Royal Oak Double Balance Openworked (ref. 15416, 15407). Visible skeleton movement, double balance wheel. Gold market ~€60,000–90,000. Sport-chic haute horlogerie. Contact us.`
+      );} },
+
+
+
 
     // ── PATEK PHILIPPE ──────────────────────────────────────────────────────────
-    { id:'patek_general', kw:['patek philippe','patek','pp','patek genève','patek paris','achat patek','vente patek','patek occasion','patek pre-owned','patek histoire','calatrava patek','patek suisse','genève manufacture','patek fondé','1839 patek','stern patek','patek collection'],
+    { id:'patek_general', kw:['patek philippe','patek','pp','patek genève','patek paris','achat patek','vente patek','patek occasion','patek pre-owned','patek histoire','calatrava patek','patek suisse','genève manufacture','patek fondé','1839 patek','stern patek','patek collection','patek watches','patek models','what patek','which patek','patek available','patek in stock','patek you have','avez vous des patek','got any patek','patek brand','patek dealer','buy patek','acheter patek','patek philippe watch','patek philippe collection','patek philippe available','patek philippe models','patek most expensive','most expensive patek','patek best','best patek','patek worth it','is patek worth it'],
       r:()=>{ ctx.brand='Patek Philippe'; return t(
         `Patek Philippe fondée en 1839 à Genève. Manufacture indépendante. Nous avons ${STOCK.filter(w=>w.brand==='Patek Philippe').length} Patek en stock (Nautilus, Annual Calendar, Complications). Quel modèle ?`,
         `Patek Philippe founded 1839 in Geneva. Independent manufacture. We have ${STOCK.filter(w=>w.brand==='Patek Philippe').length} Patek in stock (Nautilus, Annual Calendar, Complications). Which model?`
       );} },
 
-    { id:'patek_nautilus', kw:['nautilus','5711','5712','5726','5980','5990','nautilus 5711','5711 acier','5711 or','nautilus bleu','nautilus vert','nautilus blanc','5711 discontinué','nautilus discontinué','5726 nautilus','nautilus travel time','nautilus chronographe','ref 5980','ref 5990','nautilus 40mm','nautilus bracelet','nautilus dial'],
+    { id:'patek_nautilus', kw:['nautilus','patek nautilus','5711','5712','5726','5980','5990','nautilus 5711','5711 acier','5711 or','nautilus bleu','nautilus vert','nautilus blanc','5711 discontinué','nautilus discontinué','5726 nautilus','nautilus travel time','nautilus chronographe','ref 5980','ref 5990','nautilus 40mm','nautilus bracelet','nautilus dial'],
       r:()=>{ ctx.brand='Patek Philippe'; ctx.model='Nautilus'; const s=STOCK.filter(w=>w.brand==='Patek Philippe'&&w.model.toLowerCase().includes('nautilus')); return t(
         `Nos Nautilus :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nIcone sport-chic dessinée par Gérald Genta en 1976. Le 5711 acier (discontinué 2021) cote >80 000€ marché.`,
         `Our Nautilus:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nSport-chic icon designed by Gérald Genta in 1976. The steel 5711 (discontinued 2021) trades >€80,000 on market.`
@@ -334,8 +469,58 @@
         `Our Patek complications:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nAnnual calendars and mechanical complications. Among the highest watchmaking know-how in the world.`
       );} },
 
+    { id:'patek_twenty4', kw:['twenty 4','twenty~4','twenty four','twenty4','patek femme','patek ladies','patek women','patek lady','4910','4910/10a','7300','7300/1200a','twenty4 automatic','twenty 4 automatique','rectangulaire patek','patek rectangulaire','patek quartz','twenty4 or','twenty4 acier','twenty4 diamonds','twenty4 diamants'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `Twenty~4 : la montre féminine iconique de Patek. Quartz rectangle (réf. 4910, ~12 000–18 000€) ou automatique ronde (réf. 7300, ~25 000–35 000€). Acier ou or, avec ou sans diamants. Contactez-nous.`,
+        `Twenty~4: Patek's iconic ladies' watch. Quartz rectangle (ref. 4910, ~€12,000–18,000) or automatic round (ref. 7300, ~€25,000–35,000). Steel or gold, with or without diamonds. Contact us.`
+      );} },
+
+    { id:'patek_gondolo', kw:['gondolo','patek gondolo','5098','5124','5200','7099','gondolo art deco','gondolo rectangulaire','rectangular patek','patek rectangle','tonneau patek','patek tonneau','art deco patek','gondolo or','gondolo gold'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `Gondolo : la ligne Art Déco de Patek. Boîtiers rectangulaires et tonneau, or. Réf. 5124 (rectangle), 5098 (tonneau), 5200 (8 jours). Marché 20 000–40 000€. Contactez-nous.`,
+        `Gondolo: Patek's Art Deco line. Rectangular and tonneau cases, gold. Ref. 5124 (rectangle), 5098 (tonneau), 5200 (8-day). Market €20,000–40,000. Contact us.`
+      );} },
+
+    { id:'patek_golden_ellipse', kw:['golden ellipse','ellipse','patek ellipse','5738','3738','3748','ellipse or','ellipse gold','patek ovale','ellipse vintage','golden ellipse patek','ellipse bleu','ellipse blue','nombre d or','golden ratio'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `Golden Ellipse : créée 1968, proportions du nombre d'or. Boîtier ovale, cadran bleu soleil, or jaune (réf. 5738). Ultra-mince. Marché 25 000–40 000€. Pièce discrète et raffinée. Contactez-nous.`,
+        `Golden Ellipse: created 1968, golden ratio proportions. Oval case, sunburst blue dial, yellow gold (ref. 5738). Ultra-thin. Market €25,000–40,000. Discreet and refined. Contact us.`
+      );} },
+
+    { id:'patek_world_time', kw:['world time','heure universelle','5230','5231','5131','5110','5130','patek world time','patek heure universelle','world time patek','carte monde','world map','cloisonné','émail','enamel dial','fuseaux horaires','time zones','24 fuseaux','world time or','world time rose gold'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `World Time : affichage 24 fuseaux horaires. Réf. 5230 (cadran guilloché), 5231 (émail cloisonné). Or blanc ou rose, 38.5mm. Marché 40 000–80 000€+. Haute horlogerie voyageur. Contactez-nous.`,
+        `World Time: displays 24 time zones. Ref. 5230 (guilloché dial), 5231 (cloisonné enamel). White or rose gold, 38.5mm. Market €40,000–80,000+. Travel haute horlogerie. Contact us.`
+      );} },
+
+    { id:'patek_perpetual_calendar', kw:['patek perpetual calendar','patek calendrier perpétuel','5320','5327','5140','5139','5940','3940','patek perpétuel','patek perpetual','perpetual patek','calendrier perpétuel patek','5320g','grand complication patek','patek qp'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `Calendrier Perpétuel Patek : ne nécessite aucun ajustement jusqu'en 2100. Réf. 5320G (or gris, ~80 000€+), 5327 (or rose), 5940 (coussin). Parmi les plus beaux QP au monde. Contactez-nous.`,
+        `Patek Perpetual Calendar: needs no adjustment until 2100. Ref. 5320G (white gold, ~€80,000+), 5327 (rose gold), 5940 (cushion). Among the finest QPs in the world. Contact us.`
+      );} },
+
+    { id:'patek_minute_repeater', kw:['patek minute repeater','répétition minutes patek','patek sonnerie','5078','5178','5539','patek chiming','sonnerie patek','carillon patek','cathedral gong','gong cathédrale','patek 5078','patek 5539','minute repeater 5078'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `Répétition Minutes Patek : sonnerie mécanique des heures, quarts et minutes. Réf. 5078 (or, ~350 000€+), 5539 (tourbillon + répétition). Parmi les plus hautes complications horlogères. Contactez-nous.`,
+        `Patek Minute Repeater: mechanical chiming of hours, quarters and minutes. Ref. 5078 (gold, ~€350,000+), 5539 (tourbillon + repeater). Among the highest horological complications. Contact us.`
+      );} },
+
+    { id:'patek_grand_complications', kw:['patek grand complication','grande complication patek','sky moon','sky moon tourbillon','6002','6300','5016','5002','5175','grandmaster chime','celestial','patek celestial','6104','patek étoiles','patek stars','ciel étoilé','starry sky','patek astronomique','astronomical patek','most complicated watch','patek million','patek enchères','patek auction'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `Grandes Complications Patek : les montres les plus complexes au monde. Sky Moon Tourbillon (réf. 6002, ~1.5M€+), Grandmaster Chime (réf. 6300, 20 complications). Celestial (réf. 6104). Pièces muséales. Contactez-nous.`,
+        `Patek Grand Complications: the world's most complex watches. Sky Moon Tourbillon (ref. 6002, ~€1.5M+), Grandmaster Chime (ref. 6300, 20 complications). Celestial (ref. 6104). Museum pieces. Contact us.`
+      );} },
+
+    { id:'patek_chronograph', kw:['patek chronograph','patek chronographe','5172','5170','5070','5204','chronographe patek','chrono patek','patek chrono acier','patek chrono or','split seconds patek','rattrapante patek','5172g','5204r','5370'],
+      r:()=>{ ctx.brand='Patek Philippe'; return t(
+        `Chronographes Patek : Réf. 5172G (mono-poussoir, or gris, ~60 000€+), 5204R (rattrapante calendrier perpétuel, ~400 000€+). Mouvements manufacture CH 29-535. Contactez-nous.`,
+        `Patek Chronographs: Ref. 5172G (mono-pusher, white gold, ~€60,000+), 5204R (split-second perpetual calendar, ~€400,000+). Manufacture movements CH 29-535. Contact us.`
+      );} },
+
+
+
     // ── RICHARD MILLE ───────────────────────────────────────────────────────────
-    { id:'rm_general', kw:['richard mille','rm','richard mille paris','rm montre','rm occasion','rm pre-owned','achat richard mille','vente richard mille','rm suisse','rm tourbillon','rm prix','richard mille cher','rm combien','rm investment','rm cote'],
+    { id:'rm_general', kw:['richard mille','rm','richard mille paris','rm montre','rm occasion','rm pre-owned','achat richard mille','vente richard mille','rm suisse','rm prix','richard mille cher','rm combien','rm investment','rm cote','rm watch','rm watches','rm models','what rm','which rm','rm available','rm in stock','rm you have','avez vous des rm','got any rm','rm brand','rm dealer','buy rm','acheter rm','richard mille collection','richard mille available','richard mille models','richard mille price','richard mille worth','most expensive watch','watches over 100k','watches over 200k','six figure watch','six figure watches'],
       r:()=>{ ctx.brand='Richard Mille'; return t(
         `Richard Mille fondée en 2001. Montres ultra-légères, techniques, prix de 100 000€ à plusieurs millions. Nous avons ${STOCK.filter(w=>w.brand==='Richard Mille').length} RM en stock.`,
         `Richard Mille founded 2001. Ultra-light, technical watches, prices from €100,000 to several million. We have ${STOCK.filter(w=>w.brand==='Richard Mille').length} RM in stock.`
@@ -347,14 +532,88 @@
         `Our Richard Mille:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nRM 65-01: flyback split-second chronograph. Grade 5 titanium tonneau case, skeleton movement.`
       );} },
 
-    { id:'rm_tourbillon', kw:['rm tourbillon','rm 001','rm 008','rm 010','rm 011','rm 27','rm 35','rm 038','rm 055','rm 52','rm 56','rm 69','tourbillon rm','rm rafael nadal','rm athletes','rm sport','rm carbon','rm tpt','carbon ntpt'],
+    { id:'rm_tourbillon', kw:['rm tourbillon','rm 001','rm 008','rm 038','rm 52','rm 56','tourbillon rm','rm carbon','rm tpt','carbon ntpt'],
       r:()=>{ ctx.brand='Richard Mille'; return t(
         `Les RM Tourbillon (RM 001, RM 027 Nadal, RM 052…) sont les pièces iconiques. Marché 200 000€ à 2M+. Contactez-nous pour sourcing selon référence.`,
         `RM Tourbillons (RM 001, RM 027 Nadal, RM 052…) are the iconic pieces. Market €200,000 to 2M+. Contact us for sourcing by reference.`
       );} },
 
+    { id:'rm_011', kw:['rm 011','rm011','rm 11','rm11','rm 011 felipe massa','felipe massa','rm flyback','rm chronographe flyback','rm 011 titanium','rm 011 or rose','rm 011 rose gold','rm 011 carbone','rm 011 ntpt','rm 011 prix','rm 011 price'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 011 Felipe Massa : chronographe flyback + calendrier annuel. Boîtier tonneau titane/or rose/carbone NTPT, 50mm. Marché 150 000–300 000€ selon matériau. Pièce emblématique RM. Contactez-nous.`,
+        `RM 011 Felipe Massa: flyback chronograph + annual calendar. Tonneau case titanium/rose gold/carbon NTPT, 50mm. Market €150,000–300,000 depending on material. Iconic RM piece. Contact us.`
+      );} },
+
+    { id:'rm_027', kw:['rm 027','rm027','rm 27','rm27','rm nadal','rafael nadal','nadal watch','rm 27-01','rm 27-02','rm 27-03','rm 27-04','rm nadal tourbillon','montre nadal','nadal rm','rm ultra léger','rm ultralight','rm 20 grammes','rm 20 grams','lightest watch'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 027 Rafael Nadal : tourbillon ultra-léger (~20g avec bracelet). Boîtier carbone NTPT, conçue pour résister aux chocs du tennis. Marché 500 000€ à 1M+. Éditions très limitées. Contactez-nous.`,
+        `RM 027 Rafael Nadal: ultra-light tourbillon (~20g with strap). Carbon NTPT case, designed to withstand tennis impacts. Market €500,000 to 1M+. Very limited editions. Contact us.`
+      );} },
+
+    { id:'rm_035', kw:['rm 035','rm035','rm 35','rm35','rm 035 americas','rm 35-01','rm 35-02','rm 35-03','rm 035 nadal','rm baby nadal','rm nadal automatique','rm 035 carbone','rm 035 ntpt','rm 035 prix'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 035 "Baby Nadal" : automatique ultra-léger. Boîtier tonneau carbone NTPT/quartz TPT, calibre RMUL3. Marché 150 000–250 000€. Plus accessible que le RM 027. Contactez-nous.`,
+        `RM 035 "Baby Nadal": ultra-light automatic. Tonneau carbon NTPT/quartz TPT case, calibre RMUL3. Market €150,000–250,000. More accessible than the RM 027. Contact us.`
+      );} },
+
+    { id:'rm_055', kw:['rm 055','rm055','rm 55','rm55','rm 055 bubba watson','bubba watson','rm 055 white','rm 055 ceramic','rm 055 carbone','rm 055 prix','rm golf','rm golfeur'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 055 Bubba Watson : boîtier céramique blanche/carbone, résistant aux chocs du golf. Mouvement squelette, 49.9mm. Marché 150 000–200 000€. Contactez-nous pour sourcing.`,
+        `RM 055 Bubba Watson: white ceramic/carbon case, golf-shock resistant. Skeleton movement, 49.9mm. Market €150,000–200,000. Contact us to source.`
+      );} },
+
+    { id:'rm_010', kw:['rm 010','rm010','rm 10','rm10','rm 010 automatique','rm 010 automatic','rm 010 titane','rm 010 titanium','rm 010 or rose','rm 010 rose gold','rm 010 acier','rm entry level','rm entrée de gamme'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 010 : automatique avec date, l'une des RM les plus classiques. Boîtier tonneau titane/or rose, 48mm. Marché 100 000–180 000€. Point d'entrée RM historique. Contactez-nous.`,
+        `RM 010: automatic with date, one of the most classic RMs. Tonneau titanium/rose gold case, 48mm. Market €100,000–180,000. Historic RM entry point. Contact us.`
+      );} },
+
+    { id:'rm_030', kw:['rm 030','rm030','rm 30','rm30','rm 030 americas','rm 030 declutchable rotor','declutchable','rotor débrayable','rm 030 titane','rm 030 carbone','rm 030 ceramique','rm 030 automatic'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 030 : automatique avec rotor débrayable breveté. Boîtier tonneau titane/céramique/carbone. Marché 130 000–200 000€. Innovation mécanique signature RM. Contactez-nous.`,
+        `RM 030: automatic with patented declutchable rotor. Tonneau titanium/ceramic/carbon case. Market €130,000–200,000. Signature RM mechanical innovation. Contact us.`
+      );} },
+
+    { id:'rm_067', kw:['rm 067','rm067','rm 67','rm67','rm 67-01','rm 67-02','rm extra flat','rm extra plat','rm mince','rm thin','rm slim','rm 067 automatique','rm sportif','rm athlete edition','rm 67 carbone','rm 67 titane','rm everyday','rm quotidien'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 67-01 Extra Flat : la RM la plus fine (7.75mm). Automatique, boîtier tonneau titane/carbone. Marché 100 000–150 000€. RM 67-02 en éditions athlètes (sprint, saut en hauteur). Contactez-nous.`,
+        `RM 67-01 Extra Flat: thinnest RM (7.75mm). Automatic, tonneau titanium/carbon case. Market €100,000–150,000. RM 67-02 in athlete editions (sprint, high jump). Contact us.`
+      );} },
+
+    { id:'rm_072', kw:['rm 072','rm072','rm 72','rm72','rm 72-01','rm 72-01 lifestyle','rm lifestyle','rm chronographe','rm chrono flyback','rm 072 automatique','rm 072 ceramic','rm 072 céramique'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 72-01 Lifestyle Chronographe : flyback automatique, boîtier tonneau céramique/titane. Design contemporain à double compteur. Marché 180 000–250 000€. Contactez-nous.`,
+        `RM 72-01 Lifestyle Chronograph: automatic flyback, tonneau ceramic/titanium case. Contemporary twin-counter design. Market €180,000–250,000. Contact us.`
+      );} },
+
+    { id:'rm_005', kw:['rm 005','rm005','rm 5','rm5','rm 005 felipe massa','rm 005 automatique','rm 005 automatic','rm 005 titane','rm 005 titanium','rm premiere','rm first automatic'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 005 Felipe Massa : premier automatique RM (2003). Boîtier tonneau titane, masse oscillante variable. Marché 80 000–120 000€. Pièce historique de la marque. Contactez-nous.`,
+        `RM 005 Felipe Massa: first RM automatic (2003). Tonneau titanium case, variable-geometry rotor. Market €80,000–120,000. Historic piece for the brand. Contact us.`
+      );} },
+
+    { id:'rm_016', kw:['rm 016','rm016','rm 16','rm16','rm extra plat ancien','rm 016 automatique','rm 016 automatic','rm 016 titane','rm 016 or','rm toro','rm culture'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 016 : automatique extra-plat, la première RM fine. Boîtier tonneau titane/or, réhaut incliné distinctif. Marché 80 000–130 000€. Contactez-nous.`,
+        `RM 016: extra-flat automatic, the first thin RM. Tonneau titanium/gold case, distinctive angled flange. Market €80,000–130,000. Contact us.`
+      );} },
+
+    { id:'rm_050', kw:['rm 050','rm050','rm 50','rm50','rm 50-03','rm 50-03 mclaren','mclaren rm','rm tourbillon chrono','rm chronographe tourbillon','rm split second tourbillon','rm 056','rm 056 saphir','rm sapphire','rm transparent'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 050 Tourbillon Chronographe : chronographe rattrapante + tourbillon. Pièce haute horlogerie RM. RM 056 en saphir transparent (~2M€). RM 50-03 McLaren (graphène, le plus léger). Contactez-nous.`,
+        `RM 050 Tourbillon Chronograph: split-second chronograph + tourbillon. RM haute horlogerie piece. RM 056 in transparent sapphire (~€2M). RM 50-03 McLaren (graphene, lightest). Contact us.`
+      );} },
+
+    { id:'rm_069', kw:['rm 069','rm069','rm 69','rm69','rm erotic','rm érotique','rm 069 tourbillon','rm fun','rm playful','rm man'],
+      r:()=>{ ctx.brand='Richard Mille'; return t(
+        `RM 69 Erotic Tourbillon : tourbillon avec message rotatif érotique sur le cadran. Pièce ludique et provocatrice, édition très limitée. Marché 500 000€+. Contactez-nous.`,
+        `RM 069 Erotic Tourbillon: tourbillon with rotating erotic message on dial. Playful and provocative piece, very limited edition. Market €500,000+. Contact us.`
+      );} },
+
+
+
     // ── CARTIER ─────────────────────────────────────────────────────────────────
-    { id:'cartier_general', kw:['cartier','cartier montre','cartier paris','achat cartier','vente cartier','cartier occasion','cartier pre-owned','cartier histoire','cartier jewellery','cartier bijouterie','cartier joaillier','tank cartier','santos cartier','panthere cartier','cartier femme','cartier homme'],
+    { id:'cartier_general', kw:['cartier','cartier montre','cartier paris','achat cartier','vente cartier','cartier occasion','cartier pre-owned','cartier histoire','cartier jewellery','cartier bijouterie','cartier joaillier','panthere cartier','cartier femme','cartier homme','cartier watch','cartier watches','cartier models','what cartier','which cartier','cartier available','cartier in stock','cartier you have','avez vous des cartier','got any cartier','cartier brand','cartier dealer','buy cartier','acheter cartier','cartier collection','cartier available','cartier models','cartier price','cartier worth','cartier luxury','cartier jewel','cartier iconic','cartier love','cartier panthère','cartier panthere'],
       r:()=>{ ctx.brand='Cartier'; return t(
         `Cartier fondée à Paris en 1847. Maison de joaillerie et horlogerie. Nous avons ${STOCK.filter(w=>w.brand==='Cartier').length} Cartier en stock (Juste un Clou…). Quel modèle vous intéresse ?`,
         `Cartier founded in Paris in 1847. Jewellery and watchmaking house. We have ${STOCK.filter(w=>w.brand==='Cartier').length} Cartier in stock (Juste un Clou…). Which model interests you?`
@@ -378,15 +637,89 @@
         `Ballon Bleu: round case, sapphire-protected crown. Steel 36mm ~€5,000–7,000, steel 40mm ~€7,000–9,000. Contact us for availability.`
       );} },
 
-    { id:'cartier_juste_un_clou', kw:['juste un clou','just a nail','nail bracelet','clou cartier','wjba0042','clou or','clou bracelet','cartier nail','love bracelet','love ring','juste un clou prix'],
+    { id:'cartier_juste_un_clou', kw:['juste un clou','just a nail','nail bracelet','clou cartier','wjba0042','clou or','clou bracelet','cartier nail','juste un clou prix'],
       r:()=>{ ctx.brand='Cartier'; ctx.model='Juste un Clou'; const s=STOCK.filter(w=>w.brand==='Cartier'); return t(
         `Nos Cartier :\n${s.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nJuste un Clou : bracelet-jonc en forme de clou, iconique depuis 1971.`,
         `Our Cartier:\n${s.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nJuste un Clou: nail-shaped bangle, iconic since 1971.`
       );} },
 
+    { id:'cartier_panthere', kw:['panthère','panthere','panthere cartier','panthère de cartier','cartier panthere','cartier panthère','wspn0007','wspn0006','wspn0019','panthere mini','panthere small','panthere medium','panthere or','panthere gold','panthere acier','panthere steel','panthere quartz','montre panthere','chaînon','chain bracelet cartier','art deco cartier'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Panthère de Cartier : montre iconique Art Déco, bracelet chaînon souple. Mini, Small, Medium. Acier (~4 000–6 000€), or (~10 000–25 000€). Relancée en 2017. Contactez-nous.`,
+        `Panthère de Cartier: iconic Art Deco watch, supple chain bracelet. Mini, Small, Medium. Steel (~€4,000–6,000), gold (~€10,000–25,000). Relaunched 2017. Contact us.`
+      );} },
+
+    { id:'cartier_pasha', kw:['pasha','pasha cartier','pasha de cartier','pasha 41','pasha 35','pasha chronographe','pasha grille','pasha 2021','wspa0009','wspa0013','pasha acier','pasha or','pasha skeleton','pasha squelette','cartier pasha','pasha seatimer','pasha c'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Pasha de Cartier : boîtier rond avec couronne vissée protégée, cadran grillé signature. Relancé 2020 en 41mm et 35mm. Acier ~7 000–10 000€, or ~15 000–25 000€. Contactez-nous.`,
+        `Pasha de Cartier: round case with screw-down protected crown, signature grid dial. Relaunched 2020 in 41mm and 35mm. Steel ~€7,000–10,000, gold ~€15,000–25,000. Contact us.`
+      );} },
+
+    { id:'cartier_drive', kw:['drive','drive de cartier','drive cartier','cartier drive','wsnm0004','wsnm0008','drive acier','drive or','drive automatique','drive lune','drive moonphase','coussin cartier','cushion cartier','drive 40mm','drive extra flat'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Drive de Cartier : boîtier coussin arrondi, 40mm. Automatique ou Extra-Flat. Acier ~5 000–7 000€, or ~12 000–18 000€. Montre masculine élégante. Contactez-nous pour disponibilité.`,
+        `Drive de Cartier: rounded cushion case, 40mm. Automatic or Extra-Flat. Steel ~€5,000–7,000, gold ~€12,000–18,000. Elegant men's watch. Contact us for availability.`
+      );} },
+
+    { id:'cartier_ronde', kw:['ronde','ronde solo','ronde de cartier','ronde louis cartier','cartier ronde','ronde must','w6700155','w6700255','wsrn0031','ronde 36','ronde 40','ronde acier','ronde or','ronde cuir','ronde leather','ronde automatique','cartier rond','round cartier'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Ronde de Cartier : forme ronde classique, chiffres romains, cabochon bleu. Ronde Solo (~2 500–4 000€), Ronde Louis Cartier or (~8 000–15 000€). Élégance intemporelle. Contactez-nous.`,
+        `Ronde de Cartier: classic round shape, Roman numerals, blue cabochon. Ronde Solo (~€2,500–4,000), Ronde Louis Cartier gold (~€8,000–15,000). Timeless elegance. Contact us.`
+      );} },
+
+    { id:'cartier_calibre', kw:['calibre','calibre de cartier','calibre cartier','cartier calibre','w7100015','w7100037','calibre diver','calibre plongée','calibre acier','calibre or','calibre 42mm','calibre automatique','calibre chronographe'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Calibre de Cartier : montre sport masculine, 42mm. Acier (~5 000–7 000€), or (~12 000€+). Existe en version Diver 300m. Premier mouvement manufacture Cartier (1904 MC). Contactez-nous.`,
+        `Calibre de Cartier: men's sport watch, 42mm. Steel (~€5,000–7,000), gold (~€12,000+). Available in Diver 300m version. First Cartier manufacture movement (1904 MC). Contact us.`
+      );} },
+
+    { id:'cartier_cle', kw:['clé','clé de cartier','cle de cartier','cartier clé','cartier cle','wgcl0005','wscl0018','clé acier','clé or','clé automatique','clé 40mm','clé 35mm','couronne clé','key cartier','cartier key shape'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Clé de Cartier : couronne en forme de clé distinctive. 40mm homme, 35mm femme. Acier ~5 000–7 000€, or ~12 000€+. Design moderne lancé en 2015. Contactez-nous.`,
+        `Clé de Cartier: distinctive key-shaped crown. 40mm men's, 35mm ladies'. Steel ~€5,000–7,000, gold ~€12,000+. Modern design launched 2015. Contact us.`
+      );} },
+
+    { id:'cartier_crash', kw:['crash','crash cartier','cartier crash','crash watch','montre crash','crash london','crash 1967','crash surréaliste','surrealist watch','crash asymétrique','crash asymmetric','crash or','crash gold','crash limited','crash vintage','crash dali','melting watch','fondue montre'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Crash Cartier : montre surréaliste créée à Londres en 1967. Boîtier asymétrique "fondu", or, éditions très limitées. Marché vintage 50 000–200 000€+. Pièce collector rare. Contactez-nous.`,
+        `Cartier Crash: surrealist watch created in London 1967. Asymmetric "melted" case, gold, very limited editions. Vintage market €50,000–200,000+. Rare collector piece. Contact us.`
+      );} },
+
+    { id:'cartier_rotonde', kw:['rotonde','rotonde de cartier','cartier rotonde','rotonde tourbillon','rotonde minute repeater','rotonde mystérieuse','mysterious cartier','cartier mystère','rotonde skeleton','rotonde squelette','rotonde astrotourbillon','astrotourbillon','cartier haute horlogerie','cartier grand complication'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Rotonde de Cartier : haute horlogerie Cartier. Tourbillons, répétitions minutes, heures mystérieuses, astrotourbillon. Or, 40–45mm. Marché 50 000€ à 500 000€+. Contactez-nous.`,
+        `Rotonde de Cartier: Cartier haute horlogerie. Tourbillons, minute repeaters, mysterious hours, astrotourbillon. Gold, 40–45mm. Market €50,000 to €500,000+. Contact us.`
+      );} },
+
+    { id:'cartier_tortue', kw:['tortue','tortue cartier','cartier tortue','tortue or','tortue gold','tortue chronographe','tortue monopusher','tortue monopoussoir','tortue vintage','tortue xl','w1556234','tortue skeleton','cartier tonneau'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Tortue Cartier : boîtier forme tortue, design 1912. Chronographe monopoussoir, éditions limitées. Or. Marché 15 000–50 000€+. Classique de collection Cartier. Contactez-nous.`,
+        `Cartier Tortue: tortue-shaped case, 1912 design. Mono-pusher chronograph, limited editions. Gold. Market €15,000–50,000+. Cartier collection classic. Contact us.`
+      );} },
+
+    { id:'cartier_santos_dumont', kw:['santos dumont','santos-dumont','dumont','santos dumont cartier','ultra thin santos','santos plat','santos fin','wssa0022','wssa0032','santos dumont xl','santos dumont large','santos dumont small','dumont or','dumont acier','dumont leather','dumont cuir','santos extra plat','santos quartz'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Santos-Dumont : version ultra-plate du Santos, bracelet cuir. Small et Large. Acier ~4 000–6 000€, or ~8 000–15 000€. Hommage au pionnier de l'aviation Alberto Santos-Dumont. Contactez-nous.`,
+        `Santos-Dumont: ultra-thin Santos version, leather strap. Small and Large. Steel ~€4,000–6,000, gold ~€8,000–15,000. Tribute to aviation pioneer Alberto Santos-Dumont. Contact us.`
+      );} },
+
+    { id:'cartier_tank_francaise', kw:['tank française','tank francaise','française','francaise','wsta0065','wsta0074','tank francaise 2023','tank francaise acier','tank francaise or','tank française medium','tank française small','chain bracelet tank','chaîne tank'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Tank Française : bracelet chaînon intégré, boîtier incurvé. Relancée 2023 avec nouveau design. Small et Medium. Acier ~3 500–5 000€, or ~10 000€+. Contactez-nous.`,
+        `Tank Française: integrated chain bracelet, curved case. Relaunched 2023 with new design. Small and Medium. Steel ~€3,500–5,000, gold ~€10,000+. Contact us.`
+      );} },
+
+    { id:'cartier_tank_americaine', kw:['tank américaine','tank americaine','américaine','americaine','wsta0082','wsta0083','tank americaine 2023','elongated tank','tank allongé','tank américaine curved','cintrée','tank cintrée','tank americaine acier','tank americaine or'],
+      r:()=>{ ctx.brand='Cartier'; return t(
+        `Tank Américaine : version allongée et cintrée du Tank. Relancée 2023. Acier ~5 000–8 000€, or ~12 000€+. Silhouette élégante et distinctive. Contactez-nous.`,
+        `Tank Américaine: elongated curved Tank version. Relaunched 2023. Steel ~€5,000–8,000, gold ~€12,000+. Elegant and distinctive silhouette. Contact us.`
+      );} },
+
+
+
 
     // ── OMEGA ────────────────────────────────────────────────────────────────────
-    { id:'omega_general', kw:['omega','seamaster','speedmaster','constellation','de ville','omega montre','achat omega','vente omega','omega occasion','omega pre-owned','omega histoire','omega suisse','omega 1848','omega swatch group','omega james bond','omega nasa','moonwatch'],
+    { id:'omega_general', kw:['omega','constellation','de ville','omega montre','achat omega','vente omega','omega occasion','omega pre-owned','omega histoire','omega suisse','omega 1848','omega swatch group','omega james bond','omega nasa'],
       r:()=>t(
         `Omega fondée en 1848. Montre officielle NASA (Speedmaster Apollo 11 1969), montre de James Bond (Seamaster). Marché Speedmaster Pro ~5 000–8 000€, Seamaster 300M ~4 000–6 000€. Nous pouvons sourcer selon modèle.`,
         `Omega founded 1848. Official NASA watch (Speedmaster Apollo 11 1969), James Bond's watch (Seamaster). Speedmaster Pro market ~€5,000–8,000, Seamaster 300M ~€4,000–6,000. We can source by model.`
@@ -455,7 +788,7 @@
 
 
     // ── SERVICES ────────────────────────────────────────────────────────────────
-    { id:'revision_general', kw:['révision','revision','service','entretien','maintenance','remettre en état','overhaul','refaire','remise à neuf','nettoyage intérieur','mouvement révisé','mouvement nettoyé','service complet','full service','combien révision','prix révision','tarif révision'],
+    { id:'revision_general', kw:['révision','revision','service','entretien','maintenance','remettre en état','overhaul','refaire','remise à neuf','nettoyage intérieur','mouvement révisé','mouvement nettoyé','service complet','full service','combien révision','prix révision','tarif révision','my watch needs service','ma montre a besoin de révision','watch stopped working','montre arrêtée','watch not working','montre ne fonctionne plus','watch running slow','montre prend du retard','watch running fast','montre prend de l avance','losing time','prend du retard','gaining time','prend de l avance','watch broken','montre cassée','something wrong with','quelque chose qui cloche','strange noise','bruit bizarre','watch making noise','montre fait du bruit','service needed','révision nécessaire','overhaul needed','révision complète'],
       r:()=>t(
         `Révision complète disponible pour Rolex et Audemars Piguet. Nettoyage, lubrification, remplacement joints, test étanchéité, polissage optionnel. Délai ~3–6 semaines. Demandez un devis.`,
         `Full service available for Rolex and Audemars Piguet. Cleaning, lubrication, gasket replacement, water resistance test, optional polish. Lead time ~3–6 weeks. Request a quote.`
@@ -498,7 +831,7 @@
       ) },
 
     // ── MARCHÉ & PRIX ────────────────────────────────────────────────────────────
-    { id:'price_general', kw:['prix','price','combien','how much','tarif','coût','cost','cote','valeur marchande','market value','cours actuel','current price','quelle est la valeur','what is the value','prix du marché','market price','cotation','estimation prix'],
+    { id:'price_general', kw:['prix','price','prices','pricing','combien','how much','tarif','tarifs','coût','coûts','cost','costs','cote','valeur marchande','market value','cours actuel','current price','quelle est la valeur','what is the value','prix du marché','market price','cotation','estimation prix','cost of','price of','how much is','how much does','what does it cost','what is the price','what is the cost','quel est le prix','quel est le coût','c est combien','cela coûte','ça coûte','that costs','it costs','combien coûte','combien vaut','how much for','price range','fourchette de prix','around how much','environ combien','roughly how much','price list','liste de prix','tarification','quote','devis','estimate','estimation'],
       r:()=>t(
         `Dites-moi la référence exacte ou le modèle et je vous donne une estimation de marché actuelle. Nos prix sont consultables sur notre site.`,
         `Tell me the exact reference or model and I'll give you a current market estimate. Our prices are visible on the site.`
@@ -522,7 +855,7 @@
         `Patek pre-owned market benchmarks: Nautilus 5711/1A (discontinued) ~€80,000–120,000, 5726A Annual Calendar ~€55,000–75,000. Patek remains the #1 store of value in watchmaking.`
       ) },
 
-    { id:'market_trends', kw:['tendances marché','market trends','marché horloger','watch market','secondhand luxury','bulle spéculative','correction marché','montre en baisse','watch prices drop','montre en hausse','watch prices up','marché 2024','marché 2025','investir maintenant','should i buy now','bon moment acheter'],
+    { id:'market_trends', kw:['tendances marché','market trends','marché horloger','watch market','secondhand luxury','bulle spéculative','correction marché','montre en baisse','watch prices drop','montre en hausse','watch prices up','marché 2024','marché 2025','investir maintenant','should i buy now','bon moment acheter','is now a good time to buy','est maintenant bon moment acheter','watch market 2025','marché montre 2025','watch bubble','bulle montre','prices recovering','prix en hausse','prices falling','prix en baisse','market recovering','marché se reprend','watch speculation','spéculation montre','secondary market','marché secondaire','grey market','marché gris','dealer market','marché revendeur'],
       r:()=>t(
         `Depuis fin 2022, le marché secondaire a corrigé (-20–30% sur Rolex acier). Stabilisation en 2024. C'est historiquement un bon moment d'entrée sur les modèles clés.`,
         `Since late 2022, the secondary market corrected (-20–30% on steel Rolex). Stabilised in 2024. Historically a good entry point on key models.`
@@ -530,7 +863,7 @@
 
 
     // ── ÉDUCATION & CONSEILS ─────────────────────────────────────────────────────
-    { id:'fake_detection', kw:['faux','fake','contrefait','contrefaçon','comment détecter','how to spot','fake rolex','fausse rolex','copy','copie','replica','réplique','authentifier soi même','self authenticate','différence vraie fausse','true vs fake','ticking','tic tac','rolex tic','rolex sweep','second main'],
+    { id:'fake_detection', kw:['faux','fake','contrefait','contrefaçon','comment détecter','how to spot','fake rolex','fausse rolex','copy','copie','replica','réplique','authentifier soi même','self authenticate','différence vraie fausse','true vs fake','ticking','tic tac','rolex tic','rolex sweep','second main','how do i know if fake','comment savoir si faux','is it real','est elle vraie','how to tell if genuine','comment savoir si authentique','spot a fake','repérer un faux','fake watch signs','signes fausse montre','chinese fake','fausse chinoise','aliexpress watch','fake luxury watch','fausse montre luxe','counterfeit watch','montre contrefaite','identify fake','identifier faux','authentication guide','guide authentification','tell if genuine','savoir si vrai'],
       r:()=>t(
         `Signes d'un faux : trotteuse saccadée (vrai Rolex = glissement continu), poids léger, gravures floues, couronne et fond dévissables facilement, verre non-saphir. Mieux vaut faire expertiser.`,
         `Signs of a fake: jerky seconds hand (real Rolex = smooth sweep), light weight, blurry engravings, easily unscrewable crown and caseback, non-sapphire crystal. Better to have it authenticated.`
@@ -554,7 +887,7 @@
         `Automatic = wound by wrist movement (rotor). Manual = hand-wound. Quartz = battery, very precise. Haute horlogerie favours mechanical (status, craftsmanship).`
       ) },
 
-    { id:'complications', kw:['complication','chronographe','tourbillon','minute repeater','répétition minutes','calendrier perpétuel','perpetual calendar','moonphase','phase de lune','GMT','double fuseau','flying tourbillon','skeleton','squelette','openworked','grande complication'],
+    { id:'complications', kw:['complication','chronograph','chronographe','tourbillon','minute repeater','répétition minutes','calendrier perpétuel','perpetual calendar','moonphase','phase de lune','GMT','double fuseau','flying tourbillon','skeleton','squelette','openworked','grande complication'],
       r:()=>t(
         `Complications principales : chronographe (chrono), GMT (2 fuseaux), calendrier annuel, calendrier perpétuel, moonphase, tourbillon, répétition minutes. Chaque complication ajoute de la valeur.`,
         `Main complications: chronograph, GMT (dual time), annual calendar, perpetual calendar, moonphase, tourbillon, minute repeater. Each complication adds value.`
@@ -658,8 +991,57 @@
         `Nautilus Travel Time ref. **5990/1R**: ${w?fmt(w.price):'~€230,000–250,000 market'}. 18ct Rose Gold, dual time zone, annual calendar, chronograph. Cal. CH 28-520 IRM QA 24H.`
       );} },
 
+    // ── USE CASES ────────────────────────────────────────────────────────────────
+    { id:'daily_watch', kw:['daily wear','pour tous les jours','everyday watch','montre quotidienne','montre de tous les jours','casual watch','montre casual','can i wear it every day','puis je la porter tous les jours','rugged','solide','resistant','résistante','durable','durability','scratch resistant','résistante aux rayures','tough','robuste','hard wearing','daily driver','wearing every day','porter au bureau','wear to office','wear to work','wear to gym','salle de sport','sport quotidien','commute watch','travel watch','vacation watch','holiday watch','beach watch','vacation','plage','voyage','travel'],
+      r:()=>t(
+        `Pour le quotidien : Rolex Submariner (acier 904L, 300m), Datejust 41, AP Royal Oak 15500. Costaud, polyvalents, résistants. Évitez les complications fragiles (tourbillon) pour un usage daily.`,
+        `For daily wear: Rolex Submariner (904L steel, 300m), Datejust 41, AP Royal Oak 15500. Tough, versatile, resistant. Avoid fragile complications (tourbillon) for daily use.`
+      ) },
+
+    { id:'dress_watch', kw:['dress watch','montre habillée','formal watch','montre de soirée','evening watch','montre élégante','elegant watch','montre chic','chic','smart watch','business watch','montre bureau','montre costume','suit watch','tie watch','black tie','gala','soirée','event','cérémonie','formal occasion','occasion formelle','fine watch','slim watch','thin watch','montre fine','montre mince','classic watch','montre classique','sophisticated','sophistiqué'],
+      r:()=>t(
+        `Pour une tenue habillée : Patek Calatrava, Datejust 36 (Wimbledon), AP Royal Oak ultra-plat, Cartier Tank ou Ballon Bleu. Discrets, élégants, intemporels.`,
+        `For formal dress: Patek Calatrava, Datejust 36 (Wimbledon), AP Royal Oak ultra-thin, Cartier Tank or Ballon Bleu. Discreet, elegant, timeless.`
+      ) },
+
+    { id:'sport_watch', kw:['sport watch','montre sport','sportive','sports watch','active watch','action watch','outdoor watch','adventure watch','hiking watch','running watch','swimming watch','diving watch','montre plongée','montre sport','montre natation','montre course','montre randonnée','athletic','athlétique','physical activity','activité physique','workout','fitness','gym','exercise','water sport','sport nautique'],
+      r:()=>t(
+        `Montres sport en stock : Submariner (300m, plongée), GMT-Master (voyage), Explorer II (aventure), Yacht-Master (nautisme), Royal Oak Offshore (sport extrême). Dites-moi votre discipline.`,
+        `Sport watches in stock: Submariner (300m, diving), GMT-Master (travel), Explorer II (adventure), Yacht-Master (nautical), Royal Oak Offshore (extreme sport). Tell me your activity.`
+      ) },
+
+    { id:'watch_for_man', kw:['montre homme','watch for men','mens watch','montre pour homme','watch for man','montre masculine','masculine watch','men rolex','rolex for men','rolex homme','ap homme','ap for men','patek homme','patek for men','homme','man','men','male','masculin','montre virile','bold watch','strong watch'],
+      r:()=>t(
+        `Nos choix masculins les plus populaires : Submariner 41mm, Daytona 40mm, GMT-Master II, Royal Oak 41mm, Nautilus 40mm. Quel style — sport, classique ou habillé ?`,
+        `Our most popular men's choices: Submariner 41mm, Daytona 40mm, GMT-Master II, Royal Oak 41mm, Nautilus 40mm. What style — sport, classic or dress?`
+      ) },
+
+    { id:'watch_casual', kw:['casual watch','montre décontractée','relaxed watch','weekend watch','montre weekend','off duty watch','not too flashy','pas trop voyant','subtle','subtile','discreet','discrete','not too bling','understated','pas ostentatoire','low key','clean watch','simple watch','montre simple','no complications','sans complications','clean design','everyday luxury','luxe discret'],
+      r:()=>t(
+        `Montres discrètes et polyvalentes : Datejust 36mm, Oyster Perpetual, AP Royal Oak (la lunette octogonale est reconnaissable mais sobre). Le luxe sans ostentation.`,
+        `Discreet and versatile watches: Datejust 36mm, Oyster Perpetual, AP Royal Oak (the octagonal bezel is recognisable but understated). Luxury without ostentation.`
+      ) },
+
+    { id:'biggest_watch', kw:['grosse montre','big watch','large watch','statement watch','oversized','imposant','large case','grand boîtier','44mm','42mm','big face','grand cadran','bold design','attention','remarquer','noticed','stand out','se démarquer','luxury flex','montre qui se remarque','impressive watch','impressive piece'],
+      r:()=>t(
+        `Pour l'impact visuel : Royal Oak Offshore 44mm (réf. 26325TS, ${fmt(STOCK.find(w=>w.ref==='26325TS')?.price||34000)}), Yacht-Master 42mm (réf. 326935, ${fmt(STOCK.find(w=>w.ref==='326935')?.price||35000)}), RM 65-01 (réf. RM65-01, ${fmt(STOCK.find(w=>w.brand==='Richard Mille')?.price||235000)}). Présence garantie.`,
+        `For visual impact: Royal Oak Offshore 44mm (ref. 26325TS, ${fmt(STOCK.find(w=>w.ref==='26325TS')?.price||34000)}), Yacht-Master 42mm (ref. 326935, ${fmt(STOCK.find(w=>w.ref==='326935')?.price||35000)}), RM 65-01 (ref. RM65-01, ${fmt(STOCK.find(w=>w.brand==='Richard Mille')?.price||235000)}). Guaranteed presence.`
+      ) },
+
+    { id:'rarest_watch', kw:['rare watch','montre rare','limited edition','édition limitée','hard to find','introuvable','rare piece','pièce rare','exclusive','exclusif','one of a kind','unique','collector piece','pièce collector','discontinued','discontinué','no longer made','plus fabriqué','limited production','production limitée','out of production','rare find','difficult to find'],
+      r:()=>t(
+        `Nos pièces les plus rares en stock : Patek Nautilus Travel Time 5990/1R (or rose, ${fmt(239000)}), RM 65-01 rattrapante (${fmt(235000)}), Royal Oak Chrono 26240ST (${fmt(58500)}). Contactez-nous pour le sourcing de pièces introuvables.`,
+        `Our rarest pieces in stock: Patek Nautilus Travel Time 5990/1R (rose gold, ${fmt(239000)}), RM 65-01 split-second (${fmt(235000)}), Royal Oak Chrono 26240ST (${fmt(58500)}). Contact us to source unobtainable pieces.`
+      ) },
+
+    { id:'entry_luxury', kw:['entry level luxury','première montre de luxe','first luxury','entrée gamme luxe','debut luxury','start luxury','starting luxury','affordable luxury','luxe abordable','cheapest luxury','least expensive','moins cher luxe','most affordable','pas trop cher','not too expensive','value luxury','bon rapport qualité prix','good value luxury','starter watch','montre pour commencer','beginner luxury'],
+      r:()=>{ const opts=STOCK.filter(w=>w.price<9000).slice(0,3); return t(
+        `Nos meilleures entrées en matière de luxe :\n${opts.map(w=>`• ${w.brand} ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nExcellent point d'entrée avec une forte valeur de revente.`,
+        `Our best luxury entry points:\n${opts.map(w=>`• ${w.brand} ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\nExcellent entry point with strong resale value.`
+      );} },
+
     // ── COMPARAISONS ─────────────────────────────────────────────────────────────
-    { id:'compare_sub_vs_gmt', kw:['submariner vs gmt','sub ou gmt','difference submariner gmt','sub gmt choisir','gmt ou sub','submariner gmt comparaison','submariner ou gmt master'],
+    { id:'compare_sub_vs_gmt', kw:['submariner vs gmt','sub ou gmt','difference submariner gmt','sub gmt choisir','gmt ou sub','submariner gmt comparaison','submariner ou gmt master','submariner or gmt','gmt or submariner','which is better sub or gmt','should i get sub or gmt','sub vs gmt master','gmt master vs submariner','rolex sub vs gmt','lequel choisir sub gmt','sub ou gmt master'],
       r:()=>t(
         `Submariner : montre de plongée iconique, lunette unidirectionnelle, 300m. GMT : 2 fuseaux horaires, lunette bidirectionnelle, non-plongée. Budget identique (~12–18k€). Si vous voyagez souvent → GMT. Sinon → Submariner.`,
         `Submariner: iconic dive watch, uni-directional bezel, 300m. GMT: 2 time zones, bi-directional bezel, non-dive. Similar budget (~€12–18k). If you travel often → GMT. Otherwise → Submariner.`
@@ -708,14 +1090,117 @@
         `Browse our Richard Mille on [our Richard Mille page](/richard-mille.html).`
       ) },
 
+    // ── MORE CONVERSATIONAL & KNOWLEDGE ──────────────────────────────────────────
+    { id:'what_is_rolex', kw:['what is rolex','qu est ce que rolex','cest quoi rolex','rolex explanation','tell me about rolex','rolex brand information','information sur rolex','rolex background','about rolex brand','rolex famous','why is rolex famous','pourquoi rolex est célèbre','rolex reputation','rolex known for','rolex symbolic','rolex symbolique','rolex iconic','rolex prestige'],
+      r:()=>t(
+        `Rolex est la marque horlogère la plus connue au monde. Fondée en 1905 à Londres. Symbole de réussite, qualité Swiss Made irréprochable, valeur de revente exceptionnelle. Chaque Rolex est assemblée à Genève.`,
+        `Rolex is the world's most recognised watch brand. Founded in 1905 in London. Symbol of success, flawless Swiss Made quality, exceptional resale value. Every Rolex is assembled in Geneva.`
+      ) },
+
+    { id:'what_is_ap', kw:['what is audemars piguet','qu est ce que audemars','cest quoi ap','ap explanation','tell me about ap','about audemars piguet brand','ap famous','why is ap famous','pourquoi ap est célèbre','ap reputation','ap known for','ap iconic','ap prestige','ap symbolic','about royal oak','what is royal oak','royal oak explanation','royal oak famous'],
+      r:()=>t(
+        `Audemars Piguet est une manufacture indépendante fondée en 1875. Créatrice du Royal Oak (1972), première montre sport en acier de luxe. L'une des "Sainte-Trinité" de l'horlogerie avec Patek et Rolex.`,
+        `Audemars Piguet is an independent manufacture founded in 1875. Creator of the Royal Oak (1972), the first luxury steel sports watch. One of watchmaking's "Holy Trinity" with Patek and Rolex.`
+      ) },
+
+    { id:'what_is_patek', kw:['what is patek philippe','qu est ce que patek','cest quoi patek','patek explanation','tell me about patek','about patek philippe brand','patek famous','why is patek famous','pourquoi patek est célèbre','patek reputation','patek known for','patek iconic','patek prestige','holy trinity','sainte trinité horlogerie','most prestigious watch','most prestigious brand'],
+      r:()=>t(
+        `Patek Philippe est considérée comme la manufacture la plus prestigieuse au monde. Fondée en 1839 à Genève. Slogan : "Vous ne possédez jamais une Patek Philippe, vous la gardez pour la prochaine génération."`,
+        `Patek Philippe is considered the most prestigious manufacture in the world. Founded 1839 in Geneva. Slogan: "You never actually own a Patek Philippe, you merely look after it for the next generation."`
+      ) },
+
+    { id:'what_is_rm', kw:['what is richard mille','qu est ce que richard mille','cest quoi richard mille','rm explanation','tell me about richard mille','about rm brand','rm famous','why is rm famous','pourquoi rm est célèbre','rm reputation','rm known for','rm iconic','rm prestige','rm symbolic','richard mille brand story','rm founding','rm story'],
+      r:()=>t(
+        `Richard Mille fondée en 2001 à Paris. Montres ultra-techniques inspirées de la F1, matériaux aérospatiaux (titane, carbone NTPT, céramique). Prix de 100 000€ à plusieurs millions. Portées par des athlètes comme Nadal et Federer.`,
+        `Richard Mille founded 2001 in Paris. Ultra-technical watches inspired by F1, aerospace materials (titanium, NTPT carbon, ceramic). Prices €100,000 to several million. Worn by athletes like Nadal and Federer.`
+      ) },
+
+    { id:'what_is_pre_owned', kw:['pre owned','pre-owned','second hand','secondhand','used watch','montre usagée','occasion','d occasion','pre owned luxury','luxe occasion','is used bad','is pre owned good','is second hand ok','montre occasion bien','vaut il mieux neuf','new vs used','neuf ou occasion','difference neuf occasion','why buy pre owned','pourquoi acheter occasion'],
+      r:()=>t(
+        `Une montre d'occasion certifiée offre : **prix -20 à -40%** vs neuf, **disponibilité immédiate** (pas de liste d'attente), et **valeur déjà stabilisée**. Pour les Rolex populaires, l'occasion côte souvent AU-DESSUS du prix catalogue.`,
+        `A certified pre-owned watch offers: **20–40% lower price** vs new, **immediate availability** (no waiting list), and **already-stabilised value**. For popular Rolex, pre-owned often trades ABOVE catalogue price.`
+      ) },
+
+    { id:'holy_trinity', kw:['holy trinity watches','sainte trinité montre','top 3 watches','top 3 brands','best three brands','best three watch brands','trois meilleures marques','rolex patek ap','ap rolex patek','patek rolex ap','which is best brand','best watch brand','top watch brand','greatest watch brand','most prestigious','most prestigious brands','number one watch','numéro un montre'],
+      r:()=>t(
+        `La "Sainte-Trinité" de l'horlogerie : **Patek Philippe** (prestige suprême), **Audemars Piguet** (innovation sport), **Rolex** (liquidité & iconicité). Si vous rajoutez une 4e : Richard Mille pour la technologie extrême.`,
+        `Watchmaking's "Holy Trinity": **Patek Philippe** (supreme prestige), **Audemars Piguet** (sport innovation), **Rolex** (liquidity & iconicity). Add a 4th: Richard Mille for extreme technology.`
+      ) },
+
+    { id:'watch_knowledge', kw:['learn about watches','apprendre les montres','watch education','éducation horlogère','watch terminology','terminologie montre','watch glossary','glossaire montre','watch basics','bases horlogerie','horology','horlogerie','clockmaking','how watches work','comment fonctionne une montre','watch mechanism','mécanisme montre','know about watches','connaitre les montres','watch novice','débutant en montres','new to watches','new to horology'],
+      r:()=>t(
+        `Je peux vous expliquer : complications (chronographe, GMT, tourbillon), types de mouvements (automatique, manuel, quartz), matériaux (904L, titane, céramique), ou l'histoire des grandes maisons. Quelle question ?`,
+        `I can explain: complications (chronograph, GMT, tourbillon), movement types (automatic, manual, quartz), materials (904L, titanium, ceramic), or the history of the major houses. What's your question?`
+      ) },
+
+    { id:'resale_value', kw:['resale value','valeur de revente','can i resell','puis je revendre','is it easy to resell','facile à revendre','resell quickly','revendre rapidement','liquidity','liquidité','easy to sell','se revend facilement','market for','marché pour','demand for','demande pour','will anyone buy','quelquun achètera','flip watch','flip a watch','profit on watch','profit montre','make money watches','gagner de largent montres'],
+      r:()=>t(
+        `Liquidité par marque : **Rolex** = meilleure (revend partout, rapidement). **AP** = excellente (Royal Oak très demandé). **Patek** = excellente (Nautilus, Annual Cal.). **RM** = très bonne mais marché plus petit. Contactez-nous pour une estimation.`,
+        `Resale liquidity by brand: **Rolex** = best (sells everywhere, quickly). **AP** = excellent (Royal Oak very sought after). **Patek** = excellent (Nautilus, Annual Cal.). **RM** = very good but smaller market. Contact us for an estimate.`
+      ) },
+
+    { id:'watch_condition', kw:['condition of watch','état de la montre','excellent condition','mint condition','good condition','fair condition','poor condition','scratched','polished','unpolished','worn','unworn','lightly worn','heavily worn','like new','comme neuf','perfect condition','parfait état','condition matters','est ce que l état importe','does condition affect price','l état affecte le prix','condition grade','grading'],
+      r:()=>t(
+        `L'état impacte le prix de **15 à 35%**. Excellente condition (traces légères) > Très bon état (marques boîtier) > Bon état (usage visible). Les cadrans originaux non touchés ont plus de valeur que les cadrans refaits.`,
+        `Condition impacts price by **15 to 35%**. Excellent (light traces) > Very Good (case marks) > Good (visible use). Original untouched dials are worth more than refinished ones.`
+      ) },
+
+    { id:'payment_plan', kw:['payment plan','plan de paiement','payer en plusieurs fois','pay in instalments','split payment','paiement échelonné','financement','financing','crédit','credit','loan','prêt','monthly payment','mensualités','can i pay monthly','puis je payer mensuellement','layaway','acompte mensuel'],
+      r:()=>t(
+        `Nous ne proposons pas de financement direct, mais vous pouvez utiliser votre propre crédit bancaire ou faire un acompte pour réserver la pièce. Contactez-nous pour discuter des options.`,
+        `We don't offer direct financing, but you can use your own bank credit or pay a deposit to hold the piece. Contact us to discuss options.`
+      ) },
+
+    { id:'visit_store', kw:['can i visit','puis je visiter','visit your store','visiter votre boutique','come to your shop','venir en boutique','visit in person','visite en personne','stop by','passer','i want to come','je veux venir','see in person','voir en personne','physical store','boutique physique','shop location','emplacement boutique','can i see the watch','voir la montre','try on','essayer'],
+      r:()=>t(
+        `Oui, venez nous voir sur rendez-vous. 46 rue de Miromesnil, 75008 Paris — métro Miromesnil (L9/13). Prenez RDV au ${BIZ.phone1} ou via notre [formulaire](/prendre-rendez-vous.html).`,
+        `Yes, come see us by appointment. 46 rue de Miromesnil, 75008 Paris — metro Miromesnil (L9/13). Book via ${BIZ.phone1} or our [form](/prendre-rendez-vous.html).`
+      ) },
+
+    { id:'watch_photos', kw:['photos','photo','picture','pictures','image','images','see photos','voir photos','can i see','puis je voir','show me photos','montrez moi des photos','pictures of','photos of','more photos','plus de photos','high resolution','haute résolution','photo gallery','galerie photo','what does it look like','à quoi ça ressemble'],
+      r:()=>t(
+        `Les photos de chaque pièce sont disponibles sur notre [site](/index.html). Pour des photos supplémentaires ou en haute résolution, contactez-nous directement.`,
+        `Photos of every piece are available on our [site](/index.html). For additional or high-resolution photos, contact us directly.`
+      ) },
+
+    { id:'watch_certif', kw:['certificate','certificat','certification','certified','certifié','proof of authenticity','preuve authenticité','documentation','document','paperwork','papers included','papiers inclus','what comes with','qu est ce qui est inclus','what is included','box included','boîte incluse','warranty included','garantie incluse','accessories','accessoires','extras','suppléments'],
+      r:()=>t(
+        `Chaque pièce vendue inclut un certificat d'authenticité Nos Montres. Box et papiers d'origine sont mentionnés dans l'annonce — leur présence est indiquée produit par produit.`,
+        `Every piece sold includes a Nos Montres certificate of authenticity. Original box and papers are noted in the listing — their presence is indicated product by product.`
+      ) },
+
     // ── QUESTIONS FRÉQUENTES CLIENTS ─────────────────────────────────────────────
+    { id:'more_info', kw:['tell me more','dites moi plus','more information','plus d information','more details','plus de détails','elaborate','développez','can you expand','pouvez vous développer','more about that','plus sur ça','go on','continuez','and then','et ensuite','explain more','expliquez plus','what else','quoi d autre','anything else','autre chose','keep going','continuez','additional info','info supplémentaire'],
+      r:()=>t(
+        `Bien sûr — quel aspect vous intéresse le plus ? Prix, disponibilité, caractéristiques techniques, ou conseils d'achat ?`,
+        `Of course — which aspect interests you most? Price, availability, technical specs, or buying advice?`
+      ) },
+
+    { id:'not_interested', kw:['not interested','pas intéressé','no thanks','non merci','nevermind','laissez tomber','forget it','oubliez','maybe later','peut être plus tard','ill think about it','je vais réfléchir','just looking','je regarde','just browsing','juste en train de regarder','no need','pas besoin','its fine','c est bon','all good','tout va bien'],
+      r:()=>t(
+        `Pas de problème — n'hésitez pas à revenir si vous avez des questions. Bonne journée !`,
+        `No problem — feel free to come back if you have any questions. Have a great day!`
+      ) },
+
+    { id:'confirm', kw:['ok','okay','d accord','agreed','got it','compris','understood','noted','noté','sure','bien sûr','of course','absolument','absolutely','right','exact','exactement','correct','affirmative','yes please','oui s il vous plaît','sounds good','ça me convient','perfect','parfait','great','super','alright','très bien','fine','bien'],
+      r:()=>t(
+        `Parfait. Y a-t-il autre chose que je puisse faire pour vous ?`,
+        `Perfect. Is there anything else I can help you with?`
+      ) },
+
+    { id:'goodbye', kw:['bye','goodbye','au revoir','à bientôt','a bientot','see you','ciao','adieu','take care','bonne continuation','bonne journée','good day','have a good','passez une bonne','later','à plus','a plus','a tout à l heure','see you later','au plaisir','goodbye for now','bonne soirée','good evening','good night','bonne nuit','bye bye','cya'],
+      r:()=>t(
+        `À bientôt ! N'hésitez pas à revenir — nous sommes disponibles 7j/7 sur rendez-vous.`,
+        `Goodbye! Don't hesitate to come back — we're available 7 days a week by appointment.`
+      ) },
+
     { id:'warranty_sold', kw:['garantie','warranty','garanti','garanti combien de temps','how long warranty','garantie après achat','montre garantie','garantie boutique','pièce garantie','nm garantie'],
       r:()=>t(
         `Toutes nos montres sont vendues avec un certificat d'authenticité et une garantie boutique. Les détails de garantie sont précisés au moment de l'achat.`,
         `All our watches are sold with a certificate of authenticity and a boutique warranty. Warranty details are specified at the time of purchase.`
       ) },
 
-    { id:'negotiation', kw:['négocier','négociation','négociable','price negotiable','remise','discount','réduction','faire une offre','make an offer','meilleur prix','best price','on peut négocier','prix ferme'],
+    { id:'negotiation', kw:['négocier','négociation','négociable','price negotiable','remise','discount','réduction','faire une offre','make an offer','meilleur prix','best price','on peut négocier','prix ferme','can i negotiate','puis je négocier','room for negotiation','marge de négociation','lower the price','baisser le prix','can you do better','vous pouvez faire mieux','is the price fixed','le prix est il fixe','final price','prix final','can i get a deal','puis je avoir une remise','any discount','une réduction possible','promo','promotion','special price','prix spécial','bundle deal','deal groupé'],
       r:()=>t(
         `Nos prix sont étudiés au marché. Pour toute demande, contactez-nous directement — nous trouverons la meilleure solution selon le modèle et votre situation.`,
         `Our prices reflect the market. For any request, contact us directly — we'll find the best solution depending on the model and your situation.`
@@ -887,6 +1372,43 @@
       ) },
 
     // ── VENTE SPÉCIFIQUE ──────────────────────────────────────────────────────────
+    // ── WATCH KNOWLEDGE: MECHANICS & MATERIALS ────────────────────────────────────
+    { id:'sapphire_crystal', kw:['saphir','sapphire','crystal','cristal','verre','glass','verre de montre','watch glass','anti reflective','anti-reflet','ar coating','scratch proof glass','verre inrayable','verre résistant','hardness','dureté','mohs','scratch crystal','rayer le verre'],
+      r:()=>t(
+        `Le verre saphir (dureté Mohs 9) est quasi-inrayable. Toutes nos montres de marque utilisent du saphir. Seul le diamant peut le rayer. Un revêtement anti-reflets améliore la lisibilité.`,
+        `Sapphire crystal (Mohs hardness 9) is virtually scratch-proof. All brand watches we carry use sapphire. Only diamond can scratch it. Anti-reflective coating improves legibility.`
+      ) },
+
+    { id:'luminova', kw:['luminescence','lumineux','lume','luminova','superluminova','glow dark','brille dans le noir','noctilumineux','luminescent','aiguilles lumineuses','index lumineux','legibility night','lisibilité nuit','dark legibility','lisible dans le noir','visibility night','visibilité nuit'],
+      r:()=>t(
+        `Les montres Rolex utilisent le Chromalight (bleu, durée 8h), AP et Patek utilisent Super-LumiNova (vert, durée 6h). Indispensable pour plongeurs et pilotes. Très utile au quotidien pour lire l'heure la nuit.`,
+        `Rolex watches use Chromalight (blue, 8h duration), AP and Patek use Super-LumiNova (green, 6h). Essential for divers and pilots. Very useful daily for reading time at night.`
+      ) },
+
+    { id:'bezel_types', kw:['lunette','bezel','lunette tournante','rotating bezel','lunette fixe','fixed bezel','lunette céramique','ceramic bezel','lunette saphir','sapphire bezel','lunette or','gold bezel','fluted bezel','cannelée','tachymètre','tachymeter','diver bezel','lunette plongée','bidirectionnel','unidirectionnel','bidirectional bezel','unidirectional bezel'],
+      r:()=>t(
+        `Types de lunettes : **Céramique tournante** (Submariner, GMT — inrayable, unidirectionnelle), **Tachymètre** (Daytona — mesure vitesse), **Cannelée** (Datejust — or blanc/or jaune, décorative), **Grande Tapisserie** (AP RO Offshore).`,
+        `Bezel types: **Rotating ceramic** (Submariner, GMT — scratch-proof, unidirectional), **Tachymeter** (Daytona — speed measurement), **Fluted** (Datejust — white/yellow gold, decorative), **Grande Tapisserie** (AP RO Offshore).`
+      ) },
+
+    { id:'rolex_clasp', kw:['fermoir','clasp','deployant','déployant','safety clasp','fermoir sécurité','oysterlock','oysterclasp','glidelock','glide lock','bracelet fermoir','adjust bracelet','ajuster bracelet','bracelet trop grand','bracelet too big','bracelet too small','bracelet trop petit','resize bracelet','ajuster taille'],
+      r:()=>t(
+        `Rolex utilise l'Oysterlock (sécurité plongée) + système Glidelock pour ajuster le bracelet de ±5mm sans outils. AP Royal Oak a un fermoir papillon. Les deux sont parmi les fermetures les plus sécurisées du marché.`,
+        `Rolex uses Oysterlock (dive safety) + Glidelock system to adjust bracelet ±5mm without tools. AP Royal Oak has a butterfly clasp. Both are among the most secure closures on the market.`
+      ) },
+
+    { id:'watch_accuracy', kw:['précision','accuracy','accurate','precise','exactitude','seconds per day','secondes par jour','gain loss','gain perte','fast slow','avance retard','chronometer','chronomètre','how accurate','quelle précision','very accurate','très précis','keeps time','garde le temps','time keeping'],
+      r:()=>t(
+        `Rolex cal. 3235 : ±2 s/j. AP cal. 4302 : ±2 s/j. Patek cal. 26-330 : ±2 s/j. Pour comparaison, le quartz standard : ±15 s/mois. Si votre mécanique dépasse ±5 s/j, une révision est conseillée.`,
+        `Rolex cal. 3235: ±2 s/d. AP cal. 4302: ±2 s/d. Patek cal. 26-330: ±2 s/d. For comparison, standard quartz: ±15 s/month. If your mechanical exceeds ±5 s/d, a service is recommended.`
+      ) },
+
+    { id:'oyster_perpetual_about', kw:['oyster','perpetual','oyster case','boîtier oyster','what is oyster','cest quoi oyster','oyster meaning','oyster technology','oyster rolex','perpétuel','perpetual rotor','rotor perpétuel','self winding rotor','rotor remontage'],
+      r:()=>t(
+        `"Oyster" = boîtier hermétique (inventé par Rolex en 1926, étanche). "Perpetual" = rotor de remontage automatique (inventé par Rolex en 1931). Ces deux innovations ont révolutionné la montre-bracelet.`,
+        `"Oyster" = hermetic case (invented by Rolex in 1926, waterproof). "Perpetual" = automatic winding rotor (invented by Rolex in 1931). These two innovations revolutionised the wristwatch.`
+      ) },
+
     { id:'sell_rolex', kw:['vendre ma rolex','sell my rolex','vendre rolex','estimer rolex','rolex estimation vente','je veux vendre rolex','combien pour ma rolex','rachat rolex','how much for my rolex','rolex buyback'],
       r:()=>t(
         `Pour estimer votre Rolex : envoyez-nous photos (cadran, boîtier, fond, couronne, bracelet) + réf. et état. Réponse sous 48h. Papiers et boîte d'origine augmentent le prix de 15–30%.`,
@@ -905,7 +1427,7 @@
         `To estimate your Patek: send photos + serial number (caseback). Nautilus 5711/1A complete set currently buys at €75,000–100,000. Response time: 24–48h.`
       ) },
 
-    { id:'condition_grades', kw:['état','condition','mint','parfait état','très bon état','bon état','état usagé','worn condition','grade','scratches','rayures','used','porté','unworn','never worn','NOS','new old stock'],
+    { id:'condition_grades', kw:['état','condition','mint','parfait état','très bon état','bon état','état usagé','worn condition','grade','scratches','rayures','used','porté','unworn','never worn','NOS','new old stock','what condition','quelle condition','condition description','description état','how worn','combien porté','how used','how old','quel âge','age of watch','age montre','year of watch','année de la montre','production date','date de production'],
       r:()=>t(
         `Nos grades : Excellent (≤légères traces bracelet), Très bon (quelques marques boîtier), Bon (marques visibles, fonctionnel). Les prix indiqués sur le site reflètent l'état réel de chaque pièce.`,
         `Our grades: Excellent (≤light bracelet marks), Very Good (some case marks), Good (visible marks, fully functional). Prices shown on site reflect each piece's actual condition.`
@@ -1039,34 +1561,66 @@
       ) },
 
     { id:'fallback', kw:[], r:()=>t(
-        `Je n'ai pas cette information précise. Contactez-nous directement : ${BIZ.phone1} ou ${BIZ.email}.`,
-        `I don't have that specific information. Contact us directly: ${BIZ.phone1} or ${BIZ.email}.`
+        `Je peux vous renseigner sur nos montres en stock, les prix, l'achat, la vente, les révisions, ou l'horlogerie de luxe en général. Reformulez votre question ou appelez-nous au ${BIZ.phone1}.`,
+        `I can help with our watches in stock, prices, buying, selling, servicing, or luxury horology in general. Try rephrasing your question, or call us on ${BIZ.phone1}.`
       ) },
 
   ]; // end KB
 
 
   // ─── Classifier ───────────────────────────────────────────────────────────────
-  function kwRegex(kw) {
-    const esc = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp('(?:^|[\\s,.\'"!?()\\-])' + esc + '(?=$|[\\s,.\'"!?()\\-])', 'i');
+
+  // Strip common question/filler words to expose intent words
+  function stripFillers(text) {
+    return text
+      .replace(/\b(what|which|where|when|how|why|who|do|does|is|are|was|were|have|has|had|can|could|would|should|will|may|might|shall|tell|show|give|know|mean|says|said|going|want|need|looking|trying|wondering|thinking|hi|hey|hello|bonjour|bonsoir|salut|please|merci|okay|ok|oui|non|yes|no|not|dont|dont|doesnt|isnt|arent|cant|wont|a|an|the|of|in|on|at|to|for|with|about|your|my|our|their|its|this|that|these|those|de|la|le|les|du|des|un|une|et|ou|est|que|qui|quoi|quel|quelle|pour|sur|dans|avec|sans|plus|très|bien|aussi|encore|just|just|only|really|very|so|quite|i|you|we|they|me|us|il|elle|on|nous|vous|ils|je|tu|c est|c'est|ça|ca|j ai|j'ai|vous avez|vous êtes|je suis|je cherche|im|i'm|ive|i've|id|i'd)\b/gi, ' ')
+      .replace(/\s+/g, ' ').trim();
   }
 
-  function classify(text) {
-    const t2 = fuzzy(text.toLowerCase());
+  // Build regex from keyword — allows trailing plural/conjugation suffixes
+  function kwRegex(kw) {
+    const esc = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Allow: s/es (plural), ing (gerund), ed (past), er/eur (agent), ment, tion
+    const sfx = '(?:s|es|ing|ings|ed|er|eur|ment|tion|sion|able|ible)?';
+    return new RegExp('(?:^|[\\s,.\'"!?()\\-/])' + esc + sfx + '(?=$|[\\s,.\'"!?()\\-/])', 'i');
+  }
+
+  function runClassify(t2) {
     let best = null, bestScore = 0;
     for (const entry of KB) {
-      if (!entry.kw.length) continue; // skip fallback
+      if (!entry.kw.length) continue;
       let score = 0;
       for (const kw of entry.kw) {
         if (kwRegex(kw).test(t2)) {
           const words = kw.split(/\s+/).length;
-          score += words * words; // longer phrases score higher
+          score += words * words;
         }
       }
       if (score > bestScore) { bestScore = score; best = entry; }
     }
-    return bestScore > 0 ? best : KB.find(e => e.id === 'fallback');
+    return { best, score: bestScore };
+  }
+
+  function classify(text) {
+    const t2 = fuzzy(text.toLowerCase());
+    // First pass: full text
+    let { best, score } = runClassify(t2);
+    if (score > 0) return best;
+    // Second pass: strip fillers to expose intent words
+    const stripped = stripFillers(t2);
+    if (stripped && stripped !== t2) {
+      const r2 = runClassify(stripped);
+      if (r2.score > 0) return r2.best;
+    }
+    // Third pass: try individual content words (length >= 4)
+    const words = stripped.split(' ').filter(w => w.length >= 4);
+    let fallbackBest = null, fallbackScore = 0;
+    for (const word of words) {
+      const r3 = runClassify(word);
+      if (r3.score > fallbackScore) { fallbackScore = r3.score; fallbackBest = r3.best; }
+    }
+    if (fallbackScore > 0) return fallbackBest;
+    return KB.find(e => e.id === 'fallback');
   }
 
   // ─── Greeting variants (random) ──────────────────────────────────────────────
