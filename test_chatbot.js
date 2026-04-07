@@ -1548,7 +1548,7 @@ const TESTS = [
 { i:'what is a perpetual calendar', e:'patek_complications' },
 { i:'difference quartz et automatique', e:'movement_types' },
 { i:'automatic vs manual', e:'movement_types' },
-{ i:'how to wind a watch', e:'fallback' },
+{ i:'how to wind a watch', e:'how_to_wind' },
 { i:'what size should i get', e:'size_guide' },
 { i:'which size is best for me', e:'size_guide' },
 { i:'is 40mm too big', e:'size_guide' },
