@@ -36,14 +36,11 @@ button { cursor: pointer; background: none; border: none; font-family: inherit; 
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Language Visibility ── */
-.en { display: none; }
-.fr { display: inline; }
-span.fr, span.en { display: inline; }
-p.en, p.fr, div.en, div.fr, li.en, li.fr, h1.en, h1.fr,
-h2.en, h2.fr, h3.en, h3.fr, h4.en, h4.fr, label.en, label.fr,
-button.en, button.fr, a.en, a.fr, td.en, td.fr, th.en, th.fr,
-section.en, section.fr, article.en, article.fr { display: block; }
+/* ── Language Visibility (CSS-only, driven by html[data-lang]) ── */
+/* Default (before JS / French): hide English */
+html:not([data-lang="en"]) .en { display: none !important; }
+/* When English active: hide French */
+html[data-lang="en"] .fr { display: none !important; }
 
 /* ── Utility ── */
 .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }

@@ -315,25 +315,12 @@ const NM = {
     document.documentElement.lang = lang;
     document.documentElement.setAttribute('data-lang', lang);
 
-    // Block-level elements that need display:block when visible
-    const blockTags = new Set(['P','DIV','LI','H1','H2','H3','H4','LABEL',
-                               'SECTION','ARTICLE','BUTTON','A','TD','TH',
-                               'HEADER','FOOTER','NAV','ASIDE','MAIN','FORM']);
+    // CSS handles visibility via html[data-lang] attribute selectors.
+    // Clear any leftover inline display styles so CSS takes full control.
+    document.querySelectorAll('.fr, .en').forEach(el => {
+      el.style.removeProperty('display');
+    });
 
-    document.querySelectorAll('.fr').forEach(el => {
-      if (lang === 'fr') {
-        el.style.display = blockTags.has(el.tagName) ? 'block' : 'inline';
-      } else {
-        el.style.display = 'none';
-      }
-    });
-    document.querySelectorAll('.en').forEach(el => {
-      if (lang === 'en') {
-        el.style.display = blockTags.has(el.tagName) ? 'block' : 'inline';
-      } else {
-        el.style.display = 'none';
-      }
-    });
     document.querySelectorAll('[data-lang]').forEach(btn => {
       btn.classList.toggle('active-lang', btn.dataset.lang === lang);
     });
