@@ -2,14 +2,11 @@
  * Nos Montres — Cloudflare Worker
  * Routes:
  *   GET  /?q=...           → Live / static price lookup
+ *   GET  /models           → Full model map
  *   POST /submit           → Store a sell lead in Workers KV
  *   GET  /leads.csv?key=.. → Download all leads as CSV
  *   GET  /leads.json?key=. → Download all leads as JSON
- *
- * KV SETUP (one-time):
- *   npx wrangler kv:namespace create LEADS
- *   → Copy the ID into wrangler.toml [[kv_namespaces]] id = "…"
- *   npx wrangler deploy
+ *   POST /chat             → Gemini AI chatbot endpoint
  */
 
 const CORS = {
@@ -19,7 +16,150 @@ const CORS = {
   'Content-Type': 'application/json',
 };
 
-/* ─── Static price database (April 2026 secondary market) ─────────────────── */
+/* ─── Gemini AI System Prompt ──────────────────────────────────────────────── */
+const SYSTEM_PROMPT = `Tu es l'assistant expert horloger de Nos Montres, une boutique parisienne spécialisée dans l'achat et la vente de montres de luxe de seconde main, fondée par un passionné fort de plus de 15 ans d'expertise horlogère.
+
+RÈGLES DE STYLE — IMPÉRATIVES :
+- Ne jamais utiliser d'emojis.
+- Ne jamais répéter l'adresse, le téléphone ou l'email sauf si l'utilisateur le demande explicitement.
+- Réponses concises : 2 à 4 phrases maximum, sauf si une question technique approfondie l'exige.
+- Répondre en français par défaut. Si le client écrit en anglais, répondre en anglais.
+- Ton professionnel, chaleureux et expert. Jamais générique.
+
+CONTACT (uniquement si demandé) :
+- Adresse : 46 rue de Miromesnil, 75008 Paris
+- Téléphone : 01 81 80 08 47 / 06 22 80 70 14
+- Email : contact.nosmontres@gmail.com
+- Disponibilité : 7j/7 sur rendez-vous uniquement
+- Site : https://nosmontres.com
+
+NOS SERVICES :
+1. ACHAT de montres de luxe — estimation gratuite et sans engagement, paiement immédiat
+2. VENTE de montres de luxe d'occasion rigoureusement authentifiées
+3. RÉVISION ROLEX — diagnostic complet, démontage, nettoyage ultrasonique, lubrification, réglage du mouvement au timegrapher, test d'étanchéité, pièces d'origine exclusivement
+4. RÉVISION AUDEMARS PIGUET — processus identique avec respect des finitions satinées/brossées propres au Royal Oak
+5. CHANGEMENT DE PILE — identification précise, ouverture sécurisée, test d'étanchéité si requis
+6. EXPERTISE & CONSEIL — sélection personnalisée selon vos critères
+7. DÉPLACEMENT possible pour les pièces de valeur
+
+PROCESSUS DE VENTE (pour un client qui veut vendre sa montre) :
+- Le client nous contacte par téléphone ou email
+- On prend rendez-vous ou on demande des photos
+- Estimation gratuite et sans engagement
+- Si accord : paiement immédiat
+- On s'occupe de tout le reste
+
+PROCESSUS D'ACHAT (pour un client qui veut acheter) :
+- Rendez-vous en boutique ou contact préalable
+- Notre expert prépare une sélection personnalisée selon vos critères
+- Toutes nos montres sont authentifiées et dans leur état exact tel que décrit
+- Livraison possible
+
+MARQUES TRAITÉES :
+Rolex, Audemars Piguet, Patek Philippe, Richard Mille, Cartier, Omega, IWC, Jaeger-LeCoultre, Vacheron Constantin, A. Lange & Söhne, Tudor, Breguet, Hublot, Panerai, et autres grandes maisons.
+
+`;
+/* Continuation of SYSTEM_PROMPT — injected as second part */
+const SYSTEM_PROMPT_2 = `
+NOTRE INVENTAIRE ACTUEL (montres disponibles à la vente) :
+
+ROLEX :
+- Rolex Submariner Date Hulk (Réf. 126610LV) — 13 900 €
+- Rolex Submariner (Réf. 116613LB, acier/or jaune) — 11 500 €
+- Rolex Submariner vintage (Réf. 16800) — 9 500 €
+- Rolex Daytona Or Rose 2024 (Réf. 126505) — 49 500 €
+- Rolex Daytona Panda Acier (Réf. 126500LN) — 27 500 €
+- Rolex GMT-Master II Black (Réf. 116710LN) — 11 900 €
+- Rolex GMT-Master II Sprite (Réf. 126710GRNR) — 18 500 €
+- Rolex GMT-Master II vintage (Réf. 16710) — 9 500 €
+- Rolex Datejust 41 (Réf. 126334) — 11 500 € et 12 900 €
+- Rolex Datejust 36 Mint (Réf. 126300) — 11 000 €
+- Rolex Datejust 36 Wimbledon (Réf. 126300) — 10 500 € et 9 500 €
+- Rolex Datejust 36 vintage (Réf. 16234) — 6 500 €
+- Rolex Lady Datejust (Réf. 177234) — 6 500 €
+- Rolex Lady Datejust (Réf. 6917) — 8 500 €
+- Rolex Lady Datejust (Réf. 69178) — 6 000 €
+- Rolex Lady Datejust MOP Diamants (Réf. 179161) — 6 500 €
+- Rolex Turn-O-Graph 36 (Réf. 116264) — 7 500 €
+- Rolex Explorer II (Réf. 226570) — 9 500 €
+- Rolex Yacht-Master (Réf. 326935) — 35 000 €
+- Rolex Oyster Perpetual 41 Red (Réf. 124300) — 14 500 €
+
+AUDEMARS PIGUET :
+- AP Royal Oak Chronographe 41 Blue (Réf. 26240ST) — 58 500 €
+- AP Royal Oak Offshore (Réf. 26325TS) — 34 000 €
+- AP Royal Oak Offshore (Réf. 25940SK) — 17 500 €
+- AP Offshore Lady Diamants (Réf. 26048SK) — 22 500 €
+
+PATEK PHILIPPE :
+- Patek Philippe Nautilus 5980-1A Gris — 85 000 €
+- Patek Philippe Nautilus 5990/1R Or Rose — 239 000 €
+- Patek Philippe Annual Calendar (Réf. 5726-001) — 110 000 €
+- Patek Philippe (Réf. 7010R/011) — 53 000 €
+
+RICHARD MILLE :
+- Richard Mille RM65-01 — 235 000 €
+
+CARTIER :
+- Cartier (Réf. WJBA0042) — 24 000 €
+
+FOURCHETTES DE PRIX MARCHÉ SECONDAIRE (avril 2026) :
+- Rolex Submariner : 11 000 – 15 500 €
+- Rolex Daytona acier : 14 000 – 27 000 €
+- Rolex GMT-Master II : 11 000 – 20 000 €
+- Rolex Datejust 41 : 9 000 – 14 000 €
+- Rolex Explorer II : 8 500 – 11 000 €
+- Rolex Yacht-Master : 10 000 – 38 000 €
+- AP Royal Oak 15500ST : 35 000 – 60 000 €
+- AP Royal Oak Jumbo 15202ST : 80 000 – 145 000 €
+- AP Royal Oak Offshore acier : 22 000 – 45 000 €
+- Patek Nautilus 5711 acier : 65 000 – 150 000 €
+- Patek Aquanaut 5167A : 30 000 – 55 000 €
+- Richard Mille gamme : 95 000 – 500 000 €+
+- Cartier Santos acier : 5 500 – 14 000 €
+- Cartier Tank : 4 500 – 22 000 €
+
+DONNÉES HORLOGÈRES CLÉS SUR NOS MARQUES :
+
+AUDEMARS PIGUET :
+- Fondée en 1875 à Le Brassus, Vallée de Joux, toujours indépendante (familles fondatrices)
+- Royal Oak : dessiné par Gérald Genta en une nuit en 1971, présenté Bâle 1972. Premier grand boîtier sport en acier inoxydable, cadran Grande Tapisserie, bracelet intégré, 8 vis hexagonales
+- Réf. 15500ST : 39mm, calibre 4302, 70h réserve de marche — visage du Royal Oak contemporain
+- Réf. 15202ST "Jumbo" Extra-Thin : 39mm, mouvement 4,3mm d'épaisseur — la plus désirée par les puristes
+- Royal Oak Offshore : lancé 1993, surnommé "the Beast" par Genta lui-même
+- Code 11.59 : collection contemporaine, lunette ronde sur boîtier octogonal
+
+PATEK PHILIPPE :
+- Fondée à Genève en 1839, manufacture indépendante — la plus ancienne manufacture horlogère genevoise en activité
+- Nautilus 5711 : dessinée par Gérald Genta, discontinuée en 2021 — cotes explosées depuis l'annonce
+- Aquanaut 5167A : successeur spirituel de la Nautilus en version sportive contemporaine
+- Calatrava : collection dress watch classique, le cœur de la marque
+- Grand Complications : pièces grand feu, sonneries, calendriers perpétuels — investissement patrimonial de premier rang
+
+ROLEX :
+- Manufacture indépendante, Genève. Mouvements 100% in-house depuis toujours
+- Submariner : née en 1953, étanche jusqu'à 300m. Ref. 124060 (sans date), 126610LN/LV (avec date)
+- Daytona : chronographe mythique, né 1963 pour les pilotes de course. La plus difficile à obtenir en boutique officielle
+- GMT-Master II : deux fuseaux horaires, lunette bicolore. BLNR (Batman), BLRO (Pepsi), GRNR (Sprite)
+- Datejust : la plus intemporelle, disponible en 36 et 41mm, dizaines de cadrans/bracelets
+- Explorer II : 42mm, aiguille orange 24h, pour les aventuriers et spéléologues
+- Révision recommandée tous les 10 ans (ancienne recommandation : 5 ans)
+
+INFORMATIONS SUR LE SITE nosmontres.com :
+- Page collection complète : /index.html (filtres par marque)
+- Page vendre sa montre : /vendre.html (formulaire multi-étapes)
+- Page Audemars Piguet : /audemars-piguet.html
+- Page Royal Oak guide : /montre-audemars-piguet-royal-oak.html
+- Page révision Rolex : /entretien-montre-Rolex.html
+- Page révision AP : /revision-Audemars-Piguet-Paris.html
+- Page changement de pile : /changement-de-pile-de-montre.html
+- Page rendez-vous : /prendre-rendez-vous.html
+- Boutique en ligne : /shop/
+`;
+
+const FULL_SYSTEM_PROMPT = SYSTEM_PROMPT + SYSTEM_PROMPT_2;
+
+/* ─── Static price database ─────────────────────────────────────────────────── */
 const STATIC_PRICES = {
   rolex: {
     '124060': [11000, 14500], 'submariner no date': [11000, 14500],
@@ -80,13 +220,11 @@ function staticLookup(query) {
   const q = norm(query);
   for (const [brand, db] of Object.entries(STATIC_PRICES)) {
     if (!q.includes(brand)) continue;
-    const sortedKeys = Object.keys(db)
-      .filter(k => k !== '_default')
-      .sort((a, b) => {
-        const aRef = /\d/.test(a), bRef = /\d/.test(b);
-        if (aRef !== bRef) return aRef ? -1 : 1;
-        return norm(b).length - norm(a).length;
-      });
+    const sortedKeys = Object.keys(db).filter(k => k !== '_default').sort((a, b) => {
+      const aRef = /\d/.test(a), bRef = /\d/.test(b);
+      if (aRef !== bRef) return aRef ? -1 : 1;
+      return norm(b).length - norm(a).length;
+    });
     for (const key of sortedKeys) {
       const k = norm(key);
       if (k.length > 0 && q.includes(k)) {
@@ -99,17 +237,99 @@ function staticLookup(query) {
   return null;
 }
 
-// European country codes — exactly as Chrono24 uses them in their "Europe" filter
-const EUROPE_COUNTRIES = [
-  'DE','FR','CH','IT','ES','AT','NL','BE','PT','GR',
-  'PL','CZ','RO','HU','SE','DK','FI','NO','IE','LU',
-  'HR','SI','SK','LT','LV','EE','CY','MT','MC','LI',
-  'IS','AL','RS','BA','ME','MK','MD','UA','BY','SM',
-  'AD','GI','UK','BG',
-].map(c => `countryIds=${c}`).join('&');
+const SLUG_TO_QUERY = {
+  'rolex': 'rolex', 'audemarspiguet': 'audemars piguet',
+  'patekphilippe': 'patek philippe', 'richardmille': 'richard mille', 'cartier': 'cartier',
+};
 
-async function tryLivePrices(query) {
-  const url = `https://www.chrono24.com/search/index.htm?query=${encodeURIComponent(query)}&dosearch=true&sortorder=1&currencyId=EUR&${EUROPE_COUNTRIES}`;
+const FALLBACK_MODEL_URLS = {
+  'rolex submariner': '/rolex/submariner--mod1.htm',
+  'rolex gmt master ii': '/rolex/gmt-master-ii--mod4.htm',
+  'rolex gmt master': '/rolex/gmt-master--mod3.htm',
+  'rolex daytona': '/rolex/daytona--mod2.htm',
+  'rolex datejust 41': '/rolex/datejust-41--mod3025.htm',
+  'rolex datejust 36': '/rolex/datejust-36--mod2787.htm',
+  'rolex datejust': '/rolex/datejust--mod45.htm',
+  'rolex day date': '/rolex/day-date--mod47.htm',
+  'rolex explorer ii': '/rolex/explorer-ii--mod51.htm',
+  'rolex explorer': '/rolex/explorer--mod50.htm',
+  'rolex sea dweller': '/rolex/sea-dweller--mod49.htm',
+  'rolex yacht master': '/rolex/yacht-master--mod58.htm',
+  'rolex milgauss': '/rolex/milgauss--mod54.htm',
+  'rolex air king': '/rolex/air-king--mod5.htm',
+  'rolex oyster perpetual': '/rolex/oyster-perpetual--mod55.htm',
+  'audemars piguet royal oak offshore': '/audemarspiguet/royal-oak-offshore--mod117.htm',
+  'audemars piguet royal oak chronograph': '/audemarspiguet/royal-oak-chronograph--mod1170.htm',
+  'audemars piguet royal oak': '/audemarspiguet/royal-oak--mod116.htm',
+  'audemars piguet code 11 59': '/audemarspiguet/code-1159--mod2734.htm',
+  'audemars piguet millenary': '/audemarspiguet/millenary--mod114.htm',
+  'patek philippe nautilus': '/patekphilippe/nautilus--mod106.htm',
+  'patek philippe aquanaut': '/patekphilippe/aquanaut--mod92.htm',
+  'patek philippe grand complications': '/patekphilippe/grand-complications--mod101.htm',
+  'patek philippe calatrava': '/patekphilippe/calatrava--mod93.htm',
+  'patek philippe chronograph': '/patekphilippe/chronograph--mod1964.htm',
+  'richard mille rm 011': '/richardmille/rm-011--mod880.htm',
+  'richard mille rm 035': '/richardmille/rm-035--mod1447.htm',
+  'richard mille rm 055': '/richardmille/rm-055--mod1449.htm',
+  'cartier santos': '/cartier/santos--mod180.htm',
+  'cartier tank': '/cartier/tank--mod186.htm',
+  'cartier ballon bleu': '/cartier/ballon-bleu--mod165.htm',
+};
+
+async function resolveModelUrl(query, env) {
+  const q = norm(query);
+  if (env?.LEADS) {
+    try {
+      const modelmap = await env.LEADS.get('modelmap', { type: 'json' });
+      if (modelmap) {
+        for (const [slug, brandQuery] of Object.entries(SLUG_TO_QUERY)) {
+          if (!q.includes(brandQuery) && !q.includes(slug)) continue;
+          const models = modelmap[slug] || [];
+          const sorted = models.slice().sort((a, b) => norm(b.name).length - norm(a.name).length);
+          for (const m of sorted) {
+            const mn = norm(m.name);
+            if (mn.length > 2 && q.includes(mn)) return m.path;
+          }
+        }
+      }
+    } catch {}
+  }
+  const keys = Object.keys(FALLBACK_MODEL_URLS).sort((a, b) => b.length - a.length);
+  for (const key of keys) {
+    if (q.includes(norm(key))) return FALLBACK_MODEL_URLS[key];
+  }
+  return null;
+}
+
+function buildFallbackModelmap() {
+  const map = { rolex: [], audemarspiguet: [], patekphilippe: [], richardmille: [], cartier: [] };
+  for (const [key, path] of Object.entries(FALLBACK_MODEL_URLS)) {
+    const slugMatch = path.match(/^\/([^/]+)\//);
+    if (!slugMatch) continue;
+    const slug = slugMatch[1];
+    if (!map[slug]) continue;
+    const brandQuery = SLUG_TO_QUERY[slug] || slug;
+    const name = key.replace(brandQuery, '').trim();
+    if (!name) continue;
+    const titled = name.replace(/\b\w/g, c => c.toUpperCase());
+    if (!map[slug].some(m => m.path === path)) map[slug].push({ name: titled, path });
+  }
+  return map;
+}
+
+async function tryLivePrices(query, env) {
+  const modelPath = await resolveModelUrl(query, env);
+  if (!modelPath) return null;
+  if (env?.LEADS) {
+    try {
+      const cached = await env.LEADS.get('price:' + modelPath, { type: 'json' });
+      if (cached?.low && cached?.ts) {
+        const ageHours = (Date.now() - new Date(cached.ts).getTime()) / 3_600_000;
+        if (ageHours < 48) return { lowPrice: cached.low, highPrice: cached.high, currency: 'EUR', offerCount: cached.count || 0, source: 'live' };
+      }
+    } catch {}
+  }
+  const url = `https://www.chrono24.com${modelPath}?sortorder=1&currencyId=EUR`;
   try {
     const resp = await fetch(url, {
       headers: {
@@ -121,129 +341,120 @@ async function tryLivePrices(query) {
     });
     if (!resp.ok) return null;
     const html = await resp.text();
-    const match = html.match(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
-    if (!match) return null;
-    const parsed = JSON.parse(match[1]);
-    const graph = parsed['@graph'] || [parsed];
-    const agg = graph.find(n => n['@type'] === 'AggregateOffer');
-    if (!agg?.lowPrice) return null;
-    return {
-      lowPrice: parseFloat(agg.lowPrice),
-      highPrice: parseFloat(agg.highPrice),
-      currency: agg.priceCurrency || 'EUR',
-      offerCount: parseInt(agg.offerCount || 0),
-      source: 'live',
-    };
-  } catch {
+    const matches = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+    for (const m of matches) {
+      try {
+        const parsed = JSON.parse(m[1]);
+        const graph = parsed['@graph'] || [parsed];
+        const agg = graph.find(n => n['@type'] === 'AggregateOffer');
+        if (agg?.lowPrice) return { lowPrice: parseFloat(agg.lowPrice), highPrice: parseFloat(agg.highPrice), currency: 'EUR', offerCount: parseInt(agg.offerCount || 0), source: 'live' };
+      } catch {}
+    }
     return null;
-  }
+  } catch { return null; }
 }
 
-/* ─── Lead storage helpers ─────────────────────────────────────────────────── */
 function csvEscape(v) {
   if (v === null || v === undefined) return '';
   const s = String(v);
-  if (s.includes(',') || s.includes('"') || s.includes('\n')) {
-    return '"' + s.replace(/"/g, '""') + '"';
-  }
+  if (s.includes(',') || s.includes('"') || s.includes('\n')) return '"' + s.replace(/"/g, '""') + '"';
   return s;
 }
-
 const CSV_HEADERS = ['timestamp','brand','model','condition','papers','ref','name','phone','email','lang'];
-
 function leadsToCSV(leads) {
   const rows = [CSV_HEADERS.join(',')];
-  for (const lead of leads) {
-    rows.push(CSV_HEADERS.map(h => csvEscape(lead[h])).join(','));
-  }
+  for (const lead of leads) rows.push(CSV_HEADERS.map(h => csvEscape(lead[h])).join(','));
   return rows.join('\r\n');
 }
+async function getAllLeads(env) {
+  if (!env.LEADS) return [];
+  const list = await env.LEADS.list();
+  const leads = await Promise.all(
+    list.keys.filter(k => !k.name.startsWith('price:') && k.name !== 'modelmap').map(k => env.LEADS.get(k.name, { type: 'json' }))
+  );
+  return leads.filter(Boolean).sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
+}
 
-/* ─── Main handler ─────────────────────────────────────────────────────────── */
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
 
-    /* Preflight */
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: CORS });
+    if (request.method === 'GET' && url.pathname === '/models') {
+      let modelmap = null;
+      if (env?.LEADS) { try { modelmap = await env.LEADS.get('modelmap', { type: 'json' }); } catch {} }
+      if (!modelmap) modelmap = buildFallbackModelmap();
+      return Response.json(modelmap, { headers: { ...CORS, 'Cache-Control': 'public, max-age=3600' } });
     }
 
-    /* ── POST /submit — store lead ── */
     if (request.method === 'POST' && url.pathname === '/submit') {
       try {
         const body = await request.json();
         const id = Date.now().toString() + '-' + Math.random().toString(36).slice(2, 6);
         const lead = {
           timestamp: new Date().toISOString(),
-          brand:     body.brand     || '',
-          model:     body.model     || '',
-          condition: body.condition || '',
-          papers:    body.papers    || '',
-          ref:       body.ref       || '',
-          name:      body.name      || '',
-          phone:     body.phone     || '',
-          email:     body.email     || '',
-          lang:      body.lang      || 'fr',
+          brand: body.brand || '', model: body.model || '', condition: body.condition || '',
+          papers: body.papers || '', ref: body.ref || '', name: body.name || '',
+          phone: body.phone || '', email: body.email || '', lang: body.lang || 'fr',
         };
-        if (env.LEADS) {
-          await env.LEADS.put(id, JSON.stringify(lead));
-        }
+        if (env.LEADS) await env.LEADS.put(id, JSON.stringify(lead));
         return Response.json({ ok: true, id }, { headers: CORS });
       } catch (e) {
         return Response.json({ ok: false, error: e.message }, { status: 400, headers: CORS });
       }
     }
 
-    /* ── GET /leads.csv — export all leads as CSV ── */
     if (request.method === 'GET' && url.pathname === '/leads.csv') {
       const key = url.searchParams.get('key');
-      if (!env.ADMIN_KEY || key !== env.ADMIN_KEY) {
-        return new Response('Unauthorized', { status: 401 });
-      }
+      if (!env.ADMIN_KEY || key !== env.ADMIN_KEY) return new Response('Unauthorized', { status: 401 });
       const leads = await getAllLeads(env);
-      const csv = leadsToCSV(leads);
-      return new Response(csv, {
-        headers: {
-          'Content-Type': 'text/csv; charset=utf-8',
-          'Content-Disposition': 'attachment; filename="leads-nosmontres.csv"',
-          'Access-Control-Allow-Origin': '*',
-        },
+      return new Response(leadsToCSV(leads), {
+        headers: { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename="leads-nosmontres.csv"', 'Access-Control-Allow-Origin': '*' },
       });
     }
 
-    /* ── GET /leads.json — export all leads as JSON ── */
     if (request.method === 'GET' && url.pathname === '/leads.json') {
       const key = url.searchParams.get('key');
-      if (!env.ADMIN_KEY || key !== env.ADMIN_KEY) {
-        return new Response('Unauthorized', { status: 401 });
-      }
-      const leads = await getAllLeads(env);
-      return Response.json(leads, { headers: { 'Access-Control-Allow-Origin': '*' } });
+      if (!env.ADMIN_KEY || key !== env.ADMIN_KEY) return new Response('Unauthorized', { status: 401 });
+      return Response.json(await getAllLeads(env), { headers: { 'Access-Control-Allow-Origin': '*' } });
     }
 
-    /* ── GET /?q=... — price lookup ── */
+    if (request.method === 'POST' && url.pathname === '/chat') {
+      try {
+        const body = await request.json();
+        const messages = body.messages || [];
+        if (!messages.length) return Response.json({ reply: 'Bonjour, comment puis-je vous aider ?' }, { headers: CORS });
+        const apiKey = env.GEMINI_API_KEY;
+        if (!apiKey) return Response.json({ reply: 'Service temporairement indisponible.' }, { status: 503, headers: CORS });
+        const geminiRes = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: FULL_SYSTEM_PROMPT }] },
+              contents: messages.map(m => ({
+                role: m.role === 'assistant' ? 'model' : 'user',
+                parts: [{ text: m.content }],
+              })),
+              generationConfig: { temperature: 0.7, maxOutputTokens: 600 },
+            }),
+          }
+        );
+        const data = await geminiRes.json();
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Désolé, une erreur est survenue.';
+        return Response.json({ reply }, { headers: CORS });
+      } catch (e) {
+        return Response.json({ reply: 'Désolé, une erreur est survenue.' }, { status: 500, headers: CORS });
+      }
+    }
+
     const query = (url.searchParams.get('q') || '').trim();
-    if (query.length < 3) {
-      return Response.json({ error: 'query_too_short' }, { status: 400, headers: CORS });
-    }
-    const live = await tryLivePrices(query);
-    if (live) {
-      return Response.json(live, { headers: { ...CORS, 'Cache-Control': 'public, max-age=900' } });
-    }
+    if (query.length < 3) return Response.json({ error: 'query_too_short' }, { status: 400, headers: CORS });
+    const live = await tryLivePrices(query, env);
+    if (live) return Response.json(live, { headers: { ...CORS, 'Cache-Control': 'public, max-age=900' } });
     const stat = staticLookup(query);
-    if (stat) {
-      return Response.json(stat, { headers: { ...CORS, 'Cache-Control': 'public, max-age=1800' } });
-    }
+    if (stat) return Response.json(stat, { headers: { ...CORS, 'Cache-Control': 'public, max-age=1800' } });
     return Response.json({ error: 'not_found', query }, { status: 404, headers: CORS });
   },
 };
-
-async function getAllLeads(env) {
-  if (!env.LEADS) return [];
-  const list = await env.LEADS.list();
-  const leads = await Promise.all(
-    list.keys.map(k => env.LEADS.get(k.name, { type: 'json' }))
-  );
-  return leads.filter(Boolean).sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
-}
