@@ -94,18 +94,34 @@ html[data-lang="en"] .fr { display: none !important; }
 
 /* Dropdown */
 .has-drop { position: relative; }
+
+/* Bridge the 8px gap between nav link and dropdown so the cursor
+   never leaves .has-drop while crossing — prevents premature close */
+.has-drop::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -12px; right: -12px;
+  height: 12px;
+  background: transparent;
+}
+
 .drop-menu {
   position: absolute; top: calc(100% + 8px); left: 0;
   background: var(--white); border: 1px solid var(--border);
   min-width: 220px; padding: 12px 0;
   opacity: 0; pointer-events: none;
   transform: translateY(-8px);
-  transition: opacity var(--transition), transform var(--transition);
+  /* Delay hiding by 150ms so user has time to move into the dropdown */
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.15s,
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.15s;
   box-shadow: 0 8px 32px rgba(0,0,0,0.08);
 }
 .has-drop:hover .drop-menu,
 .has-drop.open .drop-menu {
   opacity: 1; pointer-events: auto; transform: translateY(0);
+  /* Show immediately — no delay on open */
+  transition-delay: 0s;
 }
 .drop-menu a {
   display: block; padding: 10px 22px;
