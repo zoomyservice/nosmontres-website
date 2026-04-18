@@ -427,7 +427,7 @@ export default {
         const apiKey = env.GEMINI_API_KEY;
         if (!apiKey) return Response.json({ reply: 'Service temporairement indisponible.' }, { status: 503, headers: CORS });
         const geminiRes = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${apiKey}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
