@@ -52,7 +52,151 @@
   ];
 
   // ─── Context tracking ─────────────────────────────────────────────────────────
-  const ctx = { brand: null, model: null };
+  const ctx = { brand: null, model: null, lastEntry: null };
+
+  // ─── UPGRADE: Conversation memory ─────────────────────────────────────────
+  // Tracks last 10 exchanges for multi-turn intelligence
+  const memory = {
+    history: [],          // [{role:'user'|'bot', text:'...', entry:'kb-id', ts:Date.now()}]
+    topics: new Set(),    // unique KB entry IDs discussed this session
+    phase: 'greeting',    // greeting → browsing → interested → converting
+    turnCount: 0,
+    questionsAsked: 0,    // how many questions the user has asked
+
+    push(role, text, entryId) {
+      this.history.push({ role, text: text.slice(0, 200), entry: entryId || null, ts: Date.now() });
+      if (this.history.length > 20) this.history.shift();
+      if (role === 'user') { this.turnCount++; this.questionsAsked++; }
+      if (entryId) this.topics.add(entryId);
+      // Phase transitions
+      if (this.turnCount >= 1 && this.phase === 'greeting') this.phase = 'browsing';
+      if (this.turnCount >= 3 && this.topics.size >= 2) this.phase = 'interested';
+      if (this.topics.has('sell') || this.topics.has('buy') || this.topics.has('sourcing')) this.phase = 'converting';
+    },
+
+    lastUserMsg()  { return [...this.history].reverse().find(h => h.role === 'user'); },
+    lastBotEntry() { return [...this.history].reverse().find(h => h.role === 'bot' && h.entry); },
+    discussed(id)  { return this.topics.has(id); },
+
+    // Get the last topic for pronoun resolution ("it", "that one", "this watch")
+    resolveReference() {
+      if (ctx.model) return ctx.model;
+      if (ctx.brand) return ctx.brand;
+      const last = this.lastBotEntry();
+      return last ? last.entry : null;
+    }
+  };
+
+  // ─── UPGRADE: Synonym expansion map ───────────────────────────────────────
+  // Maps natural phrases to KB keywords so users don't need exact terms
+  const SYNONYMS = {
+    // Price intent
+    'how much': 'price', 'what does it cost': 'price', 'pricing': 'price',
+    'what is the price': 'price', 'cost': 'price', 'how expensive': 'price',
+    'what do you charge': 'price', 'fees': 'price', 'tarif': 'price',
+    'combien ça coûte': 'price', 'quel prix': 'price', 'coûte combien': 'price',
+
+    // Hours intent
+    'when are you open': 'horaires', 'what time': 'horaires', 'opening time': 'horaires',
+    'when can i come': 'horaires', 'when can i visit': 'horaires', 'schedule': 'horaires',
+    'are you open now': 'horaires', 'are you open today': 'horaires',
+    'are you open on saturday': 'horaires', 'are you open on sunday': 'horaires',
+    'quand êtes vous ouvert': 'horaires', 'à quelle heure': 'horaires',
+
+    // Sell intent
+    'get rid of my watch': 'vendre', 'cash for my watch': 'vendre',
+    'trade in': 'vendre', 'what is my watch worth': 'vendre',
+    'how much will you give me': 'vendre', 'sell my': 'vendre',
+    'you buy watches': 'vendre', 'do you buy': 'vendre',
+
+    // Location intent
+    'where are you': 'adresse', 'how do i get there': 'directions',
+    'which metro': 'metro', 'which station': 'metro',
+    'closest metro': 'metro', 'nearest metro': 'metro',
+
+    // Service intent
+    'my watch is broken': 'révision', 'watch stopped': 'révision',
+    'needs fixing': 'révision', 'repair': 'révision',
+    'battery': 'révision', 'ma montre ne marche plus': 'révision',
+    'montre arrêtée': 'révision', 'en panne': 'révision',
+
+    // Browse intent
+    'what do you have': 'stock', 'show me what you have': 'stock',
+    'what watches': 'stock', 'your collection': 'collection',
+    'what can i buy': 'acheter', "qu'est ce que vous avez": 'stock',
+
+    // Gift intent
+    'for my husband': 'cadeau', 'for my wife': 'cadeau',
+    'for my dad': 'cadeau', 'for my boyfriend': 'cadeau',
+    'for her birthday': 'cadeau', 'for his birthday': 'cadeau',
+    'anniversary gift': 'cadeau', 'valentine': 'cadeau',
+  };
+
+  // Expand user input with synonym mapping before classification
+  function expandSynonyms(text) {
+    let expanded = text;
+    for (const [phrase, replacement] of Object.entries(SYNONYMS)) {
+      if (text.includes(phrase.toLowerCase())) {
+        expanded += ' ' + replacement;
+      }
+    }
+    return expanded;
+  }
+
+  // ─── UPGRADE: Response variation engine ───────────────────────────────────
+  // Multiple phrasings for common responses to avoid repetition
+  const VARIATIONS = {
+    'greeting': {
+      fr: [
+        `Bonjour ! Je suis l'assistant **Nos Montres**, spécialiste parisien de l'achat-vente de montres de luxe. Posez-moi votre question.`,
+        `Bonjour ! Comment puis-je vous aider — achat, vente, ou renseignement horloger ?`,
+        `Bonsoir ! Boutique parisienne de montres de luxe d'occasion. Que puis-je faire pour vous ?`,
+        `Bonjour et bienvenue ! Dites-moi ce qui vous intéresse — Rolex, AP, Patek, Cartier…`,
+      ],
+      en: [
+        `Hello! I'm the **Nos Montres** assistant, a Parisian specialist in pre-owned luxury watches. Ask me anything.`,
+        `Hello! How can I help — buying, selling, or watch advice?`,
+        `Good evening! Parisian luxury watch boutique. What can I do for you?`,
+        `Hello and welcome! Tell me what interests you — Rolex, AP, Patek, Cartier…`,
+      ]
+    },
+    'thanks': {
+      fr: [`Avec plaisir.`, `Je vous en prie !`, `De rien ! N'hésitez pas si vous avez d'autres questions.`, `Merci à vous ! Je suis là si besoin.`],
+      en: [`My pleasure.`, `You're welcome!`, `Happy to help! Let me know if you have other questions.`, `Thanks! I'm here if you need anything else.`]
+    },
+    'fallback': {
+      fr: [
+        `Je n'ai pas bien compris. Essayez par exemple :\n• _"Avez-vous des Submariner ?"_\n• _"Je veux vendre ma montre"_\n• _"Quel budget pour une Rolex ?"_\n\n📞 ${BIZ.phone1}`,
+        `Hmm, je ne suis pas sûr de comprendre. Posez-moi une question sur nos montres, les prix, la vente, ou l'horlogerie — ou appelez-nous : ${BIZ.phone1}`,
+        `Je n'ai pas saisi votre demande. Voici ce que je maîtrise : **stock & prix**, **achat & vente**, **révision**, **conseils horlogers**. Essayez de reformuler ?`,
+      ],
+      en: [
+        `I didn't quite catch that. Try asking:\n• _"Do you have any Submariners?"_\n• _"I want to sell my watch"_\n• _"What budget for a Rolex?"_\n\n📞 ${BIZ.phone1}`,
+        `Hmm, I'm not sure I understand. Ask me about our watches, prices, selling, or horology — or call us: ${BIZ.phone1}`,
+        `I didn't get that. I can help with: **stock & prices**, **buying & selling**, **servicing**, **watch advice**. Try rephrasing?`,
+      ]
+    }
+  };
+
+  function vary(entryId) {
+    const v = VARIATIONS[entryId];
+    if (!v) return null;
+    const pool = lang() === 'en' ? v.en : v.fr;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // ─── UPGRADE: Pronoun & reference resolution ─────────────────────────────
+  // Detects "it", "that one", "this watch" etc. and resolves to last discussed item
+  const PRONOUNS = /\b(it|that|that one|this one|this watch|that watch|the watch|the one|celle[- ]ci|celle[- ]là|cette montre|la montre|celui[- ]ci|celui[- ]là|ce modèle)\b/i;
+  const FOLLOW_UP_SIGNALS = /\b(tell me more|more details|what else|go on|elaborate|continue|en savoir plus|plus de details|dites[- ]m en plus|plus d infos|and|et aussi|also)\b/i;
+
+  function resolvePronouns(text) {
+    if (!PRONOUNS.test(text)) return text;
+    const ref = memory.resolveReference();
+    if (!ref) return text;
+    // Inject the reference so the classifier can find it
+    return text + ' ' + ref;
+  }
 
   // ─── Levenshtein fuzzy correction ─────────────────────────────────────────────
   function lev(a, b) {
@@ -108,8 +252,7 @@
 
     // ── CONVERSATIONAL ──────────────────────────────────────────────────────────
     { id:'greeting', kw:['bonjour','bonsoir','salut','allo','hello','hey','coucou','hi','good morning','good evening','good afternoon','yo','hola','good day','howdy','greetings','wassup','whats up','what up','sup','bonne journée','bonne soirée','bonne nuit','good night','bjr','bsr','cc','slt'],
-      r:()=>t(`Bonjour ! Je suis l'assistant de **Nos Montres**, spécialiste parisien de l'achat-vente de montres de luxe d'occasion. Posez-moi votre question.`,
-              `Hello! I'm the **Nos Montres** assistant, a Parisian specialist in pre-owned luxury watches. Ask me anything.`) },
+      r:()=>{ ctx.lastEntry='greeting'; return vary('greeting') || t(`Bonjour ! Je suis l'assistant de **Nos Montres**, spécialiste parisien de l'achat-vente de montres de luxe d'occasion. Posez-moi votre question.`,`Hello! I'm the **Nos Montres** assistant, a Parisian specialist in pre-owned luxury watches. Ask me anything.`); } },
 
     { id:'thanks', kw:['merci','thank you','thanks','parfait','excellent','super','nickel','very helpful','utile','cheers','perfect','génial','bravo','awesome','great','fantastic','wonderful','amazing','terrific','magnifique','formidable','impeccable','top','chapeau','bien joué','well done','appreciated','noted','understood','compris','reçu','ok merci','thanks a lot','merci beaucoup','thank you so much','merci infiniment','many thanks','much appreciated','very kind','très aimable'],
       r:()=>t(`Avec plaisir.`,`My pleasure.`) },
@@ -2409,10 +2552,32 @@
 
     // ── MARCHÉ & PRIX ────────────────────────────────────────────────────────────
     { id:'price_general', kw:['prix','price','prices','pricing','combien','how much','tarif','tarifs','coût','coûts','cost','costs','cote','valeur marchande','market value','cours actuel','current price','quelle est la valeur','what is the value','prix du marché','market price','cotation','estimation prix','cost of','price of','how much is','how much does','what does it cost','what is the price','what is the cost','quel est le prix','quel est le coût','c est combien','cela coûte','ça coûte','that costs','it costs','combien coûte','combien vaut','how much for','price range','fourchette de prix','around how much','environ combien','roughly how much','price list','liste de prix','tarification','quote','devis','estimate','estimation'],
-      r:()=>t(
-        `Dites-moi la référence exacte ou le modèle et je vous donne une estimation de marché actuelle. Nos prix sont consultables sur notre site.`,
-        `Tell me the exact reference or model and I'll give you a current market estimate. Our prices are visible on the site.`
-      ) },
+      r:()=>{
+        // UPGRADE: If we have a model in context, show its actual prices
+        if (ctx.model) {
+          const modelKey = ctx.model.toLowerCase();
+          const inStock = STOCK.filter(w => w.model.toLowerCase().includes(modelKey));
+          if (inStock.length) {
+            return t(
+              `Prix de nos **${ctx.model}** en stock :\n${inStock.map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\n📞 ${BIZ.phone1} pour réserver.`,
+              `Prices for our **${ctx.model}** in stock:\n${inStock.map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\n📞 ${BIZ.phone1} to reserve.`
+            );
+          }
+        }
+        if (ctx.brand) {
+          const brandStock = STOCK.filter(w => w.brand === ctx.brand);
+          if (brandStock.length) {
+            return t(
+              `Nos **${ctx.brand}** en stock :\n${brandStock.slice(0,6).map(w=>`• ${w.model} réf. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nDites-moi quel modèle vous intéresse.`,
+              `Our **${ctx.brand}** in stock:\n${brandStock.slice(0,6).map(w=>`• ${w.model} ref. **${w.ref}** → ${fmt(w.price)}`).join('\n')}\n\nTell me which model interests you.`
+            );
+          }
+        }
+        return t(
+          `Dites-moi la référence exacte ou le modèle et je vous donne une estimation de marché actuelle. Nos prix sont consultables sur notre site.`,
+          `Tell me the exact reference or model and I'll give you a current market estimate. Our prices are visible on the site.`
+        );
+      } },
 
     { id:'market_rolex', kw:['cote rolex','prix rolex marché','rolex secondhand market','marché rolex','rolex market','rolex valeur','rolex prix occasion','rolex investissement prix','rolex prix 2024','rolex prix 2025','rolex augmente','rolex appreciates','rolex se revend','resale rolex'],
       r:()=>t(
@@ -3789,20 +3954,31 @@
     for (const entry of KB) {
       if (!entry.kw.length) continue;
       let score = 0;
+      let matchedSpecificRef = false;
       for (const kw of entry.kw) {
         if (kwRegex(kw).test(t2)) {
           const words = kw.split(/\s+/).length;
           score += words * words;
+          // UPGRADE: Boost score heavily when a specific ref number matches
+          // Ref numbers are alphanumeric 4+ chars with digits — e.g. 116613lb, 126500ln
+          if (/\d/.test(kw) && kw.length >= 4) { score += 20; matchedSpecificRef = true; }
         }
       }
+      // UPGRADE: If this entry matched a specific ref, it should almost always win
+      // over generic conversational entries like 'more_info' or 'help'
+      if (matchedSpecificRef) score += 50;
       if (score > bestScore) { bestScore = score; best = entry; }
     }
     return { best, score: bestScore };
   }
 
   function classify(text) {
-    const t2 = fuzzy(text.toLowerCase());
-    // First pass: full text
+    // UPGRADE: Synonym expansion + pronoun resolution before classification
+    let t2 = fuzzy(text.toLowerCase());
+    t2 = expandSynonyms(t2);
+    t2 = resolvePronouns(t2);
+
+    // First pass: full text (now synonym-expanded)
     let { best, score } = runClassify(t2);
     if (score > 0) return best;
     // Second pass: strip fillers to expose intent words
@@ -3819,6 +3995,13 @@
       if (r3.score > fallbackScore) { fallbackScore = r3.score; fallbackBest = r3.best; }
     }
     if (fallbackScore > 0) return fallbackBest;
+
+    // UPGRADE: Follow-up signal detection — if user says "tell me more" etc.
+    if (FOLLOW_UP_SIGNALS.test(text) && ctx.lastEntry) {
+      const lastKB = KB.find(e => e.id === ctx.lastEntry);
+      if (lastKB) return lastKB;
+    }
+
     return KB.find(e => e.id === 'fallback');
   }
 
@@ -3836,7 +4019,7 @@
 
   // ─── Sell intent detection → trigger lead capture ─────────────────────────────
   const SELL_INTENT = /\b(vendre|vente|je veux vendre|sell|selling|estimation|estimer|rachat|buyback|reprendre|how much for|combien pour|valeur de ma)\b/i;
-  const BUY_INTENT  = /\b(acheter|je cherche|looking for|want to buy|disponible|in stock|avez.vous|do you have|je veux acheter)\b/i;
+  const BUY_INTENT  = /\b(acheter|je cherche|looking for|want to buy|buy a|buy an|disponible|in stock|avez.vous|do you have|je veux acheter|looking to buy|interested in buying)\b/i;
 
   // ─── Async market price lookup from Cloudflare Worker ────────────────────────
   async function fetchMarketPrice(ref) {
@@ -3863,14 +4046,38 @@
   let firstMessage = true;
   let leadCaptured = false;
 
+  // Gemini fallback
+  async function callGemini(userText) {
+    try {
+      const messages = memory.history
+        .filter(h => h.role === 'user' || h.role === 'bot')
+        .slice(-10)
+        .map(h => ({ role: h.role === 'bot' ? 'assistant' : 'user', content: h.text }));
+      if (!messages.length || messages[messages.length-1].content !== userText)
+        messages.push({ role: 'user', content: userText });
+      const res = await fetch(WORKER_URL + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages }),
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.reply || null;
+    } catch (e) { return null; }
+  }
   // ─── Main response handler ────────────────────────────────────────────────────
   async function getResponse(userText) {
     const raw = userText.trim();
     if (!raw) return '';
 
-    // ── Stock lookup first: if user mentions a ref or model, show it directly ──
+    // UPGRADE: Record user message in memory
+    memory.push('user', raw, null);
+
+    // ── Stock lookup — but ONLY if user is asking for price/availability ───────
+    // If user is asking "tell me more", "details", "about", etc → skip stock, go to KB
+    const DETAIL_INTENT = /\b(tell me more|more about|details|about|explain|info|information|history|en savoir plus|plus sur|parlez|détails|c est quoi|what is|what are|describe|compared|vs|versus|worth|good|recommend|should i|better|best|investment)\b/i;
     const matches = stockMatch(raw);
-    if (matches.length) {
+    if (matches.length && !DETAIL_INTENT.test(raw)) {
       ctx.brand = matches[0].brand;
       ctx.model  = matches[0].model;
       let livePrice = null;
@@ -3879,27 +4086,168 @@
         const mp = livePrice && i === 0 ? ` (marché: ${livePrice})` : '';
         return `• ${w.brand} ${w.model} réf. **${w.ref}** → ${fmt(w.price)}${mp}`;
       });
-      // Offer to show lead form if sell intent detected
       if (SELL_INTENT.test(raw)) {
         setTimeout(() => showLeadForm('sell'), 1200);
       }
-      return t(
+      const stockReply = t(
         `En stock :\n${lines.join('\n')}`,
         `In stock:\n${lines.join('\n')}`
       );
+      memory.push('bot', stockReply, 'stock_match');
+      return stockReply;
+    }
+    // If stock matched but user wants details, set context and fall through to KB
+    if (matches.length && DETAIL_INTENT.test(raw)) {
+      ctx.brand = matches[0].brand;
+      ctx.model = matches[0].model;
+      // Fall through to KB classify below — it will find the model-specific entry
+    }
+
+    // ── UPGRADE: Multi-intent detection ──────────────────────────────────────
+    // If user asks about two things ("sell a Rolex and buy a Patek"), handle both
+    const sellAndBuy = SELL_INTENT.test(raw) && BUY_INTENT.test(raw);
+    if (sellAndBuy) {
+      const sellEntry = KB.find(e => e.id === 'sell');
+      const buyEntry = KB.find(e => e.id === 'buy');
+      if (sellEntry && buyEntry) {
+        ctx.lastEntry = 'sell';
+        memory.push('bot', 'multi-intent: sell+buy', 'sell');
+        const response = t(
+          `**Vendre** : Envoyez-nous des photos (cadran, boîtier, bracelet, fond) — estimation sous 48h.\n\n**Acheter** : Consultez notre [collection](/index.html) ou dites-moi exactement ce que vous cherchez.\n\n📞 ${BIZ.phone1}`,
+          `**Sell**: Send us photos (dial, case, bracelet, caseback) — estimate within 48h.\n\n**Buy**: Browse our [collection](/index.html) or tell me exactly what you're looking for.\n\n📞 ${BIZ.phone1}`
+        );
+        if (!leadCaptured) setTimeout(() => showLeadForm('sell'), 1400);
+        return response;
+      }
     }
 
     // ── KB classify ──────────────────────────────────────────────────────────────
     const entry = classify(raw);
-    let response = entry ? entry.r() : KB.find(e=>e.id==='fallback').r();
+    let response;
 
-    // ── Trigger lead capture form contextually ────────────────────────────────
+    if (entry && entry.id !== 'fallback') {
+      // Use response variation for greeting, thanks, and fallback
+      if (VARIATIONS[entry.id]) {
+        response = vary(entry.id);
+      } else {
+        response = entry.r();
+      }
+      ctx.lastEntry = entry.id;
+    } else if (matches.length) {
+      // ── Stock-aware detail fallback ──────────────────────────────────────
+      // KB didn't find a specific entry, but we know which stock item they mean.
+      // Build a rich response from the stock data + find the parent model KB entry.
+      const w = matches[0];
+      ctx.brand = w.brand; ctx.model = w.model;
+
+      // Try to find a parent model entry (e.g. rolex_submariner for any Submariner)
+      const modelKey = w.model.toLowerCase().split(' ')[0]; // "submariner", "daytona", etc.
+      const parentEntry = KB.find(e => e.id && e.id.includes(modelKey) && e.kw.length > 3);
+
+      if (parentEntry) {
+        // Use the parent model's full response — it has all the detail
+        response = parentEntry.r();
+        ctx.lastEntry = parentEntry.id;
+      } else {
+        // No parent entry — build a detail response from stock data
+        const otherVariants = STOCK.filter(s => s.model.toLowerCase().includes(modelKey) && s.ref !== w.ref);
+        response = t(
+          `**${w.brand} ${w.model}** réf. **${w.ref}** — ${fmt(w.price)} en stock.\n\n${otherVariants.length ? `Autres ${w.brand} ${modelKey} disponibles :\n${otherVariants.map(v=>`• ${v.model} réf. **${v.ref}** → ${fmt(v.price)}`).join('\n')}\n\n` : ''}Pour plus de détails ou réserver, appelez-nous au 📞 ${BIZ.phone1} ou envoyez un email à ${BIZ.email}.`,
+          `**${w.brand} ${w.model}** ref. **${w.ref}** — ${fmt(w.price)} in stock.\n\n${otherVariants.length ? `Other ${w.brand} ${modelKey}s available:\n${otherVariants.map(v=>`• ${v.model} ref. **${v.ref}** → ${fmt(v.price)}`).join('\n')}\n\n` : ''}For more details or to reserve, call us at 📞 ${BIZ.phone1} or email ${BIZ.email}.`
+        );
+        ctx.lastEntry = 'stock_detail';
+      }
+    } else {
+      const geminiReply = await callGemini(raw);
+      response = geminiReply || vary('fallback') || KB.find(e=>e.id==='fallback').r();
+    }
+
+    // UPGRADE: Record bot response in memory
+    memory.push('bot', response, entry ? entry.id : 'fallback');
+
+    // ── UPGRADE: Smart lead capture timing ────────────────────────────────────
+    // Instead of only on sell/sourcing, also trigger when user is deeply engaged
     if (entry && (entry.id === 'sell' || entry.id === 'sourcing') && !leadCaptured) {
       setTimeout(() => showLeadForm(entry.id === 'sell' ? 'sell' : 'buy'), 1400);
+    } else if (!leadCaptured && memory.phase === 'interested' && memory.questionsAsked >= 4) {
+      // User has asked 4+ questions across 2+ topics — they're engaged, soft-offer help
+      const softCTA = t(
+        `\n\n_Vous semblez chercher quelque chose de précis — souhaitez-vous qu'on vous rappelle ? 📞_`,
+        `\n\n_Sounds like you're looking for something specific — would you like us to call you back? 📞_`
+      );
+      response += softCTA;
+      memory.phase = 'converting'; // don't ask again
+    }
+
+    // UPGRADE: Contextual follow-up suggestion based on what was just discussed
+    if (entry && memory.turnCount >= 2 && !['greeting','thanks','help','clarify','fallback'].includes(entry.id)) {
+      const suggestions = getContextualSuggestions(entry.id);
+      if (suggestions) response += suggestions;
     }
 
     firstMessage = false;
     return response;
+  }
+
+  // ─── UPGRADE: Contextual suggestion engine ─────────────────────────────────
+  // After answering a topic, suggest related follow-ups the user hasn't asked yet
+  function getContextualSuggestions(entryId) {
+    const RELATED = {
+      'rolex_submariner':  ['investment','sell','rolex_daytona'],
+      'rolex_daytona':     ['investment','rolex_gmt','sell'],
+      'rolex_gmt':         ['rolex_submariner','rolex_datejust','budget'],
+      'rolex_datejust':    ['woman_watch','gift','rolex_explorer'],
+      'ap_general':        ['investment','ap_royal_oak','budget_over50k'],
+      'patek_general':     ['investment','patek_nautilus','budget_over50k'],
+      'investment':        ['sell','budget','rolex_daytona'],
+      'sell':              ['authentication','sell_docs'],
+      'buy':               ['recommendation','budget','stock_overview'],
+      'budget':            ['recommendation','stock_overview'],
+      'gift':              ['woman_watch','recommendation','budget'],
+      'service':           ['authentication','contact'],
+    };
+
+    const related = RELATED[entryId];
+    if (!related) return null;
+
+    // Filter out topics already discussed
+    const fresh = related.filter(id => !memory.discussed(id));
+    if (fresh.length === 0) return null;
+
+    // Pick the first undiscussed related topic and suggest it
+    const TOPIC_NAMES = {
+      'investment': { fr: 'investissement horloger', en: 'watch investment' },
+      'sell': { fr: 'vendre votre montre', en: 'selling your watch' },
+      'buy': { fr: 'acheter', en: 'buying' },
+      'authentication': { fr: "l'authentification", en: 'authentication' },
+      'sell_docs': { fr: 'papiers et boîte', en: 'papers and box' },
+      'budget': { fr: 'votre budget', en: 'your budget' },
+      'recommendation': { fr: 'nos recommandations', en: 'our recommendations' },
+      'stock_overview': { fr: 'tout notre stock', en: 'our full stock' },
+      'woman_watch': { fr: 'montres femme', en: 'women\'s watches' },
+      'gift': { fr: 'idées cadeau', en: 'gift ideas' },
+      'service': { fr: 'la révision', en: 'servicing' },
+      'contact': { fr: 'nous contacter', en: 'contact us' },
+      'rolex_submariner': { fr: 'le Submariner', en: 'the Submariner' },
+      'rolex_daytona': { fr: 'la Daytona', en: 'the Daytona' },
+      'rolex_gmt': { fr: 'le GMT-Master', en: 'the GMT-Master' },
+      'rolex_datejust': { fr: 'le Datejust', en: 'the Datejust' },
+      'rolex_explorer': { fr: "l'Explorer", en: 'the Explorer' },
+      'ap_general': { fr: 'Audemars Piguet', en: 'Audemars Piguet' },
+      'ap_royal_oak': { fr: 'le Royal Oak', en: 'the Royal Oak' },
+      'patek_general': { fr: 'Patek Philippe', en: 'Patek Philippe' },
+      'patek_nautilus': { fr: 'le Nautilus', en: 'the Nautilus' },
+      'budget_over50k': { fr: 'nos pièces premium', en: 'our premium pieces' },
+    };
+
+    const pick = fresh[0];
+    const name = TOPIC_NAMES[pick];
+    if (!name) return null;
+
+    return t(
+      `\n\n_Vous pourriez aussi me demander sur **${name.fr}**._`,
+      `\n\n_You might also want to ask about **${name.en}**._`
+    );
   }
 
 
@@ -4061,19 +4409,21 @@
       .nm-hlogo { width:36px; height:36px; border-radius:50%; background:#c8a96e; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#111; flex-shrink:0; }
       .nm-htitle { flex:1; }
       .nm-htitle strong { display:block; color:#e8d5b0; font-size:14px; letter-spacing:.5px; }
-      .nm-htitle span { color:#666; font-size:11px; }
+      .nm-htitle span { color:#999; font-size:11px; }
       #nm-close { background:none; border:none; cursor:pointer; color:#555; font-size:20px; line-height:1; padding:4px; transition:color .2s; }
       #nm-close:hover { color:#c8a96e; }
       #nm-msgs { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; scrollbar-width:thin; scrollbar-color:#2a2a2a transparent; }
       #nm-msgs::-webkit-scrollbar { width:4px; }
       #nm-msgs::-webkit-scrollbar-track { background:transparent; }
       #nm-msgs::-webkit-scrollbar-thumb { background:#2a2a2a; border-radius:4px; }
-      .nm-msg { max-width:84%; padding:10px 14px; border-radius:14px; font-size:13.5px; line-height:1.55; word-break:break-word; }
+      .nm-msg { max-width:84%; padding:10px 14px; border-radius:14px; font-size:13.5px; line-height:1.55; word-break:break-word; color:#ffffff; }
       .nm-msg ul { margin:6px 0 0 0; padding-left:14px; }
       .nm-msg li { margin:3px 0; }
       .nm-msg a { color:#c8a96e; text-decoration:none; }
       .nm-msg a:hover { text-decoration:underline; }
-      .nm-bot { background:#1e1e1e; color:#fff; border-bottom-left-radius:4px; align-self:flex-start; border:1px solid #2a2a2a; }
+      .nm-bot { background:#1e1e1e; color:#ffffff; border-bottom-left-radius:4px; align-self:flex-start; border:1px solid #2a2a2a; text-shadow:0 0 0 #fff; }
+      .nm-bot strong { color:#ffffff; }
+      .nm-bot li, .nm-bot br+span, .nm-msg.nm-bot * { color:#ffffff; }
       .nm-user { background:#c8a96e; color:#111; border-bottom-right-radius:4px; align-self:flex-end; font-weight:500; }
       .nm-typing { display:flex; gap:5px; align-items:center; padding:12px 16px; }
       .nm-typing span { width:7px; height:7px; background:#555; border-radius:50%; animation:nm-dot 1.3s infinite; }
@@ -4090,7 +4440,7 @@
       #nm-send { width:38px; height:38px; border-radius:50%; background:#c8a96e; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s; align-self:flex-end; }
       #nm-send:hover { background:#d4b87a; }
       #nm-send svg { width:16px; height:16px; fill:#111; }
-      #nm-powered { text-align:center; padding:4px 0 8px; color:#333; font-size:10px; flex-shrink:0; }
+      #nm-powered { text-align:center; padding:4px 0 8px; color:#666; font-size:10px; flex-shrink:0; }
       .nm-lead-card { width:100% !important; max-width:100% !important; display:flex; flex-direction:column; gap:8px; background:#1a1a1a !important; border:1px solid #c8a96e44 !important; }
       .nm-lead-title { font-size:13px; font-weight:600; color:#c8a96e; margin-bottom:2px; }
       .nm-lead-inp { background:#111; border:1px solid #2a2a2a; border-radius:8px; padding:8px 12px; color:#ddd; font-size:12.5px; outline:none; font-family:inherit; transition:border-color .2s; width:100%; box-sizing:border-box; }
