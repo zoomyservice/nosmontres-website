@@ -70,7 +70,7 @@
       if (entryId) this.topics.add(entryId);
       // Phase transitions
       if (this.turnCount >= 1 && this.phase === 'greeting') this.phase = 'browsing';
-      if (this.turnCount >= 3 && this.topics.size >= 2) this.phase = 'interested';
+      if (this.turnCount >= 3 && this.topics.size >= 2 && this.phase !== 'converting') this.phase = 'interested';
       if (this.topics.has('sell') || this.topics.has('buy') || this.topics.has('sourcing')) this.phase = 'converting';
     },
 
@@ -4180,7 +4180,7 @@
     }
 
     // UPGRADE: Contextual follow-up suggestion based on what was just discussed
-    if (entry && memory.turnCount >= 2 && !['greeting','thanks','help','clarify','fallback'].includes(entry.id)) {
+    if (entry && memory.turnCount >= 2 && memory.turnCount % 3 === 0 && !['greeting','thanks','help','clarify','fallback'].includes(entry.id)) {
       const suggestions = getContextualSuggestions(entry.id);
       if (suggestions) response += suggestions;
     }
