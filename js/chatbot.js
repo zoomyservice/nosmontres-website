@@ -4465,11 +4465,14 @@
     const bubble = document.createElement('div');
     bubble.id = 'nm-bubble';
 
-    // Attention message
-    const attn = document.createElement('div');
-    attn.id = 'nm-attention';
-    attn.textContent = t('Besoin d\'aide pour choisir ou vendre une montre ?','Need help choosing or selling a watch?');
-    bubble.appendChild(attn);
+    // Attention message — shown once ever via localStorage
+    if (!localStorage.getItem('nm_popup_seen')) {
+      localStorage.setItem('nm_popup_seen', '1');
+      const attn = document.createElement('div');
+      attn.id = 'nm-attention';
+      attn.textContent = t('Besoin d\'aide pour choisir ou vendre une montre ?','Need help choosing or selling a watch?');
+      bubble.appendChild(attn);
+    }
 
     // Toggle button
     const toggle = document.createElement('button');
