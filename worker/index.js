@@ -157,7 +157,132 @@ INFORMATIONS SUR LE SITE nosmontres.com :
 - Boutique en ligne : /shop/
 `;
 
-const FULL_SYSTEM_PROMPT = SYSTEM_PROMPT + SYSTEM_PROMPT_2;
+
+const SYSTEM_PROMPT_3 = `
+SURNOMS ET NICKNAMES — INDISPENSABLES POUR PARLER EN EXPERT :
+
+ROLEX :
+- Submariner 126610LV : "Hulk" (lunette ET cadran verts)
+- Submariner 16610LV/116610LV : "Kermit" (lunette verte, cadran noir — ancienne génération)
+- Submariner 124060 : "Sub no-date" — choix des puristes, pas de fenêtre de date, lunette noire
+- GMT-Master II 126710BLRO : "Pepsi" (rouge et bleu) — le plus iconique
+- GMT-Master II 126710BLNR : "Batman" (noir et bleu) — discontinué décembre 2023
+- GMT-Master II 126710GRNR : "Sprite" (vert et noir) — EN STOCK chez Nos Montres
+- GMT-Master II 126715CHNR : "Root Beer" (Everose gold/acier, marron-noir)
+- Daytona cadran blanc sous-cadrans noirs : "Panda" (116500LN, 126500LN)
+- Daytona cadran noir sous-cadrans blancs : "Reverse Panda"
+- Daytona vintage : "Paul Newman" (réfs 6239, 6241, 6263) — peut atteindre 500 000 € aux enchères
+- Datejust cadran vert sunburst : "Wimbledon"
+- Datejust cadran vert pâle : "Mint" — EN STOCK
+- Explorer II cadran blanc : "Polar"
+- Oyster Perpetual cadran Tiffany blue : édition très demandée
+
+AUDEMARS PIGUET :
+- Royal Oak 15202ST : "Jumbo" ou "Extra-Thin" — le plus prisé des puristes, 39mm ultra-mince
+- Royal Oak Offshore : surnommé "the Beast" par Gérald Genta lui-même (1993)
+- Cadran gris tapisserie du Royal Oak : "Elephant Grey" — couleur signature absolue
+
+PATEK PHILIPPE :
+- Nautilus 5711/1A : "le Graal" — discontinued janvier 2021, impossible à retrouver au prix boutique
+- Nautilus "Tiffany" : collaboration limitée Tiffany & Co., vendue 6,5 M$ aux enchères Phillips 2021
+- Aquanaut 5167A : alternative sportive à la Nautilus, bracelet caoutchouc intégré
+
+ENCYCLOPÉDIE DES CALIBRES :
+
+ROLEX :
+- Cal. 3235 : Submariner Date, GMT-Master II, Datejust 41 — Chronergy escapement (+15% efficacité), 70h réserve de marche, anti-magnétique, -2/+2 s/j (plus strict que COSC)
+- Cal. 3230 : Submariner no-date, Explorer — même famille 3235, 70h PR
+- Cal. 4130 : Daytona — chronographe in-house, embrayage vertical, roue à colonnes, 72h PR. Référence absolue du chrono automatique depuis 2000.
+- Cal. 3255 : Day-Date 40 — Chronergy, 70h PR, 14 brevets déposés
+- Cal. 2236 : Ladies — ressort-spiral Syloxi en silicium, anti-magnétique
+- Tous mouvements Rolex : 100% manufacture, acier Oystersteel (904L sur montres sport)
+
+AUDEMARS PIGUET :
+- Cal. 4302 : Royal Oak 15500ST — 59 rubis, rotor bidirectionnel, 70h PR, 5,55mm d'épaisseur
+- Cal. 2121 : Royal Oak Jumbo 15202ST — base JLC 920, 3,05mm d'épaisseur (un des plus minces au monde), 40h PR. Mouvement légendaire depuis 1967.
+- Cal. 4401 : Royal Oak Chronographe — flyback, 70h PR
+- Tous mouvements AP : manufacture Le Brassus, Vallée de Joux
+
+PATEK PHILIPPE :
+- Certification Patek Philippe Seal : -3/+2 s/j, plus stricte que COSC
+- Mouvements en Gyromax (roue de balancier), ressort Spiromax (silicium)
+- Grand Complications : sonneries, calendriers perpétuels — pièces de patrimoine
+
+GUIDE D'INVESTISSEMENT HORLOGER (2026) :
+
+MEILLEURES ACQUISITIONS :
+1. Rolex Daytona acier (116500LN / 126500LN) — très difficile en boutique officielle, marché secondaire puissant
+2. Patek Nautilus 5711/1A acier — discontinued jan. 2021, 65 000–150 000 €, ne reviendra pas
+3. AP Royal Oak Jumbo 15202ST — puriste absolu, 85 000–145 000 €
+4. Rolex GMT-Master II Pepsi (126710BLRO) — valeur refuge depuis des décennies
+5. Tout Rolex sportif en acier discontinued (les prix montent systématiquement)
+
+À ÉVITER POUR L'INVESTISSEMENT :
+- Montres très joaillées (revente à 40-60% du prix boutique)
+- Montres de mode (fortes décotes), quartz haut de gamme
+- Boîtiers re-polis (destruction de la valeur collector)
+
+BOX ET PAPIERS :
+- Full set (boîte intérieure + extérieure + papiers + étiquettes + maillons) : +15-30% vs sans papiers
+- Sans papiers sur une montre récente (post-2010) : toujours demander pourquoi
+
+GUIDE D'AUTHENTIFICATION :
+- Numéro de série fond de boîte ↔ papiers : doit correspondre
+- Couronne : sensation ferme, logo gravé, action douce
+- Cadran : impression texte nette, logo à 12h (Rolex), index sans bavure
+- Lunette : clic précis, couleur uniforme, pas de jeu excessif
+- Mouvement : doit correspondre à la référence
+- Signaux d'alarme : prix très bas sans raison, papiers manquants sur pièce récente, cadran re-dialé, boîtier brillant comme neuf sur une vieille pièce (re-polissage)
+
+RÉVISION ET ENTRETIEN :
+- Rolex : tous les 10 ans (les lubrifiants modernes durent plus longtemps qu'avant)
+- Notre révision Rolex : démontage complet, nettoyage ultrasonique, remplacement joints + lubrifiants, réglage timegrapher (-2/+2 s/j), test étanchéité
+- AP / Patek : tous les 5-8 ans
+- RÈGLE D'OR : ne jamais polir une montre de sport (Sub, GMT, Daytona, Royal Oak) — l'usure naturelle a plus de valeur que le poli
+- Révision documentée (avec facture chez spécialiste) = rassurante pour la revente
+
+FOURCHETTES MARCHÉ SECONDAIRE (avril 2026) :
+Rolex Submariner (acier, sans date) : 11 000–14 500 €
+Rolex Submariner Date noir : 12 000–15 500 €
+Rolex Submariner Hulk : 13 000–17 000 €
+Rolex Daytona acier : 14 000–27 000 €
+Rolex GMT Pepsi : 14 500–20 000 €
+Rolex GMT Batman (discontinued) : 13 500–18 000 €
+Rolex GMT Sprite : 13 000–16 500 €
+Rolex Datejust 41 : 9 000–14 000 €
+Rolex Explorer II : 8 500–11 000 €
+Rolex Yacht-Master : 10 000–38 000 €
+AP Royal Oak 15500ST : 35 000–55 000 €
+AP Royal Oak Jumbo 15202ST : 85 000–145 000 €
+AP Royal Oak Offshore acier : 22 000–45 000 €
+Patek Nautilus 5711/1A : 65 000–150 000 €
+Patek Aquanaut 5167A : 30 000–55 000 €
+Richard Mille (gamme) : 95 000–2 000 000 €+
+Cartier Santos acier : 5 500–14 000 €
+Cartier Tank : 4 500–22 000 €
+
+MARQUES SUPPLÉMENTAIRES TRAITÉES :
+Omega : Speedmaster (Moonwatch, 311.30.42.30.01.005), Seamaster 300M, Constellation — révisions disponibles
+IWC : Portugieser, Pilot's Watch, Portofino
+Jaeger-LeCoultre : Reverso, Master, Polaris
+Vacheron Constantin : Overseas, Patrimony, Traditionnelle
+A. Lange & Söhne : Lange 1, Datograph — manufacture allemande Glashütte, finishing exceptionnel
+Tudor : Black Bay (alternative abordable Rolex, même manufacture pour certains calibres), Pelagos
+Breguet : inventeur du tourbillon (1801), ressort Breguet, aiguilles Breguet — horloger de Marie-Antoinette
+Panerai : historique Marine italienne, grands boîtiers 44-47mm, OP et PAM
+
+CONCEPTS HORLOGERS CLÉS (expliquer si le client demande) :
+- Tourbillon : cage tournante compensant l'effet de la gravité sur le balancier — surtout prestige aujourd'hui
+- Chronographe : fonction chronomètre, poussoirs à 2h et 4h généralement
+- GMT : 4e aiguille pour un 2e fuseau horaire, lunette 24h
+- Calendrier annuel : ajustement auto pour mois 30/31 jours, une correction manuelle/an (fin février)
+- Calendrier perpétuel : zéro correction nécessaire, gère automatiquement les années bissextiles
+- Grande Sonnerie / Minute Répétiteur : sonne l'heure à la demande — la complication la plus complexe
+- Résistance à l'eau : 3 ATM (pluie seulement), 10 ATM (natation), 30 ATM (plongée sport)
+- COSC : -4/+6 s/j. Rolex Superlative Chronometer : -2/+2 s/j. Patek Seal : -3/+2 s/j.
+`;
+
+const FULL_SYSTEM_PROMPT = SYSTEM_PROMPT + SYSTEM_PROMPT_2 + SYSTEM_PROMPT_3;
 
 /* ─── Static price database ─────────────────────────────────────────────────── */
 const STATIC_PRICES = {
@@ -427,7 +552,7 @@ export default {
         const apiKey = env.GEMINI_API_KEY;
         if (!apiKey) return Response.json({ reply: 'Service temporairement indisponible.' }, { status: 503, headers: CORS });
         const geminiRes = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${apiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
