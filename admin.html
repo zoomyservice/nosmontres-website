@@ -748,7 +748,7 @@ function buildWatches(){
     const i=WATCHES_ADMIN.indexOf(w);
     const pill=BRAND_PILL[w.brand]||'brand-other';
     const cls=['watch-card',w.sold?'sold-card':'',w.hidden?'hidden-card':''].filter(Boolean).join(' ');
-    const imgSrc=w.img?(w.img.startsWith('data:')||w.img.startsWith('http')?w.img:'shop/'+w.img):'';
+    const imgSrc=w.img?(w.img.startsWith('data:')||w.img.startsWith('http')?w.img:'https://www.nosmontres.com/uploads/'+w.img):'';
     const card=document.createElement('div');
     card.className=cls;
     card.id='wc_'+i;
@@ -848,7 +848,7 @@ let _watchImgTarget=-1;
 function openWatchImgPicker(i){
   _watchImgTarget=i;
   const w=WATCHES_ADMIN[i];
-  const src=w.img?(w.img.startsWith('data:')||w.img.startsWith('http')?w.img:'shop/'+w.img):'';
+  const src=w.img?(w.img.startsWith('data:')||w.img.startsWith('http')?w.img:'https://www.nosmontres.com/uploads/'+w.img):'';
   const prev=document.getElementById('wip-preview');
   const noImg=document.getElementById('wip-no-img');
   if(prev){prev.src=src||'';prev.style.display=src?'block':'none';}
