@@ -119,6 +119,9 @@
       enrichedMsg = '[STOCK ACTUEL DISPONIBLE: ' + ctx + ']\n\n' + raw;
     }
 
+    // Prepend language directive so Gemini always replies in the correct language
+    if (lang() === 'en') enrichedMsg = '[IMPORTANT: Respond in English only.]\n\n' + enrichedMsg;
+
     // Build conversation history for Gemini (exclude current turn, add enriched version)
     const msgs = memory.history.slice(0, -1).slice(-14)
       .map(h => ({ role: h.role === 'bot' ? 'assistant' : 'user', content: h.text }));
