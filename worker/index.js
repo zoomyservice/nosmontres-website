@@ -19,7 +19,7 @@ const CORS = {
 };
 // Admin endpoints — restricted CORS: only nosmontres.com and localhost
 const CORS_ADMIN = (origin) => {
-  const allowed = origin && (origin.includes('nosmontres') || origin.includes('localhost') || origin.includes('127.0.0.1') || origin === '');
+  const allowed = !origin || origin.includes('nosmontres') || origin.includes('luxfly-skydive') || origin.includes('localhost') || origin.includes('127.0.0.1');
   return {
     'Access-Control-Allow-Origin': allowed ? (origin || '*') : 'https://www.nosmontres.com',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
