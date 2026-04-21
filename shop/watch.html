@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Montre — Nos Montres Paris</title>
+  <meta name="description" id="page-desc" content="Montre de luxe occasion — Boutique Nos Montres, 46 rue de Miromesnil 75008 Paris.">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<div style="padding-top:var(--nav-h)">
+  <div class="watch-detail" id="watch-detail-wrap" style="opacity:0;transition:opacity .3s;">
+
+    <div class="watch-detail__gallery">
+      <img id="wd-img" src="" alt="" style="display:none;">
+      <div id="wd-img-placeholder" style="width:100%;height:100%;min-height:320px;display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--mid,#555);">⌚</div>
+    </div>
+
+    <div class="watch-detail__info">
+      <span class="watch-detail__brand" id="wd-brand"></span>
+      <h1 class="watch-detail__title" id="wd-name"></h1>
+      <span class="watch-detail__ref" id="wd-ref"></span>
+      <div class="watch-detail__price" id="wd-price"></div>
+
+      <div class="watch-specs" id="wd-specs"></div>
+
+      <a class="watch-detail__cta" href="../prendre-rendez-vous.html">
+        <span class="fr">Prendre rendez-vous pour cette montre</span>
+        <span class="en">Book an appointment for this watch</span>
+      </a>
+
+      <p style="margin-top:24px;font-size:0.78rem;color:var(--mid);line-height:1.7" class="fr">
+        Toutes nos montres sont rigoureusement authentifiées. Pour toute information&nbsp;:
+        <a href="tel:0181800847" style="color:var(--gold)">01 81 80 08 47</a>
+      </p>
+      <p style="margin-top:24px;font-size:0.78rem;color:var(--mid);line-height:1.7" class="en">
+        All our watches are rigorously authenticated. For any information:
+        <a href="tel:0181800847" style="color:var(--gold)">01 81 80 08 47</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="wd-not-found" style="display:none;text-align:center;padding:4rem 2rem;">
+    <p style="color:var(--mid);font-size:1rem;">Cette montre n'est plus disponible.</p>
+    <a href="../montre-rolex-occasion.html" style="color:var(--gold);font-size:.9rem;">← Voir toutes les montres</a>
+  </div>
+</div>
+
+<section class="section section--cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow fr">Continuez à explorer</span>
+      <span class="section-eyebrow en">Continue exploring</span>
+      <h2 class="section-title fr">Autres <em>Pièces Disponibles</em></h2>
+      <h2 class="section-title en">Other <em>Available Pieces</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="watch-grid" id="moreWatches"></div>
+  </div>
+</section>
+
+<footer id="siteFooter"></footer>
+<script src="../js/watches.js"></script>
+<script src="../js/components.js"></script>
+<script>
+  NM.rootPath = '../';
+  NM.renderNav();
+  NM.renderFooter();
+
+  const WORKER = 'https://nosmontres-prices.zoozoomfast.workers.dev';
+  const watchId = new URLSearchParams(location.search).get('id');
+
+  function formatPrice(p) {
+    if (!p) return 'Prix sur demande';
+    return parseInt(p).toLocaleString('fr-FR') + ' €';
+  }
+
+  function imgUrl(img) {
+    if (!img) return '';
+    if (img.startsWith('data:') || img.startsWith('http')) return img;
+    return 'https://www.nosmontres.com/uploads/' + img;
+  }
+
+  function specRow(labelFr, labelEn, valueFr, valueEn) {
+    return '<div class="watch-spec">'
+      + '<span class="watch-spec__label fr">' + labelFr + '</span>'
+      + '<span class="watch-spec__label en">' + labelEn + '</span>'
+      + '<span class="watch-spec__value fr">' + valueFr + '</span>'
+      + (valueEn !== undefined ? '<span class="watch-spec__value en">' + valueEn + '</span>' : '')
+      + '</div>';
+  }
+
+  function renderWatch(w) {
+    if (!w) {
+      document.getElementById('wd-not-found').style.display = 'block';
+      return;
+    }
+    const lang = NM.lang || 'fr';
+    const name = lang === 'fr' ? (w.name_fr || w.name_en || '') : (w.name_en || w.name_fr || '');
+
+    document.getElementById('page-title').textContent = name + ' — Nos Montres Paris';
+    document.getElementById('page-desc').content = name + (w.ref ? ' Réf. ' + w.ref : '') + (w.price ? ' — ' + formatPrice(w.price) : '') + '. Boutique Nos Montres, 46 rue de Miromesnil 75008 Paris.';
+    document.getElementById('wd-brand').textContent = w.brand || '';
+    document.getElementById('wd-name').textContent = name;
+    document.getElementById('wd-ref').textContent = w.ref ? 'Réf. ' + w.ref : '';
+    document.getElementById('wd-price').textContent = formatPrice(w.price);
+
+    const src = imgUrl(w.img);
+    if (src) {
+      const img = document.getElementById('wd-img');
+      img.src = src; img.alt = name; img.style.display = 'block';
+      document.getElementById('wd-img-placeholder').style.display = 'none';
+    }
+
+    let specs = '';
+    if (w.brand) specs += specRow('Marque','Brand', w.brand, w.brand);
+    if (w.ref)   specs += specRow('Référence','Reference', w.ref, w.ref);
+    if (w.year)  specs += specRow('Année','Year', w.year, w.year);
+    specs += specRow('Papiers d\'origine','Original papers', w.papers ? 'Oui' : 'Non', w.papers ? 'Yes' : 'No');
+    specs += specRow('Boite d\'origine','Original box', w.box ? 'Oui' : 'Non', w.box ? 'Yes' : 'No');
+    document.getElementById('wd-specs').innerHTML = specs;
+
+    document.getElementById('watch-detail-wrap').style.opacity = '1';
+
+    // More watches
+    const others = WATCHES.filter(x => x.id !== w.id && x.brand === w.brand).slice(0, 4);
+    const fallback = WATCHES.filter(x => x.id !== w.id).slice(0, 4);
+    const show = others.length >= 2 ? others : fallback;
+    document.getElementById('moreWatches').innerHTML = show.map(x => WatchEngine.watchCard(x, lang)).join('');
+  }
+
+  function findAndRender(watchesArr) {
+    const w = watchesArr.find(x => String(x.id) === String(watchId));
+    renderWatch(w || null);
+  }
+
+  if (!watchId) {
+    document.getElementById('wd-not-found').style.display = 'block';
+  } else {
+    // Try KV first (catches newly added watches), fallback to static WATCHES array
+    fetch(WORKER + '/content')
+      .then(r => r.json())
+      .then(data => {
+        if (data.watches_json) {
+          try {
+            const kvWatches = JSON.parse(data.watches_json);
+            // Merge: KV takes precedence, then static
+            const merged = [...kvWatches];
+            WATCHES.forEach(w => { if (!merged.find(x => x.id === w.id)) merged.push(w); });
+            findAndRender(merged);
+            return;
+          } catch(e) {}
+        }
+        findAndRender(WATCHES);
+      })
+      .catch(() => findAndRender(WATCHES));
+  }
+</script>
+</body>
+</html>

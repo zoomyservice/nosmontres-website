@@ -319,42 +319,72 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
 
       <!-- PANEL: USERS -->
       <div id="panel-users" class="panel">
-        <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1.25rem;">🔑 Mot de passe &amp; Utilisateurs</div>
+        <div style="font-size:1rem;font-weight:700;color:var(--gold-lt);margin-bottom:1.5rem;letter-spacing:.02em;">🔑 Sécurité &amp; Accès</div>
+
         <!-- Change Password -->
-        <div class="settings-section-card" style="margin-bottom:1.25rem;">
-          <div style="font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.75rem;">Changer le mot de passe</div>
-          <div style="display:grid;gap:.6rem;">
-            <div style="position:relative;">
-              <input id="cp-current" type="password" class="settings-input" placeholder="Mot de passe actuel"/>
-              <button class="eye-btn" onclick="toggleEye('cp-current',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+        <div class="settings-section-card" style="margin-bottom:1.25rem;max-width:420px;">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1.1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">
+            <span style="font-size:.95rem;">🔒</span>
+            <span style="font-size:.82rem;font-weight:700;color:var(--text);letter-spacing:.03em;text-transform:uppercase;">Changer le mot de passe</span>
+          </div>
+          <div style="display:grid;gap:.85rem;">
+            <div>
+              <label style="font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:.3rem;">Mot de passe actuel</label>
+              <div style="position:relative;">
+                <input id="cp-current" type="password" class="settings-input" placeholder="••••••••" style="padding-right:2.5rem;"/>
+                <button class="eye-btn" onclick="toggleEye('cp-current',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);line-height:1;padding:0;"></button>
+              </div>
             </div>
-            <div style="position:relative;">
-              <input id="cp-new" type="password" class="settings-input" placeholder="Nouveau mot de passe"/>
-              <button class="eye-btn" onclick="toggleEye('cp-new',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+            <div>
+              <label style="font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:.3rem;">Nouveau mot de passe</label>
+              <div style="position:relative;">
+                <input id="cp-new" type="password" class="settings-input" placeholder="••••••••" style="padding-right:2.5rem;"/>
+                <button class="eye-btn" onclick="toggleEye('cp-new',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);line-height:1;padding:0;"></button>
+              </div>
             </div>
-            <div style="position:relative;">
-              <input id="cp-confirm" type="password" class="settings-input" placeholder="Confirmer le nouveau mot de passe"/>
-              <button class="eye-btn" onclick="toggleEye('cp-confirm',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+            <div>
+              <label style="font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:.3rem;">Confirmer le nouveau mot de passe</label>
+              <div style="position:relative;">
+                <input id="cp-confirm" type="password" class="settings-input" placeholder="••••••••" style="padding-right:2.5rem;"/>
+                <button class="eye-btn" onclick="toggleEye('cp-confirm',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);line-height:1;padding:0;"></button>
+              </div>
             </div>
-            <div id="cp-msg" style="font-size:.73rem;display:none;"></div>
-            <button class="btn-gold" style="padding:8px 20px;font-size:.8rem;width:fit-content;" onclick="changePassword()">Mettre à jour</button>
+            <div id="cp-msg" style="font-size:.75rem;padding:.45rem .65rem;border-radius:6px;display:none;"></div>
+            <div>
+              <button class="btn-gold" style="padding:9px 24px;font-size:.8rem;" onclick="changePassword()">Mettre à jour le mot de passe</button>
+            </div>
           </div>
         </div>
+
         <!-- Add User (admin only) -->
-        <div id="add-user-section" class="settings-section-card" style="display:none;">
-          <div style="font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.75rem;">Ajouter un utilisateur</div>
-          <div style="display:grid;gap:.6rem;">
-            <input id="au-user" type="text" class="settings-input" placeholder="Nom d'utilisateur"/>
-            <div style="position:relative;">
-              <input id="au-pwd" type="password" class="settings-input" placeholder="Mot de passe"/>
-              <button class="eye-btn" onclick="toggleEye('au-pwd',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+        <div id="add-user-section" class="settings-section-card" style="display:none;max-width:420px;">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1.1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">
+            <span style="font-size:.95rem;">👤</span>
+            <span style="font-size:.82rem;font-weight:700;color:var(--text);letter-spacing:.03em;text-transform:uppercase;">Ajouter un utilisateur</span>
+          </div>
+          <div style="display:grid;gap:.85rem;">
+            <div>
+              <label style="font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:.3rem;">Nom d'utilisateur</label>
+              <input id="au-user" type="text" class="settings-input" placeholder="ex : marie"/>
             </div>
-            <div style="display:flex;align-items:center;gap:.5rem;">
-              <input id="au-admin" type="checkbox" style="accent-color:var(--gold);"/>
-              <label for="au-admin" style="font-size:.75rem;color:var(--muted);cursor:pointer;">Rôle Admin</label>
+            <div>
+              <label style="font-size:.67rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:.3rem;">Mot de passe</label>
+              <div style="position:relative;">
+                <input id="au-pwd" type="password" class="settings-input" placeholder="••••••••" style="padding-right:2.5rem;"/>
+                <button class="eye-btn" onclick="toggleEye('au-pwd',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);line-height:1;padding:0;"></button>
+              </div>
             </div>
-            <div id="au-msg" style="font-size:.73rem;display:none;"></div>
-            <button class="btn-gold" style="padding:8px 20px;font-size:.8rem;width:fit-content;" onclick="addUser()">Ajouter l'utilisateur</button>
+            <div style="display:flex;align-items:center;gap:.6rem;padding:.5rem .65rem;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:7px;">
+              <input id="au-admin" type="checkbox" style="accent-color:var(--gold);width:15px;height:15px;cursor:pointer;flex-shrink:0;"/>
+              <div>
+                <label for="au-admin" style="font-size:.78rem;color:var(--text);cursor:pointer;font-weight:600;display:block;">Rôle Administrateur</label>
+                <span style="font-size:.68rem;color:var(--muted);">Accès complet — ajout/suppression d'utilisateurs</span>
+              </div>
+            </div>
+            <div id="au-msg" style="font-size:.75rem;padding:.45rem .65rem;border-radius:6px;display:none;"></div>
+            <div>
+              <button class="btn-gold" style="padding:9px 24px;font-size:.8rem;" onclick="addUser()">Créer l'utilisateur</button>
+            </div>
           </div>
         </div>
       </div>
@@ -910,7 +940,7 @@ function applyWatchImg(){
 }
 function addNewWatch(){
   const id='new_'+Date.now();
-  WATCHES_ADMIN.unshift({id,brand:'Rolex',name_fr:'Nouvelle montre',name_en:'New watch',ref:'',papers:false,box:false,year:new Date().getFullYear(),price:0,sold:false,hidden:false,img:''});
+  WATCHES_ADMIN.unshift({id,brand:'Rolex',name_fr:'Nouvelle montre',name_en:'New watch',ref:'',papers:false,box:false,year:new Date().getFullYear(),price:0,sold:false,hidden:false,img:'',dynamic:true});
   activeBrand='Tous';savePendingWatches();buildBrandTabs();buildWatches();
   document.getElementById('watches-grid').firstElementChild?.scrollIntoView({behavior:'smooth'});
 }
@@ -995,7 +1025,13 @@ async function addUser(){
     showMsg(msg,'Utilisateur "'+user+'" créé.','#86efac');
   }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','#f87171');}
 }
-function showMsg(el,text,color){el.textContent=text;el.style.color=color;el.style.display='block';setTimeout(()=>{el.style.display='none';},4000);}
+function showMsg(el,text,color){
+  el.textContent=text;el.style.color=color;
+  el.style.background=color==='#86efac'?'rgba(134,239,172,.1)':'rgba(248,113,113,.1)';
+  el.style.border='1px solid '+(color==='#86efac'?'rgba(134,239,172,.3)':'rgba(248,113,113,.3)');
+  el.style.display='block';
+  setTimeout(()=>{el.style.display='none';},4000);
+}
 
 // IMAGE DIALOG
 let _focalInited=false,_focalDragging=false;
