@@ -210,11 +210,17 @@
     });
   }
 
+  let sending = false;
+
   async function handleSend(text) {
+    if (sending) return;
     const input = document.getElementById('nm-input');
     const msg = (text || (input && input.value) || '').trim();
     if (!msg) return;
-    if (input) input.value = '';
+    sending = true;
+    if (input) { input.value = ''; input.disabled = true; }
+    const sendBtn = document.getElementById('nm-send');
+    if (sendBtn) sendBtn.disabled = true;
     const qc = document.getElementById('nm-quick'); if (qc) qc.style.display = 'none';
     addMsg(msg, 'user');
     showTyping();
@@ -222,6 +228,12 @@
     const reply = await getResponse(msg);
     hideTyping();
     addMsg(reply, 'bot');
+    // Re-enable after response + small cooldown (invisible to real users reading the reply)
+    setTimeout(() => {
+      sending = false;
+      if (input) { input.disabled = false; input.focus(); }
+      if (sendBtn) sendBtn.disabled = false;
+    }, 1500);
   }
 
   // ─── Lead capture form ────────────────────────────────────────────────────────

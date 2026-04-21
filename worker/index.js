@@ -500,6 +500,26 @@ async function getAllLeads(env) {
   return leads.filter(Boolean).sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
 }
 
+
+/* ─── Rate limiting ─────────────────────────────────────────────────────────── */
+// 10 msgs/min, 80 msgs/hour per IP. Real users never hit this. Bots do instantly.
+async function checkRateLimit(ip, env) {
+  if (!env.LEADS || !ip || ip === 'unknown') return true;
+  try {
+    const now  = Date.now();
+    const mKey = 'rl:m:' + ip + ':' + Math.floor(now / 60000);
+    const hKey = 'rl:h:' + ip + ':' + Math.floor(now / 3600000);
+    const [mRaw, hRaw] = await Promise.all([env.LEADS.get(mKey), env.LEADS.get(hKey)]);
+    const mc = parseInt(mRaw || '0'), hc = parseInt(hRaw || '0');
+    if (mc >= 10 || hc >= 80) return false;
+    await Promise.all([
+      env.LEADS.put(mKey, String(mc + 1), { expirationTtl: 120 }),
+      env.LEADS.put(hKey, String(hc + 1), { expirationTtl: 7200 }),
+    ]);
+    return true;
+  } catch { return true; }
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -549,6 +569,30 @@ export default {
         const body = await request.json();
         const messages = body.messages || [];
         if (!messages.length) return Response.json({ reply: 'Bonjour, comment puis-je vous aider ?' }, { headers: CORS });
+
+        // Origin check — blocks direct API calls from scripts/curl (no browser origin)
+        const origin = request.headers.get('Origin') || '';
+        const referer = request.headers.get('Referer') || '';
+        const validOrigin = origin.includes('nosmontres') || referer.includes('nosmontres') || origin === '';
+        // origin === '' allows same-origin requests; non-empty origins must match nosmontres
+        if (origin && !origin.includes('nosmontres')) {
+          return Response.json({ reply: 'Unauthorized' }, { status: 403, headers: CORS });
+        }
+
+        // Rate limit check
+        const ip = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
+        if (!(await checkRateLimit(ip, env))) {
+          return Response.json(
+            { reply: 'Trop de messages. Patientez un instant. / Too many messages — please wait a moment.' },
+            { status: 429, headers: CORS }
+          );
+        }
+
+        // Server-side caps: max 20 messages, max 2000 chars each
+        const safeMsgs = messages.slice(-20).map(m => ({
+          role: m.role, content: typeof m.content === 'string' ? m.content.slice(0, 2000) : '',
+        }));
+
         const apiKey = env.GEMINI_API_KEY;
         if (!apiKey) return Response.json({ reply: 'Service temporairement indisponible.' }, { status: 503, headers: CORS });
         const geminiRes = await fetch(
@@ -558,7 +602,7 @@ export default {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               system_instruction: { parts: [{ text: FULL_SYSTEM_PROMPT }] },
-              contents: messages.map(m => ({
+              contents: safeMsgs.map(m => ({
                 role: m.role === 'assistant' ? 'model' : 'user',
                 parts: [{ text: m.content }],
               })),
