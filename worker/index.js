@@ -341,6 +341,34 @@ const STATIC_PRICES = {
 
 const norm = s => s.toLowerCase().replace(/[_\-\/\.\s]+/g, ' ').trim();
 
+// ── Admin auth helpers ──────────────────────────────────────────────────────
+async function safeEqual(a, b) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey('raw', enc.encode('nm-hmac-2026'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const [ha, hb] = await Promise.all([crypto.subtle.sign('HMAC', key, enc.encode(a)), crypto.subtle.sign('HMAC', key, enc.encode(b))]);
+  const va = new Uint8Array(ha), vb = new Uint8Array(hb);
+  let diff = 0; for (let i = 0; i < va.length; i++) diff |= va[i] ^ vb[i];
+  return diff === 0;
+}
+async function getUsers(env) { return (await env.CONTENT.get('nm_users', { type: 'json' })) || {}; }
+async function saveUsers(env, u) { await env.CONTENT.put('nm_users', JSON.stringify(u)); }
+async function authenticateAdmin(req, env) {
+  const user = req.headers.get('X-Admin-User') || '';
+  const pass = req.headers.get('X-Admin-Password') || '';
+  if (!user || !pass) return null;
+  let users = await getUsers(env);
+  if (Object.keys(users).length === 0) {
+    const defUser = env.ADMIN_USERNAME || 'admin';
+    const defPass = env.ADMIN_PASSWORD || 'NosMontes2026!';
+    if (user === defUser && await safeEqual(pass, defPass)) return { role: 'admin' };
+    return null;
+  }
+  const u = users[user];
+  if (!u) return null;
+  if (!await safeEqual(pass, u.password)) return null;
+  return { role: u.role || 'user' };
+}
+
 function staticLookup(query) {
   const q = norm(query);
   for (const [brand, db] of Object.entries(STATIC_PRICES)) {
@@ -616,6 +644,69 @@ export default {
       } catch (e) {
         return Response.json({ reply: 'Désolé, une erreur est survenue.' }, { status: 500, headers: CORS });
       }
+    }
+
+    // ── POST /me — verify credentials ────────────────────────────────────────
+    if (request.method === 'POST' && url.pathname === '/me') {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth) return Response.json({ error: 'Invalid credentials' }, { status: 401, headers: CORS });
+      return Response.json({ role: auth.role }, { headers: CORS });
+    }
+
+    // ── GET /content — return all KV content overrides ───────────────────────
+    if (request.method === 'GET' && url.pathname === '/content') {
+      try {
+        const data = await env.CONTENT.get('nm_site_content', { type: 'json' });
+        return Response.json(data || {}, { headers: { ...CORS, 'Cache-Control': 'no-store' } });
+      } catch { return Response.json({}, { headers: CORS }); }
+    }
+
+    // ── POST /content — save content overrides (auth required) ───────────────
+    if (request.method === 'POST' && url.pathname === '/content') {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth) return Response.json({ error: 'Unauthorized' }, { status: 401, headers: CORS });
+      try {
+        const body = await request.json();
+        const existing = (await env.CONTENT.get('nm_site_content', { type: 'json' })) || {};
+        const merged = { ...existing, ...body };
+        await env.CONTENT.put('nm_site_content', JSON.stringify(merged));
+        return Response.json({ ok: true }, { headers: CORS });
+      } catch (e) { return Response.json({ error: e.message }, { status: 400, headers: CORS }); }
+    }
+
+    // ── POST /change-password ─────────────────────────────────────────────────
+    if (request.method === 'POST' && url.pathname === '/change-password') {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth) return Response.json({ error: 'Unauthorized' }, { status: 401, headers: CORS });
+      try {
+        const { newPassword } = await request.json();
+        const user = request.headers.get('X-Admin-User') || '';
+        if (!newPassword || newPassword.length < 8) return Response.json({ error: 'Password too short' }, { status: 400, headers: CORS });
+        let users = await getUsers(env);
+        if (Object.keys(users).length === 0) {
+          users[user] = { password: newPassword, role: 'admin' };
+        } else {
+          if (!users[user]) return Response.json({ error: 'User not found' }, { status: 404, headers: CORS });
+          users[user].password = newPassword;
+        }
+        await saveUsers(env, users);
+        return Response.json({ ok: true }, { headers: CORS });
+      } catch (e) { return Response.json({ error: e.message }, { status: 400, headers: CORS }); }
+    }
+
+    // ── POST /add-user ────────────────────────────────────────────────────────
+    if (request.method === 'POST' && url.pathname === '/add-user') {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth || auth.role !== 'admin') return Response.json({ error: 'Admin required' }, { status: 403, headers: CORS });
+      try {
+        const { username, password, role } = await request.json();
+        if (!username || !password || password.length < 8) return Response.json({ error: 'Invalid data' }, { status: 400, headers: CORS });
+        const users = await getUsers(env);
+        if (users[username]) return Response.json({ error: 'Username already exists' }, { status: 409, headers: CORS });
+        users[username] = { password, role: role || 'user' };
+        await saveUsers(env, users);
+        return Response.json({ ok: true }, { headers: CORS });
+      } catch (e) { return Response.json({ error: e.message }, { status: 400, headers: CORS }); }
     }
 
     const query = (url.searchParams.get('q') || '').trim();

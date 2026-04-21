@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Nos Montres — Admin</title>
+<meta name="robots" content="noindex,nofollow"/>
+<style>
+:root{--dark:#0e0c09;--card:#161410;--border:#2a2520;--gold:#A07936;--gold-lt:#C9A86A;--gold-dim:rgba(160,121,54,0.12);--text:#F2EDE4;--muted:#7a7065;--cream:#FAFAF7;--green:#4ade80;--red:#f87171;--blue:#60a5fa;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:var(--dark);}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;width:100%;max-width:370px;text-align:center;}
+.login-box h1{font-size:1.3rem;font-weight:700;color:var(--gold-lt);margin-bottom:.3rem;letter-spacing:.03em;}
+.login-box p{color:var(--muted);font-size:.82rem;margin-bottom:2rem;}
+.login-box input{width:100%;background:#0f0d0a;border:1px solid var(--border);color:var(--text);padding:12px 16px;border-radius:8px;font-size:1rem;margin-bottom:1rem;outline:none;font-family:inherit;}
+.login-box input:focus{border-color:var(--gold);}
+.btn-gold{background:var(--gold);color:#0a0a08;font-weight:700;border:none;padding:13px 28px;border-radius:8px;font-size:.95rem;cursor:pointer;width:100%;transition:opacity .2s;font-family:inherit;}
+.btn-gold:hover{opacity:.85;}
+.login-error{color:var(--red);font-size:.82rem;margin-top:.75rem;display:none;}
+.pwd-wrap{position:relative;margin-bottom:1rem;}
+.login-box .pwd-wrap input{margin-bottom:0;}
+.pwd-wrap input{padding-right:44px!important;}
+.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;line-height:0;opacity:.5;}
+.eye-btn:hover{color:var(--text);opacity:1;}
+#admin-panel{display:none;height:100vh;flex-direction:row;overflow:hidden;}
+.admin-sidebar{width:214px;flex-shrink:0;background:#0b0905;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;}
+.admin-sidebar-logo{padding:.95rem 1.1rem .85rem;color:var(--gold-lt);font-weight:700;font-size:.88rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.45rem;flex-shrink:0;letter-spacing:.04em;}
+.admin-sidebar-section{padding:.75rem 1.1rem .2rem;font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4a4540;}
+.admin-sidebar-divider{height:1px;background:var(--border);margin:.6rem 0;}
+.nav-group{margin-bottom:.2rem;}
+.nav-group-header{display:flex;align-items:center;justify-content:space-between;padding:.52rem 1.1rem;color:var(--text);font-size:.78rem;font-weight:600;cursor:pointer;user-select:none;border:none;background:none;width:100%;font-family:inherit;transition:color .15s;}
+.nav-group-header:hover{color:var(--gold-lt);}
+.nav-group-arrow{font-size:.55rem;transition:transform .22s;color:var(--muted);}
+.nav-group-items{max-height:0;overflow:hidden;transition:max-height .28s ease;}
+.nav-group-items.open{max-height:700px;}
+.admin-nav-item{display:flex;align-items:center;gap:.5rem;padding:.42rem .9rem .42rem 1.65rem;color:var(--muted);font-size:.76rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:3px solid transparent;transition:all .13s;font-family:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.admin-nav-item:hover{color:var(--text);background:rgba(255,255,255,.04);}
+.admin-nav-item.active{color:var(--gold-lt);border-left-color:var(--gold);background:var(--gold-dim);}
+.admin-nav-settings{padding-left:1.1rem;}
+#admin-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
+.top-bar{background:var(--card);border-bottom:1px solid var(--border);padding:.45rem .9rem;display:flex;align-items:center;gap:.6rem;flex-shrink:0;min-height:46px;}
+.top-bar-context{font-size:.77rem;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.top-bar-context span{color:var(--text);}
+.top-bar-right{display:flex;align-items:center;gap:.45rem;flex-shrink:0;}
+.change-badge{font-size:.7rem;color:var(--gold-lt);background:var(--gold-dim);padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.save-status{font-size:.74rem;color:var(--green);white-space:nowrap;}
+.btn-save{background:var(--gold);color:#0a0a08;font-weight:700;border:none;padding:7px 15px;border-radius:7px;cursor:pointer;font-size:.77rem;white-space:nowrap;font-family:inherit;}
+.btn-save:hover:not(:disabled){opacity:.85;}
+.btn-save:disabled{opacity:.35;cursor:default;}
+.btn-logout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 11px;border-radius:7px;cursor:pointer;font-size:.72rem;font-family:inherit;}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
+.top-bar-user{font-size:.7rem;color:var(--muted);white-space:nowrap;}
+.role-badge{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:4px;background:var(--gold-dim);color:var(--gold-lt);margin-left:.3rem;vertical-align:middle;}
+.edit-toolbar{background:#0d0b08;border-bottom:1px solid var(--border);padding:.42rem 1rem;display:none;align-items:center;justify-content:space-between;font-size:.72rem;color:var(--muted);flex-shrink:0;}
+.edit-hint{display:flex;align-items:center;gap:.5rem;}
+.edit-hint-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.device-btns{display:flex;align-items:center;gap:.3rem;}
+.device-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:3px 9px;border-radius:5px;font-size:.67rem;cursor:pointer;font-family:inherit;}
+.device-btn.active{border-color:var(--gold);color:var(--gold-lt);}
+#wysiwyg-wrap{flex:1;overflow:hidden;display:none;flex-direction:column;background:#111;}
+.iframe-scroll-outer{flex:1;overflow:auto;display:flex;justify-content:center;background:#111;}
+#page-frame{border:none;width:100%;min-height:100%;display:block;flex-shrink:0;}
+#page-frame.tablet-view{width:768px;box-shadow:0 0 0 1px var(--border);}
+#page-frame.mobile-view{width:390px;box-shadow:0 0 0 1px var(--border);}
+#welcome-screen{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.6rem;color:var(--muted);text-align:center;padding:2rem;}
+#welcome-screen .ws-icon{font-size:2.5rem;opacity:.35;}
+#welcome-screen .ws-text{font-size:.88rem;}
+#welcome-screen .ws-hint{font-size:.73rem;opacity:.55;}
+#settings-area{display:none;flex:1;overflow-y:auto;}
+.settings-main{padding:1.6rem;max-width:960px;}
+.panel{display:none;}.panel.active{display:block;}
+.field{margin-bottom:.8rem;}
+.field label{display:block;font-size:.66rem;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.28rem;}
+.field input,.field textarea,.field select{width:100%;background:#0f0d0a;border:1px solid var(--border);color:var(--text);padding:8px 11px;border-radius:7px;font-size:.85rem;outline:none;transition:border-color .2s;font-family:inherit;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold);}
+.field textarea{resize:vertical;min-height:65px;}
+.field select option{background:#1a1714;}
+.sh{font-size:.9rem;font-weight:700;color:var(--gold-lt);margin:1.6rem 0 .8rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);}
+.sh:first-child{margin-top:0;}
+.product-list{display:flex;flex-direction:column;gap:.8rem;}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:11px;overflow:hidden;}
+.product-card-head{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;cursor:pointer;user-select:none;}
+.product-card-head:hover{background:rgba(255,255,255,.025);}
+.product-card-title{font-weight:600;font-size:.85rem;}
+.product-card-origin{font-size:.69rem;color:var(--muted);margin-top:1px;}
+.product-card-chevron{color:var(--muted);transition:transform .2s;font-size:.7rem;}
+.product-card.open .product-card-chevron{transform:rotate(180deg);}
+.product-card-body{display:none;padding:1rem;border-top:1px solid var(--border);}
+.product-card.open .product-card-body{display:block;}
+.watch-grid-admin{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
+@media(max-width:780px){.watch-grid-admin{grid-template-columns:1fr;}}
+.btn-sold-out-product{background:none;border:1px solid rgba(148,163,184,.3);color:#94a3b8;padding:5px 11px;border-radius:7px;font-size:.72rem;cursor:pointer;margin-right:.35rem;font-family:inherit;}
+.btn-sold-out-product:hover{background:rgba(148,163,184,.08);}
+.btn-pause-product{background:none;border:1px solid rgba(251,191,36,.3);color:#f59e0b;padding:5px 11px;border-radius:7px;font-size:.72rem;cursor:pointer;margin-right:.35rem;font-family:inherit;}
+.btn-pause-product:hover{background:rgba(251,191,36,.08);}
+.btn-remove-product{background:none;border:1px solid rgba(248,113,113,.3);color:var(--red);padding:5px 11px;border-radius:7px;font-size:.72rem;cursor:pointer;font-family:inherit;}
+.btn-remove-product:hover{background:rgba(248,113,113,.08);}
+.removed-section{margin-top:.9rem;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.removed-section-toggle{width:100%;background:none;border:none;color:var(--muted);padding:.6rem 1rem;font-size:.76rem;cursor:pointer;text-align:left;font-family:inherit;}
+.removed-section-toggle:hover{background:rgba(255,255,255,.025);}
+.removed-list{flex-direction:column;gap:.4rem;padding:.8rem;}
+.removed-card{display:flex;align-items:center;justify-content:space-between;background:#0f0d0a;border:1px solid var(--border);border-radius:8px;padding:.55rem .85rem;}
+.removed-card-name{font-size:.8rem;}
+.btn-restore{background:none;border:1px solid var(--green);color:var(--green);padding:3px 10px;border-radius:6px;font-size:.7rem;cursor:pointer;font-family:inherit;}
+.btn-restore:hover{background:rgba(74,222,128,.1);}
+.new-watch-form{background:rgba(160,121,54,.05);border:1px dashed rgba(160,121,54,.3);border-radius:11px;padding:1rem;margin-bottom:1.2rem;}
+.new-watch-form h3{color:var(--gold-lt);font-size:.85rem;margin-bottom:.8rem;}
+.settings-box{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:1.1rem;max-width:500px;margin-bottom:1.1rem;}
+.msg{font-size:.8rem;margin-top:.55rem;}
+.msg.ok{color:var(--green);}.msg.err{color:var(--red);}
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.85rem;max-width:680px;}
+.color-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.8rem;}
+.color-item label{font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.35rem;}
+.color-swatch-row{display:flex;align-items:center;gap:.45rem;}
+.color-swatch{width:30px;height:30px;border-radius:6px;cursor:pointer;border:2px solid transparent;padding:0;flex-shrink:0;}
+.color-hex{flex:1;background:#0f0d0a;border:1px solid var(--border);color:var(--text);padding:5px 9px;border-radius:6px;font-size:.77rem;font-family:monospace;outline:none;}
+.color-hex:focus{border-color:var(--gold);}
+.color-reset{background:none;border:none;color:var(--muted);font-size:.65rem;cursor:pointer;margin-top:.3rem;}
+.color-reset:hover{color:var(--gold-lt);}
+.img-dialog-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;}
+.img-dialog-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.4rem;width:460px;max-width:92vw;}
+.img-dialog-box h3{color:var(--gold-lt);font-size:.93rem;margin-bottom:.95rem;}
+.imgd-preview{width:100%;height:165px;border:2px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;overflow:hidden;background:#0f0d0a;}
+.imgd-preview img{width:100%;height:100%;object-fit:contain;}
+.imgd-preview-hint{color:var(--muted);font-size:.77rem;}
+.imgd-url-row{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;}
+.imgd-url-label{font-size:.72rem;color:var(--muted);white-space:nowrap;}
+.imgd-url-input{flex:1;background:#0f0d0a;border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:7px;font-size:.82rem;outline:none;font-family:inherit;}
+.imgd-url-input:focus{border-color:var(--gold);}
+.imgd-btns{display:flex;gap:.5rem;justify-content:flex-end;}
+.imgd-tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);padding:.42rem .85rem .5rem;font-size:.78rem;cursor:pointer;font-family:inherit;font-weight:600;transition:color .15s;}
+.imgd-tab.active{color:var(--gold-lt);border-bottom-color:var(--gold);}
+.imgd-tab:hover:not(.active){color:var(--text);}
+.imgd-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1rem;}
+#imgd-focal-wrap{position:relative;width:100%;height:200px;border-radius:8px;overflow:hidden;cursor:crosshair;background:#0f0d0a;margin-bottom:.85rem;user-select:none;}
+#imgd-focal-img{width:100%;height:100%;object-fit:cover;pointer-events:none;transition:object-position .1s;}
+#imgd-focal-dot{position:absolute;width:18px;height:18px;border-radius:50%;border:2px solid #fff;background:rgba(160,121,54,.8);transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 0 2px rgba(0,0,0,.6);top:50%;left:50%;}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--text);padding:7px 16px;border-radius:8px;font-size:.8rem;cursor:pointer;font-family:inherit;}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold-lt);}
+.btn-cancel{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:7px;font-size:.79rem;cursor:pointer;font-family:inherit;}
+.btn-cancel:hover{border-color:var(--red);color:var(--red);}
+.brand-pill-admin{display:inline-block;padding:2px 7px;border-radius:12px;font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-right:.3rem;}
+.brand-rolex{background:rgba(160,121,54,.15);color:var(--gold-lt);}
+.brand-ap{background:rgba(96,165,250,.12);color:#93c5fd;}
+.brand-pp{background:rgba(168,85,247,.12);color:#c4b5fd;}
+.brand-rm{background:rgba(248,113,113,.12);color:#fca5a5;}
+.brand-cartier{background:rgba(244,63,94,.12);color:#fda4af;}
+.brand-other{background:rgba(255,255,255,.06);color:var(--muted);}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--dark);">
+  <div class="login-box">
+    <div class="login-logo">⌚ Nos Montres Admin</div>
+    <p style="font-size:.8rem;color:var(--muted);text-align:center;margin-bottom:1.5rem;letter-spacing:.03em;">Espace administrateur</p>
+    <div style="position:relative;margin-bottom:.85rem;">
+      <input id="user-input" type="text" class="login-input" placeholder="Nom d'utilisateur" autocomplete="username"/>
+    </div>
+    <div style="position:relative;margin-bottom:.85rem;">
+      <input id="pwd-input" type="password" class="login-input" placeholder="Mot de passe" autocomplete="current-password" style="padding-right:2.5rem;"/>
+      <button class="eye-btn" onclick="toggleEye('pwd-input',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);padding:2px;"></button>
+    </div>
+    <div id="login-error" style="display:none;color:#f87171;font-size:.75rem;margin-bottom:.75rem;text-align:center;"></div>
+    <button class="btn-gold" onclick="doLogin()">Connexion</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel" style="display:none;flex-direction:row;height:100vh;overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <div class="admin-sidebar">
+    <div class="admin-sidebar-logo">⌚ Nos Montres</div>
+
+    <div class="nav-group">
+      <button class="nav-group-header" onclick="togglePagesDropdown()">
+        <span>✏️ Modifier les pages</span>
+        <span class="nav-group-arrow" id="pages-arrow">▼</span>
+      </button>
+      <div class="nav-group-items open" id="pages-dropdown">
+        <button class="admin-nav-item" data-page="index.html" onclick="switchPage(this)">🏠 Accueil</button>
+        <button class="admin-nav-item" data-page="a-propos.html" onclick="switchPage(this)">📖 À propos</button>
+        <button class="admin-nav-item" data-page="vendre.html" onclick="switchPage(this)">💰 Vendre</button>
+        <button class="admin-nav-item" data-page="prendre-rendez-vous.html" onclick="switchPage(this)">📅 Rendez-vous</button>
+        <button class="admin-nav-item" data-page="rolex.html" onclick="switchPage(this)">⌚ Rolex</button>
+        <button class="admin-nav-item" data-page="audemars-piguet.html" onclick="switchPage(this)">⌚ Audemars Piguet</button>
+        <button class="admin-nav-item" data-page="patek-philippe.html" onclick="switchPage(this)">⌚ Patek Philippe</button>
+        <button class="admin-nav-item" data-page="richard-mille.html" onclick="switchPage(this)">⌚ Richard Mille</button>
+      </div>
+    </div>
+
+    <div class="admin-sidebar-divider"></div>
+    <div class="admin-sidebar-section">Paramètres</div>
+    <button class="admin-nav-item admin-nav-settings" onclick="openSettings('stock',this)">💎 Stock / Montres</button>
+    <button class="admin-nav-item admin-nav-settings" onclick="openSettings('colors',this)">🎨 Couleurs &amp; Polices</button>
+    <button class="admin-nav-item admin-nav-settings" onclick="openSettings('users',this)">🔑 Mot de passe</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="admin-main" style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <span id="top-bar-context" style="font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.04em;">Nos Montres Admin</span>
+      <div style="display:flex;align-items:center;gap:.75rem;margin-left:auto;">
+        <span id="change-badge" style="display:none;background:rgba(160,121,54,.18);color:var(--gold-lt);font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.04em;">✦ Modifications en attente</span>
+        <span id="top-user" style="font-size:.75rem;color:var(--muted);"></span>
+        <button class="btn-gold" id="save-btn" style="display:none;padding:6px 18px;font-size:.78rem;" onclick="saveAll()">Enregistrer tout</button>
+        <button onclick="doLogout()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:7px;font-size:.72rem;cursor:pointer;font-family:inherit;">Déconnexion</button>
+      </div>
+    </div>
+
+    <!-- EDIT TOOLBAR (shown when a page is loaded) -->
+    <div class="edit-toolbar" id="edit-toolbar" style="display:none;">
+      <span style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--muted);">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block;box-shadow:0 0 6px rgba(160,121,54,.6);"></span>
+        Mode édition actif — cliquez sur n'importe quel texte ou image
+      </span>
+      <div style="display:flex;gap:.35rem;margin-left:auto;">
+        <button class="device-btn active" onclick="setDevice('desktop',this)" title="Desktop">🖥</button>
+        <button class="device-btn" onclick="setDevice('tablet',this)" title="Tablet">📱</button>
+        <button class="device-btn" onclick="setDevice('mobile',this)" title="Mobile">📲</button>
+      </div>
+    </div>
+
+    <!-- WELCOME SCREEN -->
+    <div id="welcome-screen" style="display:flex;flex:1;align-items:center;justify-content:center;flex-direction:column;gap:1rem;background:var(--dark);">
+      <div style="font-size:3rem;">⌚</div>
+      <div style="font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.04em;">Bienvenue dans l'admin Nos Montres</div>
+      <div style="font-size:.82rem;color:var(--muted);text-align:center;max-width:360px;line-height:1.6;">Sélectionnez une page à gauche pour l'éditer,<br>ou accédez aux paramètres pour gérer le stock et les couleurs.</div>
+    </div>
+
+    <!-- WYSIWYG IFRAME -->
+    <div id="wysiwyg-wrap" style="display:none;flex:1;flex-direction:column;">
+      <iframe id="page-frame" src="" style="width:100%;flex:1;border:none;background:#fff;display:block;"></iframe>
+    </div>
+
+    <!-- SETTINGS AREA -->
+    <div id="settings-area" style="display:none;flex:1;overflow-y:auto;padding:1.5rem 2rem;flex-direction:column;gap:1.5rem;">
+
+      <!-- PANEL: STOCK -->
+      <div id="panel-stock" class="panel active">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+          <div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text);">💎 Stock — Montres en vente</div>
+            <div style="font-size:.75rem;color:var(--muted);margin-top:.25rem;">Gérez les montres affichées sur le site. Marquez comme vendu ou masquées.</div>
+          </div>
+          <button class="btn-gold" style="padding:7px 16px;font-size:.78rem;" onclick="addNewWatch()">+ Ajouter</button>
+        </div>
+        <div id="watches-grid" class="watch-card-grid"></div>
+      </div>
+
+      <!-- PANEL: COLORS -->
+      <div id="panel-colors" class="panel">
+        <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem;">🎨 Couleurs &amp; Polices</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:1.25rem;">Modifiez les couleurs du site. Les changements s'appliquent instantanément.</div>
+        <div id="colors-grid" class="colors-grid"></div>
+        <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);">
+          <div style="font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.75rem;">Polices de caractères</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
+            <div>
+              <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:.3rem;">Police titres</label>
+              <input data-key="nm_font_heading" type="text" class="settings-input" placeholder="ex: Georgia, serif"/>
+            </div>
+            <div>
+              <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:.3rem;">Police corps</label>
+              <input data-key="nm_font_body" type="text" class="settings-input" placeholder="ex: system-ui, sans-serif"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: USERS -->
+      <div id="panel-users" class="panel">
+        <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1.25rem;">🔑 Mot de passe &amp; Utilisateurs</div>
+        <!-- Change Password -->
+        <div class="settings-section-card" style="margin-bottom:1.25rem;">
+          <div style="font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.75rem;">Changer le mot de passe</div>
+          <div style="display:grid;gap:.6rem;">
+            <div style="position:relative;">
+              <input id="cp-current" type="password" class="settings-input" placeholder="Mot de passe actuel"/>
+              <button class="eye-btn" onclick="toggleEye('cp-current',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+            </div>
+            <div style="position:relative;">
+              <input id="cp-new" type="password" class="settings-input" placeholder="Nouveau mot de passe"/>
+              <button class="eye-btn" onclick="toggleEye('cp-new',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+            </div>
+            <div style="position:relative;">
+              <input id="cp-confirm" type="password" class="settings-input" placeholder="Confirmer le nouveau mot de passe"/>
+              <button class="eye-btn" onclick="toggleEye('cp-confirm',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+            </div>
+            <div id="cp-msg" style="font-size:.73rem;display:none;"></div>
+            <button class="btn-gold" style="padding:8px 20px;font-size:.8rem;width:fit-content;" onclick="changePassword()">Mettre à jour</button>
+          </div>
+        </div>
+        <!-- Add User (admin only) -->
+        <div id="add-user-section" class="settings-section-card" style="display:none;">
+          <div style="font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.75rem;">Ajouter un utilisateur</div>
+          <div style="display:grid;gap:.6rem;">
+            <input id="au-user" type="text" class="settings-input" placeholder="Nom d'utilisateur"/>
+            <div style="position:relative;">
+              <input id="au-pwd" type="password" class="settings-input" placeholder="Mot de passe"/>
+              <button class="eye-btn" onclick="toggleEye('au-pwd',this)" style="position:absolute;right:.6rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);"></button>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem;">
+              <input id="au-admin" type="checkbox" style="accent-color:var(--gold);"/>
+              <label for="au-admin" style="font-size:.75rem;color:var(--muted);cursor:pointer;">Rôle Admin</label>
+            </div>
+            <div id="au-msg" style="font-size:.73rem;display:none;"></div>
+            <button class="btn-gold" style="padding:8px 20px;font-size:.8rem;width:fit-content;" onclick="addUser()">Ajouter l'utilisateur</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /settings-area -->
+
+  </div><!-- /admin-main -->
+</div><!-- /admin-panel -->
+
+<!-- FORM FIELD EDITOR (fixed, outside admin-panel) -->
+<div id="form-field-editor" style="display:none;position:fixed;bottom:0;left:214px;right:0;background:var(--card);border-top:1px solid var(--border);z-index:9999;padding:.85rem 1.25rem;box-shadow:0 -4px 20px rgba(0,0,0,.4);">
+  <div style="display:flex;align-items:flex-start;gap:.75rem;">
+    <div style="flex:1;">
+      <div id="form-field-label" style="font-size:.7rem;color:var(--muted);margin-bottom:.35rem;letter-spacing:.04em;text-transform:uppercase;"></div>
+      <textarea id="form-field-textarea" rows="3" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:inherit;font-size:.82rem;padding:.5rem .7rem;resize:vertical;box-sizing:border-box;line-height:1.5;" oninput="formFieldChanged(this)"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.4rem;padding-top:1.2rem;">
+      <button class="btn-gold" style="padding:6px 14px;font-size:.76rem;white-space:nowrap;" onclick="applyFormField()">Appliquer</button>
+      <button class="btn-cancel" onclick="closeEditPopover()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE DIALOG -->
+<div id="img-dialog" class="img-dialog-overlay" style="display:none" onclick="if(event.target===this)closeImgDialog()">
+  <div class="img-dialog-box" style="width:480px;">
+    <div class="imgd-tabs">
+      <button class="imgd-tab active" id="imgd-tab-replace" onclick="switchImgTab('replace')">Remplacer l'image</button>
+      <button class="imgd-tab" id="imgd-tab-position" onclick="switchImgTab('position')">Position &amp; Recadrage</button>
+    </div>
+    <div id="imgd-pane-replace">
+      <div class="imgd-preview" id="imgd-preview"><span class="imgd-preview-hint">L'aperçu apparaîtra ici</span></div>
+      <div class="imgd-file-row">
+        <button class="btn-secondary" onclick="document.getElementById('imgd-file').click()">📁 Choisir un fichier</button>
+        <input id="imgd-file" type="file" accept="image/*" style="display:none" onchange="imgFileChosen(this)"/>
+      </div>
+      <div class="imgd-url-row">
+        <span class="imgd-url-label">Ou URL :</span>
+        <input id="imgd-url" class="imgd-url-input" type="text" placeholder="https://..." oninput="imgUrlPreview(this.value)"/>
+      </div>
+      <div class="imgd-btns">
+        <button class="btn-cancel" onclick="closeImgDialog()">Annuler</button>
+        <button class="btn-gold" style="width:auto;padding:7px 20px;" onclick="applyImgChange()">Appliquer</button>
+      </div>
+    </div>
+    <div id="imgd-pane-position" style="display:none">
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:.75rem;line-height:1.5;">Cliquez sur l'image pour définir le point focal — la partie visible lors du recadrage sur différents écrans.</p>
+      <div id="imgd-focal-wrap">
+        <img id="imgd-focal-img" src="" alt=""/>
+        <div id="imgd-focal-dot"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+        <span style="font-size:.72rem;color:var(--muted);white-space:nowrap;width:40px;">Zoom</span>
+        <input id="imgd-zoom" type="range" min="100" max="220" value="100" style="flex:1;accent-color:var(--gold);" oninput="updateFocalZoom(this.value)"/>
+        <span id="imgd-zoom-val" style="font-size:.72rem;color:var(--gold);white-space:nowrap;width:30px;text-align:right;">1×</span>
+      </div>
+      <div class="imgd-btns">
+        <button class="btn-cancel" onclick="resetFocalPoint()">Réinitialiser</button>
+        <button class="btn-cancel" onclick="closeImgDialog()">Annuler</button>
+        <button class="btn-gold" style="width:auto;padding:7px 20px;" onclick="applyImgPosition()">Appliquer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const WORKER='https://nosmontres-prices.zoozoomfast.workers.dev';
+const EYE_ON=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const EYE_OFF=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+document.querySelectorAll('.eye-btn').forEach(b=>{b.innerHTML=EYE_ON;});
+
+let SESSION_USER='',SESSION_PWD='',SESSION_ROLE='';
+let kvContent={},pendingChanges={};
+let currentPage='index.html';
+let currentEditEl=null,currentEditKey=null,currentEditSel=null;
+let imgPendingSel=null,imgPendingKey=null,imgPendingData=null;
+let imgPendingPos={x:50,y:50},imgCurrentEl=null;
+
+function getSessionId(){let s=localStorage.getItem('nm_sid');if(!s){s=(crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36));localStorage.setItem('nm_sid',s);}return s;}
+const SESSION_ID=getSessionId();
+function authH(){return{'Content-Type':'application/json','X-Admin-User':SESSION_USER,'X-Admin-Password':SESSION_PWD,'X-Session-ID':SESSION_ID};}
+function authHL(u,p){return{'Content-Type':'application/json','X-Admin-User':u,'X-Admin-Password':p,'X-Session-ID':SESSION_ID};}
+
+const TEXT_MAP={
+  nm_hero_eyebrow_fr:'.hero__eyebrow.fr', nm_hero_eyebrow_en:'.hero__eyebrow.en',
+  nm_hero_title_fr:'.hero__title.fr', nm_hero_title_en:'.hero__title.en',
+  nm_hero_sub_fr:'.hero__sub.fr', nm_hero_sub_en:'.hero__sub.en',
+  nm_strip_quote_fr:'.about-strip__quote.fr', nm_strip_quote_en:'.about-strip__quote.en',
+  nm_strip_body_fr:'.about-strip__body.fr', nm_strip_body_en:'.about-strip__body.en',
+  nm_ap_quote_fr:'.feature-row__title.fr', nm_ap_quote_en:'.feature-row__title.en',
+  nm_ap_body_fr:'.feature-row__body.fr', nm_ap_body_en:'.feature-row__body.en',
+  nm_stat1_num:'.stat-item:nth-child(1) .stat-number',
+  nm_stat2_num:'.stat-item:nth-child(2) .stat-number',
+  nm_stat3_num:'.stat-item:nth-child(3) .stat-number',
+  nm_stat4_num:'.stat-item:nth-child(4) .stat-number',
+  nm_vendre_title_fr:'.sell-hero__title.fr', nm_vendre_title_en:'.sell-hero__title.en',
+  nm_vendre_sub_fr:'.sell-hero__sub.fr', nm_vendre_sub_en:'.sell-hero__sub.en',
+  nm_rdv_title_fr:'.rdv-info__title.fr', nm_rdv_title_en:'.rdv-info__title.en',
+  nm_rdv_body_fr:'.rdv-info__body.fr', nm_rdv_body_en:'.rdv-info__body.en',
+};
+const COLORS=[
+  {key:'nm_css_gold',label:'Or (accent)',def:'#A07936'},
+  {key:'nm_css_gold_lt',label:'Or clair',def:'#C9A86A'},
+  {key:'nm_css_charcoal',label:'Fond sombre',def:'#0e0c09'},
+  {key:'nm_css_cream',label:'Texte clair',def:'#f5f0e8'},
+  {key:'nm_css_ivory',label:'Ivoire (fond cartes)',def:'#1a1714'},
+  {key:'nm_css_mid',label:'Texte secondaire',def:'#7a7060'},
+];
+
+// Default watches (overridden by KV watches_json on load)
+let WATCHES_ADMIN=[
+  {id:'1737944',brand:'Rolex',name_fr:'Rolex Oyster Perpetual 41 Corail',name_en:'Rolex Oyster Perpetual 41 Coral',ref:'124300 Red',papers:true,box:true,year:2022,price:14500,sold:false,hidden:false,img:'IMG-7772-Y5vh.jpeg'},
+  {id:'1737943',brand:'Rolex',name_fr:'Rolex DateJust 41 Wimbledon',name_en:'Rolex DateJust 41 Wimbledon',ref:'126300 Wimbledon Oyster',papers:true,box:true,year:2023,price:9500,sold:false,hidden:false,img:'IMG-7771-C54e.jpeg'},
+  {id:'1737942',brand:'Rolex',name_fr:'Rolex DateJust 36',name_en:'Rolex DateJust 36',ref:'16234',papers:false,box:true,year:1993,price:6500,sold:false,hidden:false,img:'IMG-1340-mZs7.jpeg'},
+  {id:'1737941',brand:'Rolex',name_fr:'Rolex Explorer II',name_en:'Rolex Explorer II',ref:'226570',papers:true,box:true,year:2023,price:9500,sold:false,hidden:false,img:'IMG-1296-HzNs.jpeg'},
+  {id:'1737940',brand:'Rolex',name_fr:'Rolex DateJust 41 Wimbledon',name_en:'Rolex DateJust 41 Wimbledon',ref:'126300 Wimbledon',papers:true,box:true,year:2023,price:10500,sold:false,hidden:false,img:'479fa276-9dae-4a01-a895-b85a14a8342f-KK2x.jpeg'},
+  {id:'1737939',brand:'Rolex',name_fr:"Rolex GMT Master II 'Bruce Wayne'",name_en:"Rolex GMT Master II 'Bruce Wayne'",ref:'126710GRNR',papers:true,box:true,year:2024,price:18500,sold:false,hidden:false,img:'IMG-8144-PeMi.jpeg'},
+  {id:'1737938',brand:'Richard Mille',name_fr:'Richard Mille RM65-01 Titanium',name_en:'Richard Mille RM65-01 Titanium',ref:'RM65-01',papers:true,box:true,year:2022,price:235000,sold:false,hidden:false,img:'c552deb8-4084-4deb-93e7-15a7ce0b2aaf-8BG2.jpeg'},
+];
+
+// LOGIN
+async function doLogin(){
+  const user=document.getElementById('user-input').value.trim();
+  const pwd=document.getElementById('pwd-input').value;
+  const err=document.getElementById('login-error');
+  err.style.display='none';
+  if(!user||!pwd){err.textContent='Entrez votre nom d\'utilisateur et mot de passe.';err.style.display='block';return;}
+  try{
+    const res=await fetch(WORKER+'/me',{method:'POST',headers:authHL(user,pwd),body:'{}'});
+    if(!res.ok){err.textContent='Nom d\'utilisateur ou mot de passe incorrect.';err.style.display='block';return;}
+    const me=await res.json();
+    SESSION_USER=user;SESSION_PWD=pwd;SESSION_ROLE=me.role;
+    sessionStorage.setItem('nm_au',user);sessionStorage.setItem('nm_ap',pwd);sessionStorage.setItem('nm_ar',me.role);
+    await afterLogin();
+  }catch(e){err.textContent='Erreur de connexion. Réessayez.';err.style.display='block';}
+}
+async function afterLogin(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('admin-panel').style.display='flex';
+  document.getElementById('top-user').innerHTML=SESSION_USER+'<span class="role-badge">'+(SESSION_ROLE==='admin'?'Admin':'Utilisateur')+'</span>';
+  if(SESSION_ROLE==='admin')document.getElementById('add-user-section').style.display='block';
+  document.querySelectorAll('.eye-btn').forEach(b=>b.innerHTML=EYE_ON);
+  document.getElementById('welcome-screen').style.display='flex';
+  document.getElementById('wysiwyg-wrap').style.display='none';
+  document.getElementById('settings-area').style.display='none';
+  document.getElementById('edit-toolbar').style.display='none';
+  await loadContent();
+  try{
+    const last=JSON.parse(sessionStorage.getItem('nm_last_view')||'null');
+    if(last&&last.type==='page'){const btn=document.querySelector('.admin-nav-item[data-page="'+last.page+'"]');if(btn)switchPage(btn);}
+    else if(last&&last.type==='settings'){const btn=Array.from(document.querySelectorAll('.admin-nav-settings')).find(b=>b.getAttribute('onclick').includes("'"+last.name+"'"));if(btn)openSettings(last.name,btn);}
+  }catch(e){}
+}
+function doLogout(){
+  SESSION_USER=SESSION_PWD=SESSION_ROLE='';
+  sessionStorage.removeItem('nm_au');sessionStorage.removeItem('nm_ap');sessionStorage.removeItem('nm_ar');sessionStorage.removeItem('nm_last_view');
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('user-input').value='';document.getElementById('pwd-input').value='';
+}
+document.getElementById('user-input').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('pwd-input').focus();});
+document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+(async function tryAutoLogin(){
+  const u=sessionStorage.getItem('nm_au'),p=sessionStorage.getItem('nm_ap');
+  if(!u||!p)return;
+  try{
+    const res=await fetch(WORKER+'/me',{method:'POST',headers:authHL(u,p),body:'{}'});
+    if(!res.ok){sessionStorage.removeItem('nm_au');sessionStorage.removeItem('nm_ap');return;}
+    const me=await res.json();SESSION_USER=u;SESSION_PWD=p;SESSION_ROLE=me.role;await afterLogin();
+  }catch(e){}
+})();
+
+// LOAD KV CONTENT
+async function loadContent(){
+  try{const r=await fetch(WORKER+'/content',{headers:authH()});kvContent=await r.json()||{};}catch(e){kvContent={};}
+  if(kvContent.watches_json){try{WATCHES_ADMIN=JSON.parse(kvContent.watches_json);}catch(e){}}
+  buildWatches();buildColors();populatePanelFields();
+}
+function populatePanelFields(){
+  document.querySelectorAll('[data-key]').forEach(el=>{
+    const key=el.dataset.key;if(!key||kvContent[key]===undefined)return;el.value=kvContent[key];
+  });
+}
+
+// SIDEBAR NAVIGATION
+function togglePagesDropdown(){
+  const dd=document.getElementById('pages-dropdown');
+  const arrow=document.getElementById('pages-arrow');
+  dd.classList.toggle('open');
+  arrow.style.transform=dd.classList.contains('open')?'':'rotate(-90deg)';
+}
+function switchPage(btn){
+  const page=btn.dataset.page;
+  closeEditPopover();
+  document.querySelectorAll('.admin-nav-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('welcome-screen').style.display='none';
+  document.getElementById('settings-area').style.display='none';
+  document.getElementById('wysiwyg-wrap').style.display='flex';
+  document.getElementById('edit-toolbar').style.display='flex';
+  const label=btn.textContent.trim();
+  document.getElementById('top-bar-context').textContent='✏️ Édition : '+label;
+  sessionStorage.setItem('nm_last_view',JSON.stringify({type:'page',page}));
+  loadPage(page);
+}
+function openSettings(name,btn){
+  closeEditPopover();
+  document.querySelectorAll('.admin-nav-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('welcome-screen').style.display='none';
+  document.getElementById('wysiwyg-wrap').style.display='none';
+  document.getElementById('edit-toolbar').style.display='none';
+  document.getElementById('settings-area').style.display='flex';
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const panel=document.getElementById('panel-'+name);if(panel)panel.classList.add('active');
+  document.getElementById('top-bar-context').textContent=btn.textContent.trim();
+  sessionStorage.setItem('nm_last_view',JSON.stringify({type:'settings',name}));
+}
+function loadPage(page){
+  currentPage=page;closeEditPopover();
+  if(window._nmObserver){window._nmObserver.disconnect();window._nmObserver=null;}
+  const frame=document.getElementById('page-frame');
+  if(frame.src.endsWith('/'+page)||frame.src===page){frame.contentWindow.location.reload();}
+  else{frame.src=page;}
+}
+function setDevice(mode,btn){
+  document.querySelectorAll('.device-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const frame=document.getElementById('page-frame');
+  frame.classList.remove('mobile-view','tablet-view');
+  if(mode==='mobile')frame.classList.add('mobile-view');
+  else if(mode==='tablet')frame.classList.add('tablet-view');
+}
+document.getElementById('page-frame').addEventListener('load',function(){
+  setTimeout(()=>injectEditMode(this.contentDocument),400);
+});
+
+// INJECT EDIT MODE
+function injectEditMode(doc){
+  if(!doc||!doc.body)return;
+  const old=doc.getElementById('nm-edit-style');if(old)old.remove();
+  const style=doc.createElement('style');
+  style.id='nm-edit-style';
+  style.textContent=`
+    *:not(#nm-badge):hover{outline:1px dashed rgba(160,121,54,.5)!important;}
+    a[href]{pointer-events:none!important;cursor:text!important;}
+    button:not(.nm-ov-btn){pointer-events:none!important;cursor:text!important;}
+    #nm-badge{position:fixed;top:0;left:50%;transform:translateX(-50%);background:rgba(160,121,54,.97);color:#0a0a08;font-size:11px;font-weight:800;letter-spacing:1.5px;padding:4px 16px;border-radius:0 0 10px 10px;z-index:999999;pointer-events:none;font-family:system-ui,sans-serif;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+  `;
+  doc.head.appendChild(style);
+  if(!doc.getElementById('nm-badge')){
+    const b=doc.createElement('div');b.id='nm-badge';
+    b.textContent='✏ MODE ÉDITION — cliquez sur n\'importe quel texte ou image';
+    doc.body.appendChild(b);
+  }
+  doc.designMode='on';
+  if(window._nmObserver)window._nmObserver.disconnect();
+  window._nmObserver=new MutationObserver(mutations=>{
+    mutations.forEach(m=>{
+      if(m.type!=='characterData')return;
+      const el=m.target.parentElement;
+      if(!el||el.id==='nm-badge')return;
+      const key=findKvKey(el,doc);
+      if(key){
+        pendingChanges[key]=el.textContent.trim();
+      }else if(currentPage){
+        const sel=genSel(el,doc);
+        if(sel){
+          const pg=currentPage.replace('.html','').replace(/-/g,'_');
+          const wk='_wysiwyg_'+pg;
+          try{const ex=pendingChanges[wk]?JSON.parse(pendingChanges[wk]):{};ex[sel]=el.textContent.trim();pendingChanges[wk]=JSON.stringify(ex);}catch(e){}
+        }
+      }
+      updateDirty();
+    });
+  });
+  window._nmObserver.observe(doc.body,{characterData:true,subtree:true});
+  injectImgOverlays(doc);
+  injectFormOverlays(doc);
+}
+function injectImgOverlays(doc){
+  doc.querySelectorAll('.nm-iov').forEach(e=>e.remove());
+  doc.querySelectorAll('img').forEach(img=>{
+    if(!img.offsetWidth&&!img.offsetHeight)return;
+    let top=0,left=0,node=img;
+    do{top+=node.offsetTop||0;left+=node.offsetLeft||0;node=node.offsetParent;}while(node&&node!==doc.body);
+    const ov=doc.createElement('div');
+    ov.className='nm-iov nm-ov-btn';
+    ov.style.cssText='position:absolute;z-index:99998;cursor:pointer;top:'+top+'px;left:'+left+'px;width:'+img.offsetWidth+'px;height:'+img.offsetHeight+'px;box-sizing:border-box;';
+    ov.addEventListener('mouseenter',()=>{ov.style.outline='3px solid rgba(160,121,54,.85)';ov.style.background='rgba(160,121,54,.06)';});
+    ov.addEventListener('mouseleave',()=>{ov.style.outline='';ov.style.background='';});
+    ov.addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();openImgDialog(img);});
+    doc.body.appendChild(ov);
+  });
+}
+function injectFormOverlays(doc){
+  doc.querySelectorAll('.nm-fcap').forEach(e=>e.remove());
+  doc.querySelectorAll('input:not([type=hidden]),textarea,select').forEach(el=>{
+    let top=0,left=0,node=el;
+    do{top+=node.offsetTop||0;left+=node.offsetLeft||0;node=node.offsetParent;}while(node&&node!==doc.body);
+    const cap=doc.createElement('div');cap.className='nm-fcap nm-ov-btn';
+    cap.style.cssText='position:absolute;z-index:99999;cursor:pointer;top:'+top+'px;left:'+left+'px;width:'+(el.offsetWidth||200)+'px;height:'+(el.offsetHeight||40)+'px;outline:1px dashed rgba(160,121,54,.45);box-sizing:border-box;';
+    cap.addEventListener('mouseenter',()=>{cap.style.outline='2px solid rgba(160,121,54,.85)';cap.style.background='rgba(160,121,54,.06)';});
+    cap.addEventListener('mouseleave',()=>{cap.style.outline='1px dashed rgba(160,121,54,.45)';cap.style.background='';});
+    cap.addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();openFormEditor(el,doc);});
+    doc.body.appendChild(cap);
+  });
+}
+
+// FIND KV KEY FOR ELEMENT
+function findKvKey(el,doc){
+  for(const[key,sel]of Object.entries(TEXT_MAP)){
+    try{const ms=doc.querySelectorAll(sel);for(const m of ms){if(m===el)return key;}}catch(e){}
+  }
+  return null;
+}
+function genSel(el,doc){
+  if(el.id)return'#'+el.id;
+  const cls=Array.from(el.classList).filter(c=>c&&!['active','open','visible','loaded','fr','en'].includes(c));
+  if(cls.length)return'.'+cls[0];
+  const tag=el.tagName.toLowerCase();
+  const parent=el.parentElement;
+  if(parent){const siblings=Array.from(parent.children).filter(c=>c.tagName===el.tagName);const idx=siblings.indexOf(el);if(siblings.length>1)return(parent.id?'#'+parent.id:'.'+Array.from(parent.classList)[0]||tag)+' '+tag+':nth-of-type('+(idx+1)+')';}
+  return tag;
+}
+
+// FORM FIELD EDITOR
+function openFormEditor(el,doc){
+  currentEditEl=el;
+  const ffe=document.getElementById('form-field-editor');
+  const lbl=document.getElementById('form-field-label');
+  const ta=document.getElementById('form-field-textarea');
+  let label=el.placeholder||el.name||el.id||el.tagName;
+  lbl.textContent='Champ : '+label;
+  ta.value=el.value||'';
+  ffe.style.display='block';
+  ta.focus();
+}
+function formFieldChanged(ta){
+  if(currentEditEl)currentEditEl.value=ta.value;
+}
+function applyFormField(){
+  if(!currentEditEl)return;
+  const val=document.getElementById('form-field-textarea').value;
+  currentEditEl.value=val;
+  const pg=currentPage.replace('.html','').replace(/-/g,'_');
+  const wk='_wysiwyg_'+pg;
+  const fkey='field_'+Date.now();
+  try{const ex=pendingChanges[wk]?JSON.parse(pendingChanges[wk]):{};
+    const sel=genSel(currentEditEl,document.getElementById('page-frame').contentDocument);
+    if(sel)ex['_field_'+sel]=val;pendingChanges[wk]=JSON.stringify(ex);}catch(e){}
+  closeEditPopover();updateDirty();
+}
+function closeEditPopover(){
+  document.getElementById('form-field-editor').style.display='none';
+  currentEditEl=null;
+}
+
+// DIRTY / SAVE
+function updateDirty(){
+  const has=Object.keys(pendingChanges).length>0;
+  document.getElementById('change-badge').style.display=has?'':'none';
+  document.getElementById('save-btn').style.display=has?'':'none';
+}
+async function saveAll(){
+  const payload=Object.assign({},kvContent,pendingChanges);
+  try{
+    const res=await fetch(WORKER+'/content',{method:'POST',headers:authH(),body:JSON.stringify(payload)});
+    if(!res.ok)throw new Error('save failed');
+    kvContent=payload;pendingChanges={};updateDirty();
+    const badge=document.getElementById('change-badge');
+    badge.textContent='✓ Enregistré';badge.style.display='';badge.style.color='#86efac';
+    setTimeout(()=>{badge.style.display='none';badge.textContent='✦ Modifications en attente';badge.style.color='';},2000);
+  }catch(e){alert('Erreur lors de l\'enregistrement. Réessayez.');}
+}
+
+// STOCK PANEL — build watch cards
+const BRAND_PILL={Rolex:'brand-rolex','Audemars Piguet':'brand-ap','Patek Philippe':'brand-pp','Richard Mille':'brand-rm',Cartier:'brand-cartier'};
+function buildWatches(){
+  const grid=document.getElementById('watches-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  WATCHES_ADMIN.forEach((w,i)=>{
+    const pill=BRAND_PILL[w.brand]||'brand-other';
+    const soldClass=w.sold?'watch-card sold-card':'watch-card';
+    const hiddenClass=w.hidden?' hidden-card':'';
+    const imgSrc=w.img?'shop/'+w.img:'';
+    const card=document.createElement('div');
+    card.className=soldClass+hiddenClass;
+    card.dataset.idx=i;
+    card.innerHTML=`
+      <div class="watch-card-img-wrap" style="height:120px;overflow:hidden;border-radius:6px;margin-bottom:.75rem;background:var(--bg);">
+        ${imgSrc?`<img src="${imgSrc}" alt="" style="width:100%;height:100%;object-fit:cover;">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1.5rem;">⌚</div>'}
+      </div>
+      <div style="margin-bottom:.35rem;">
+        <span class="brand-pill-admin ${pill}">${w.brand}</span>
+        ${w.sold?'<span style="background:rgba(248,113,113,.15);color:#fca5a5;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:10px;letter-spacing:.04em;text-transform:uppercase;">VENDU</span>':''}
+        ${w.hidden?'<span style="background:rgba(255,255,255,.06);color:var(--muted);font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:10px;letter-spacing:.04em;text-transform:uppercase;">MASQUÉ</span>':''}
+      </div>
+      <div style="font-size:.82rem;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:.2rem;">${w.name_fr}</div>
+      <div style="font-size:.72rem;color:var(--muted);margin-bottom:.15rem;">Réf: ${w.ref}</div>
+      <div style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem;">${w.year} · ${w.papers?'✅ Papiers':'❌ Pas de papiers'} · ${w.box?'✅ Boîte':'❌ Pas de boîte'}</div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--gold-lt);margin-bottom:.75rem;">${w.price?w.price.toLocaleString('fr-FR')+'&nbsp;€':'N/C'}</div>
+      <div class="watch-card-actions">
+        <input type="number" value="${w.price||''}" placeholder="Prix €" style="width:90px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:4px 7px;font-size:.75rem;font-family:inherit;" onchange="updateWatchPrice(${i},this.value)"/>
+        <button class="btn-secondary" style="font-size:.7rem;padding:4px 10px;" onclick="toggleWatchSold(${i})">${w.sold?'Disponible':'Vendu'}</button>
+        <button class="btn-secondary" style="font-size:.7rem;padding:4px 10px;" onclick="toggleWatchHidden(${i})">${w.hidden?'Afficher':'Masquer'}</button>
+        <button class="btn-cancel" style="font-size:.7rem;padding:4px 10px;" onclick="removeWatch(${i})">✕</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+function updateWatchPrice(i,val){
+  WATCHES_ADMIN[i].price=parseInt(val)||0;
+  savePendingWatches();
+}
+function toggleWatchSold(i){
+  WATCHES_ADMIN[i].sold=!WATCHES_ADMIN[i].sold;
+  savePendingWatches();buildWatches();
+}
+function toggleWatchHidden(i){
+  WATCHES_ADMIN[i].hidden=!WATCHES_ADMIN[i].hidden;
+  savePendingWatches();buildWatches();
+}
+function removeWatch(i){
+  if(!confirm('Supprimer cette montre du stock ?'))return;
+  WATCHES_ADMIN.splice(i,1);savePendingWatches();buildWatches();
+}
+function savePendingWatches(){
+  pendingChanges.watches_json=JSON.stringify(WATCHES_ADMIN);updateDirty();
+}
+function addNewWatch(){
+  const id='new_'+Date.now();
+  WATCHES_ADMIN.unshift({id,brand:'Rolex',name_fr:'Nouvelle montre',name_en:'New watch',ref:'',papers:false,box:false,year:new Date().getFullYear(),price:0,sold:false,hidden:false,img:''});
+  savePendingWatches();buildWatches();
+  document.getElementById('watches-grid').firstElementChild?.scrollIntoView({behavior:'smooth'});
+}
+
+// COLORS PANEL
+function buildColors(){
+  const grid=document.getElementById('colors-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  COLORS.forEach(c=>{
+    const cur=kvContent[c.key]||c.def;
+    const row=document.createElement('div');row.className='color-row';
+    row.innerHTML=`
+      <div style="display:flex;align-items:center;gap:.6rem;flex:1;min-width:0;">
+        <input type="color" value="${cur}" style="width:34px;height:34px;border-radius:6px;border:1px solid var(--border);cursor:pointer;background:none;padding:2px;" onchange="previewColor('${c.key}',this.value)" oninput="previewColor('${c.key}',this.value)"/>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.78rem;font-weight:600;color:var(--text);">${c.label}</div>
+          <div style="font-size:.68rem;color:var(--muted);">${cur}</div>
+        </div>
+      </div>
+      <input type="text" value="${cur}" maxlength="7" style="width:80px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:4px 8px;font-size:.73rem;font-family:monospace;" oninput="syncColorHex('${c.key}',this)"/>
+    `;
+    grid.appendChild(row);
+  });
+}
+function previewColor(key,val){
+  // Update hex text input
+  const grid=document.getElementById('colors-grid');
+  const rows=grid.querySelectorAll('.color-row');
+  COLORS.forEach((c,i)=>{
+    if(c.key!==key)return;
+    const hexInput=rows[i]?.querySelectorAll('input[type="text"]')[0];
+    if(hexInput)hexInput.value=val;
+    rows[i].querySelector('div div:last-child').textContent=val;
+  });
+  pendingChanges[key]=val;updateDirty();
+}
+function syncColorHex(key,hexEl){
+  const val=hexEl.value.trim();
+  if(!/^#[0-9a-fA-F]{6}$/.test(val))return;
+  const grid=document.getElementById('colors-grid');
+  const rows=grid.querySelectorAll('.color-row');
+  COLORS.forEach((c,i)=>{
+    if(c.key!==key)return;
+    const colorInput=rows[i]?.querySelector('input[type="color"]');
+    if(colorInput)colorInput.value=val;
+    rows[i].querySelector('div div:last-child').textContent=val;
+  });
+  pendingChanges[key]=val;updateDirty();
+}
+
+// PASSWORD & USERS
+async function changePassword(){
+  const cur=document.getElementById('cp-current').value;
+  const nw=document.getElementById('cp-new').value;
+  const conf=document.getElementById('cp-confirm').value;
+  const msg=document.getElementById('cp-msg');
+  msg.style.display='none';
+  if(!cur||!nw||!conf){showMsg(msg,'Remplissez tous les champs.','#f87171');return;}
+  if(nw!==conf){showMsg(msg,'Les mots de passe ne correspondent pas.','#f87171');return;}
+  if(nw.length<8){showMsg(msg,'Minimum 8 caractères.','#f87171');return;}
+  try{
+    const res=await fetch(WORKER+'/change-password',{method:'POST',headers:authH(),body:JSON.stringify({current:cur,newPassword:nw})});
+    if(!res.ok){const d=await res.json().catch(()=>({}));showMsg(msg,d.error||'Mot de passe actuel incorrect.','#f87171');return;}
+    SESSION_PWD=nw;sessionStorage.setItem('nm_ap',nw);
+    document.getElementById('cp-current').value='';document.getElementById('cp-new').value='';document.getElementById('cp-confirm').value='';
+    showMsg(msg,'Mot de passe mis à jour avec succès !','#86efac');
+  }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','#f87171');}
+}
+async function addUser(){
+  const user=document.getElementById('au-user').value.trim();
+  const pwd=document.getElementById('au-pwd').value;
+  const isAdmin=document.getElementById('au-admin').checked;
+  const msg=document.getElementById('au-msg');
+  msg.style.display='none';
+  if(!user||!pwd){showMsg(msg,'Nom d\'utilisateur et mot de passe requis.','#f87171');return;}
+  if(pwd.length<8){showMsg(msg,'Minimum 8 caractères.','#f87171');return;}
+  try{
+    const res=await fetch(WORKER+'/add-user',{method:'POST',headers:authH(),body:JSON.stringify({username:user,password:pwd,role:isAdmin?'admin':'user'})});
+    if(!res.ok){const d=await res.json().catch(()=>({}));showMsg(msg,d.error||'Erreur lors de la création.','#f87171');return;}
+    document.getElementById('au-user').value='';document.getElementById('au-pwd').value='';document.getElementById('au-admin').checked=false;
+    showMsg(msg,'Utilisateur "'+user+'" créé.','#86efac');
+  }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','#f87171');}
+}
+function showMsg(el,text,color){el.textContent=text;el.style.color=color;el.style.display='block';setTimeout(()=>{el.style.display='none';},4000);}
+
+// IMAGE DIALOG
+let _focalInited=false,_focalDragging=false;
+function openImgDialog(img){
+  imgCurrentEl=img;
+  imgPendingData=null;
+  imgPendingPos={x:50,y:50};
+  const d=document.getElementById('img-dialog');
+  const preview=document.getElementById('imgd-preview');
+  preview.innerHTML='<span class="imgd-preview-hint">L\'aperçu apparaîtra ici</span>';
+  document.getElementById('imgd-url').value='';
+  // Pre-fill focal wrap with current image
+  const fi=document.getElementById('imgd-focal-img');
+  fi.src=img.src;fi.style.objectPosition='center center';
+  document.getElementById('imgd-zoom').value=100;
+  document.getElementById('imgd-zoom-val').textContent='1×';
+  switchImgTab('replace');
+  d.style.display='flex';
+  ensureFocalInit();
+}
+function closeImgDialog(){
+  document.getElementById('img-dialog').style.display='none';
+  imgCurrentEl=null;imgPendingData=null;
+}
+function switchImgTab(tab){
+  document.getElementById('imgd-tab-replace').classList.toggle('active',tab==='replace');
+  document.getElementById('imgd-tab-position').classList.toggle('active',tab==='position');
+  document.getElementById('imgd-pane-replace').style.display=tab==='replace'?'block':'none';
+  document.getElementById('imgd-pane-position').style.display=tab==='position'?'block':'none';
+  if(tab==='position'&&imgCurrentEl){
+    const fi=document.getElementById('imgd-focal-img');fi.src=imgCurrentEl.src;
+  }
+}
+function imgFileChosen(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    imgPendingData=e.target.result;
+    const preview=document.getElementById('imgd-preview');
+    preview.innerHTML=`<img src="${imgPendingData}" style="max-width:100%;max-height:120px;object-fit:contain;border-radius:4px;">`;
+    document.getElementById('imgd-focal-img').src=imgPendingData;
+  };
+  reader.readAsDataURL(file);
+}
+function imgUrlPreview(url){
+  if(!url.startsWith('http'))return;
+  imgPendingData=url;
+  const preview=document.getElementById('imgd-preview');
+  preview.innerHTML=`<img src="${url}" style="max-width:100%;max-height:120px;object-fit:contain;border-radius:4px;" onerror="this.parentElement.innerHTML='<span class=imgd-preview-hint>Image non chargée</span>'">`;
+  document.getElementById('imgd-focal-img').src=url;
+}
+function applyImgChange(){
+  if(!imgCurrentEl||!imgPendingData)return;
+  imgCurrentEl.src=imgPendingData;
+  const pg=currentPage.replace('.html','').replace(/-/g,'_');
+  const wk='_wysiwyg_'+pg;
+  try{
+    const ex=pendingChanges[wk]?JSON.parse(pendingChanges[wk]):{};
+    const sel=genSel(imgCurrentEl,document.getElementById('page-frame').contentDocument);
+    if(sel)ex['_img_src_'+sel]=imgPendingData;
+    pendingChanges[wk]=JSON.stringify(ex);
+  }catch(e){}
+  updateDirty();closeImgDialog();
+}
+function ensureFocalInit(){
+  if(_focalInited)return;_focalInited=true;
+  const wrap=document.getElementById('imgd-focal-wrap');
+  function setFromEvent(e){
+    const r=wrap.getBoundingClientRect();
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const cy=e.touches?e.touches[0].clientY:e.clientY;
+    imgPendingPos={x:Math.min(100,Math.max(0,Math.round(((cx-r.left)/r.width)*100))),y:Math.min(100,Math.max(0,Math.round(((cy-r.top)/r.height)*100)))};
+    updateFocalDot();
+  }
+  wrap.addEventListener('mousedown',e=>{_focalDragging=true;setFromEvent(e);e.preventDefault();});
+  wrap.addEventListener('mousemove',e=>{if(_focalDragging)setFromEvent(e);});
+  wrap.addEventListener('mouseup',()=>{_focalDragging=false;});
+  wrap.addEventListener('mouseleave',()=>{_focalDragging=false;});
+  wrap.addEventListener('touchstart',e=>{setFromEvent(e);e.preventDefault();},{passive:false});
+  wrap.addEventListener('touchmove',e=>{setFromEvent(e);e.preventDefault();},{passive:false});
+}
+function updateFocalDot(){
+  const dot=document.getElementById('imgd-focal-dot');
+  const img=document.getElementById('imgd-focal-img');
+  dot.style.left=imgPendingPos.x+'%';dot.style.top=imgPendingPos.y+'%';
+  img.style.objectPosition=imgPendingPos.x+'% '+imgPendingPos.y+'%';
+}
+function updateFocalZoom(val){
+  const pct=(val/100).toFixed(2);
+  document.getElementById('imgd-focal-img').style.transform='scale('+pct+')';
+  document.getElementById('imgd-zoom-val').textContent=pct+'×';
+}
+function resetFocalPoint(){imgPendingPos={x:50,y:50};updateFocalDot();document.getElementById('imgd-zoom').value=100;updateFocalZoom(100);}
+function applyImgPosition(){
+  if(!imgCurrentEl)return;
+  imgCurrentEl.style.objectPosition=imgPendingPos.x+'% '+imgPendingPos.y+'%';
+  const pg=currentPage.replace('.html','').replace(/-/g,'_');
+  const wk='_wysiwyg_'+pg;
+  try{const ex=pendingChanges[wk]?JSON.parse(pendingChanges[wk]):{};
+    const sel=genSel(imgCurrentEl,document.getElementById('page-frame').contentDocument);
+    if(sel)ex['_img_pos_'+sel]=imgPendingPos.x+'% '+imgPendingPos.y+'%';
+    pendingChanges[wk]=JSON.stringify(ex);}catch(e){}
+  updateDirty();closeImgDialog();
+}
+function toggleEye(id,btn){const i=document.getElementById(id);if(!i)return;const s=i.type==='password';i.type=s?'text':'password';btn.innerHTML=s?EYE_OFF:EYE_ON;}
+</script>
+</body>
+</html>

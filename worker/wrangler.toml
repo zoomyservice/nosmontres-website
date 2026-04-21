@@ -2,19 +2,18 @@ name = "nosmontres-prices"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
-# ── KV Namespace for lead storage ──────────────────────────────────────────
-# One-time setup (run once from /worker/ folder):
-#   npx wrangler kv:namespace create LEADS
-# Copy the "id" from the output and paste it below, then deploy:
-#   npx wrangler deploy
-
+# ── KV: Lead storage ────────────────────────────────────────────────────────
 [[kv_namespaces]]
 binding = "LEADS"
 id = "37560864eed04f288995ddec3d7c0765"
 
-# ── Admin secret for /leads.csv and /leads.json ──────────────────────────
-# Set this secret via CLI (never commit real values):
-#   npx wrangler secret put ADMIN_KEY
-# Then download leads at:
-#   https://nosmontres-prices.zoozoomfast.workers.dev/leads.csv?key=YOUR_SECRET
-#   https://nosmontres-prices.zoozoomfast.workers.dev/leads.json?key=YOUR_SECRET
+# ── KV: Admin content overrides + user management ───────────────────────────
+[[kv_namespaces]]
+binding = "CONTENT"
+id = "ac2774a4b9b349548bffacbc6cfa74c3"
+
+# ── Secrets (set via CLI, never commit values) ───────────────────────────────
+# npx wrangler secret put ADMIN_KEY       ← for /leads.csv download
+# npx wrangler secret put GEMINI_API_KEY  ← for /chat
+# npx wrangler secret put ADMIN_USERNAME  ← default admin username (default: admin)
+# npx wrangler secret put ADMIN_PASSWORD  ← default admin password
