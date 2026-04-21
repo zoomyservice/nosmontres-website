@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.workers.dev; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; frame-src 'self'; connect-src 'self' https://*.workers.dev;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="no-referrer">
+  <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Nos Montres — Admin</title>
 <meta name="robots" content="noindex,nofollow"/>
@@ -9,7 +13,11 @@
 :root{--dark:#0e0c09;--card:#161410;--border:#2a2520;--gold:#A07936;--gold-lt:#C9A86A;--gold-dim:rgba(160,121,54,0.12);--text:#F2EDE4;--muted:#7a7065;--cream:#FAFAF7;--green:#4ade80;--red:#f87171;--blue:#60a5fa;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:var(--dark);}
+#login-screen{display:none;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:var(--dark);}
+#loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--dark);flex-direction:column;gap:.8rem;}
+#loading-screen .ls-logo{color:var(--gold-lt);font-size:1.1rem;font-weight:700;letter-spacing:.05em;}
+#loading-screen .ls-spin{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 .login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;width:100%;max-width:370px;text-align:center;}
 .login-box h1{font-size:1.3rem;font-weight:700;color:var(--gold-lt);margin-bottom:.3rem;letter-spacing:.03em;}
 .login-box p{color:var(--muted);font-size:.82rem;margin-bottom:2rem;}
@@ -191,8 +199,14 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
 </head>
 <body>
 
+<!-- LOADING SCREEN — shown while auto-login check runs -->
+<div id="loading-screen">
+  <div class="ls-logo">⌚ Nos Montres</div>
+  <div class="ls-spin"></div>
+</div>
+
 <!-- LOGIN SCREEN -->
-<div id="login-screen" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--dark);">
+<div id="login-screen">
   <div class="login-box">
     <div class="login-logo">⌚ Nos Montres Admin</div>
     <p style="font-size:.8rem;color:var(--muted);text-align:center;margin-bottom:1.5rem;letter-spacing:.03em;">Espace administrateur</p>
@@ -302,16 +316,45 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
         <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem;">🎨 Couleurs &amp; Polices</div>
         <div style="font-size:.75rem;color:var(--muted);margin-bottom:1.25rem;">Modifiez les couleurs du site. Les changements s'appliquent instantanément.</div>
         <div id="colors-grid" class="colors-grid"></div>
+
+        <!-- Live color preview -->
+        <div style="margin-top:1.4rem;">
+          <div style="font-size:.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.6rem;">Aperçu en direct</div>
+          <div style="position:relative;border:1px solid var(--border);border-radius:10px;overflow:hidden;height:220px;">
+            <iframe id="color-preview-frame" src="index.html"
+              style="width:200%;height:440px;border:none;transform:scale(0.5);transform-origin:top left;pointer-events:none;"
+              title="Aperçu couleurs"></iframe>
+            <div style="position:absolute;bottom:7px;right:9px;font-size:.62rem;color:var(--muted);">Aperçu — 50%</div>
+          </div>
+          <button onclick="refreshColorPreview()" style="margin-top:.5rem;background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:6px;font-size:.72rem;cursor:pointer;font-family:inherit;">↺ Actualiser l'aperçu</button>
+        </div>
+
+        <!-- Fonts -->
         <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);">
           <div style="font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.75rem;">Polices de caractères</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
-            <div>
-              <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:.3rem;">Police titres</label>
-              <input data-key="nm_font_heading" type="text" class="settings-input" placeholder="ex: Georgia, serif"/>
+            <div class="field">
+              <label>Police des titres</label>
+              <select data-key="nm_font_heading">
+                <option value="'Cormorant Garamond', Georgia, serif">Cormorant Garamond (actuel)</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="'Playfair Display', serif">Playfair Display</option>
+                <option value="'EB Garamond', serif">EB Garamond</option>
+                <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+                <option value="'Montserrat', sans-serif">Montserrat</option>
+                <option value="'Raleway', sans-serif">Raleway</option>
+              </select>
             </div>
-            <div>
-              <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:.3rem;">Police corps</label>
-              <input data-key="nm_font_body" type="text" class="settings-input" placeholder="ex: system-ui, sans-serif"/>
+            <div class="field">
+              <label>Corps de texte</label>
+              <select data-key="nm_font_body">
+                <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">Système (actuel)</option>
+                <option value="'Inter', system-ui, sans-serif">Inter</option>
+                <option value="'DM Sans', system-ui, sans-serif">DM Sans</option>
+                <option value="'Open Sans', sans-serif">Open Sans</option>
+                <option value="'Lato', sans-serif">Lato</option>
+                <option value="'Source Sans 3', sans-serif">Source Sans 3</option>
+              </select>
             </div>
           </div>
         </div>
@@ -542,12 +585,29 @@ document.getElementById('user-input').addEventListener('keydown',e=>{if(e.key===
 document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 (async function tryAutoLogin(){
   const u=sessionStorage.getItem('nm_au'),p=sessionStorage.getItem('nm_ap');
-  if(!u||!p)return;
+  if(!u||!p){
+    // No saved session — show login screen
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('login-screen').style.display='flex';
+    return;
+  }
+  // Has saved session — verify quietly then skip login
   try{
     const res=await fetch(WORKER+'/me',{method:'POST',headers:authHL(u,p),body:'{}'});
-    if(!res.ok){sessionStorage.removeItem('nm_au');sessionStorage.removeItem('nm_ap');return;}
-    const me=await res.json();SESSION_USER=u;SESSION_PWD=p;SESSION_ROLE=me.role;await afterLogin();
-  }catch(e){}
+    if(!res.ok){
+      sessionStorage.removeItem('nm_au');sessionStorage.removeItem('nm_ap');sessionStorage.removeItem('nm_ar');
+      document.getElementById('loading-screen').style.display='none';
+      document.getElementById('login-screen').style.display='flex';
+      return;
+    }
+    const me=await res.json();SESSION_USER=u;SESSION_PWD=p;SESSION_ROLE=me.role;
+    document.getElementById('loading-screen').style.display='none';
+    await afterLogin();
+  }catch(e){
+    // Network error — still show login (don't clear session, might be offline)
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('login-screen').style.display='flex';
+  }
 })();
 
 // LOAD KV CONTENT
@@ -595,6 +655,8 @@ function openSettings(name,btn){
   const panel=document.getElementById('panel-'+name);if(panel)panel.classList.add('active');
   document.getElementById('top-bar-context').textContent=btn.textContent.trim();
   sessionStorage.setItem('nm_last_view',JSON.stringify({type:'settings',name}));
+  // Reload color preview iframe whenever colors panel opens
+  if(name==='colors')setTimeout(()=>refreshColorPreview(),100);
 }
 function loadPage(page){
   currentPage=page;closeEditPopover();
@@ -966,6 +1028,12 @@ function buildColors(){
     grid.appendChild(row);
   });
 }
+// CSS var map: KV key → CSS variable name on the site
+const COLOR_VAR_MAP={
+  nm_css_gold:'--gold',nm_css_gold_lt:'--gold-lt',
+  nm_css_charcoal:'--dark',nm_css_cream:'--cream',
+  nm_css_ivory:'--card',nm_css_mid:'--muted'
+};
 function previewColor(key,val){
   // Update hex text input
   const grid=document.getElementById('colors-grid');
@@ -977,6 +1045,26 @@ function previewColor(key,val){
     rows[i].querySelector('div div:last-child').textContent=val;
   });
   pendingChanges[key]=val;updateDirty();
+  // Push live to preview iframe
+  const cssVar=COLOR_VAR_MAP[key];
+  if(cssVar)pushColorToPreview(cssVar,val);
+}
+function pushColorToPreview(cssVar,val){
+  const f=document.getElementById('color-preview-frame');
+  if(!f)return;
+  try{
+    if(!f.contentDocument||!f.contentDocument.head)return;
+    let st=f.contentDocument.getElementById('nm-color-preview');
+    if(!st){st=f.contentDocument.createElement('style');st.id='nm-color-preview';f.contentDocument.head.appendChild(st);}
+    const all=Object.entries(COLOR_VAR_MAP)
+      .filter(([k])=>pendingChanges[k])
+      .map(([k,v])=>v+':'+pendingChanges[k]+';').join('');
+    st.textContent=':root{'+all+'}';
+  }catch(e){}
+}
+function refreshColorPreview(){
+  const f=document.getElementById('color-preview-frame');
+  if(f){f.src='';setTimeout(()=>{f.src='index.html';},50);}
 }
 function syncColorHex(key,hexEl){
   const val=hexEl.value.trim();

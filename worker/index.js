@@ -9,6 +9,7 @@
  *   POST /chat             → Gemini AI chatbot endpoint
  */
 
+// Public endpoints (prices, chat, models) — open CORS
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -16,6 +17,37 @@ const CORS = {
   'Access-Control-Expose-Headers': 'Content-Type',
   'Content-Type': 'application/json',
 };
+// Admin endpoints — restricted CORS: only nosmontres.com and localhost
+const CORS_ADMIN = (origin) => {
+  const allowed = origin && (origin.includes('nosmontres') || origin.includes('localhost') || origin.includes('127.0.0.1') || origin === '');
+  return {
+    'Access-Control-Allow-Origin': allowed ? (origin || '*') : 'https://www.nosmontres.com',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Admin-User, X-Admin-Password, X-Session-ID',
+    'Content-Type': 'application/json',
+  };
+};
+
+/* ─── Brute Force Protection ────────────────────────────────────────────────── */
+// Max 5 failed login attempts per IP per 15 minutes. Stored in LEADS KV.
+async function checkLoginRateLimit(ip, env) {
+  if (!env.LEADS || !ip || ip === 'unknown') return { ok: true };
+  try {
+    const key = 'bf:' + ip + ':' + Math.floor(Date.now() / 900000); // 15-min window
+    const raw = await env.LEADS.get(key);
+    const count = parseInt(raw || '0');
+    if (count >= 5) return { ok: false, retryAfter: 15 };
+    await env.LEADS.put(key, String(count + 1), { expirationTtl: 1800 });
+    return { ok: true };
+  } catch { return { ok: true }; }
+}
+async function clearLoginRateLimit(ip, env) {
+  if (!env.LEADS || !ip) return;
+  try {
+    const key = 'bf:' + ip + ':' + Math.floor(Date.now() / 900000);
+    await env.LEADS.delete(key);
+  } catch {}
+}
 
 /* ─── Gemini AI System Prompt ──────────────────────────────────────────────── */
 const SYSTEM_PROMPT = `Tu es l'assistant expert horloger de Nos Montres, une boutique parisienne spécialisée dans l'achat et la vente de montres de luxe de seconde main, fondée par un passionné fort de plus de 15 ans d'expertise horlogère.
@@ -360,7 +392,7 @@ async function authenticateAdmin(req, env) {
   let users = await getUsers(env);
   if (Object.keys(users).length === 0) {
     const defUser = env.ADMIN_USERNAME || 'admin';
-    const defPass = env.ADMIN_PASSWORD || 'NosMontes2026!';
+    const defPass = env.ADMIN_PASSWORD || 'NosMontres2026!';
     if (user === defUser && await safeEqual(pass, defPass)) return { role: 'admin' };
     return null;
   }
@@ -649,9 +681,19 @@ export default {
 
     // ── POST /me — verify credentials ────────────────────────────────────────
     if (request.method === 'POST' && url.pathname === '/me') {
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      const origin = request.headers.get('Origin') || '';
+      const adminCors = CORS_ADMIN(origin);
+      // Brute force check before even attempting auth
+      const rl = await checkLoginRateLimit(ip, env);
+      if (!rl.ok) return Response.json(
+        { error: 'Too many attempts. Try again in 15 minutes.' },
+        { status: 429, headers: { ...adminCors, 'Retry-After': '900' } }
+      );
       const auth = await authenticateAdmin(request, env);
-      if (!auth) return Response.json({ error: 'Invalid credentials' }, { status: 401, headers: CORS });
-      return Response.json({ role: auth.role }, { headers: CORS });
+      if (!auth) return Response.json({ error: 'Invalid credentials' }, { status: 401, headers: adminCors });
+      await clearLoginRateLimit(ip, env); // clear counter on success
+      return Response.json({ role: auth.role }, { headers: adminCors });
     }
 
     // ── GET /content — return all KV content overrides ───────────────────────
@@ -664,8 +706,10 @@ export default {
 
     // ── POST /content — save content overrides (auth required) ───────────────
     if (request.method === 'POST' && url.pathname === '/content') {
+      const origin = request.headers.get('Origin') || '';
+      const adminCors = CORS_ADMIN(origin);
       const auth = await authenticateAdmin(request, env);
-      if (!auth) return Response.json({ error: 'Unauthorized' }, { status: 401, headers: CORS });
+      if (!auth) return Response.json({ error: 'Unauthorized' }, { status: 401, headers: adminCors });
       try {
         const body = await request.json();
         const existing = (await env.CONTENT.get('nm_site_content', { type: 'json' })) || {};
@@ -677,37 +721,43 @@ export default {
 
     // ── POST /change-password ─────────────────────────────────────────────────
     if (request.method === 'POST' && url.pathname === '/change-password') {
+      const origin = request.headers.get('Origin') || '';
+      const adminCors = CORS_ADMIN(origin);
       const auth = await authenticateAdmin(request, env);
-      if (!auth) return Response.json({ error: 'Unauthorized' }, { status: 401, headers: CORS });
+      if (!auth) return Response.json({ error: 'Unauthorized' }, { status: 401, headers: adminCors });
       try {
         const { newPassword } = await request.json();
         const user = request.headers.get('X-Admin-User') || '';
-        if (!newPassword || newPassword.length < 8) return Response.json({ error: 'Password too short' }, { status: 400, headers: CORS });
+        if (!newPassword || newPassword.length < 8) return Response.json({ error: 'Password too short' }, { status: 400, headers: adminCors });
         let users = await getUsers(env);
         if (Object.keys(users).length === 0) {
           users[user] = { password: newPassword, role: 'admin' };
         } else {
-          if (!users[user]) return Response.json({ error: 'User not found' }, { status: 404, headers: CORS });
+          if (!users[user]) return Response.json({ error: 'User not found' }, { status: 404, headers: adminCors });
           users[user].password = newPassword;
         }
         await saveUsers(env, users);
-        return Response.json({ ok: true }, { headers: CORS });
-      } catch (e) { return Response.json({ error: e.message }, { status: 400, headers: CORS }); }
+        return Response.json({ ok: true }, { headers: adminCors });
+      } catch (e) { return Response.json({ error: e.message }, { status: 400, headers: adminCors }); }
     }
 
     // ── POST /add-user ────────────────────────────────────────────────────────
     if (request.method === 'POST' && url.pathname === '/add-user') {
+      const origin = request.headers.get('Origin') || '';
+      const adminCors = CORS_ADMIN(origin);
       const auth = await authenticateAdmin(request, env);
-      if (!auth || auth.role !== 'admin') return Response.json({ error: 'Admin required' }, { status: 403, headers: CORS });
+      if (!auth || auth.role !== 'admin') return Response.json({ error: 'Admin required' }, { status: 403, headers: adminCors });
       try {
         const { username, password, role } = await request.json();
-        if (!username || !password || password.length < 8) return Response.json({ error: 'Invalid data' }, { status: 400, headers: CORS });
+        if (!username || !password || password.length < 8) return Response.json({ error: 'Invalid data' }, { status: 400, headers: adminCors });
+        // Sanitize username — alphanumeric + underscore only, max 32 chars
+        if (!/^[a-zA-Z0-9_]{1,32}$/.test(username)) return Response.json({ error: 'Invalid username format' }, { status: 400, headers: adminCors });
         const users = await getUsers(env);
-        if (users[username]) return Response.json({ error: 'Username already exists' }, { status: 409, headers: CORS });
+        if (users[username]) return Response.json({ error: 'Username already exists' }, { status: 409, headers: adminCors });
         users[username] = { password, role: role || 'user' };
         await saveUsers(env, users);
-        return Response.json({ ok: true }, { headers: CORS });
-      } catch (e) { return Response.json({ error: e.message }, { status: 400, headers: CORS }); }
+        return Response.json({ ok: true }, { headers: adminCors });
+      } catch (e) { return Response.json({ error: e.message }, { status: 400, headers: adminCors }); }
     }
 
     const query = (url.searchParams.get('q') || '').trim();

@@ -1,0 +1,13 @@
+Total models to process: 200
+Started: 2026-04-08T06:21:51.659557
+Priming browser with initial chrono24 visit...
+Prime page title: Just a moment...
+[1/200] ERROR: /rolex/gmt-master-ii--mod4.htm — Page.goto: Timeout 25000ms exceeded.
+Call log:
+  - navigating to "https://www.ch
+[2/200] ERROR: /rolex/daytona--mod2.htm — Page.goto: NS_ERROR_ABORT
+Call log:
+  - navigating to "https://www.chrono24.com/
+[3/200] BLOCKED: /rolex/submariner--mod1.htm (title: Just a moment...)
+[4/200] BLOCKED: /rolex/datejust--mod45.htm (title: Just a moment...)
+[5/200] BLOCKED: /rolex/day-date--mod47.htm (title: Just a moment...)
