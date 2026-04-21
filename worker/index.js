@@ -36,7 +36,7 @@ async function checkLoginRateLimit(ip, env) {
     const key = 'bf:' + ip + ':' + Math.floor(Date.now() / 900000); // 15-min window
     const raw = await env.LEADS.get(key);
     const count = parseInt(raw || '0');
-    if (count >= 5) return { ok: false, retryAfter: 15 };
+    if (count >= 30) return { ok: false, retryAfter: 15 };
     await env.LEADS.put(key, String(count + 1), { expirationTtl: 1800 });
     return { ok: true };
   } catch { return { ok: true }; }
