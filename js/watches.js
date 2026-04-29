@@ -342,7 +342,7 @@ const NM = {
     const yearLabel = lang === 'fr' ? "Année" : "Year";
     const discoverLabel = lang === 'fr' ? "Découvrir" : "Discover";
     return `
-      <a class="watch-card" href="${NM.rootPath || ''}shop/${(w.dynamic || String(w.id).startsWith('new_')) ? 'watch.html?id=' + w.id : w.id + '.html'}">
+      <a class="watch-card" href="${NM.rootPath || ''}shop/watch.html?id=${w.id}">
         <div class="watch-card__img-wrap">
           <img src="${this.imgUrl(w.img)}" alt="${name}" loading="lazy">
         </div>
