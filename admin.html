@@ -175,7 +175,7 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
 .watch-card-img{position:relative;cursor:pointer;}
 .watch-img-overlay{position:absolute;inset:0;background:rgba(0,0,0,.52);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .18s;font-size:.78rem;color:#fff;font-weight:700;letter-spacing:.5px;gap:5px;pointer-events:none;}
 .watch-card-img:hover .watch-img-overlay{opacity:1;}
-#watch-drawer{display:none;position:fixed;bottom:0;left:210px;right:0;background:var(--card);border-top:2px solid var(--gold);padding:1.1rem 2rem 1.2rem;z-index:2000;box-shadow:0 -6px 28px rgba(0,0,0,.5);}
+#watch-drawer{display:none;position:fixed;bottom:0;left:210px;right:0;background:var(--card);border-top:2px solid var(--gold);padding:1.1rem 2rem 1.2rem;z-index:2000;box-shadow:0 -6px 28px rgba(0,0,0,.5);max-height:55vh;overflow-y:auto;}
 #watch-drawer .wd-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:.7rem;margin-bottom:.5rem;}
 #watch-drawer .wf label{font-size:.63rem;color:var(--muted);display:block;margin-bottom:.15rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
 #watch-drawer input[type=text],#watch-drawer input[type=number],#watch-drawer select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:6px 9px;font-size:.82rem;font-family:inherit;box-sizing:border-box;}
@@ -920,6 +920,15 @@ function openWatchDrawer(i){
   document.getElementById('wd-brand').value=w.brand||'Rolex';
   document.getElementById('wd-papers').checked=!!w.papers;
   document.getElementById('wd-box').checked=!!w.box;
+  // Spec fields
+  const specKeys=['mouvement','calibre','reserve_marche','frequence','nb_rubis',
+    'mat_boitier','diam_boitier','epaisseur','entraxe','verre','etancheite',
+    'couleur_cadran','indices','mat_lunette','couleur_lunette',
+    'mat_bracelet','couleur_bracelet','fermoir','serie','genre'];
+  specKeys.forEach(k=>{
+    const el=document.getElementById('wd-'+k);
+    if(el) el.value=w[k]||'';
+  });
   document.getElementById('watch-drawer').style.display='block';
   document.querySelectorAll('.watch-card').forEach(c=>c.style.outline='');
   const card=document.getElementById('wc_'+i);
@@ -1301,6 +1310,31 @@ function toggleEye(id,btn){const i=document.getElementById(id);if(!i)return;cons
       <label><input type="checkbox" id="wd-box" onchange="wdUpdate('box',this.checked)"> Boîte</label>
     </div>
     <div></div>
+  </div>
+  <div style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;">
+    <div style="font-size:.6rem;font-weight:700;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.5rem;">Specs techniques</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem;">
+      <div class="wf"><label>Mouvement</label><input type="text" id="wd-mouvement" placeholder="ex: Automatique" oninput="wdUpdate('mouvement',this.value)"></div>
+      <div class="wf"><label>Calibre</label><input type="text" id="wd-calibre" placeholder="ex: 3235" oninput="wdUpdate('calibre',this.value)"></div>
+      <div class="wf"><label>Réserve de marche</label><input type="text" id="wd-reserve_marche" placeholder="ex: 70h" oninput="wdUpdate('reserve_marche',this.value)"></div>
+      <div class="wf"><label>Fréquence</label><input type="text" id="wd-frequence" placeholder="ex: 28 800 vph" oninput="wdUpdate('frequence',this.value)"></div>
+      <div class="wf"><label>Nombre de rubis</label><input type="text" id="wd-nb_rubis" placeholder="ex: 31" oninput="wdUpdate('nb_rubis',this.value)"></div>
+      <div class="wf"><label>Mat. boîtier</label><input type="text" id="wd-mat_boitier" placeholder="ex: Acier Oystersteel" oninput="wdUpdate('mat_boitier',this.value)"></div>
+      <div class="wf"><label>Diamètre (mm)</label><input type="text" id="wd-diam_boitier" placeholder="ex: 41 mm" oninput="wdUpdate('diam_boitier',this.value)"></div>
+      <div class="wf"><label>Épaisseur (mm)</label><input type="text" id="wd-epaisseur" placeholder="ex: 12 mm" oninput="wdUpdate('epaisseur',this.value)"></div>
+      <div class="wf"><label>Entraxe (mm)</label><input type="text" id="wd-entraxe" placeholder="ex: 20 mm" oninput="wdUpdate('entraxe',this.value)"></div>
+      <div class="wf"><label>Verre</label><input type="text" id="wd-verre" placeholder="ex: Saphir" oninput="wdUpdate('verre',this.value)"></div>
+      <div class="wf"><label>Étanchéité</label><input type="text" id="wd-etancheite" placeholder="ex: 300 m" oninput="wdUpdate('etancheite',this.value)"></div>
+      <div class="wf"><label>Couleur cadran</label><input type="text" id="wd-couleur_cadran" placeholder="ex: Noir" oninput="wdUpdate('couleur_cadran',this.value)"></div>
+      <div class="wf"><label>Indices</label><input type="text" id="wd-indices" placeholder="ex: Bâtons" oninput="wdUpdate('indices',this.value)"></div>
+      <div class="wf"><label>Mat. lunette</label><input type="text" id="wd-mat_lunette" placeholder="ex: Céramique" oninput="wdUpdate('mat_lunette',this.value)"></div>
+      <div class="wf"><label>Couleur lunette</label><input type="text" id="wd-couleur_lunette" placeholder="ex: Noir" oninput="wdUpdate('couleur_lunette',this.value)"></div>
+      <div class="wf"><label>Mat. bracelet</label><input type="text" id="wd-mat_bracelet" placeholder="ex: Acier Oyster" oninput="wdUpdate('mat_bracelet',this.value)"></div>
+      <div class="wf"><label>Couleur bracelet</label><input type="text" id="wd-couleur_bracelet" placeholder="ex: Argent" oninput="wdUpdate('couleur_bracelet',this.value)"></div>
+      <div class="wf"><label>Fermoir</label><input type="text" id="wd-fermoir" placeholder="ex: Oysterlock" oninput="wdUpdate('fermoir',this.value)"></div>
+      <div class="wf"><label>Série</label><input type="text" id="wd-serie" placeholder="ex: Submariner" oninput="wdUpdate('serie',this.value)"></div>
+      <div class="wf"><label>Genre</label><input type="text" id="wd-genre" placeholder="ex: Homme" oninput="wdUpdate('genre',this.value)"></div>
+    </div>
   </div>
 </div>
 </body>

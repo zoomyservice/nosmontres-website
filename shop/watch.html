@@ -114,12 +114,38 @@
       document.getElementById('wd-img-placeholder').style.display = 'none';
     }
 
+    function sr(labelFr, labelEn, val) {
+      const v = (val !== undefined && val !== null && val !== '') ? val : '—';
+      return '<div class="watch-spec">'
+        + '<span class="watch-spec__label fr">' + labelFr + '</span>'
+        + '<span class="watch-spec__label en">' + labelEn + '</span>'
+        + '<span class="watch-spec__value">' + v + '</span>'
+        + '</div>';
+    }
+
     let specs = '';
-    if (w.brand) specs += specRow('Marque','Brand', w.brand, w.brand);
-    if (w.ref)   specs += specRow('Référence','Reference', w.ref, w.ref);
-    if (w.year)  specs += specRow('Année','Year', w.year, w.year);
-    specs += specRow('Papiers d\'origine','Original papers', w.papers ? 'Oui' : 'Non', w.papers ? 'Yes' : 'No');
-    specs += specRow('Boite d\'origine','Original box', w.box ? 'Oui' : 'Non', w.box ? 'Yes' : 'No');
+    if (w.brand) specs += sr('Marque', 'Brand', w.brand);
+    if (w.ref)   specs += sr('Référence', 'Reference', w.ref);
+    specs += sr('Série',                  'Series',           w.serie);
+    specs += sr('Genre',                  'Gender',           w.genre);
+    specs += sr('Mouvement',              'Movement',         w.mouvement);
+    specs += sr('Calibre',                'Caliber',          w.calibre);
+    specs += sr('Réserve de marche',      'Power reserve',    w.reserve_marche);
+    specs += sr('Fréquence',              'Frequency',        w.frequence);
+    specs += sr('Nombre de rubis',        'Jewels',           w.nb_rubis);
+    specs += sr('Matériau du boîtier',    'Case material',    w.mat_boitier);
+    specs += sr('Diamètre du boîtier',    'Case diameter',    w.diam_boitier);
+    specs += sr('Épaisseur',              'Case thickness',   w.epaisseur);
+    specs += sr('Entraxe',                'Lug width',        w.entraxe);
+    specs += sr('Verre',                  'Crystal',          w.verre);
+    specs += sr('Étanchéité',             'Water resistance', w.etancheite);
+    specs += sr('Couleur du cadran',      'Dial color',       w.couleur_cadran);
+    specs += sr('Indices',                'Dial indexes',     w.indices);
+    specs += sr('Matériau de la lunette', 'Bezel material',   w.mat_lunette);
+    specs += sr('Couleur de la lunette',  'Bezel color',      w.couleur_lunette);
+    specs += sr('Matériau du bracelet',   'Bracelet material',w.mat_bracelet);
+    specs += sr('Couleur du bracelet',    'Bracelet color',   w.couleur_bracelet);
+    specs += sr('Type de fermoir',        'Clasp type',       w.fermoir);
     document.getElementById('wd-specs').innerHTML = specs;
 
     document.getElementById('watch-detail-wrap').style.opacity = '1';
