@@ -370,7 +370,38 @@ const NM = {
     if (!container) return;
     const watches = filter ? WATCHES.filter(w => w.brand === filter) : WATCHES;
     container.innerHTML = watches.map(w => this.watchCard(w, this.lang)).join('');
+    this.initZoom();
+  },
+
+  // ── In-box magnifier (scale 2.4× at cursor position) ──────────────────────
+  initZoom() {
+    function attachZoom(wrap, img) {
+      if (!img || wrap._zmInit) return;
+      wrap._zmInit = true;
+      wrap.style.cursor = 'zoom-in';
+      wrap.addEventListener('mousemove', function(e) {
+        var r = wrap.getBoundingClientRect();
+        var px = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
+        var py = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
+        img.style.transformOrigin = px + '% ' + py + '%';
+        img.style.transform = 'scale(2.4)';
+        img.style.transition = 'transform 0.08s ease';
+      });
+      wrap.addEventListener('mouseleave', function() {
+        img.style.transform = '';
+        img.style.transformOrigin = '';
+        img.style.transition = 'transform 0.3s ease';
+      });
+    }
+    // Watch grid cards
+    document.querySelectorAll('.watch-card__img-wrap').forEach(function(wrap) {
+      attachZoom(wrap, wrap.querySelector('img'));
+    });
+    // Watch detail gallery (single image or first in gallery)
+    document.querySelectorAll('.watch-detail__gallery').forEach(function(gallery) {
+      attachZoom(gallery, gallery.querySelector('img'));
+    });
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => NM.init());
+document.addEventListener('DOMContentLoaded', () => { NM.init(); NM.initZoom(); });

@@ -4,3 +4,21 @@ Phase 2 — Prices updated: 0 / 200
   Skipped (no pills): 21
   Blocked (captcha):  179
   KV errors:          0
+
+Nosmontres price refresh — 2026-04-27 $(date +%H:%M)
+Phase 1 — Models discovered: 0 total (rolex=BLOCKED, audemarspiguet=BLOCKED, patekphilippe=BLOCKED, richardmille=BLOCKED, cartier=BLOCKED)
+  All 5 brand index pages blocked by Cloudflare bot challenge ("Just a moment...").
+  Challenge did not resolve after multiple attempts (60+ seconds, multiple reloads).
+Phase 2 — Prices updated: 0 / 0 models
+  Skipped (no pills): 0
+  Blocked (captcha):  5 brands (all)
+  KV errors:          0
+
+Nosmontres price refresh — 2026-04-27 10:07
+Phase 1 — Models discovered: 0 total (rolex=BLOCKED, audemarspiguet=BLOCKED, patekphilippe=BLOCKED, richardmille=BLOCKED, cartier=BLOCKED)
+  All 5 brand index pages blocked by Cloudflare bot challenge ("Just a moment...").
+  Challenge did not resolve after multiple attempts (60+ seconds, multiple reloads).
+Phase 2 — Prices updated: 0 / 0 models
+  Skipped (no pills): 0
+  Blocked (captcha):  5 brands (all)
+  KV errors:          0

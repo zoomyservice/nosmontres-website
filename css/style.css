@@ -630,21 +630,48 @@ html[data-lang="en"] .fr { display: none !important; }
 .watch-detail__ref {
   font-size: 0.8rem; color: var(--mid); letter-spacing: 0.08em; margin-bottom: 36px; display: block;
 }
-.watch-detail__price {
-  font-family: 'Cormorant Garamond', serif; font-weight: 500;
-  font-size: 2.2rem; color: var(--charcoal); margin-bottom: 40px;
-}
+/* .watch-detail__price is defined below in the specs block */
 .watch-specs { border-top: 1px solid var(--border); margin-bottom: 40px; }
 .watch-spec {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 16px 0; border-bottom: 1px solid var(--border);
+  padding: 13px 12px; border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
 }
+.watch-spec:nth-child(even) { background: rgba(0,0,0,0.025); }
+.watch-spec:hover { background: rgba(180,148,90,0.07); }
 .watch-spec__label {
-  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+  font-size: 0.70rem; font-weight: 500; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--mid);
 }
 .watch-spec__value {
-  font-size: 0.88rem; color: var(--charcoal);
+  font-size: 0.875rem; color: var(--charcoal); font-weight: 500;
+  text-align: right; max-width: 60%;
+}
+/* Condition badge — shown as a coloured pill inside .watch-spec__value */
+.spec-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 0.70rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.spec-badge--new    { background: #e8f5e9; color: #2e7d32; }
+.spec-badge--excellent { background: #e3f2fd; color: #1565c0; }
+.spec-badge--good   { background: #fff8e1; color: #f57f17; }
+.spec-badge--fair   { background: #fce4ec; color: #b71c1c; }
+/* Breadcrumb above detail page */
+.watch-breadcrumb {
+  font-size: 0.70rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+}
+.watch-breadcrumb a { color: var(--mid); text-decoration: none; }
+.watch-breadcrumb a:hover { color: var(--gold); }
+.watch-breadcrumb__sep { opacity: 0.4; }
+/* Price block */
+.watch-detail__price {
+  font-family: 'Cormorant Garamond', serif; font-weight: 500;
+  font-size: 2.4rem; color: var(--charcoal); margin-bottom: 8px; line-height: 1;
+}
+.watch-detail__price-note {
+  font-size: 0.72rem; color: var(--mid); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 36px; display: block;
 }
 .watch-detail__note {
   font-style: italic; color: var(--gold); font-size: 0.88rem; margin-bottom: 36px;

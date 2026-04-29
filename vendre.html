@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vendre ma montre — Estimation gratuite Rolex, AP, Patek | Nos Montres</title>
+<link href="favicon.png" rel="icon" type="image/png" sizes="64x64"/>
   <meta name="description" content="Vendez votre montre de luxe à Paris. Estimation gratuite en ligne pour Rolex, Audemars Piguet, Patek Philippe, Richard Mille, Cartier. Paiement immédiat. Boutique Paris 8ème.">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -669,7 +670,53 @@
 }
 .btn-cta-white:hover { background: #f5f0e8; }
 
-/* ─── Model search ─────────────────────────────────────────────────────────── */
+/* ─── Model & year dropdowns ─────────────────────────────────────────────── */
+.model-dropdown-wrap,
+.year-dropdown-wrap {
+  max-width: 420px;
+  margin: 0 auto 28px;
+}
+.model-select {
+  width: 100%;
+  border: 1px solid #d8d3cb;
+  padding: 13px 18px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 16px center;
+  -webkit-appearance: none; appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+.model-select:focus { border-color: var(--gold, #c9a96e); }
+
+/* ─── Photo upload ─────────────────────────────────────────────────────────── */
+.upload-zone {
+  border: 1.5px dashed #d8d3cb;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: #faf9f7;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: #888;
+  font-size: 0.85rem;
+}
+.upload-zone:hover { border-color: var(--gold, #c9a96e); background: #f5f0e8; }
+.upload-zone svg { opacity: 0.5; }
+.upload-zone small { font-size: 0.75rem; color: #bbb; }
+.upload-previews {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
+}
+.upload-thumb {
+  width: 72px; height: 72px; object-fit: cover;
+  border: 1px solid #d8d3cb;
+}
+
+/* ─── Model search (legacy, kept for reference) ──────────────────────────── */
 .model-search-wrap {
   max-width: 420px;
   margin: 0 auto 28px;
@@ -866,18 +913,11 @@
     <button class="wiz-back" onclick="goStep(1)">
       ← <span class="fr">Changer de marque</span><span class="en">Change brand</span>
     </button>
-    <div class="model-search-wrap">
-      <input type="text" id="modelSearch" class="model-search-input"
-             placeholder="Rechercher un modèle… / Search model…"
-             oninput="filterModels(this.value)" autocomplete="off">
-      <span class="model-search-icon">&#9906;</span>
+    <div class="model-dropdown-wrap">
+      <select id="modelSelect" class="model-select" onchange="selectModelFromDrop(this.value)">
+        <option value="" class="fr" disabled selected>— Choisir un modèle / Choose a model —</option>
+      </select>
     </div>
-    <div class="model-count" id="modelCount"></div>
-    <div class="model-grid" id="modelGrid"></div>
-    <p class="model-none" id="modelNone">
-      <span class="fr">Aucun modèle trouvé</span>
-      <span class="en">No models found</span>
-    </p>
     <button class="btn-wiz-next" id="btnNext2" disabled onclick="goStep(3)">
       <span class="fr">Continuer</span><span class="en">Continue</span> →
     </button>
@@ -986,12 +1026,10 @@
       <div class="cond-question">
         <span class="cond-q-label fr">De quelle année est votre montre ?</span>
         <span class="cond-q-label en">What year is your watch?</span>
-        <div class="cond-options cond-options--year" id="qYear">
-          <button class="cond-btn cond-btn--year" onclick="pickCondition(this,'year','2024+')">2024+</button>
-          <button class="cond-btn cond-btn--year" onclick="pickCondition(this,'year','2021-2023')">2021–2023</button>
-          <button class="cond-btn cond-btn--year" onclick="pickCondition(this,'year','2016-2020')">2016–2020</button>
-          <button class="cond-btn cond-btn--year" onclick="pickCondition(this,'year','2001-2015')">2001–2015</button>
-          <button class="cond-btn cond-btn--year" onclick="pickCondition(this,'year','<2000')">&lt;2000</button>
+        <div class="year-dropdown-wrap" id="qYear">
+          <select id="yearSelect" class="model-select" onchange="pickYearFromDrop(this.value)">
+            <option value="" disabled selected class="fr">— Année / Year —</option>
+          </select>
         </div>
       </div>
 
@@ -1037,6 +1075,20 @@
         <label class="fr">Email *</label>
         <label class="en">Email *</label>
         <input type="email" id="fEmail" placeholder="vous@exemple.com" required>
+      </div>
+
+      <div class="f-group f-full">
+        <label class="fr">Photos de votre montre (facultatif)</label>
+        <label class="en">Photos of your watch (optional)</label>
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fPhotos').click()">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span class="fr">Cliquer pour ajouter des photos</span>
+          <span class="en">Click to add photos</span>
+          <small class="fr">JPG, PNG — max 5 photos</small>
+          <small class="en">JPG, PNG — max 5 photos</small>
+        </div>
+        <input type="file" id="fPhotos" accept="image/*" multiple style="display:none" onchange="handlePhotoUpload(this)">
+        <div class="upload-previews" id="uploadPreviews"></div>
       </div>
 
       <button class="btn-wiz-submit" id="btnSubmit" onclick="submitForm()">
@@ -1303,41 +1355,23 @@ function selectBrand(brand) {
   buildModelGrid(brand);
 }
 
-/* ── Model grid ── */
+/* ── Model dropdown ── */
 function buildModelGrid(brand) {
-  const grid = document.getElementById('modelGrid');
-  const countEl = document.getElementById('modelCount');
-  grid.innerHTML = '';
-  state.allPills = [];
+  const sel = document.getElementById('modelSelect');
+  sel.innerHTML = '<option value="" disabled selected>— Choisir un modèle / Choose a model —</option>';
+  state.model = null;
+  document.getElementById('btnNext2').disabled = true;
 
   const models = getModelsForBrand(brand);
-
-  // Add all brand models
   models.forEach(m => {
-    const btn = document.createElement('button');
-    btn.className = 'model-pill';
-    btn.textContent = m;
-    btn.dataset.name = m.toLowerCase();
-    btn.onclick = () => selectModel(m, btn);
-    grid.appendChild(btn);
-    state.allPills.push(btn);
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = m;
+    sel.appendChild(opt);
   });
-
-  // Always add "Autre / Other" at the end
-  const other = document.createElement('button');
-  other.className = 'model-pill';
-  other.textContent = 'Autre / Other';
-  other.dataset.name = 'autre other';
-  other.dataset.always = 'true';
-  other.onclick = () => selectModel('Autre / Other', other);
-  grid.appendChild(other);
-  state.allPills.push(other);
-
-  // Update count
-  if (countEl) {
-    const n = models.length;
-    countEl.textContent = n + ' modèle' + (n > 1 ? 's' : '') + ' · ' + n + ' model' + (n > 1 ? 's' : '');
-  }
+  // Other option
+  const other = document.createElement('option');
+  other.value = 'Autre / Other'; other.textContent = 'Autre / Other';
+  sel.appendChild(other);
 
   // Update heading
   const h2fr = document.getElementById('step2Title');
@@ -1346,29 +1380,35 @@ function buildModelGrid(brand) {
   if (h2en) h2en.textContent = 'Select your model — ' + brand;
 }
 
-/* ── Model search / filter ── */
-function filterModels(query) {
-  const q = query.toLowerCase().trim();
-  const noneEl = document.getElementById('modelNone');
-  let visible = 0;
-
-  state.allPills.forEach(btn => {
-    const isOther = btn.dataset.always === 'true';
-    const matches = isOther || !q || btn.dataset.name.includes(q);
-    btn.style.display = matches ? '' : 'none';
-    if (matches && !isOther) visible++;
-  });
-
-  // Show "no results" message if nothing matches (excluding Other)
-  if (noneEl) noneEl.style.display = (visible === 0 && q) ? 'block' : 'none';
+/* ── Model select from dropdown ── */
+function selectModelFromDrop(value) {
+  state.model = value;
+  document.getElementById('btnNext2').disabled = !value;
 }
 
-/* ── Model selection ── */
-function selectModel(model, btn) {
-  state.model = model;
-  document.querySelectorAll('.model-pill').forEach(p => p.classList.remove('selected'));
-  btn.classList.add('selected');
-  document.getElementById('btnNext2').disabled = false;
+/* ── Year dropdown — build on page load ── */
+(function buildYearDropdown() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const sel = document.getElementById('yearSelect');
+    if (!sel) return;
+    const current = new Date().getFullYear();
+    for (let y = current; y >= 1970; y--) {
+      const opt = document.createElement('option');
+      opt.value = String(y); opt.textContent = String(y);
+      sel.appendChild(opt);
+    }
+    const opt = document.createElement('option');
+    opt.value = 'avant 1970'; opt.textContent = '< 1970';
+    sel.appendChild(opt);
+  });
+})();
+
+/* ── Year picked from dropdown ── */
+function pickYearFromDrop(value) {
+  state.condition.year = value;
+  const c = state.condition;
+  const allAnswered = c.saleType && c.box && c.papers && c.proof && c.stickers && c.year;
+  document.getElementById('btnNext3').disabled = !allAnswered;
 }
 
 /* ── Condition selection (Step 3) ── */
@@ -1381,6 +1421,30 @@ function pickCondition(btn, field, value) {
   const c = state.condition;
   const allAnswered = c.saleType && c.box && c.papers && c.proof && c.stickers && c.year;
   document.getElementById('btnNext3').disabled = !allAnswered;
+}
+
+/* ── Photo upload handling ── */
+var uploadedPhotos = []; // array of { name, base64 }
+
+function handlePhotoUpload(input) {
+  const files = Array.from(input.files).slice(0, 5);
+  const previews = document.getElementById('uploadPreviews');
+  previews.innerHTML = '';
+  uploadedPhotos = [];
+
+  const readers = files.map(file => new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      uploadedPhotos.push({ name: file.name, base64: e.target.result });
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.className = 'upload-thumb';
+      previews.appendChild(img);
+      resolve();
+    };
+    reader.readAsDataURL(file);
+  }));
+  Promise.all(readers);
 }
 
 /* ── Build condition summary bar (shown at top of step 3) ── */
@@ -1418,6 +1482,7 @@ async function submitForm() {
     stickers: state.condition.stickers,
     year: state.condition.year,
     name, phone, email,
+    photos: uploadedPhotos,
     timestamp: new Date().toISOString(),
     lang: (typeof NM !== 'undefined' && NM.lang) || 'fr',
   };

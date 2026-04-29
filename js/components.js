@@ -33,19 +33,9 @@ NM.renderNav = function(activePage = '') {
             </a>
           </div>
         </li>
-        <li class="has-drop">
-          <span class="nav-link">
-            <span class="fr">Nos Montres</span><span class="en">Our Watches</span> ▾
-          </span>
-          <div class="drop-menu">
-            <a href="${root}montre-rolex-submariner.html">Rolex Submariner</a>
-            <a href="${root}montre-rolex-occasion.html">
-              <span class="fr">Rolex Occasion</span><span class="en">Pre-Owned Rolex</span>
-            </a>
-            <a href="${root}montre-rolex-daytona.html">Rolex Daytona</a>
-            <a href="${root}montre-audemars-piguet-royal-oak.html">AP Royal Oak</a>
-          </div>
-        </li>
+        <li><a class="nav-link${activePage==='sell'?' active':''}" href="${root}vendre.html">
+          <span class="fr">Vendre ma montre</span><span class="en">Sell my watch</span>
+        </a></li>
         <li class="has-drop">
           <span class="nav-link">
             <span class="fr">Services</span><span class="en">Services</span> ▾
@@ -68,9 +58,6 @@ NM.renderNav = function(activePage = '') {
             </a>
           </div>
         </li>
-        <li><a class="nav-link${activePage==='sell'?' active':''}" href="${root}vendre.html">
-          <span class="fr">Vendre</span><span class="en">Sell</span>
-        </a></li>
         <li><a class="nav-link${activePage==='rdv'?' active':''}" href="${root}prendre-rendez-vous.html">
           <span class="fr">Rendez-vous</span><span class="en">Appointment</span>
         </a></li>

@@ -317,6 +317,21 @@ CONCEPTS HORLOGERS CLÉS (expliquer si le client demande) :
 
 const FULL_SYSTEM_PROMPT = SYSTEM_PROMPT + SYSTEM_PROMPT_2 + SYSTEM_PROMPT_3;
 
+// Compact prompt for Groq fallback (free tier = 6000 TPM — keep under 300 tokens)
+const GROQ_SYSTEM_PROMPT = `Tu es l'assistant expert de Nos Montres, boutique parisienne spécialisée dans l'achat et la vente de montres de luxe de seconde main. Plus de 15 ans d'expertise.
+
+RÈGLES: Réponses concises (2-4 phrases max). Français par défaut. Si le client écrit en anglais, répondre en anglais. Ton professionnel et chaleureux. Jamais d'emojis.
+
+CONTACT (uniquement si demandé): 46 rue de Miromesnil, 75008 Paris. Tél: 01 81 80 08 47 / 06 22 80 70 14. Email: contact.nosmontres@gmail.com. 7j/7 sur RDV.
+
+SERVICES: Achat immédiat de montres, vente de montres authentifiées, révision Rolex et AP, changement de pile, expertise et conseil, déplacement possible pour pièces de valeur.
+
+MARQUES: Rolex, Audemars Piguet, Patek Philippe, Richard Mille, Cartier, Omega, IWC, Jaeger-LeCoultre, Vacheron Constantin, Tudor, Breguet, Panerai.
+
+PRIX MARCHÉ (indicatif): Rolex Submariner 11-17k€, Daytona acier 14-27k€, GMT-Master II 11-20k€, Datejust 41 9-14k€. AP Royal Oak 30-145k€. Patek Nautilus 52-200k€. Richard Mille 95k-2M€+.
+
+PROCESSUS VENTE: Contact → estimation gratuite → paiement immédiat si accord. ACHAT: RDV en boutique, sélection personnalisée, toutes montres authentifiées.`;
+
 /* ─── Static price database ─────────────────────────────────────────────────── */
 const STATIC_PRICES = {
   rolex: {
@@ -633,10 +648,8 @@ export default {
 
         // Origin check — blocks direct API calls from scripts/curl (no browser origin)
         const origin = request.headers.get('Origin') || '';
-        const referer = request.headers.get('Referer') || '';
-        const validOrigin = origin.includes('nosmontres') || referer.includes('nosmontres') || origin === '';
-        // origin === '' allows same-origin requests; non-empty origins must match nosmontres
-        if (origin && !origin.includes('nosmontres')) {
+        const ALLOWED = ['nosmontres', 'luxfly-skydive.github.io'];
+        if (origin && !ALLOWED.some(d => origin.includes(d))) {
           return Response.json({ reply: 'Unauthorized' }, { status: 403, headers: CORS });
         }
 
@@ -654,10 +667,10 @@ export default {
           role: m.role, content: typeof m.content === 'string' ? m.content.slice(0, 2000) : '',
         }));
 
-        const apiKey = env.GEMINI_API_KEY;
-        if (!apiKey) return Response.json({ reply: 'Service temporairement indisponible.' }, { status: 503, headers: CORS });
-        const geminiRes = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${apiKey}`,
+        // 1. Try Gemini — race against 5s timeout
+        let reply = null;
+        const geminiPromise = fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${env.GEMINI_API_KEY}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -667,12 +680,43 @@ export default {
                 role: m.role === 'assistant' ? 'model' : 'user',
                 parts: [{ text: m.content }],
               })),
-              generationConfig: { temperature: 0.7, maxOutputTokens: 600 },
+              generationConfig: { temperature: 0.7, maxOutputTokens: 300 },
             }),
           }
-        );
-        const data = await geminiRes.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Désolé, une erreur est survenue.';
+        ).then(r => r.ok ? r.json() : null)
+         .then(d => d?.candidates?.[0]?.content?.parts?.[0]?.text || null)
+         .catch(() => null);
+
+        const geminiTimeout = new Promise(resolve => setTimeout(() => resolve(null), 8000));
+        reply = await Promise.race([geminiPromise, geminiTimeout]);
+
+        // 2. Groq fallback (llama-3.1-8b-instant) — fast, free
+        if (!reply && env.GROQ_API_KEY) {
+          try {
+            const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${env.GROQ_API_KEY}`,
+              },
+              body: JSON.stringify({
+                model: 'llama-3.1-8b-instant',
+                messages: [
+                  { role: 'system', content: GROQ_SYSTEM_PROMPT },
+                  ...safeMsgs,
+                ],
+                max_tokens: 200,
+                temperature: 0.7,
+              }),
+            });
+            if (groqRes.ok) {
+              const data = await groqRes.json();
+              reply = data.choices?.[0]?.message?.content || null;
+            }
+          } catch { /* Groq also failed */ }
+        }
+
+        if (!reply) reply = 'Désolé, une erreur est survenue. Veuillez nous contacter directement.';
         return Response.json({ reply }, { headers: CORS });
       } catch (e) {
         return Response.json({ reply: 'Désolé, une erreur est survenue.' }, { status: 500, headers: CORS });
