@@ -1166,14 +1166,28 @@ function switchImgTab(tab){
     const fi=document.getElementById('imgd-focal-img');fi.src=imgCurrentEl.src;
   }
 }
+function compressImage(dataURL,maxW,maxH,quality,cb){
+  const img=new Image();
+  img.onload=function(){
+    let w=img.width,h=img.height;
+    if(w>maxW||h>maxH){const r=Math.min(maxW/w,maxH/h);w=Math.round(w*r);h=Math.round(h*r);}
+    const c=document.createElement('canvas');c.width=w;c.height=h;
+    c.getContext('2d').drawImage(img,0,0,w,h);
+    cb(c.toDataURL('image/jpeg',quality));
+  };
+  img.onerror=function(){cb(dataURL);};
+  img.src=dataURL;
+}
 function imgFileChosen(input){
   const file=input.files[0];if(!file)return;
   const reader=new FileReader();
   reader.onload=e=>{
-    imgPendingData=e.target.result;
-    const preview=document.getElementById('imgd-preview');
-    preview.innerHTML=`<img src="${imgPendingData}" style="max-width:100%;max-height:120px;object-fit:contain;border-radius:4px;">`;
-    document.getElementById('imgd-focal-img').src=imgPendingData;
+    compressImage(e.target.result,1200,900,0.78,d=>{
+      imgPendingData=d;
+      const preview=document.getElementById('imgd-preview');
+      preview.innerHTML=`<img src="${d}" style="max-width:100%;max-height:120px;object-fit:contain;border-radius:4px;">`;
+      document.getElementById('imgd-focal-img').src=d;
+    });
   };
   reader.readAsDataURL(file);
 }
