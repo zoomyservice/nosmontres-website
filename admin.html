@@ -8,6 +8,7 @@
   <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Nos Montres — Admin</title>
+<link href="favicon.png" rel="icon" type="image/png" sizes="64x64"/>
 <meta name="robots" content="noindex,nofollow"/>
 <style>
 :root{--dark:#0e0c09;--card:#161410;--border:#2a2520;--gold:#A07936;--gold-lt:#C9A86A;--gold-dim:rgba(160,121,54,0.12);--text:#F2EDE4;--muted:#7a7065;--cream:#FAFAF7;--green:#4ade80;--red:#f87171;--blue:#60a5fa;}
@@ -674,7 +675,10 @@ function setDevice(mode,btn){
   else if(mode==='tablet')frame.classList.add('tablet-view');
 }
 document.getElementById('page-frame').addEventListener('load',function(){
-  setTimeout(()=>injectEditMode(this.contentDocument),400);
+  const frameDoc=this.contentDocument;
+  setTimeout(()=>injectEditMode(frameDoc),400);
+  // Re-inject image/form overlays after dynamic content (watch grids etc.) has rendered
+  setTimeout(()=>{if(frameDoc&&frameDoc.body){injectImgOverlays(frameDoc);injectFormOverlays(frameDoc);}},1500);
 });
 
 // INJECT EDIT MODE
@@ -698,10 +702,19 @@ function injectEditMode(doc){
   doc.designMode='on';
   if(window._nmObserver)window._nmObserver.disconnect();
   window._nmObserver=new MutationObserver(mutations=>{
+    const seen=new Set();
     mutations.forEach(m=>{
-      if(m.type!=='characterData')return;
-      const el=m.target.parentElement;
-      if(!el||el.id==='nm-badge')return;
+      let el;
+      if(m.type==='characterData'){
+        el=m.target.parentElement;
+      }else if(m.type==='childList'){
+        // Only care when a text node is added (typing in a previously empty element)
+        const hasNewText=Array.from(m.addedNodes).some(n=>n.nodeType===3);
+        if(!hasNewText)return;
+        el=m.target;
+      }
+      if(!el||el.id==='nm-badge'||seen.has(el))return;
+      seen.add(el);
       const key=findKvKey(el,doc);
       if(key){
         pendingChanges[key]=el.textContent.trim();
@@ -716,7 +729,7 @@ function injectEditMode(doc){
       updateDirty();
     });
   });
-  window._nmObserver.observe(doc.body,{characterData:true,subtree:true});
+  window._nmObserver.observe(doc.body,{characterData:true,childList:true,subtree:true});
   injectImgOverlays(doc);
   injectFormOverlays(doc);
 }
