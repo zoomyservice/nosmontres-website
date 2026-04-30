@@ -563,7 +563,7 @@ async function doLogin(){
     if(!res.ok){err.textContent='Nom d\'utilisateur ou mot de passe incorrect.';err.style.display='block';return;}
     const me=await res.json();
     SESSION_USER=user;SESSION_PWD=pwd;SESSION_ROLE=me.role;
-    sessionStorage.setItem('nm_au',user);sessionStorage.setItem('nm_ap',pwd);sessionStorage.setItem('nm_ar',me.role);
+    localStorage.setItem('nm_au',user);localStorage.setItem('nm_ap',pwd);localStorage.setItem('nm_ar',me.role);
     await afterLogin();
   }catch(e){err.textContent='Erreur de connexion. Réessayez.';err.style.display='block';}
 }
@@ -579,14 +579,14 @@ async function afterLogin(){
   document.getElementById('edit-toolbar').style.display='none';
   await loadContent();
   try{
-    const last=JSON.parse(sessionStorage.getItem('nm_last_view')||'null');
+    const last=JSON.parse(localStorage.getItem('nm_last_view')||'null');
     if(last&&last.type==='page'){const btn=document.querySelector('.admin-nav-item[data-page="'+last.page+'"]');if(btn)switchPage(btn);}
     else if(last&&last.type==='settings'){const btn=Array.from(document.querySelectorAll('.admin-nav-settings')).find(b=>b.getAttribute('onclick').includes("'"+last.name+"'"));if(btn)openSettings(last.name,btn);}
   }catch(e){}
 }
 function doLogout(){
   SESSION_USER=SESSION_PWD=SESSION_ROLE='';
-  sessionStorage.removeItem('nm_au');sessionStorage.removeItem('nm_ap');sessionStorage.removeItem('nm_ar');sessionStorage.removeItem('nm_last_view');
+  localStorage.removeItem('nm_au');localStorage.removeItem('nm_ap');localStorage.removeItem('nm_ar');localStorage.removeItem('nm_last_view');
   document.getElementById('admin-panel').style.display='none';
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('user-input').value='';document.getElementById('pwd-input').value='';
@@ -594,7 +594,7 @@ function doLogout(){
 document.getElementById('user-input').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('pwd-input').focus();});
 document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 (async function tryAutoLogin(){
-  const u=sessionStorage.getItem('nm_au'),p=sessionStorage.getItem('nm_ap');
+  const u=localStorage.getItem('nm_au'),p=localStorage.getItem('nm_ap');
   if(!u||!p){
     // No saved session — show login screen
     document.getElementById('loading-screen').style.display='none';
@@ -605,12 +605,12 @@ document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='
   try{
     const res=await fetch(WORKER+'/me',{method:'POST',headers:authHL(u,p),body:'{}'});
     if(!res.ok){
-      sessionStorage.removeItem('nm_au');sessionStorage.removeItem('nm_ap');sessionStorage.removeItem('nm_ar');
+      localStorage.removeItem('nm_au');localStorage.removeItem('nm_ap');localStorage.removeItem('nm_ar');
       document.getElementById('loading-screen').style.display='none';
       document.getElementById('login-screen').style.display='flex';
       return;
     }
-    const me=await res.json();SESSION_USER=u;SESSION_PWD=p;SESSION_ROLE=me.role;
+    const me=await res.json();SESSION_USER=u;SESSION_PWD=p;SESSION_ROLE=me.role;localStorage.setItem('nm_ar',me.role);
     document.getElementById('loading-screen').style.display='none';
     await afterLogin();
   }catch(e){
@@ -650,7 +650,7 @@ function switchPage(btn){
   document.getElementById('edit-toolbar').style.display='flex';
   const label=btn.textContent.trim();
   document.getElementById('top-bar-context').textContent='✏️ Édition : '+label;
-  sessionStorage.setItem('nm_last_view',JSON.stringify({type:'page',page}));
+  localStorage.setItem('nm_last_view',JSON.stringify({type:'page',page}));
   loadPage(page);
 }
 function openSettings(name,btn){
@@ -664,7 +664,7 @@ function openSettings(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   const panel=document.getElementById('panel-'+name);if(panel)panel.classList.add('active');
   document.getElementById('top-bar-context').textContent=btn.textContent.trim();
-  sessionStorage.setItem('nm_last_view',JSON.stringify({type:'settings',name}));
+  localStorage.setItem('nm_last_view',JSON.stringify({type:'settings',name}));
   // Reload color preview iframe whenever colors panel opens
   if(name==='colors')setTimeout(()=>refreshColorPreview(),100);
 }
@@ -1178,7 +1178,7 @@ async function changePassword(){
   try{
     const res=await fetch(WORKER+'/change-password',{method:'POST',headers:authH(),body:JSON.stringify({current:cur,newPassword:nw})});
     if(!res.ok){const d=await res.json().catch(()=>({}));showMsg(msg,d.error||'Mot de passe actuel incorrect.','#f87171');return;}
-    SESSION_PWD=nw;sessionStorage.setItem('nm_ap',nw);
+    SESSION_PWD=nw;localStorage.setItem('nm_ap',nw);
     document.getElementById('cp-current').value='';document.getElementById('cp-new').value='';document.getElementById('cp-confirm').value='';
     showMsg(msg,'Mot de passe mis à jour avec succès !','#86efac');
   }catch(e){showMsg(msg,'Erreur réseau. Réessayez.','#f87171');}
