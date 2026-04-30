@@ -695,21 +695,27 @@
 
 /* ─── Photo upload ─────────────────────────────────────────────────────────── */
 .upload-zone {
-  border: 1.5px dashed #d8d3cb;
-  padding: 28px 20px;
+  border: 2px dashed #a09880;
+  padding: 32px 20px;
   text-align: center;
   cursor: pointer;
-  background: #faf9f7;
+  background: #f5f2ed;
   transition: border-color 0.2s, background 0.2s;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  color: #888;
-  font-size: 0.85rem;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  color: #4a3b2d;
+  font-size: 0.88rem;
 }
-.upload-zone:hover { border-color: var(--gold, #c9a96e); background: #f5f0e8; }
-.upload-zone.dragover { border-color: var(--gold, #c9a96e); background: #efe6d2; color: #4a3b2d; transform: scale(1.005); }
-.upload-zone.dragover svg { opacity: 0.85; }
-.upload-zone svg { opacity: 0.5; transition: opacity 0.2s; }
-.upload-zone small { font-size: 0.75rem; color: #bbb; }
+.upload-zone:hover { border-color: var(--gold, #c9a96e); background: #ede7d8; }
+.upload-zone.dragover { border-color: var(--gold, #c9a96e); background: #e5dac4; color: #2a1f14; transform: scale(1.005); }
+.upload-zone.dragover svg { opacity: 1; }
+.upload-zone svg { opacity: 0.75; transition: opacity 0.2s; color: var(--gold, #c9a96e); }
+.upload-zone small { font-size: 0.75rem; color: #7a6a58; }
+.upload-zone .upload-btn {
+  display: inline-block; margin-top: 6px;
+  padding: 7px 20px; background: var(--gold, #c9a96e); color: #fff;
+  font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+  border-radius: 2px; pointer-events: none;
+}
 .upload-previews {
   display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
 }
@@ -1098,9 +1104,11 @@
         <label class="fr">Photos de votre montre (facultatif)</label>
         <label class="en">Photos of your watch (optional)</label>
         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fPhotos').click()">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <span class="fr">Glissez-déposez vos photos ou cliquez ici</span>
-          <span class="en">Drag &amp; drop your photos or click here</span>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span class="fr"><strong>Glissez-déposez vos photos</strong> ou cliquez ici</span>
+          <span class="en"><strong>Drag &amp; drop your photos</strong> or click here</span>
+          <span class="upload-btn fr">+ Ajouter des photos</span>
+          <span class="upload-btn en">+ Add photos</span>
           <small class="fr">JPG, PNG — max 5 photos · sur mobile : galerie ou appareil photo</small>
           <small class="en">JPG, PNG — max 5 photos · on mobile: gallery or camera</small>
         </div>
