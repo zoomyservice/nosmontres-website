@@ -706,7 +706,9 @@
   font-size: 0.85rem;
 }
 .upload-zone:hover { border-color: var(--gold, #c9a96e); background: #f5f0e8; }
-.upload-zone svg { opacity: 0.5; }
+.upload-zone.dragover { border-color: var(--gold, #c9a96e); background: #efe6d2; color: #4a3b2d; transform: scale(1.005); }
+.upload-zone.dragover svg { opacity: 0.85; }
+.upload-zone svg { opacity: 0.5; transition: opacity 0.2s; }
 .upload-zone small { font-size: 0.75rem; color: #bbb; }
 .upload-previews {
   display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
@@ -1082,10 +1084,10 @@
         <label class="en">Photos of your watch (optional)</label>
         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fPhotos').click()">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <span class="fr">Cliquer pour ajouter des photos</span>
-          <span class="en">Click to add photos</span>
-          <small class="fr">JPG, PNG — max 5 photos</small>
-          <small class="en">JPG, PNG — max 5 photos</small>
+          <span class="fr">Glissez-déposez vos photos ou cliquez ici</span>
+          <span class="en">Drag &amp; drop your photos or click here</span>
+          <small class="fr">JPG, PNG — max 5 photos · sur mobile : galerie ou appareil photo</small>
+          <small class="en">JPG, PNG — max 5 photos · on mobile: gallery or camera</small>
         </div>
         <input type="file" id="fPhotos" accept="image/*" multiple style="display:none" onchange="handlePhotoUpload(this)">
         <div class="upload-previews" id="uploadPreviews"></div>
@@ -1440,6 +1442,44 @@ function pickCondition(btn, field, value) {
 
 /* ── Photo upload handling ── */
 var uploadedPhotos = []; // array of { name, base64 }
+
+/* Drag-and-drop wiring (desktop). On mobile, the OS file picker handles
+   "take photo" / "photo library" automatically via accept="image/*". */
+(function initPhotoDragDrop() {
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  ready(function(){
+    var zone = document.getElementById('uploadZone');
+    var input = document.getElementById('fPhotos');
+    if (!zone || !input) return;
+    var stop = function(e){ e.preventDefault(); e.stopPropagation(); };
+    ['dragenter','dragover','dragleave','drop'].forEach(function(ev){
+      zone.addEventListener(ev, stop, false);
+    });
+    ['dragenter','dragover'].forEach(function(ev){
+      zone.addEventListener(ev, function(){ zone.classList.add('dragover'); }, false);
+    });
+    ['dragleave','drop'].forEach(function(ev){
+      zone.addEventListener(ev, function(){ zone.classList.remove('dragover'); }, false);
+    });
+    zone.addEventListener('drop', function(e){
+      var files = e.dataTransfer && e.dataTransfer.files;
+      if (!files || !files.length) return;
+      try {
+        var dt = new DataTransfer();
+        for (var i = 0; i < files.length && dt.items.length < 5; i++) {
+          if (files[i].type && files[i].type.indexOf('image/') === 0) dt.items.add(files[i]);
+        }
+        if (dt.files.length) {
+          input.files = dt.files;
+          handlePhotoUpload(input);
+        }
+      } catch (err) {
+        // Fallback path: pass the FileList synthetically
+        handlePhotoUpload({ files: files });
+      }
+    }, false);
+  });
+})();
 
 function handlePhotoUpload(input) {
   const files = Array.from(input.files).slice(0, 5);

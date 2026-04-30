@@ -17,9 +17,9 @@ const CORS = {
   'Access-Control-Expose-Headers': 'Content-Type',
   'Content-Type': 'application/json',
 };
-// Admin endpoints — restricted CORS: only nosmontres.com and localhost
+// Admin endpoints — restricted CORS: only nosmontres.com, zoomyservice.github.io, luxfly-skydive.github.io, and localhost
 const CORS_ADMIN = (origin) => {
-  const allowed = !origin || origin.includes('nosmontres') || origin.includes('luxfly-skydive') || origin.includes('localhost') || origin.includes('127.0.0.1');
+  const allowed = !origin || origin.includes('nosmontres') || origin.includes('zoomyservice.github.io') || origin.includes('luxfly-skydive.github.io') || origin.includes('localhost') || origin.includes('127.0.0.1');
   return {
     'Access-Control-Allow-Origin': allowed ? (origin || '*') : 'https://www.nosmontres.com',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -648,7 +648,7 @@ export default {
 
         // Origin check — blocks direct API calls from scripts/curl (no browser origin)
         const origin = request.headers.get('Origin') || '';
-        const ALLOWED = ['nosmontres', 'luxfly-skydive.github.io'];
+        const ALLOWED = ['nosmontres', 'zoomyservice.github.io', 'luxfly-skydive.github.io'];
         if (origin && !ALLOWED.some(d => origin.includes(d))) {
           return Response.json({ reply: 'Unauthorized' }, { status: 403, headers: CORS });
         }
