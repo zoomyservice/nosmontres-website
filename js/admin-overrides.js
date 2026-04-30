@@ -35,8 +35,39 @@
       try {
         const upd = JSON.parse(data.watches_json);
         if (typeof WATCHES !== 'undefined' && Array.isArray(WATCHES)) {
+          // Normalise brand names to handle typos/case differences
+          const BRAND_NORM = {
+            'rolex': 'Rolex',
+            'audemars piguet': 'Audemars Piguet', 'ap': 'Audemars Piguet', 'audemars-piguet': 'Audemars Piguet',
+            'patek philippe': 'Patek Philippe', 'patek': 'Patek Philippe',
+            'richard mille': 'Richard Mille',
+            'cartier': 'Cartier',
+          };
+          upd.forEach(w => {
+            const norm = BRAND_NORM[(w.brand||'').toLowerCase().trim()];
+            if (norm) w.brand = norm;
+          });
           WATCHES.length = 0; upd.forEach(w => WATCHES.push(w));
-          if (window.WatchEngine && document.getElementById('watchGrid')) WatchEngine.renderGrid('watchGrid');
+          if (window.WatchEngine && document.getElementById('watchGrid')) {
+            // Detect which brand this page shows so we filter correctly
+            const PAGE_BRAND = {
+              'rolex': 'Rolex',
+              'montre-rolex-occasion': 'Rolex',
+              'montre-rolex-daytona': 'Rolex',
+              'montre-rolex-submariner': 'Rolex',
+              'entretien-montre-Rolex': 'Rolex',
+              'reparation-Rolex-Paris': 'Rolex',
+              'revision-Rolex-Paris': 'Rolex',
+              'audemars-piguet': 'Audemars Piguet',
+              'montre-audemars-piguet-royal-oak': 'Audemars Piguet',
+              'revision-Audemars-Piguet-Paris': 'Audemars Piguet',
+              'patek-philippe': 'Patek Philippe',
+              'richard-mille': 'Richard Mille',
+            };
+            const slug = (location.pathname.split('/').pop() || 'index.html').replace('.html', '');
+            const brand = PAGE_BRAND[slug] || null;
+            WatchEngine.renderGrid('watchGrid', brand);
+          }
         }
       } catch {}
     }
