@@ -11,7 +11,7 @@
 <link href="favicon.png" rel="icon" type="image/png" sizes="64x64"/>
 <meta name="robots" content="noindex,nofollow"/>
 <style>
-:root{--dark:#0e0c09;--card:#161410;--border:#2a2520;--gold:#A07936;--gold-lt:#C9A86A;--gold-dim:rgba(160,121,54,0.12);--text:#F2EDE4;--muted:#7a7065;--cream:#FAFAF7;--green:#4ade80;--red:#f87171;--blue:#60a5fa;}
+:root{--dark:#0e0c09;--card:#161410;--bg:#0f0d0a;--border:#2a2520;--gold:#A07936;--gold-lt:#C9A86A;--gold-dim:rgba(160,121,54,0.12);--text:#F2EDE4;--muted:#7a7065;--cream:#FAFAF7;--green:#4ade80;--red:#f87171;--blue:#60a5fa;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
 #login-screen{display:none;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:var(--dark);}
@@ -159,10 +159,15 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
 .brand-other{background:rgba(255,255,255,.06);color:var(--muted);}
 /* Watch card — redesign */
 .watch-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.watch-card[draggable="true"]{cursor:grab;}
+.watch-card[draggable="true"]:active{cursor:grabbing;}
+.watch-card.drag-dragging{opacity:.45;transform:scale(.97);}
+.watch-card.drag-over{border-color:var(--gold);box-shadow:0 0 0 2px rgba(160,121,54,.45);}
+.drag-handle{position:absolute;top:7px;left:8px;color:rgba(255,255,255,.35);font-size:.75rem;line-height:1;pointer-events:none;z-index:2;}
 .watch-card{background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s;}
 .watch-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(160,121,54,.1);}
-.watch-card-img{height:160px;overflow:hidden;background:var(--bg);flex-shrink:0;border-radius:12px 12px 0 0;position:relative;}
-.watch-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+.watch-card-img{height:200px;overflow:hidden;background:#0b0908;flex-shrink:0;border-radius:12px 12px 0 0;position:relative;display:flex;align-items:center;justify-content:center;}
+.watch-card-img img{width:100%;height:100%;object-fit:contain;padding:6px;box-sizing:border-box;transition:transform .3s;}
 .watch-card:hover .watch-card-img img{transform:scale(1.04);}
 .watch-card-body{padding:.85rem 1rem;display:flex;flex-direction:column;flex:1;}
 .watch-card-badges{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.5rem;align-items:center;}
@@ -845,6 +850,7 @@ function buildBrandTabs(){
     tabsEl.appendChild(tab);
   });
 }
+let _dragSrcIdx=-1;
 function buildWatches(){
   const grid=document.getElementById('watches-grid');
   const countEl=document.getElementById('watch-count');
@@ -860,8 +866,10 @@ function buildWatches(){
     const card=document.createElement('div');
     card.className=cls;
     card.id='wc_'+i;
+    card.draggable=true;
     card.innerHTML=`
       <div class="watch-card-img" onclick="openWatchImgPicker(${i})" title="Cliquer pour changer la photo">
+        <span class="drag-handle">⠿⠿</span>
         ${imgSrc?`<img src="${imgSrc}" alt="${w.name_fr}" loading="lazy" id="wimg_${i}">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--border);" id="wimg_${i}">⌚</div>'}
         <div class="watch-img-overlay">📷 Changer la photo</div>
       </div>
@@ -886,6 +894,35 @@ function buildWatches(){
         </div>
       </div>
     `;
+    // Drag-to-reorder
+    card.addEventListener('dragstart',e=>{
+      _dragSrcIdx=i;
+      e.dataTransfer.effectAllowed='move';
+      setTimeout(()=>card.classList.add('drag-dragging'),0);
+    });
+    card.addEventListener('dragend',()=>{
+      card.classList.remove('drag-dragging');
+      grid.querySelectorAll('.watch-card').forEach(c=>c.classList.remove('drag-over'));
+    });
+    card.addEventListener('dragover',e=>{
+      e.preventDefault();
+      e.dataTransfer.dropEffect='move';
+      if(_dragSrcIdx!==i){
+        grid.querySelectorAll('.watch-card').forEach(c=>c.classList.remove('drag-over'));
+        card.classList.add('drag-over');
+      }
+    });
+    card.addEventListener('drop',e=>{
+      e.preventDefault();
+      card.classList.remove('drag-over');
+      const targetIdx=i;
+      if(_dragSrcIdx<0||_dragSrcIdx===targetIdx)return;
+      const[moved]=WATCHES_ADMIN.splice(_dragSrcIdx,1);
+      WATCHES_ADMIN.splice(targetIdx,0,moved);
+      _dragSrcIdx=-1;
+      savePendingWatches();saveAll();
+      buildBrandTabs();buildWatches();
+    });
     grid.appendChild(card);
   });
 }
@@ -1018,7 +1055,10 @@ function addNewWatch(){
   const id='new_'+Date.now();
   WATCHES_ADMIN.unshift({id,brand:'Rolex',name_fr:'Nouvelle montre',name_en:'New watch',ref:'',papers:false,box:false,year:new Date().getFullYear(),price:0,sold:false,hidden:false,img:'',dynamic:true});
   activeBrand='Tous';savePendingWatches();buildBrandTabs();buildWatches();
-  document.getElementById('watches-grid').firstElementChild?.scrollIntoView({behavior:'smooth'});
+  const first=document.getElementById('watches-grid').firstElementChild;
+  if(first)first.scrollIntoView({behavior:'smooth'});
+  openWatchDrawer(0);
+  saveAll();
 }
 
 // COLORS PANEL
