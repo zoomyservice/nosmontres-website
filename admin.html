@@ -920,7 +920,7 @@ function buildWatches(){
       const[moved]=WATCHES_ADMIN.splice(_dragSrcIdx,1);
       WATCHES_ADMIN.splice(targetIdx,0,moved);
       _dragSrcIdx=-1;
-      savePendingWatches();saveAll();
+      savePendingWatches();
       buildBrandTabs();buildWatches();
     });
     grid.appendChild(card);
@@ -1058,7 +1058,6 @@ function addNewWatch(){
   const first=document.getElementById('watches-grid').firstElementChild;
   if(first)first.scrollIntoView({behavior:'smooth'});
   openWatchDrawer(0);
-  saveAll();
 }
 
 // COLORS PANEL
