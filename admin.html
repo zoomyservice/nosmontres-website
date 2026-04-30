@@ -520,7 +520,7 @@ const EYE_OFF=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" strok
 document.querySelectorAll('.eye-btn').forEach(b=>{b.innerHTML=EYE_ON;});
 
 let SESSION_USER='',SESSION_PWD='',SESSION_ROLE='';
-function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').split(String.fromCharCode(34)).join('&quot;');}
 let kvContent={},pendingChanges={};
 let currentPage='index.html';
 let currentEditEl=null,currentEditKey=null,currentEditSel=null;
@@ -895,7 +895,8 @@ function buildWatches(){
     card.innerHTML=`
       <div class="watch-card-img" onclick="openWatchImgPicker(${i})" title="Cliquer pour changer la photo">
         <span class="drag-handle">⠿⠿</span>
-        ${imgSrc?`<img src="${escH(imgSrc)}" alt="${escH(w.name_fr)}" loading="lazy" id="wimg_${i}">`:`<div style="font-size:2.8rem;color:var(--border);" id="wimg_${i}">⌚</div>`}
+        ${imgSrc?'<img src="'+escH(imgSrc)+'" alt="'+escH(w.name_fr)+'" loading="lazy" id="wimg_'+i+'">'
+          :'<div style="font-size:2.8rem;color:var(--border);" id="wimg_'+i+'">⌚</div>'}
         <div class="watch-img-overlay">📷 Changer</div>
       </div>
       <div class="watch-card-body">
@@ -903,7 +904,7 @@ function buildWatches(){
         <div class="watch-card-name" style="font-family:${headingFont}" id="wcn_${i}">${escH(w.name_fr)}</div>
         <span class="watch-card-ref">${w.ref?'Réf. '+escH(w.ref):''}</span>
         <div class="watch-card-meta">
-          ${w.year?`<span>${w.year}</span>`:''}
+          ${w.year?'<span>'+w.year+'</span>':''}
           <span>${w.papers?'✓ Papiers':'✗ Papiers'}</span>
           <span>${w.box?'✓ Boîte':'✗ Boîte'}</span>
           ${w.sold?'<span style="color:var(--red);font-weight:600;">Vendu</span>':''}
