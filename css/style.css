@@ -532,6 +532,13 @@ html[data-lang="en"] .fr { display: none !important; }
 /* ──────────────────────────────────────────────────
    PULL QUOTE
 ────────────────────────────────────────────────── */
+.lead-text {
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: var(--charcoal, #2a2420);
+  margin: 0;
+}
+
 .pull-quote {
   border-left: 3px solid var(--gold); padding: 20px 36px;
   margin: 48px 0; background: var(--cream);
