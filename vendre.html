@@ -898,6 +898,21 @@
           <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
+      <div class="brand-tile" id="otherBrandTile" onclick="selectOtherBrand(event)">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.2rem;color:var(--gold,#c9a96e);background:rgba(0,0,0,0.25);">⌚</div>
+        <div class="brand-tile__label">
+          <span class="brand-tile__name fr">Autre marque</span>
+          <span class="brand-tile__name en">Other brand</span>
+        </div>
+        <div class="brand-tile__check">
+          <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+    <div id="otherBrandInput" style="display:none;margin-top:1rem;">
+      <input type="text" id="fOtherBrand" placeholder="ex: Hublot, Omega, IWC…"
+        style="width:100%;max-width:340px;padding:10px 16px;border:1.5px solid var(--gold,#c9a96e);border-radius:8px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1714;outline:none;"
+        oninput="onOtherBrandInput(this.value)">
     </div>
     <button class="btn-wiz-next" id="btnNext1" disabled onclick="goStep(2)">
       <span class="fr">Continuer</span><span class="en">Continue</span> →
@@ -1369,10 +1384,45 @@ function selectBrand(brand, evt) {
   }
   if (tile) tile.classList.add('selected');
   document.getElementById('btnNext1').disabled = false;
+  // Hide the "other brand" text input
+  document.getElementById('otherBrandInput').style.display = 'none';
+  document.getElementById('fOtherBrand').value = '';
   buildModelGrid(brand);
 }
 
 /* ── Model dropdown ── */
+function selectOtherBrand(evt) {
+  // Deselect all named tiles
+  document.querySelectorAll('.brand-tile').forEach(t => t.classList.remove('selected'));
+  const tile = document.getElementById('otherBrandTile');
+  tile.classList.add('selected');
+  // Show text input
+  const wrap = document.getElementById('otherBrandInput');
+  wrap.style.display = 'block';
+  const inp = document.getElementById('fOtherBrand');
+  inp.focus();
+  // If already has a value use it, else disable Next until typed
+  const val = inp.value.trim();
+  if (val) {
+    state.brand = val;
+    buildModelGrid(val);
+    document.getElementById('btnNext1').disabled = false;
+  } else {
+    state.brand = null;
+    document.getElementById('btnNext1').disabled = true;
+  }
+}
+function onOtherBrandInput(val) {
+  val = val.trim();
+  state.brand = val || null;
+  if (val) {
+    buildModelGrid(val);
+    document.getElementById('btnNext1').disabled = false;
+  } else {
+    document.getElementById('btnNext1').disabled = true;
+  }
+}
+
 function buildModelGrid(brand) {
   const sel = document.getElementById('modelSelect');
   sel.innerHTML = '<option value="" disabled selected>— Choisir un modèle / Choose a model —</option>';
