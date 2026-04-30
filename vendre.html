@@ -851,7 +851,7 @@
       <p class="en">Choose your watch manufacturer from our partner brands.</p>
     </div>
     <div class="brand-grid">
-      <div class="brand-tile" onclick="selectBrand('Rolex')">
+      <div class="brand-tile" onclick="selectBrand('Rolex', event)">
         <img src="https://www.nosmontres.com/uploads/IMG-7772-Y5vh.jpeg" alt="Rolex" loading="lazy">
         <div class="brand-tile__label">
           <span class="brand-tile__name">Rolex</span>
@@ -860,7 +860,7 @@
           <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
-      <div class="brand-tile" onclick="selectBrand('Audemars Piguet')">
+      <div class="brand-tile" onclick="selectBrand('Audemars Piguet', event)">
         <img src="https://www.nosmontres.com/uploads/IMG-1358-iYgo.jpeg" alt="Audemars Piguet" loading="lazy">
         <div class="brand-tile__label">
           <span class="brand-tile__name">Audemars Piguet</span>
@@ -869,7 +869,7 @@
           <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
-      <div class="brand-tile" onclick="selectBrand('Patek Philippe')">
+      <div class="brand-tile" onclick="selectBrand('Patek Philippe', event)">
         <img src="https://www.nosmontres.com/uploads/IMG-5178-VIZv.jpeg" alt="Patek Philippe" loading="lazy">
         <div class="brand-tile__label">
           <span class="brand-tile__name">Patek Philippe</span>
@@ -878,7 +878,7 @@
           <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
-      <div class="brand-tile" onclick="selectBrand('Richard Mille')">
+      <div class="brand-tile" onclick="selectBrand('Richard Mille', event)">
         <img src="https://www.nosmontres.com/uploads/c552deb8-4084-4deb-93e7-15a7ce0b2aaf-8BG2.jpeg" alt="Richard Mille" loading="lazy">
         <div class="brand-tile__label">
           <span class="brand-tile__name">Richard Mille</span>
@@ -887,7 +887,7 @@
           <svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
-      <div class="brand-tile" onclick="selectBrand('Cartier')">
+      <div class="brand-tile" onclick="selectBrand('Cartier', event)">
         <img src="https://www.nosmontres.com/uploads/IMG-8144-PeMi.jpeg" alt="Cartier" loading="lazy">
         <div class="brand-tile__label">
           <span class="brand-tile__name">Cartier</span>
@@ -1347,10 +1347,25 @@ function goStep(n) {
 }
 
 /* ── Brand selection ── */
-function selectBrand(brand) {
+function selectBrand(brand, evt) {
   state.brand = brand;
   document.querySelectorAll('.brand-tile').forEach(t => t.classList.remove('selected'));
-  event.currentTarget.classList.add('selected');
+  // Resolve the clicked tile reliably across browsers — passed event,
+  // window.event fallback, or DOM lookup by brand name. Previous version
+  // used a bare `event.currentTarget` which threw ReferenceError when the
+  // global `event` was unavailable, leaving btnNext1 disabled.
+  evt = evt || (typeof window !== 'undefined' ? window.event : null);
+  var tile = (evt && evt.currentTarget) ||
+             (evt && evt.target && evt.target.closest && evt.target.closest('.brand-tile')) ||
+             null;
+  if (!tile) {
+    var tiles = document.querySelectorAll('.brand-tile');
+    for (var i = 0; i < tiles.length; i++) {
+      var oc = tiles[i].getAttribute('onclick') || '';
+      if (oc.indexOf("'" + brand + "'") !== -1) { tile = tiles[i]; break; }
+    }
+  }
+  if (tile) tile.classList.add('selected');
   document.getElementById('btnNext1').disabled = false;
   buildModelGrid(brand);
 }
