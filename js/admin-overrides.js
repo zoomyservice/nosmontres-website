@@ -79,18 +79,38 @@
     }
     const pg = (location.pathname.split('/').pop() || 'index.html').replace('.html','').replace(/-/g,'_');
     const wk = '_wysiwyg_' + pg;
-    if (data[wk]) { try { const ov = JSON.parse(data[wk]); Object.entries(ov).forEach(([s,t]) => { try { document.querySelectorAll(s).forEach(e => { e.textContent = t; }); } catch {} }); } catch {} }
-    const wImgKey = '_wysiwyg_' + pg + '_imgs';
-    if (data[wImgKey]) {
+    if (data[wk]) {
       try {
-        const imgOverrides = JSON.parse(data[wImgKey]);
-        Object.entries(imgOverrides).forEach(([sel, src]) => {
-          try { document.querySelectorAll(sel).forEach(el => {
-            el.style.opacity = '0';
-            el.style.transition = 'opacity 0.15s ease';
-            el.src = src;
-            el.addEventListener('load', () => { el.style.opacity = '1'; }, { once: true });
-          }); } catch {}
+        const ov = JSON.parse(data[wk]);
+        Object.entries(ov).forEach(([key, val]) => {
+          try {
+            if (key.startsWith('_img_src_')) {
+              // Image source override — key is '_img_src_{selector}'
+              const sel = key.slice('_img_src_'.length);
+              document.querySelectorAll(sel).forEach(el => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.15s ease';
+                el.src = val;
+                const show = () => { el.style.opacity = '1'; };
+                if (el.complete && el.naturalWidth) { show(); }
+                else {
+                  el.addEventListener('load', show, { once: true });
+                  el.addEventListener('error', show, { once: true });
+                }
+              });
+            } else if (key.startsWith('_img_pos_')) {
+              // Image object-position override
+              const sel = key.slice('_img_pos_'.length);
+              document.querySelectorAll(sel).forEach(el => { el.style.objectPosition = val; });
+            } else if (key.startsWith('_field_')) {
+              // Form field value override
+              const sel = key.slice('_field_'.length);
+              document.querySelectorAll(sel).forEach(el => { el.value = val; });
+            } else {
+              // Text content override — key is a CSS selector
+              document.querySelectorAll(key).forEach(el => { el.textContent = val; });
+            }
+          } catch {}
         });
       } catch {}
     }
