@@ -33,7 +33,7 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
 .eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;line-height:0;opacity:.5;}
 .eye-btn:hover{color:var(--text);opacity:1;}
 #admin-panel{display:none;height:100vh;flex-direction:row;overflow:hidden;}
-.admin-sidebar{width:214px;flex-shrink:0;background:#0b0905;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;}
+.admin-sidebar{width:214px;flex-shrink:0;min-height:0;background:#0b0905;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;}
 .admin-sidebar-logo{padding:.95rem 1.1rem .85rem;color:var(--gold-lt);font-weight:700;font-size:.88rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.45rem;flex-shrink:0;letter-spacing:.04em;}
 .admin-sidebar-section{padding:.75rem 1.1rem .2rem;font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4a4540;}
 .admin-sidebar-divider{height:1px;background:var(--border);margin:.6rem 0;}
@@ -42,7 +42,7 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
 .nav-group-header:hover{color:var(--gold-lt);}
 .nav-group-arrow{font-size:.55rem;transition:transform .22s;color:var(--muted);}
 .nav-group-items{max-height:0;overflow:hidden;transition:max-height .28s ease;}
-.nav-group-items.open{max-height:700px;}
+.nav-group-items.open{max-height:1200px;}
 .admin-nav-item{display:flex;align-items:center;gap:.5rem;padding:.42rem .9rem .42rem 1.65rem;color:var(--muted);font-size:.76rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:3px solid transparent;transition:all .13s;font-family:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .admin-nav-item:hover{color:var(--text);background:rgba(255,255,255,.04);}
 .admin-nav-item.active{color:var(--gold-lt);border-left-color:var(--gold);background:var(--gold-dim);}
@@ -729,7 +729,7 @@ function injectEditMode(doc){
   style.id='nm-edit-style';
   style.textContent=`
     *:not(#nm-badge):hover{outline:1px dashed rgba(160,121,54,.5)!important;}
-    a[href]{pointer-events:none!important;cursor:text!important;}
+    a[href]{cursor:text!important;}
     button:not(.nm-ov-btn){pointer-events:none!important;cursor:text!important;}
     #nm-badge{position:fixed;top:0;left:50%;transform:translateX(-50%);background:rgba(160,121,54,.97);color:#0a0a08;font-size:11px;font-weight:800;letter-spacing:1.5px;padding:4px 16px;border-radius:0 0 10px 10px;z-index:999999;pointer-events:none;font-family:system-ui,sans-serif;box-shadow:0 2px 12px rgba(0,0,0,.4);}
   `;
@@ -738,6 +738,15 @@ function injectEditMode(doc){
     const b=doc.createElement('div');b.id='nm-badge';
     b.textContent='✏ MODE ÉDITION — cliquez sur n\'importe quel texte ou image';
     doc.body.appendChild(b);
+  }
+  // Prevent link navigation without blocking pointer-events (pointer-events:none breaks
+  // cursor placement in designMode for text inside <a> tags, e.g. product cards)
+  if(!doc._nmLinkGuard){
+    doc._nmLinkGuard=true;
+    doc.addEventListener('click',e=>{
+      const a=e.target.closest('a[href]');
+      if(a){e.preventDefault();e.stopPropagation();}
+    },true);
   }
   doc.designMode='on';
   if(window._nmObserver)window._nmObserver.disconnect();
