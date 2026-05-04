@@ -245,24 +245,29 @@ body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMac
         <span class="nav-group-arrow" id="pages-arrow">▼</span>
       </button>
       <div class="nav-group-items open" id="pages-dropdown">
+        <div style="padding:.45rem 1.1rem .1rem 1.65rem;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a3530;">Principal</div>
         <button class="admin-nav-item" data-page="index.html" onclick="switchPage(this)">🏠 Accueil</button>
-        <button class="admin-nav-item" data-page="a-propos.html" onclick="switchPage(this)">📖 À propos</button>
+        <button class="admin-nav-item" data-page="a-propos.html" onclick="switchPage(this)">👤 À propos</button>
         <button class="admin-nav-item" data-page="vendre.html" onclick="switchPage(this)">💰 Vendre</button>
         <button class="admin-nav-item" data-page="prendre-rendez-vous.html" onclick="switchPage(this)">📅 Rendez-vous</button>
         <button class="admin-nav-item" data-page="montre-rolex-occasion.html" onclick="switchPage(this)">🕰️ Toutes les montres</button>
-        <button class="admin-nav-item" data-page="rolex.html" onclick="switchPage(this)">⌚ Rolex</button>
-        <button class="admin-nav-item" data-page="montre-rolex-daytona.html" onclick="switchPage(this)">⌚ Rolex Daytona</button>
-        <button class="admin-nav-item" data-page="montre-rolex-submariner.html" onclick="switchPage(this)">⌚ Rolex Submariner</button>
+        <div style="padding:.45rem 1.1rem .1rem 1.65rem;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a3530;margin-top:.3rem;">Rolex</div>
+        <button class="admin-nav-item" data-page="rolex.html" onclick="switchPage(this)">👑 Rolex</button>
+        <button class="admin-nav-item" data-page="montre-rolex-submariner.html" onclick="switchPage(this)">🌊 Submariner</button>
+        <button class="admin-nav-item" data-page="montre-rolex-daytona.html" onclick="switchPage(this)">🏁 Daytona</button>
         <button class="admin-nav-item" data-page="entretien-montre-Rolex.html" onclick="switchPage(this)">🔧 Entretien Rolex</button>
-        <button class="admin-nav-item" data-page="reparation-Rolex-Paris.html" onclick="switchPage(this)">🔧 Réparation Rolex</button>
-        <button class="admin-nav-item" data-page="revision-Rolex-Paris.html" onclick="switchPage(this)">🔧 Révision Rolex</button>
-        <button class="admin-nav-item" data-page="audemars-piguet.html" onclick="switchPage(this)">⌚ Audemars Piguet</button>
-        <button class="admin-nav-item" data-page="montre-audemars-piguet-royal-oak.html" onclick="switchPage(this)">⌚ AP Royal Oak</button>
-        <button class="admin-nav-item" data-page="revision-Audemars-Piguet-Paris.html" onclick="switchPage(this)">🔧 Révision AP</button>
-        <button class="admin-nav-item" data-page="patek-philippe.html" onclick="switchPage(this)">⌚ Patek Philippe</button>
-        <button class="admin-nav-item" data-page="richard-mille.html" onclick="switchPage(this)">⌚ Richard Mille</button>
+        <button class="admin-nav-item" data-page="reparation-Rolex-Paris.html" onclick="switchPage(this)">🛠️ Réparation Rolex</button>
+        <button class="admin-nav-item" data-page="revision-Rolex-Paris.html" onclick="switchPage(this)">⚙️ Révision Rolex</button>
+        <div style="padding:.45rem 1.1rem .1rem 1.65rem;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a3530;margin-top:.3rem;">Audemars Piguet</div>
+        <button class="admin-nav-item" data-page="audemars-piguet.html" onclick="switchPage(this)">💠 Audemars Piguet</button>
+        <button class="admin-nav-item" data-page="montre-audemars-piguet-royal-oak.html" onclick="switchPage(this)">🔷 Royal Oak</button>
+        <button class="admin-nav-item" data-page="revision-Audemars-Piguet-Paris.html" onclick="switchPage(this)">🔩 Révision AP</button>
+        <div style="padding:.45rem 1.1rem .1rem 1.65rem;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a3530;margin-top:.3rem;">Autres marques</div>
+        <button class="admin-nav-item" data-page="patek-philippe.html" onclick="switchPage(this)">✨ Patek Philippe</button>
+        <button class="admin-nav-item" data-page="richard-mille.html" onclick="switchPage(this)">🔴 Richard Mille</button>
+        <div style="padding:.45rem 1.1rem .1rem 1.65rem;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3a3530;margin-top:.3rem;">Autres</div>
         <button class="admin-nav-item" data-page="changement-de-pile-de-montre.html" onclick="switchPage(this)">🔋 Changement de pile</button>
-        <button class="admin-nav-item" data-page="mentions-legales.html" onclick="switchPage(this)">📄 Mentions légales</button>
+        <button class="admin-nav-item" data-page="mentions-legales.html" onclick="switchPage(this)">📋 Mentions légales</button>
       </div>
     </div>
 
@@ -707,7 +712,13 @@ document.getElementById('page-frame').addEventListener('load',function(){
   const frameDoc=this.contentDocument;
   setTimeout(()=>injectEditMode(frameDoc),400);
   // Re-inject image/form overlays after dynamic content (watch grids etc.) has rendered
-  setTimeout(()=>{if(frameDoc&&frameDoc.body){injectImgOverlays(frameDoc);injectFormOverlays(frameDoc);}},1500);
+  // Skip if user has already clicked into the iframe to edit — re-adding DOM nodes kills the caret
+  setTimeout(()=>{
+    if(!frameDoc||!frameDoc.body)return;
+    if(document.activeElement===document.getElementById('page-frame'))return;
+    injectImgOverlays(frameDoc);
+    injectFormOverlays(frameDoc);
+  },1500);
 });
 
 // INJECT EDIT MODE
